@@ -335,6 +335,7 @@ background-color: #98C438 !important;
 
 
 
+
 .autocomplete_button{
   position: absolute !important;
   top:16px;
@@ -435,7 +436,7 @@ background-color: #98C438 !important;
 
 
 .MuiInputLabel-root {
-  color: #111D31 !important; 
+  color: #c4c4c4 !important; 
 }
 
 .MuiInputLabel-root.Mui-focused {
