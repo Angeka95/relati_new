@@ -305,15 +305,15 @@ let datos = [
 
 
 
-export default function Card({selectedFilters}) {
-    const {verTodasDecisiones, busqueda} = useContext(Context);
+export default function Card({ selectedFilters }) {
+    const { verTodasDecisiones, busqueda } = useContext(Context);
 
-    if(!selectedFilters) {
+    if (!selectedFilters) {
         selectedFilters = [];
     }
     const [isButtonSorterEnabled, setIsButtonSorterEnabled] = useState(false);
 
-    // Función para alternar el estado del botón
+    // Estado del Boton ordenar 
     const toggleButton = () => {
         setIsButtonSorterEnabled(prev => !prev);
     };
@@ -338,10 +338,10 @@ export default function Card({selectedFilters}) {
         setIsButtonSorterEnabled(false);
     };
 
+
+    // Paginado
     const [page, setPage] = useState(1);
     const [itemsPerPage, setitemsPerPage] = React.useState(5);
-
-
     const handleChange = (event, value) => {
         setPage(value);
     };
@@ -364,7 +364,7 @@ export default function Card({selectedFilters}) {
         if (items == 0) {
             items = itemsPerPage;
         }
-        // Obtener los datos para la página actual
+    
         const startIndex = (page - 1) * items;
         setCurrentData(datos.slice(startIndex, startIndex + items));
     }
@@ -386,12 +386,11 @@ export default function Card({selectedFilters}) {
             flexWrap: 'wrap',
             textAlign: 'center',
             width: "100%",
-            textAlign: 'center',
             margin: '20px 0px 0px 0px',
         },
         [theme.breakpoints.up('sm')]: {
             margin: '0px 0px',
-            
+
         },
     }));
 
@@ -410,7 +409,7 @@ export default function Card({selectedFilters}) {
             margin: '0px 0px',
             display: 'flex',
             justifyContent: 'space-between'
-            
+
         },
     }));
 
@@ -425,7 +424,8 @@ export default function Card({selectedFilters}) {
     const NoneGrid = styled(Grid)(({ theme }) => ({
 
         [theme.breakpoints.down('sm')]: {
-            display: 'none',}
+            display: 'none',
+        }
     }));
 
     const SpaceTop = styled(Grid)(({ theme }) => ({
@@ -439,68 +439,68 @@ export default function Card({selectedFilters}) {
         <Stack>
             <div className="text_results_search margin_search">
                 <SpaceGrid>
-                <h3 className="">Resultados de búsqueda</h3>
-                {!busqueda && !verTodasDecisiones && (
-                    <h4 className="text_diabled">Cuando ingrese una búsqueda verá los resultados aquí</h4>
-                )}
+                    <h3 className="">Resultados de búsqueda</h3>
+                    {!busqueda && !verTodasDecisiones && (
+                        <h4 className="text_diabled">Cuando ingrese una búsqueda verá los resultados aquí</h4>
+                    )}
 
-                
-                {verTodasDecisiones &&(
-                    <h4 >Está buscando por <span className="text_bolder">"Todas las decisiones"</span> </h4>
-                )}
-                
 
-                {busqueda && (
-                    <h4 >Está buscando por <span className="text_bolder">"{busqueda}"</span> </h4>
-                )}
-                
-                {selectedFilters.length === 0 && (
-                    <h4 className="text_diabled">(Aún no ha agregado ningún filtro a su búsqueda)</h4>
-                )}
-                {selectedFilters.length > 0 && (
-                    <Box sx={{ marginBottom: '20px', display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
-                    {selectedFilters.map((value) => (
-                      <Chip   
-                      onMouseDown={e => {
-                          e.stopPropagation()
-                        }}
-                      className="chip_select" key={value} label={value} 
-                      />
-                      
-                      
-                    ))}
-                  </Box>
-                )}
+                    {verTodasDecisiones && (
+                        <h4 >Está buscando por <span className="text_bolder">"Todas las decisiones"</span> </h4>
+                    )}
+
+
+                    {busqueda && (
+                        <h4 >Está buscando por <span className="text_bolder">"{busqueda}"</span> </h4>
+                    )}
+
+                    {selectedFilters.length === 0 && (
+                        <h4 className="text_diabled">(Aún no ha agregado ningún filtro a su búsqueda)</h4>
+                    )}
+                    {selectedFilters.length > 0 && (
+                        <Box sx={{ marginBottom: '20px', display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                            {selectedFilters.map((value) => (
+                                <Chip
+                                    onMouseDown={e => {
+                                        e.stopPropagation()
+                                    }}
+                                    className="chip_select" key={value} label={value}
+                                />
+
+
+                            ))}
+                        </Box>
+                    )}
                 </SpaceGrid>
 
                 {(verTodasDecisiones || busqueda) && (
                     <div >
 
                         <Grid container spacing={2}>
-                            
-                                
-                                <SpaceBetweenGrid item xs={12} sm={12} md={12} lg={12} xl={12} >
-                                    <Grid item xs={12} sm={12} md={6} lg={6} xl={6}> 
-                                        <NoneGrid> 
 
-                                            <Button className="button_function" startIcon={<SortIcon />} onClick={toggleButton}>Ordenar
-                                            </Button>
-                                            {isButtonSorterEnabled && (
-                                                <div className='container_date_sorted'>
-                                                    <Button onClick={sortAscByDate} className='items_sorted'>fecha ascendente </Button>
-                                                    <Button onClick={sortDescByDate} className='items_sorted'>fecha descendente </Button>
-                                                </div>
-                                            )}
-                                        </NoneGrid>
-                                    </Grid>
-                                    
-                                    <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
-                                    
-                                            <SearchBarSmall ></SearchBarSmall>
-                                    
-                                    </Grid>
-                                </SpaceBetweenGrid>
-                                
+
+                            <SpaceBetweenGrid item xs={12} sm={12} md={12} lg={12} xl={12} >
+                                <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
+                                    <NoneGrid>
+
+                                        <Button className="button_function" startIcon={<SortIcon />} onClick={toggleButton}>Ordenar
+                                        </Button>
+                                        {isButtonSorterEnabled && (
+                                            <div className='container_date_sorted'>
+                                                <Button onClick={sortAscByDate} className='items_sorted'>fecha ascendente </Button>
+                                                <Button onClick={sortDescByDate} className='items_sorted'>fecha descendente </Button>
+                                            </div>
+                                        )}
+                                    </NoneGrid>
+                                </Grid>
+
+                                <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
+
+                                    <SearchBarSmall ></SearchBarSmall>
+
+                                </Grid>
+                            </SpaceBetweenGrid>
+
                         </Grid>
                     </div>
                 )}
@@ -508,108 +508,103 @@ export default function Card({selectedFilters}) {
 
             {(verTodasDecisiones || busqueda) && (
                 <>
-                                    <SpaceGrid item xs={12} sm={12} md={12} lg={12} xl={12} className="flex"> 
+                    <SpaceGrid item xs={12} sm={12} md={12} lg={12} xl={12} className="flex">
                         <Width100Grid>
                             <p>
-                            <span className="text_bolder">  </span> Resultados de 
-                            <span> {startIndexPage} </span> a
-                            <span> {endIndexPage} </span> de 
-                            <span className="text_bolder"> {datos.length} </span> en total
+                                <span className="text_bolder">  </span> Resultados de
+                                <span> {startIndexPage} </span> a
+                                <span> {endIndexPage} </span> de
+                                <span className="text_bolder"> {datos.length} </span> en total
                             </p>
                         </Width100Grid>
-                        <NoneGrid> 
-                        <p className='margin_xs'> | </p>
+                        <NoneGrid>
+                            <p className='margin_xs'> | </p>
                         </NoneGrid>
 
-                        
-                        <div > 
-                        <Width100Grid className='width_100 flex'>
+                        <div >
+                            <Width100Grid className='width_100 flex'>
 
-                            <p className="">Mostrando </p>
-                            <Box sx={{ minWidth: 120 }}>
-                                <FormControl fullWidth>
-                                    {/* <InputLabel id="demo-simple-select-label"></InputLabel> */}
-                                    <Select className="select_items_results justify_center"
-                                        value={itemsPerPage}
-                                        onChange={handleChange2}
-                                        MenuProps={{
-                                            PaperProps: {
-                                                sx: {
-                                                    boxShadow: '0px 8px 24px rgba(57, 129, 195, 0.2) ', // Sombra 
+                                <p className="">Mostrando </p>
+                                <Box sx={{ minWidth: 120 }}>
+                                    <FormControl fullWidth>
+                                        {/* <InputLabel id="demo-simple-select-label"></InputLabel> */}
+                                        <Select className="select_items_results justify_center"
+                                            value={itemsPerPage}
+                                            onChange={handleChange2}
+                                            MenuProps={{
+                                                PaperProps: {
+                                                    sx: {
+                                                        boxShadow: '0px 8px 24px rgba(57, 129, 195, 0.2) ', // Sombra 
+                                                    },
                                                 },
-                                            },
-                                        }}
-                                    >
-                                        <MenuItem value={2}>2</MenuItem>
-                                        <MenuItem value={3}>3</MenuItem>
-                                        <MenuItem value={5}>5</MenuItem>
-                                        <MenuItem value={datos.length}>Todas</MenuItem>
-                                    </Select>
-                                </FormControl>
-                            </Box>
-                            <p className=""> resultados por página  </p>
-                        </Width100Grid>
+                                            }}
+                                        >
+                                            <MenuItem value={2}>2</MenuItem>
+                                            <MenuItem value={3}>3</MenuItem>
+                                            <MenuItem value={5}>5</MenuItem>
+                                            <MenuItem value={datos.length}>Todas</MenuItem>
+                                        </Select>
+                                    </FormControl>
+                                </Box>
+                                <p className=""> resultados por página  </p>
+                            </Width100Grid>
                         </div>
-                     
-                    </SpaceGrid> 
-                    
-            
 
+                    </SpaceGrid>
 
-                 <SpaceGrid className="justify_end">
+                    <div className="separator width_100"></div>
 
-                    <Pagination className="margin_top_s"
-                        count={totalPages}
-                        page={page}
-                        onChange={handleChange}
-                        renderItem={(item) => (
-                            <PaginationItem
-                                slots={{ previous: ArrowBackIcon, next: ArrowForwardIcon }}
-                                {...item}
-                            />
-                        )}
-                    />
-                 </SpaceGrid>
-              
-                
-                
-                
-                <List className="width_100">
-                
-                    {currentData.map(item => (
-                        <SpaceGrid>
-                        <ListItem  className="padding_none" key={item.id}>
-                            <CardSearch className="padding_none" datos={item}></CardSearch>
-                        </ListItem>
-                        </SpaceGrid>
-                    ))}
-      
-                </List>
+                    <SpaceGrid className="justify_end">
 
-                <SpaceGrid className="justify_end">
-                    <Pagination className="pagination_container margin_bottom_s"
-                        count={totalPages}
-                        page={page}
-                        onChange={handleChange}
-                        renderItem={(item) => (
-                            <PaginationItem
-                                slots={{ previous: ArrowBackIcon, next: ArrowForwardIcon }}
-                                {...item}
-                            />
-                        )}
-                    />
-                
-                </SpaceGrid>
+                        <Pagination className="margin_top_s"
+                            count={totalPages}
+                            page={page}
+                            onChange={handleChange}
+                            renderItem={(item) => (
+                                <PaginationItem
+                                    slots={{ previous: ArrowBackIcon, next: ArrowForwardIcon }}
+                                    {...item}
+                                />
+                            )}
+                        />
+                    </SpaceGrid>
+
+                    <List className="width_100">
+
+                        {currentData.map(item => (
+                            <SpaceGrid>
+                                <ListItem className="padding_none" key={item.id}>
+                                    <CardSearch className="padding_none" datos={item}></CardSearch>
+                                </ListItem>
+                            </SpaceGrid>
+                        ))}
+
+                    </List>
+
+                    <SpaceGrid className="justify_end">
+                        <Pagination className="pagination_container margin_bottom_s"
+                            count={totalPages}
+                            page={page}
+                            onChange={handleChange}
+                            renderItem={(item) => (
+                                <PaginationItem
+                                    slots={{ previous: ArrowBackIcon, next: ArrowForwardIcon }}
+                                    {...item}
+                                />
+                            )}
+                        />
+
+                    </SpaceGrid>
                 </>
             )
 
             }
-                
-                
 
 
-                             
-         
+
+
+
+
 
         </Stack>
 

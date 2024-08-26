@@ -11,17 +11,17 @@ import Context from '../context/context';
 
 
 export default function CardSearch({ datos }) {
-  const {busqueda, verTodasDecisiones} = useContext(Context);
+  const { busqueda, verTodasDecisiones } = useContext(Context);
   const [isButtonInfoEnabled, setIsButtonInfoEnabled] = useState(true);
 
-  // Función para alternar el estado del botón
+  // Estado del boton info 
   const toggleButtonInfo = () => {
     setIsButtonInfoEnabled(prev => !prev);
   };
 
   const [isButtonExtractEnabled, setIsButtonExtractEnabled] = useState(false);
 
-  // Función para alternar el estado del botón
+  // Estado del boton extracto 
   const toggleButtonExtract = () => {
     setIsButtonExtractEnabled(prev => !prev);
   };
@@ -29,9 +29,9 @@ export default function CardSearch({ datos }) {
   const CustomGrid = styled(Grid)(({ theme }) => ({
 
     [theme.breakpoints.down('sm')]: {
-        display: 'flex',
-        flexWrap: 'wrap',
-        justifyContent: 'center'
+      display: 'flex',
+      flexWrap: 'wrap',
+      justifyContent: 'center'
     },
   }));
 
@@ -81,33 +81,33 @@ export default function CardSearch({ datos }) {
         <div className="width_100">
           {!verTodasDecisiones && (
             <>
-          <p className="text_center"
-            style={{
-              height: isButtonExtractEnabled ? 'auto' : '50px',
-              overflow: 'hidden'
-            }}>
-            {datos.extractoBusqueda.split('secuestro').map((extracto, index) => (
-              <React.Fragment key={index}>
-                {extracto}
-                {index != datos.extractoBusqueda.split('secuestro').length - 1 ? (
-                  <span className="text_bolder">{busqueda}</span>
-                ) : (
-                  <></>
-                )}
-              </React.Fragment>
-            ))}
-          </p>
+              <p className="text_center"
+                style={{
+                  height: isButtonExtractEnabled ? 'auto' : '50px',
+                  overflow: 'hidden'
+                }}>
+                {datos.extractoBusqueda.split('secuestro').map((extracto, index) => (
+                  <React.Fragment key={index}>
+                    {extracto}
+                    {index != datos.extractoBusqueda.split('secuestro').length - 1 ? (
+                      <span className="text_bolder">{busqueda}</span>
+                    ) : (
+                      <></>
+                    )}
+                  </React.Fragment>
+                ))}
+              </p>
 
-          {isButtonExtractEnabled && (
-            <Button
-              className="link_secondary justify_center" onClick={toggleButtonExtract}> ver menos del extracto
-            </Button>
-          )}
-          {!isButtonExtractEnabled && (
-            <Button
-              className="link_secondary justify_center" onClick={toggleButtonExtract}> ver más del extracto
-            </Button>
-          )}            
+              {isButtonExtractEnabled && (
+                <Button
+                  className="link_secondary justify_center" onClick={toggleButtonExtract}> ver menos del extracto
+                </Button>
+              )}
+              {!isButtonExtractEnabled && (
+                <Button
+                  className="link_secondary justify_center" onClick={toggleButtonExtract}> ver más del extracto
+                </Button>
+              )}
             </>
           )
           }
@@ -117,8 +117,6 @@ export default function CardSearch({ datos }) {
 
 
     </React.Fragment>
-
-
 
   );
 

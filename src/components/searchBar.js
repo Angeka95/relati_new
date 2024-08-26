@@ -11,51 +11,61 @@ import Context from '../context/context';
 
 export default function Search() {
 
+  // Grids personalizadas
+
   const NoneGrid = styled(Grid)(({ theme }) => ({
 
     [theme.breakpoints.down('sm')]: {
-        display: 'none',
-        padding: 'none',
-      }
+      display: 'none',
+      padding: 'none',
+    }
   }));
 
 
   const ShowGrid = styled(Grid)(({ theme }) => ({
 
     [theme.breakpoints.down('sm')]: {
-        display: 'inblock',
-      },
+      display: 'inblock',
+    },
 
-      [theme.breakpoints.up('sm')]: {
-        display: 'none',
-        padding: 'none',
-      }
+    [theme.breakpoints.up('sm')]: {
+      display: 'none',
+      padding: 'none',
+    }
   }));
 
   const SpaceBottom = styled(Grid)(({ theme }) => ({
 
     [theme.breakpoints.down('sm')]: {
-        marginBottom: '40px',
+      marginBottom: '40px',
     }
-}));
+  }));
 
+  // valor en el buscador 
 
+  const [valueBar, setValueBar] = useState(searchOptions[0].title);
 
-const [valueBar, setValueBar] = useState(searchOptions[0].title);
-const {verTodasDecisiones, setVerTodasDecisiones, setBusqueda} = useContext(Context);
+    // Trae el valor de la busqueda y del switch desde el contexto 
+
+  const { verTodasDecisiones, setVerTodasDecisiones, setBusqueda } = useContext(Context);
   const updateSelectedValue = (event, value) => {
     setValueBar(value);
   };
+
+      // Busqueda por palabra
 
   const search = () => {
     setBusqueda(valueBar);
     setVerTodasDecisiones(false)
   };
-  
+
+
+    // Encender y apagar switch ver todas las decisiones 
+
   const handleChange = () => {
     setVerTodasDecisiones(prev => !prev);
     setValueBar('');
-    if(!verTodasDecisiones) {
+    if (!verTodasDecisiones) {
       setBusqueda('');
     }
   };
@@ -68,37 +78,37 @@ const {verTodasDecisiones, setVerTodasDecisiones, setBusqueda} = useContext(Cont
     <div >
       <Stack className="autocomplete_bar_search">
         <SpaceBottom>
-        <FormControlLabel control={<Switch checked={verTodasDecisiones} onChange={handleChange} />} label="ver todas las decisiones" className="switch_search" />
-        <Autocomplete className="margin_top_s autoconmplete_container" 
-          id="free-solo-demo"
-          value={valueBar}
-          freeSolo
-          onChange={updateSelectedValue}          
-          options={searchOptions.map((option) => option.title)}
-          renderInput={(params) => <TextField {...params} label="Ingrese su búsqueda" placeholder="Busque por palabra clave, número de decisión, radicado...  " inputProps={{
-            ...params.inputProps,
-            maxLength: 80
-          }} />}
+          <FormControlLabel control={<Switch checked={verTodasDecisiones} onChange={handleChange} />} label="ver todas las decisiones" className="switch_search" />
+          <Autocomplete className="margin_top_s autoconmplete_container"
+            id="free-solo-demo"
+            value={valueBar}
+            freeSolo
+            onChange={updateSelectedValue}
+            options={searchOptions.map((option) => option.title)}
+            renderInput={(params) => <TextField {...params} label="Ingrese su búsqueda" placeholder="Busque por palabra clave, número de decisión, radicado...  " inputProps={{
+              ...params.inputProps,
+              maxLength: 80
+            }} />}
 
-        />
-        {/* <div className="autocomplete_delete">
+          />
+          {/* <div className="autocomplete_delete">
           <ClearIcon />
         </div> */}
-        <NoneGrid>
-          <Button onClick={search} className="autocomplete_button button_primary" startIcon={<SearchIcon />}>
-          Buscar
-          </Button>
-        </NoneGrid>
-        <ShowGrid> 
-        <Button onClick={search} className="autocomplete_button_responsive button_primary"><SearchIcon /></Button>
+          <NoneGrid>
+            <Button onClick={search} className="autocomplete_button button_primary" startIcon={<SearchIcon />}>
+              Buscar
+            </Button>
+          </NoneGrid>
+          <ShowGrid>
+            <Button onClick={search} className="autocomplete_button_responsive button_primary"><SearchIcon /></Button>
 
-        </ShowGrid>
+          </ShowGrid>
 
 
-      <NoneGrid>
-        <Button className="light_white text_blue autocomplete_button_help button_terciary">?</Button>
-      </NoneGrid>
-        <Button className="autocomplete_button_advance primary_blue text_white button_secondary_border">Búsqueda Avanzada</Button>
+          <NoneGrid>
+            <Button className="light_white text_blue autocomplete_button_help button_terciary">?</Button>
+          </NoneGrid>
+          <Button className="autocomplete_button_advance primary_blue text_white button_secondary_border">Búsqueda Avanzada</Button>
 
         </SpaceBottom>
       </Stack>

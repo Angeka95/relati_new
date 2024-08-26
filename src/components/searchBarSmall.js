@@ -11,25 +11,25 @@ import ClearIcon from '@mui/icons-material/Clear';
 
 export default function search() {
   return (
-    
-      <Stack className="autocomplete_bar_search_small">
-        <Autocomplete
-          id="free-solo-demo"
-          freeSolo
-          options={searchOptions.map((option) => option.title)}
-          renderInput={(params) => <TextField {...params} label="Buscar en los resultados" inputProps={{
-            ...params.inputProps,
-            maxLength: 80
-          }} />}
 
-        />
-        {/* <div className="autocomplete_delete_small">
+    <Stack className="autocomplete_bar_search_small">
+      <Autocomplete
+        id="free-solo-demo"
+        freeSolo
+        options={searchOptions.map((option) => option.title)}
+        renderInput={(params) => <TextField {...params} label="Buscar en los resultados" inputProps={{
+          ...params.inputProps,
+          maxLength: 80
+        }} />}
+
+      />
+      {/* <div className="autocomplete_delete_small">
           <ClearIcon />
         </div> */}
 
-        <Button className="autocomplete_button_small button_primary"><SearchIcon /></Button>
+      <Button className="autocomplete_button_small button_primary"><SearchIcon /></Button>
 
-      </Stack>
+    </Stack>
 
   );
 }
