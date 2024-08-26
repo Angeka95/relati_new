@@ -443,6 +443,8 @@ background-color: #98C438 !important;
   color: #111D31 !important; 
 }
 
+
+
 /*END SEARCH BAR */
 
 /*SEARCH BAR SMALL*/
@@ -526,6 +528,7 @@ background-color: #98C438 !important;
   width:15%;
 }
 
+
 /* Color del paginador*/
 .MuiPaginationItem-root {
   color: #007CAE !important; 
@@ -535,6 +538,11 @@ background-color: #98C438 !important;
 .MuiPaginationItem-root.Mui-selected {
   background-color: #111D31 !important; 
   color: #fff !important; 
+}
+
+
+.margin_search{
+  margin-top: 16px;
 }
 
 /*END CARD SEARCH RESULTS */

@@ -437,9 +437,9 @@ export default function Card({selectedFilters}) {
 
     return (
         <Stack>
-            <div className="text_results_search">
+            <div className="text_results_search margin_search">
                 <SpaceGrid>
-                <h3>Resultados de búsqueda</h3>
+                <h3 className="">Resultados de búsqueda</h3>
                 {!busqueda && !verTodasDecisiones && (
                     <h4 className="text_diabled">Cuando ingrese una búsqueda verá los resultados aquí</h4>
                 )}
