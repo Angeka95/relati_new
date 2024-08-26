@@ -1,5 +1,6 @@
 import './App.css'; 
-import SearchResults from './sections/searchResults';
+import ResultadosBusqueda from './sections/resultadosBusqueda';
+import Map from './sections/mapaJurisprudencial';
 import ContextProvider from './context/contextProvider';
 
 function App() {
@@ -7,7 +8,7 @@ function App() {
     <div className="App">
 
         <ContextProvider>
-          <SearchResults></SearchResults>
+          <Map></Map>
         </ContextProvider>
         
       </div>
