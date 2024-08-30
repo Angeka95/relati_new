@@ -52,7 +52,9 @@ export default function Map() {
   return (
     <div> 
     <Container className="container_large">
-    <FilterLarge> </FilterLarge>
+    <FilterLarge> 
+        
+    </FilterLarge>
     <WrapMapGrid container spacing={0} >
         <SmallResultsGrid item xs={12} sm={12} md={5} lg={5} xl={5}  >
 

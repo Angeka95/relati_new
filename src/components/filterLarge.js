@@ -2,9 +2,11 @@ import { Card, CardContent, Button, CardMedia } from '@mui/material';
 import { Container, Grid, Box, Chip } from '@mui/material';
 import { BuildTwoTone } from '@mui/icons-material';
 import FilterListIcon from '@mui/icons-material/FilterList';
+import ExpandLessOutlinedIcon from '@mui/icons-material/ExpandLessOutlined';
+import ExpandMoreOutlinedIcon from '@mui/icons-material/ExpandMoreOutlined';
 import Filter from './filter';
 import React, { useState, useEffect, useContext } from 'react';
-
+import { styled } from '@mui/material/styles';
 
 
 
@@ -20,6 +22,23 @@ export default function FilterLarge() {
     setShowFilter(!showFilter);
   };
   
+  const SpaceBetweenGrid = styled(Grid)(({ theme }) => ({
+
+    [theme.breakpoints.down('sm')]: {
+        display: 'flex',
+        justifyContent: 'center',
+        flexWrap: 'wrap',
+        textAlign: 'center',
+        width: "100%",
+        textAlign: 'center',
+        margin: '20px 0px 0px 0px',
+    },
+    [theme.breakpoints.up('sm')]: {
+        margin: '0px 0px',
+        display: 'flex',
+
+    },
+}));
   
     
   return (
@@ -27,13 +46,13 @@ export default function FilterLarge() {
       
         <h1 className="text_center">Mapa Jurisprudencial </h1>  
         <p className="text_center">Encuentre las decisiones de la JEP y conozca la actividad judicial en el territorio Colombiano</p>
-        <Grid> 
-        <div className="margin_bottom_s padding_none card_filter_large">
+        
+        <div className= {selectedFilters.length > 0 ?  ("margin_bottom_s padding_none card_filter_large_active ") : ("margin_bottom_s padding_none card_filter_large") } >
           
-          <div className="justify_between vertical_align">
+          <div className="filter_justify_between vertical_align  ">
               <Grid items xs={12} sm={12} md={8} lg={8} xl={8}>
               {selectedFilters.length === 0 && (
-                        <h4 className="text_bolder">Seleccione un filtro para mostrarle decisiones y datos limitados a su interés</h4>
+                        <h4 className="text_bolder text_center">Seleccione un filtro para mostrarle decisiones y datos limitados a su interés</h4>
                     )}
                     {selectedFilters.length > 0 && (
                       
@@ -56,13 +75,16 @@ export default function FilterLarge() {
                  </Grid>
 
             <Grid items xs={12} sm={12} md={4} lg={4} xl={4}>
-              <div className="position_relative"> 
-              <Button className="button_function button_filter_size" startIcon={<FilterListIcon/>} onClick={handleFilter}>
-                  {showFilter ? 'Cerrar filtros' : 'Filtrar'} 
+              <div className="position_relative "> 
+              <Button className={showFilter ? ("button_function_noradius button_filter_size" ) : ("button_function button_filter_size" )} 
+              endIcon ={showFilter ? <ExpandMoreOutlinedIcon /> : <ExpandLessOutlinedIcon/>}
+              startIcon={<FilterListIcon /> } 
+              onClick={handleFilter}>
+                  {showFilter ? ('Filtrar' ) : 'Filtrar'} 
               </Button>
       
-                    <div className="position_float button_filter_position"> 
-                    {showFilter && <Filter setSelectedFilters={setSelectedFilters}/>}
+                    <div className="position_float"> 
+                    {showFilter && <Filter isFilterFloat={true} setSelectedFilters={setSelectedFilters}/>}
                     </div> 
               </div> 
             </Grid>
@@ -74,7 +96,7 @@ export default function FilterLarge() {
          
           
        </div>
-       </Grid>
+       
 
 
     </div>

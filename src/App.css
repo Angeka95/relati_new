@@ -228,7 +228,7 @@ h6 {
 
 .button_function {
   text-transform: capitalize !important;
-  background-color: #fff;
+  background-color: #fff !important;
   color: black !important;
   box-shadow: rgba(57, 129, 195, 0.2) 0px 8px 24px;
   font-weight: 700 !important;
@@ -722,6 +722,62 @@ h6 {
   z-index: 10;
 }
 
+.card_filter_large_active {
+  margin: 0px 3%;
+  border-radius: 8px;
+  padding: 16px !important;
+  border-radius: 16px !important;
+  border: #fff !important;
+  box-shadow: 0px 8px 16px rgba(57, 129, 195, 0.2) !important;
+  background-color: #111D31;
+  color: #fff;
+  vertical-align: center;
+  align-items: center;
+  align-content: center;
+  z-index: 10;
+}
+
+
+/*Start icon End icon */
+.button_function .MuiButton-startIcon {
+  margin-right: 4% !important;
+
+}
+
+.button_function .MuiButton-endIcon {
+  margin-left: 70% !important;
+  color: #98C438; 
+}
+
+.button_function_noradius .MuiButton-endIcon {
+  margin-left: 70% !important;
+  color: #98C438; 
+}
+
+.button_function_noradius .MuiButton-startIcon {
+  margin-right: 4% !important;
+
+}
+
+/*Start icon End icon */
+
+
+.button_function_noradius {
+  text-transform: capitalize !important;
+  background-color: #fff !important;
+  color: black !important;
+  box-shadow: rgba(57, 129, 195, 0.2) 0px 8px 24px;
+  font-weight: 700 !important;
+  padding: 24px !important;
+  height: 60px;
+  border-top-left-radius: 8px !important;
+  border-bottom-left-radius: 0px !important;
+  border-top-right-radius: 8px !important;
+  border-bottom-right-radius: 0px !important;
+  font-size: 1.1em !important;
+}
+
+
 /*END FILTER LARGE*/
 
 
@@ -735,16 +791,11 @@ h6 {
 
 /*END MAP*/
 
-/*FILTER LARGE*/
+/*FILTER LARGE OR FLOAT */
 
 .button_filter_size{
   width: 300px;
   min-width: 300px;
-}
-
-.button_filter_position{
-  top: 100px;
-  min-width: 100%;
 }
 
 
@@ -753,7 +804,77 @@ h6 {
   margin:2px;
 }
 
+.filter_justify_between{
+  display: flex;
+  justify-content: space-between;
+}
+
+.card_filter_float {
+  margin: 0px;
+  border-top-left-radius: 0px !important;
+  border-top-right-radius: 0px !important;
+  border-bottom-left-radius: 16px;
+  border-bottom-right-radius: 16px;
+  padding: 0px 1% 20px 1%;
+  border: #fff !important;
+  box-shadow: 0px 8px 16px rgba(57, 129, 195, 0.2) !important;
+}
+
 
 
 /*END FILTER LARGE*/
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*--------------------------------------------------------------------*/
+/*--------------------------------------------------------------------*/
+
+/*QUERIES*/
+
+@media (max-width: 1130px) {
+  .filter_justify_between {
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+}
+
+/*END QUERIES*/

@@ -165,7 +165,7 @@ const datos_procedimiento = [
 
 
 
-export default function Filter({ setSelectedFilters }) {
+export default function Filter({ setSelectedFilters, isFilterFloat }) {
   // Estado para controlar si el botón está habilitado o deshabilitado
   const { verTodasDecisiones, busqueda } = useContext(Context);
   const [isButtonEnabled, setIsButtonEnabled] = useState(true);
@@ -213,13 +213,22 @@ export default function Filter({ setSelectedFilters }) {
     }
   }, [verTodasDecisiones, busqueda]);
 
+  const  JustFilterFloatNoneGrid = styled(Grid)(({ theme }) => ({
+
+    [theme.breakpoints.up('xs')]: {
+        display: isFilterFloat ? 'none' : '',
+    }
+}));
+
   return (
 
-    <Card className="card_filter ">
+    <Card className= {isFilterFloat ? "card_filter_float" : "card_filter"} >
       <CardContent>
-        <div className="vertical_align">
-          <h3> <FilterListIcon /> Filtrar </h3>
-        </div>
+        <JustFilterFloatNoneGrid> 
+          <div className="vertical_align">
+            <h3> <FilterListIcon /> Filtrar </h3>
+          </div>
+        </JustFilterFloatNoneGrid>
 
         <SelectField isDisabled={isFilterDisabled} datos_filtros={datos_sala_seccion} setSelectedData={setSelectedDataFilter1}
           label='Sala o Sección' id='sala'></SelectField>
