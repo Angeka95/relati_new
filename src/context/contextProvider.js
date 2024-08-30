@@ -4,8 +4,8 @@ import Context from './context';
 
 const ContextProvider = ({ children }) => {
   // Estado que se va a compartir a través del contexto
-  const [verTodasDecisiones, setVerTodasDecisiones] = useState(false);
-  const [busqueda, setBusqueda] = useState("Competencia de la JEP");
+  const [verTodasDecisiones, setVerTodasDecisiones] = useState(true);
+  const [busqueda, setBusqueda] = useState();
 
   return (
     <Context.Provider value={{ verTodasDecisiones, setVerTodasDecisiones, busqueda, setBusqueda }}>

@@ -8,6 +8,7 @@ import React, { useState, useEffect } from 'react';
 
 export default function SearchResults() {
   const [selectedFilters, setSelectedFilters] = useState([]);
+  
 
   return (
     <Container>

@@ -305,7 +305,7 @@ let datos = [
 
 
 
-export default function Card({ selectedFilters }) {
+export default function Card({ selectedFilters, isListSmall }) {
     const { verTodasDecisiones, busqueda } = useContext(Context);
 
     if (!selectedFilters) {
@@ -388,9 +388,22 @@ export default function Card({ selectedFilters }) {
             width: "100%",
             margin: '20px 0px 0px 0px',
         },
+    }));
+
+    const WrapGrid = styled(Grid)(({ theme }) => ({
+
+        [theme.breakpoints.down('sm')]: {
+            display: 'flex',
+            justifyContent: 'center',
+            flexWrap: 'wrap',
+            textAlign: 'center',
+            width: "100%",
+            margin: '20px 0px 0px 0px',
+        },
         [theme.breakpoints.up('sm')]: {
             margin: '0px 0px',
-
+            display: isListSmall?'flex': '',
+            flexWrap: isListSmall?'wrap': '',
         },
     }));
 
@@ -408,7 +421,8 @@ export default function Card({ selectedFilters }) {
         [theme.breakpoints.up('sm')]: {
             margin: '0px 0px',
             display: 'flex',
-            justifyContent: 'space-between'
+            flexWrap: isListSmall ? 'wrap' : '',
+            width: isListSmall ? "100%" : '',
 
         },
     }));
@@ -416,8 +430,13 @@ export default function Card({ selectedFilters }) {
 
     const Width100Grid = styled(Grid)(({ theme }) => ({
 
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
             width: '100%',
+        },
+        [theme.breakpoints.up('md')]: {
+
+            width: isListSmall?'100%': '',
+
         }
     }));
 
@@ -425,20 +444,40 @@ export default function Card({ selectedFilters }) {
 
         [theme.breakpoints.down('sm')]: {
             display: 'none',
+        },
+        [theme.breakpoints.up('sm')]: {
+            display: isListSmall ? 'none' : '',
         }
     }));
 
-    const SpaceTop = styled(Grid)(({ theme }) => ({
+    const  JustMapGrid = styled(Grid)(({ theme }) => ({
 
         [theme.breakpoints.down('sm')]: {
-            marginTop: '40px',
+            display: 'none',
+        },
+        [theme.breakpoints.up('sm')]: {
+            display: isListSmall ? 'flex' : 'none',
+           
         }
     }));
+
+    const  JustMapNoneGrid = styled(Grid)(({ theme }) => ({
+
+        [theme.breakpoints.up('xs')]: {
+            display: isListSmall ? 'none' : '',
+        }
+    }));
+
+    
+   
+
+      
 
     return (
         <Stack>
-            <div className="text_results_search margin_search">
+            <div className=  {isListSmall ? ('text_results_search', 'no-spacing') :  ('text_results_search','margin_search') } >
                 <SpaceGrid>
+                    <JustMapNoneGrid>
                     <h3 className="">Resultados de búsqueda</h3>
                     {!busqueda && !verTodasDecisiones && (
                         <h4 className="text_diabled">Cuando ingrese una búsqueda verá los resultados aquí</h4>
@@ -471,6 +510,7 @@ export default function Card({ selectedFilters }) {
                             ))}
                         </Box>
                     )}
+                    </JustMapNoneGrid>
                 </SpaceGrid>
 
                 {(verTodasDecisiones || busqueda) && (
@@ -480,7 +520,10 @@ export default function Card({ selectedFilters }) {
 
 
                             <SpaceBetweenGrid item xs={12} sm={12} md={12} lg={12} xl={12} >
-                                <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
+                                <Grid item xs={12} sm={12} md= {(isListSmall ? 12 : 6)} lg={(isListSmall ? 12 : 6)} xl={(isListSmall ? 12 : 6)}>
+                                    <JustMapGrid > 
+                                        <h4 className="text_bolder"> Decisiones </h4> 
+                                    </JustMapGrid>
                                     <NoneGrid>
 
                                         <Button className="button_function" startIcon={<SortIcon />} onClick={toggleButton}>Ordenar
@@ -494,7 +537,7 @@ export default function Card({ selectedFilters }) {
                                     </NoneGrid>
                                 </Grid>
 
-                                <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
+                                <Grid item xs={12} sm={12} md= {(isListSmall ? 12 : 6)} lg={(isListSmall ? 12 : 6)} xl={(isListSmall ? 12 : 6)}>
 
                                     <SearchBarSmall ></SearchBarSmall>
 
@@ -508,7 +551,7 @@ export default function Card({ selectedFilters }) {
 
             {(verTodasDecisiones || busqueda) && (
                 <>
-                    <SpaceGrid item xs={12} sm={12} md={12} lg={12} xl={12} className="flex">
+                    <WrapGrid item xs={12} sm={12} md={12} lg={12} xl={12} className="flex">
                         <Width100Grid>
                             <p>
                                 <span className="text_bolder">  </span> Resultados de
@@ -524,11 +567,13 @@ export default function Card({ selectedFilters }) {
                         <div >
                             <Width100Grid className='width_100 flex'>
 
-                                <p className="">Mostrando </p>
+                                <JustMapNoneGrid>
+                                <p className="">Mostrando</p>
+                                </JustMapNoneGrid>
                                 <Box sx={{ minWidth: 120 }}>
                                     <FormControl fullWidth>
                                         {/* <InputLabel id="demo-simple-select-label"></InputLabel> */}
-                                        <Select className="select_items_results justify_center"
+                                        <Select className= {isListSmall ? "select_items_results_small" : ("select_items_results justify_center")} 
                                             value={itemsPerPage}
                                             onChange={handleChange2}
                                             MenuProps={{
@@ -550,7 +595,7 @@ export default function Card({ selectedFilters }) {
                             </Width100Grid>
                         </div>
 
-                    </SpaceGrid>
+                    </WrapGrid>
 
                     <div className="separator width_100"></div>
 
@@ -572,7 +617,7 @@ export default function Card({ selectedFilters }) {
                     <List className="width_100">
 
                         {currentData.map(item => (
-                            <SpaceGrid>
+                            <SpaceGrid >
                                 <ListItem className="padding_none" key={item.id}>
                                     <CardSearch className="padding_none" datos={item}></CardSearch>
                                 </ListItem>

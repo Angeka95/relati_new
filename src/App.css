@@ -331,9 +331,24 @@ h6 {
 
 .vertical_align {
   display: flex;
-  vertical-align: middle;
+  align-items: center;
+  align-content: center;
 }
 
+.position_float{ 
+
+  position: absolute;
+  z-index: 20;
+}
+
+.position_relative{
+  position: relative;
+}
+
+.display_block{
+  display: block;
+  width: 100%;
+}
 
 /*END CONTAINER*/
 
@@ -440,11 +455,12 @@ h6 {
 
 
 
-/* Color label */
+/* Label Placeholder*/
 
 
 .MuiInputLabel-root {
   color: #c4c4c4 !important;
+
 }
 
 .MuiInputLabel-root.Mui-focused {
@@ -488,7 +504,7 @@ h6 {
   justify-content: center;
   width: 100%;
   max-width: 500px;
-  min-width: 320px;
+  min-width: 280px;
 }
 
 
@@ -507,8 +523,9 @@ h6 {
 /*CARD SEARCH RESULTS */
 
 .card_container {
-  padding-top: 0px !important;
+
   width: 100% !important;
+  padding: 5px 10px 10px 10px !important;
 }
 
 
@@ -579,6 +596,13 @@ h6 {
   height: 40px;
   min-width: 60px;
   margin: 0px 10px !important;
+}
+
+.select_items_results_small {
+  width: 60px;
+  height: 40px;
+  min-width: 60px;
+  margin: 0px 10px 0px 0px !important;
 }
 
 .css-ece9u5 {
@@ -687,10 +711,49 @@ h6 {
 .card_filter_large {
   margin: 0px 3%;
   border-radius: 8px;
-  padding: 0px 1% 20px 1%;
+  padding: 16px !important;
   border-radius: 16px !important;
   border: #fff !important;
   box-shadow: 0px 8px 16px rgba(57, 129, 195, 0.2) !important;
+  background-color: #FFF;
+  vertical-align: center;
+  align-items: center;
+  align-content: center;
+  z-index: 10;
 }
 
-/*END SORTER*/
+/*END FILTER LARGE*/
+
+
+/*MAP*/
+
+.map{
+  height: 100%;
+  width: auto; 
+  min-height: 520px;
+}
+
+/*END MAP*/
+
+/*FILTER LARGE*/
+
+.button_filter_size{
+  width: 300px;
+  min-width: 300px;
+}
+
+.button_filter_position{
+  top: 100px;
+  min-width: 100%;
+}
+
+
+
+.chip_select_large {
+  margin:2px;
+}
+
+
+
+/*END FILTER LARGE*/
+
