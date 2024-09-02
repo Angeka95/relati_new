@@ -84,7 +84,8 @@ export default function FilterLarge() {
               </Button>
       
                     <div className="position_float"> 
-                    {showFilter && <Filter isFilterFloat={true} setSelectedFilters={setSelectedFilters}/>}
+                    <Filter isShowingFilter={showFilter} isFilterFloat={true} setSelectedFilters={setSelectedFilters}/>
+                    
                     </div> 
               </div> 
             </Grid>

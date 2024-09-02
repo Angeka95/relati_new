@@ -720,12 +720,13 @@ h6 {
   align-items: center;
   align-content: center;
   z-index: 10;
+ 
 }
 
 .card_filter_large_active {
   margin: 0px 3%;
   border-radius: 8px;
-  padding: 16px !important;
+  padding: 8px 16px 16px 16px !important;
   border-radius: 16px !important;
   border: #fff !important;
   box-shadow: 0px 8px 16px rgba(57, 129, 195, 0.2) !important;
@@ -735,6 +736,7 @@ h6 {
   align-items: center;
   align-content: center;
   z-index: 10;
+
 }
 
 
@@ -820,6 +822,9 @@ h6 {
   box-shadow: 0px 8px 16px rgba(57, 129, 195, 0.2) !important;
 }
 
+.card_filter_float_hidden {
+  display: none;
+}
 
 
 /*END FILTER LARGE*/
