@@ -554,10 +554,10 @@ export default function Card({ selectedFilters, isListSmall }) {
                     <WrapGrid item xs={12} sm={12} md={12} lg={12} xl={12} className="flex">
                         <Width100Grid>
                             <p>
-                                <span className="text_bolder">  </span> Resultados de
+                                
                                 <span> {startIndexPage} </span> a
                                 <span> {endIndexPage} </span> de
-                                <span className="text_bolder"> {datos.length} </span> en total
+                                <span className="text_bolder"> {datos.length} </span> decisiones
                             </p>
                         </Width100Grid>
                         <NoneGrid>
@@ -566,10 +566,7 @@ export default function Card({ selectedFilters, isListSmall }) {
 
                         <div >
                             <Width100Grid className='width_100 flex'>
-
-                                <JustMapNoneGrid>
-                                <p className="">Mostrando</p>
-                                </JustMapNoneGrid>
+                            <p className="">Resultados por página  </p>
                                 <Box sx={{ minWidth: 120 }}>
                                     <FormControl fullWidth>
                                         {/* <InputLabel id="demo-simple-select-label"></InputLabel> */}
@@ -591,7 +588,7 @@ export default function Card({ selectedFilters, isListSmall }) {
                                         </Select>
                                     </FormControl>
                                 </Box>
-                                <p className=""> resultados por página  </p>
+                                
                             </Width100Grid>
                         </div>
 
