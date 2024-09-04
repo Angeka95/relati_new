@@ -9,7 +9,7 @@ import ClearIcon from '@mui/icons-material/Clear';
 import { styled } from '@mui/material/styles';
 import Context from '../context/context';
 
-export default function Search() {
+export default function Search({isSearchAdvance}) {
 
   // Grids personalizadas
 
@@ -77,8 +77,14 @@ export default function Search() {
 
     <div >
       <Stack className="autocomplete_bar_search">
+        
         <SpaceBottom>
-          <FormControlLabel control={<Switch checked={verTodasDecisiones} onChange={handleChange} />} label="ver todas las decisiones" className="switch_search" />
+
+          {!isSearchAdvance && (
+                      <FormControlLabel control={<Switch checked={verTodasDecisiones} onChange={handleChange} />} label="ver todas las decisiones" className="switch_search" />)
+          }
+
+
           <Autocomplete className="margin_top_s autoconmplete_container"
             id="free-solo-demo"
             value={valueBar}
@@ -104,12 +110,14 @@ export default function Search() {
 
           </ShowGrid>
 
-
+          {!isSearchAdvance && (
           <NoneGrid>
             <Button className="light_white text_blue autocomplete_button_help button_terciary">?</Button>
           </NoneGrid>
+          )}
+          {!isSearchAdvance && (
           <Button className="autocomplete_button_advance primary_blue text_white button_secondary_border">Búsqueda Avanzada</Button>
-
+          )}
         </SpaceBottom>
       </Stack>
     </div>

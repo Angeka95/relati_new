@@ -1,5 +1,6 @@
 import './App.css'; 
 import ResultadosBusqueda from './sections/resultadosBusqueda';
+import BusquedaAvanzada from './sections/busquedaAvanzada';
 import Map from './sections/mapaJurisprudencial';
 import ContextProvider from './context/contextProvider';
 
@@ -9,7 +10,9 @@ function App() {
 
         <ContextProvider>
           
-          <Map></Map>
+          <BusquedaAvanzada>
+            
+          </BusquedaAvanzada>
         </ContextProvider>
         
       </div>
