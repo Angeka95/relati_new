@@ -929,6 +929,9 @@ h6 {
   box-shadow: 0px 8px 16px rgba(57, 129, 195, 0.2);
 }
 
+.width-search-advance{
+  width: 75%;
+}
 
 /*AUTOCOMPLETE BUSQUEDA AVANZADA*/
 

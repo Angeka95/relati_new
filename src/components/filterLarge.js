@@ -44,9 +44,6 @@ export default function FilterLarge() {
   return (
     <div>
       
-        <h1 className="text_center">Mapa Jurisprudencial </h1>  
-        <p className="text_center">Encuentre las decisiones de la JEP y conozca la actividad judicial en el territorio Colombiano</p>
-        
         <div className= {selectedFilters.length > 0 ?  ("margin_bottom_s padding_none card_filter_large_active ") : ("margin_bottom_s padding_none card_filter_large") } >
           
           <div className="filter_justify_between vertical_align  ">

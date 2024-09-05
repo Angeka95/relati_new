@@ -232,12 +232,12 @@ export default function BusquedaAvanzada() {
         <p className="text_diabled text_center margin_top_m">(Aún no ha agregado ningún parámetro a su búsqueda)</p>
         
         <Grid item xs={8} sm={8} md={12} lg={12} xl={12} className="wrap"> 
-            <Grid item xs={8} sm={8} md={8} lg={8} xl={8}>
+            <Grid item xs={8} sm={8} md={8} lg={8} xl={8} className="width-search-advance">
                 <SearchBar isSearchAdvance={true}> 
                 </SearchBar>
             </Grid>
             <Grid item xs={8} sm={8} md={4} lg={4} xl={4}>
-                <Filter setSelectedFilters={setSelectedFilters} ></Filter>  
+                <FilterLarge setSelectedFilters={setSelectedFilters} ></FilterLarge>  
             </Grid>
         </Grid>
         

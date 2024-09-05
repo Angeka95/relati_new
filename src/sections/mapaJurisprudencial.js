@@ -52,6 +52,9 @@ export default function Map() {
   return (
     <div> 
     <Container className="container_large">
+    <h1 className="text_center">Mapa Jurisprudencial </h1>  
+    <p className="text_center">Encuentre las decisiones de la JEP y conozca la actividad judicial en el territorio Colombiano</p>
+        
     <FilterLarge> 
         
     </FilterLarge>
