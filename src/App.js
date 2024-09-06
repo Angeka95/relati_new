@@ -10,9 +10,9 @@ function App() {
 
         <ContextProvider>
           
-          <Map>
+          <BusquedaAvanzada>
             
-          </Map>
+          </BusquedaAvanzada>
         </ContextProvider>
         
       </div>

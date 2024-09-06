@@ -7,6 +7,9 @@ import React, { useState, useEffect,useRef } from 'react';
 import { styled } from '@mui/material/styles';
 import TextField from '@mui/material/TextField';
 import SearchBar from '../components/searchBar.js';
+import ExpandLessOutlinedIcon from '@mui/icons-material/ExpandLessOutlined';
+import ExpandMoreOutlinedIcon from '@mui/icons-material/ExpandMoreOutlined';
+import FilterListIcon from '@mui/icons-material/FilterList';
 
 
 export default function BusquedaAvanzada() {
@@ -100,6 +103,13 @@ export default function BusquedaAvanzada() {
           // Filtros
 
          const [selectedFilters, setSelectedFilters] = useState([]);
+         const ButtonFilter = () => {
+        }
+        const [showFilter, setShowFilter] = useState(false);
+      
+        const handleFilter = () => {
+          setShowFilter(!showFilter);
+        };
     
   return (
     <Container>
@@ -231,14 +241,29 @@ export default function BusquedaAvanzada() {
 
         <p className="text_diabled text_center margin_top_m">(Aún no ha agregado ningún parámetro a su búsqueda)</p>
         
-        <Grid item xs={8} sm={8} md={12} lg={12} xl={12} className="wrap"> 
+        <Grid container className="wrap"> 
             <Grid item xs={8} sm={8} md={8} lg={8} xl={8} className="width-search-advance">
                 <SearchBar isSearchAdvance={true}> 
                 </SearchBar>
             </Grid>
-            <Grid item xs={8} sm={8} md={4} lg={4} xl={4}>
-                <FilterLarge setSelectedFilters={setSelectedFilters} ></FilterLarge>  
-            </Grid>
+
+                <Grid items xs={12} sm={12} md={4} lg={4} xl={4}>
+                    <div className="position_relative filter_advance"> 
+                        <Button className={showFilter ? ("button_function_noradius button_filter_size" ) : ("button_function button_filter_size" )} 
+                        endIcon ={showFilter ? <ExpandMoreOutlinedIcon /> : <ExpandLessOutlinedIcon/>}
+                        startIcon={<FilterListIcon /> } 
+                        onClick={handleFilter}>
+                            {showFilter ? ('Filtrar' ) : 'Filtrar'} 
+                        </Button>
+                
+                        <div className="position_float"> 
+                        <Filter isShowingFilter={showFilter} isFilterFloat={true} setSelectedFilters={setSelectedFilters}/>   
+                        </div> 
+
+                    </div> 
+                </Grid>
+
+           
         </Grid>
         
     </div> 

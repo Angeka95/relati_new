@@ -165,7 +165,7 @@ const datos_procedimiento = [
 
 
 
-export default function Filter({ setSelectedFilters, isFilterFloat, isShowingFilter, selectedData }) {
+export default function Filter({ setSelectedFilters, isFilterFloat, isShowingFilter, selectedData, isSearchAdvance }) {
   // Estado para controlar si el botón está habilitado o deshabilitado
   const { verTodasDecisiones, busqueda } = useContext(Context);
   const [isButtonEnabled, setIsButtonEnabled] = useState(true);
@@ -218,7 +218,7 @@ export default function Filter({ setSelectedFilters, isFilterFloat, isShowingFil
   const  JustFilterFloatNoneGrid = styled(Grid)(({ theme }) => ({
 
     [theme.breakpoints.up('xs')]: {
-        display: isFilterFloat ? 'none' : '',
+        display: isFilterFloat || isSearchAdvance ? 'none' : '',
     }
 }));
 
@@ -243,7 +243,8 @@ export default function Filter({ setSelectedFilters, isFilterFloat, isShowingFil
         <div className='justify_center'>
           {isButtonEnabled && (
             <Button className="link_primary" onClick={toggleButton}> ver más filtros
-            </Button>)}
+            </Button>)
+            }
 
           {!isButtonEnabled && (
             <div className="width_100 text_center">

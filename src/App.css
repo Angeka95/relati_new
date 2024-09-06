@@ -933,6 +933,11 @@ h6 {
   width: 75%;
 }
 
+.filter_advance{
+  margin-top: 50px;
+  max-width: 299px;
+}
+
 /*AUTOCOMPLETE BUSQUEDA AVANZADA*/
 
 
