@@ -43,11 +43,11 @@ export default function Search({isSearchAdvance}) {
 
   // valor en el buscador 
 
-  const [valueBar, setValueBar] = useState(searchOptions[0].title);
+  const [valueBar, setValueBar] = useState('');
 
     // Trae el valor de la busqueda y del switch desde el contexto 
 
-  const { verTodasDecisiones, setVerTodasDecisiones, setBusqueda } = useContext(Context);
+  const { verTodasDecisiones, setVerTodasDecisiones, setBusqueda, busquedaAvanzada } = useContext(Context);
   const updateSelectedValue = (event, value) => {
     setValueBar(value);
   };
@@ -70,13 +70,15 @@ export default function Search({isSearchAdvance}) {
     }
   };
 
+
   return (
 
 
 
 
     <div >
-      <Stack className="autocomplete_bar_search">
+      
+      <Stack className= {isSearchAdvance ?  ('autocomplete_bar_search_nomargin') : 'autocomplete_bar_search' } >
         
         <SpaceBottom>
 
@@ -91,7 +93,7 @@ export default function Search({isSearchAdvance}) {
             freeSolo
             onChange={updateSelectedValue}
             options={searchOptions.map((option) => option.title)}
-            renderInput={(params) => <TextField {...params} label="Ingrese su búsqueda" placeholder="Busque por palabra clave, número de decisión, radicado...  " inputProps={{
+            renderInput={(params) => <TextField {...params}  label= {isSearchAdvance ? "" : "Ingrese su búsqueda"} placeholder= {isSearchAdvance ? "" : "Busque por palabra clave, número de decisión, radicado...  "} inputProps={{
               ...params.inputProps,
               maxLength: 80
             }} />}

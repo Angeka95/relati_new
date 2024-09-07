@@ -165,7 +165,7 @@ const datos_procedimiento = [
 
 
 
-export default function Filter({ setSelectedFilters, isFilterFloat, isShowingFilter, selectedData, isSearchAdvance }) {
+export default function Filter({ setSelectedFilters, isFilterFloat, isShowingFilter, selectedData, isSearchAdvance}) {
   // Estado para controlar si el botón está habilitado o deshabilitado
   const { verTodasDecisiones, busqueda } = useContext(Context);
   const [isButtonEnabled, setIsButtonEnabled] = useState(true);
@@ -224,7 +224,7 @@ export default function Filter({ setSelectedFilters, isFilterFloat, isShowingFil
 
   return (
 
-    <Card className= {isFilterFloat ? (!isShowingFilter ? "card_filter_float_hidden" : "card_filter_float") : "card_filter"} >
+    <Card className= {isFilterFloat ? (!isShowingFilter ? ("card_filter_float_hidden" ) : "card_filter_float") : "card_filter"} >
       <CardContent>
         <JustFilterFloatNoneGrid> 
           <div className="vertical_align">

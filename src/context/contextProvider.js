@@ -6,6 +6,7 @@ const ContextProvider = ({ children }) => {
   // Estado que se va a compartir a través del contexto
   const [verTodasDecisiones, setVerTodasDecisiones] = useState(true);
   const [busqueda, setBusqueda] = useState();
+  const [busquedaAvanzada, setBusquedaAvanzada] = useState('');
 
   return (
     <Context.Provider value={{ verTodasDecisiones, setVerTodasDecisiones, busqueda, setBusqueda }}>
