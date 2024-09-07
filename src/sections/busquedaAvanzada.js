@@ -254,14 +254,16 @@ export default function BusquedaAvanzada() {
                         inputRef={textAreaRef}
                         ref={fraseExactaRef}
                 />
+                <div className="modal_help_container">
                 <Button className="light_white text_blue autocomplete_button_help_area button_terciary margin_left_s"
                         onClick= {toggleButtonHelp1}
                 >?</Button>
 
-                {infoFraseExacta && (<div className="position_float container_help_advance text_center info_help_position"> 
+                {infoFraseExacta && (<div className="position_float container_help_advance text_center "> 
                     <p><span className="text_bolder display_block">Frase exacta:</span>Use este campo para buscar dos o más términos consecutivos
                     <span className="display_block"> ej:  fuerza pública, falsos positivos, ejercito nacional</span> </p>
                     </div> )} 
+                </div>
 
 
 
@@ -279,16 +281,18 @@ export default function BusquedaAvanzada() {
                         inputRef={textAreaRef2}
                         ref={todasPalabrasRef}
                 />
+                <div className="modal_help_container">
                 <Button className="light_white text_blue autocomplete_button_help_area button_terciary margin_left_s"
                         onClick= {toggleButtonHelp2}
                 >? {infoTodasPalabras ? '' : ''}
 
                 </Button>
                 
-                {infoTodasPalabras && (<div className="position_float container_help_advance text_center info_help_position"> 
+                {infoTodasPalabras && (<div className="position_float container_help_advance text_center "> 
                     <p><span className="text_bolder display_block">Todas las palabras:</span>Use este campo para buscar por todos los términos aquí incluidos
                     <span className="display_block"> ej:  FARC, diputados, sometimiento</span> </p>
                     </div> )} 
+                </div>
 
 
 
@@ -306,23 +310,25 @@ export default function BusquedaAvanzada() {
                         inputRef={textAreaRef3}
                         ref={algunaPalabrasRef}
                 />
+                <div className="modal_help_container">
                 <Button className="light_white text_blue autocomplete_button_help_area button_terciary margin_left_s position_relative"
                             onClick= {toggleButtonHelp3}
                 >?  {infoAlgunaPalabra ? '' : ''}
 
                 </Button>
 
-                    {infoAlgunaPalabra && (<div className="position_float container_help_advance text_center info_help_position"> 
+                    {infoAlgunaPalabra && (<div className="position_float container_help_advance text_center "> 
                     <p><span className="text_bolder display_block">Alguna de las palabras:</span> Use este campo para buscar por alguno de los términos aquí incluidos
                     <span className="display_block"> ej: ley, norma</span> </p>
                     </div> )} 
+                    </div>
 
             </div>
 
 
 
 
-            <div className=" vertical_align  margin_s modal_help_container"> 
+            <div className=" vertical_align  margin_s "> 
                 <TextField className="textarea_size"   
                         label="Ninguna de  las palabras"
                         multiline 
@@ -334,6 +340,7 @@ export default function BusquedaAvanzada() {
                         inputRef={textAreaRef4}
                         ref={ningunaPalabraRef}
                 />
+                <div className="modal_help_container">
                 <Button className="light_white text_blue autocomplete_button_help_area button_terciary margin_left_s"
                          onClick= {toggleButtonHelp4}
                 
@@ -342,10 +349,13 @@ export default function BusquedaAvanzada() {
                     ? {infoNingunaPalabra ? '' : ''}
                     </Button>
            
-                {infoNingunaPalabra&& (<div className="position_float container_help_advance text_center info_help_position"> 
+                {infoNingunaPalabra&& (<div className="position_float container_help_advance text_center"> 
                     <p><span className="text_bolder display_block">Ninguna de las palabras:</span> Use este campo para excluir un término de su búsqueda.
                     <span className="display_block"> ej:  demanda, reclamación</span> </p>
                     </div> )} 
+
+                </div>
+
            
             </div>
 
