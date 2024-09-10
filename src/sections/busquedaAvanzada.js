@@ -153,8 +153,8 @@ export default function BusquedaAvanzada() {
       }
   
       if (values4.length > 0) {
-        if (result) result += estilosOperadores.replace('operadorLogico', 'excluyendo término');
-        result += values4.join(estilosOperadores.replace('operadorLogico', 'excluyendo término'));
+        if (result) result += estilosOperadores.replace('operadorLogico', 'excluyendo');
+        result += values4.join(estilosOperadores.replace('operadorLogico', 'excluyendo'));
       }
 
       setBusquedaAvanzada(result);
@@ -229,7 +229,7 @@ export default function BusquedaAvanzada() {
     
   return (
     <Container>
-    <div className="">
+    <div className="search_advance_size">
         <Grid item xs={8} sm={8} md={12} lg={12} xl={12}>
 
             <Grid item xs={8} sm={8} md={8} lg={8} xl={8}>
@@ -391,20 +391,24 @@ export default function BusquedaAvanzada() {
 
 
         <Grid container className="wrap"> 
+            
             <Grid item xs={12} sm={12} md={12} lg={8} xl={8} className="search-advance-width">
                 {/* <SearchBar isSearchAdvance={true}> 
                 </SearchBar> */}
+                {busquedaAvanzada.length > 0 &&(
                 <div className="input_advance">
                     <div className="flex width_100 vertical_align wrap"dangerouslySetInnerHTML={{ __html: busquedaAvanzada }}> 
                     
                     </div>
-                <Button  className=" button_primary button_search_advance" startIcon={<SearchIcon />}>
+                <Button  className=" button_primary button_search_advance " startIcon={<SearchIcon />}>
               Buscar
             </Button>
                 </div>
+                )}
             </Grid>
 
                 <Grid items xs={12} sm={12} md={12} lg={4} xl={4} className="filter_advance_position">
+                {busquedaAvanzada.length > 0 &&(
                     <div className="filter_advance"> 
                         <Button className={showFilter ? ("button_function_noradius button_filter_size" ) : ("button_function button_filter_size" )} 
                         endIcon ={showFilter ? <ExpandMoreOutlinedIcon /> : <ExpandLessOutlinedIcon/>}
@@ -419,8 +423,9 @@ export default function BusquedaAvanzada() {
                         </div> 
 
                     </div> 
+                    )}
                 </Grid>
-
+                
            
         </Grid>
         
