@@ -178,6 +178,10 @@ h6 {
   color: #111D31 !important;
 }
 
+.link_simple:hover { 
+  color: #111D31 !important;
+}
+
 .button_primary:hover {
   background-color: #fff !important;
   color: #98C438 !important;
@@ -386,6 +390,10 @@ h6 {
 
 .z-index_front{
   z-index: 10;
+}
+
+.display_flex{
+  display: flex;
 }
 
 .display_none{
@@ -1022,12 +1030,126 @@ h6 {
   text-transform: capitalize !important;
   color: #007CAE !important;
   border-radius: 12px !important;
-  padding: 15px 15px !important;
+  padding: 10px 10px !important;
   margin: 10px !important;
   font-weight: 700 !important;
   font-size: 1.0em !important;
+  min-width: 52px !important;
 }
 
+/* App.css */
+.container_list_tesauro {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px 0px;
+  border-radius: 20px;
+  max-height: 500px;
+  overflow-y: auto;
+
+
+  
+}
+
+.button_group_tesauro{
+  width:100%;
+  max-width: 1000px;
+  display: flex;
+  justify-content: center;
+}
+
+.list_container_tesauro {
+  width: 100%;
+  max-width: 1000px; 
+
+
+}
+
+.list_tesauro {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px; /* Espacio entre elementos */
+
+}
+
+.scroll-container {
+  width: 1000px; /* Ancho del contenedor */
+  height: 400px; /* Altura del contenedor */
+  overflow-y: auto; /* Scroll vertical */
+  box-shadow: 0px 8px 16px rgba(57, 129, 195, 0.2);
+  border-radius: 20px; /* Radio del borde */
+  padding: 20px; /* Espaciado interno */
+  background-color: #fff; /* Color de fondo */
+}
+
+
+/* Firefox */
+.scroll-container {
+  scrollbar-width: thin; /* Ancho de la barra de desplazamiento: auto, thin, none */
+  scrollbar-color: #98C438 transparent; /*Color del control deslizante y el fondo */
+
+
+  scroll-behavior: smooth;
+
+  scrollbar-gutter: stable both-edges;
+}
+
+
+.list_item_tesauro {
+  position: relative;
+  flex: 1 1 calc(50% - 10px); /* Ajusta el ancho de las columnas */
+  box-sizing: border-box;
+  padding: 10px;
+
+  border-radius: 4px;
+  text-align: left;
+
+  overflow: hidden; /* Oculta el texto que desborda */
+  text-overflow: ellipsis; /* Muestra elipsis cuando el texto es demasiado largo */
+  white-space: nowrap; /* Evita que el texto se rompa en varias líneas */
+}
+
+/* Tooltip */
+
+
+/* Estilos personalizados para el Tooltip de MUI */
+.MuiTooltip-tooltip {
+  background-color: #ffffff !important; /* Color de fondo del tooltip */
+  color: #282828 !important; /* Color del texto del tooltip */
+  font-size: 0.8em !important; /* Tamaño de la fuente */
+  line-height: 1.4em !important; /* Tamaño de la fuente */
+  padding: 8px 16px !important; /* Padding del tooltip */
+  border-radius: 4px !important; /* Bordes redondeados */
+  text-align: center !important; /* Alineación del texto */
+  box-shadow: rgba(57, 128, 195, 0.098) 0px 8px 24px;
+}
+
+.MuiTooltip-arrow {
+  color: #333 !important; /* Color de la flecha del tooltip */
+}
+
+
+
+.tooltip {
+  position: absolute;
+  top: 100%; /* Posiciona el tooltip arriba del item */
+  left: 50%;
+  max-width: 200px;
+  transform: translateX(-50%);
+  padding: 5px;
+  background-color: #333;
+  color: #fff;
+  border-radius: 4px;
+  white-space: nowrap; /* Mantiene el texto en una línea */
+  opacity: 0;
+  transition: opacity 0.3s;
+  pointer-events: none; /* Hace que el tooltip no interfiera con el mouse */
+  z-index: 10; /* Asegura que el tooltip esté por encima de otros elementos */
+}
+
+.list_item_tesauro:hover .tooltip {
+  opacity: 1;
+}
 
 /*END TESAURO */
 
@@ -1079,6 +1201,19 @@ h6 {
 
   .search_advance_size{
     margin: 10px 2%;
+  }
+
+
+}
+@media (max-width: 600px) {
+  .list_item_tesauro {
+    flex: 1 1 calc(100% - 10px); /* Dos columnas en pantallas pequeñas */
+  }
+}
+
+@media (max-width: 400px) {
+  .list_item_tesauro {
+    flex: 1 1 100%; /* Una columna en pantallas muy pequeñas */
   }
 }
 

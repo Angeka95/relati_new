@@ -392,7 +392,7 @@ export default function BusquedaAvanzada() {
 
         <Grid container className="wrap"> 
             
-            <Grid item xs={12} sm={12} md={12} lg={8} xl={8} className="search-advance-width">
+            <Grid item xs={12} sm={12} md={12} lg={12} xl={12} className="search-advance-width">
                 {/* <SearchBar isSearchAdvance={true}> 
                 </SearchBar> */}
                 {busquedaAvanzada.length > 0 &&(
