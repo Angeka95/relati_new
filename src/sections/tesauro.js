@@ -1,18 +1,24 @@
 import '../App.css';
-import { Container, Grid, Button, Tooltip } from '@mui/material';
+import { Container, Grid, Button, Tooltip, Autocomplete } from '@mui/material';
 import React, { useState, useEffect } from 'react';
 import SearchBarSmall from '../components/searchBarSmall.js';
-
+import TextField from '@mui/material/TextField';
+import Stack from '@mui/material/Stack';
+import SearchIcon from '@mui/icons-material/Search';
+import ListCardSearch from '../components/listCardSearchResults.js';
 
 export default function Tesauro() {
 
     const data = {
-        a: ['Abandono',
+        a: [
             'Abandono De Hijo Fruto De Acceso Carnal Violento, Abusivo, O De Inseminación Artificial O Transferencia De Óvulo Fecundado No Consentidas',
             'Abigeato',
             'Aborto',
             'Aborto Forzado En Persona Protegida',
             'Aborto Sin Consentimiento',
+            {nombreReal: 'Certificación que Acredita la condición de miembro de las FARC-EP por la oficina de alto comisionado para la paz',
+                alias: 'Acreditación como integrante de las FARC-EP por la oficina del alto comisionado para la paz'
+            },
             'Abuso De Autoridad Por Acto Arbitrario E Injusto',
             'Abuso De Autoridad Por Omisión De Denuncia',
             'Abuso De Condiciones De Inferioridad',
@@ -299,48 +305,162 @@ export default function Tesauro() {
     }
 
     const [activeLetter, setActiveLetter] = useState(null);
+    const [selectedTerm, setSelectedTerm] = useState(null);
+
+    const selectLetter = (letter) => {
+        setActiveLetter(letter);
+        setSelectedTerm ('');
+    } ;
 
     const getButtonActiveClass = (letter) => {
         return letter === activeLetter ? 'button_alphabet_active' : 'button_terciary';
     };
+    const handleTermClick = (term) => {
+        setSelectedTerm(term);
+    };
 
 
     return (
-        <Container> 
-        <Grid container spacing={2} className="justify_center">
-            <Grid item xs={12} sm={12} md={12} lg={12} xl={12} >
+        <Container>
+            <Grid container spacing={2} className="justify_center">
+                <Grid item xs={12} sm={12} md={12} lg={12} xl={12} >
 
-                <div className="margin_bottom_m wrap justify_center  button_alphabet_container">
+                    <div className="margin_bottom_m wrap justify_center  button_alphabet_container">
 
 
-                    <h1 className="width_100 text_center">Teusaro </h1>
-                    <p className="width_100 text_center">Encuentre las decisiones a través de conceptos clave </p>
-                    {Object.keys(data).map((letter) => (
+                        <h1 className="width_100 text_center">Teusaro</h1>
+                        <p className="width_100 text_center margin_bottom_m">Encuentre las decisiones a través de conceptos clave </p>
+                        {Object.keys(data).map((letter) => 
+                            (
 
-                        <Button className={`shadow button_alphabet ${getButtonActiveClass(letter)}  `} key={letter} onClick={() => setActiveLetter(letter)}>
-                            {letter.toUpperCase()}
-                        </Button>
-                    ))}
-                </div>
+                            <Button className={`shadow  button_alphabet ${getButtonActiveClass(letter)}  `} key={letter} onClick={() => selectLetter(letter)}>
+                                {letter.toUpperCase()}
+                            </Button>
+                        ))}
+                    </div>
 
-                <div className="container_list_tesauro ">
+                    <div className="container_list_tesauro ">
+                        {!activeLetter && (
+                            <p class="text_diabled">(Seleccione una letra para mostrarle términos del Tesauro)</p> 
+                        )}
 
-                    <div className="list_container_tesauro scroll-container text_center">
-                        <h2> Términos encontrados por {activeLetter ? activeLetter.toUpperCase() : ''}</h2>
-                        {activeLetter && (
-                            <div className="list_tesauro">
-                                {data[activeLetter].map((term, index) => (
-                                    <div className="list_item_tesauro text_blue link_simple" key={index} title={term}>
-                                        {term}
+                        {!selectedTerm && activeLetter && (
+                            <div className="list_container_tesauro scroll-container text_center ">
+                                <div className="wrap justify_between margin_bottom_m margin_top_s list_container_header">
+                                    <h3> Términos encontrados por {activeLetter ? activeLetter.toUpperCase() : ''}</h3>
+
+                                    <div>
+                                        <Stack className='autocomplete_bar_search_terms'>
+                                            <Autocomplete
+
+                                                id="free-solo-demo"
+                                                freeSolo
+                                                options={searchOptions.map((option) => option.title)}
+                                                renderInput={(params) => <TextField {...params} label="Buscar término" inputProps={{
+                                                    ...params.inputProps,
+                                                    maxLength: 80
+                                                }} />}
+
+                                            />
+
+
+                                            <Button className="autocomplete_button_terms button_primary"><SearchIcon /></Button>
+
+                                        </Stack>
                                     </div>
-                                ))}
+                                </div>
+                                
+
+
+                                {!selectedTerm && activeLetter &&  (
+                                    <div className="list_tesauro">
+                                        {/* {data[activeLetter].map((term, index) => (
+                                            <div className="list_item_tesauro text_blue link_simple " key={index} title={term}>
+                                                {term}
+                                                
+                                            </div>
+                                        ))} */}
+                                        {data[activeLetter].map((term, index) => 
+                                        typeof term === 'string' ? (
+                                            <div
+                                                className="list_item_tesauro text_blue link_simple"
+                                                key={index}
+                                                title={term}
+                                            >
+                                                <a className="link_nounderline text_blue"
+                                                    href="#"
+                                                    onClick={(e) => {
+                                                        e.preventDefault(); // Previene la navegación
+                                                        handleTermClick(term); // Actualiza el término seleccionado
+                                                    }}
+                                                >   <div>
+                                                    {term} 
+                                                    </div> 
+
+
+
+                                                
+                                                    
+                                                    
+                                                </a>
+                                            </div>
+                                        ) : (
+                                            <div
+                                                className="list_item_tesauro text_blue link_simple"
+                                                key={index}
+                                                title={term}
+                                            >
+                                                <a  className="link_inline link_nounderline text_blue"
+                                                    href="#"
+                                                    onClick={(e) => {
+                                                        e.preventDefault(); // Previene la navegación
+                                                        handleTermClick(term); // Actualiza el término seleccionado
+                                                    }}
+                                                >   
+                                                    <div className="text_green margin_right_s">
+                                                    {term.alias} 
+                                                    </div> 
+                                                    <div className="text_blue">Use el termino:</div>
+                                                    <div className="margin_left_s "> 
+                                                        {term.nombreReal} 
+                                                    </div> 
+
+                                                </a>
+                                            </div>
+                                        )
+                                    )}
+
+                                    </div>
+                                )}
+
+
                             </div>
+
+
+
                         )}
                     </div>
-                </div>
+                    
+                             {selectedTerm && (
+                                <div className="">
+                                    <ListCardSearch selectedTerm={selectedTerm} isLargeResult={true}/>
+                                </div>
+                            )}
 
+
+
+
+                </Grid>
             </Grid>
-        </Grid>
         </Container>
     );
 }
+
+const searchOptions = [
+    { title: 'Abandono' },
+    { title: 'Abigeato' },
+    { title: 'Aborto' },
+    { title: 'Aborto Sin Consentimiento' },
+    { title: 'Acaparamiento' },
+    { title: 'Actos De Barbarie' },
+];

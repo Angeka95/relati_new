@@ -305,7 +305,7 @@ let datos = [
 
 
 
-export default function Card({ selectedFilters, isListSmall }) {
+export default function Card({ selectedFilters, isListSmall, selectedTerm, isLargeResult }) {
     const { verTodasDecisiones, busqueda } = useContext(Context);
 
     if (!selectedFilters) {
@@ -484,8 +484,13 @@ export default function Card({ selectedFilters, isListSmall }) {
                     )}
 
 
-                    {verTodasDecisiones && (
+                    {!selectedTerm && verTodasDecisiones && (
                         <h4 >Está buscando por <span className="text_bolder">"Todas las decisiones"</span> </h4>
+                    )}
+
+                    {selectedTerm && (
+                        <h4 >Está buscando por <span className="text_bolder">{selectedTerm}</span> </h4>
+        
                     )}
 
 
@@ -537,9 +542,9 @@ export default function Card({ selectedFilters, isListSmall }) {
                                     </NoneGrid>
                                 </Grid>
 
-                                <Grid item xs={12} sm={12} md= {(isListSmall ? 12 : 6)} lg={(isListSmall ? 12 : 6)} xl={(isListSmall ? 12 : 6)}>
-
-                                    <SearchBarSmall ></SearchBarSmall>
+                                <Grid item  className="justify_end_partial" xs={12} sm={12} md= {(isListSmall ? 12 : 6)} lg={(isListSmall ? 12 : 6)} xl={(isListSmall ? 12 : 6) }>
+                                    
+                                    <SearchBarSmall> </SearchBarSmall>
 
                                 </Grid>
                             </SpaceBetweenGrid>

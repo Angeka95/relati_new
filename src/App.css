@@ -21,6 +21,13 @@ h6 {
   font-family: 'Open Sans', Arial, sans-serif;
 }
 
+h1 {
+  font-weight: 700;
+  font-size: 2.4em;
+  line-height: 1.2em;
+}
+
+
 h4 {
   font-weight: 400;
   font-size: 1.1em;
@@ -54,7 +61,7 @@ h6 {
 
 .text_diabled {
   font-weight: 400;
-  color: #B6B6B6;
+  color: #cbcbcb;
 }
 
 .text_uppercase {
@@ -319,6 +326,11 @@ h6 {
   display: flex;
   justify-content: end;
   width: 100%;
+}
+
+.justify_end_partial {
+  display: flex;
+  justify-content: end;
 }
 
 .justify_center {
@@ -1081,7 +1093,7 @@ h6 {
 
 .scroll-container {
   width: 1000px; /* Ancho del contenedor */
-  height: 400px; /* Altura del contenedor */
+  height: 350px; /* Altura del contenedor */
   overflow-y: auto; /* Scroll vertical */
   box-shadow: 0px 8px 16px rgba(57, 129, 195, 0.2);
   border-radius: 20px; /* Radio del borde */
@@ -1165,16 +1177,53 @@ h6 {
   color: #ffffff !important;
 }
 
-.button_alphabet_container{
 
 
+
+
+.autocomplete_button_terms {
+  position: absolute !important;
+  top: 8px;
+  padding: 0px !important;
+  width: 40px;
+  height: 40px;
+  right: 10px;
+  text-transform: initial !important;
 }
+
+.autocomplete_bar_search_terms {
+  margin: 0px 0% 20px 0%;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  max-width: 300px;
+  min-width: 280px;
+}
+
+.autocomplete_bar_search_terms  .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline {
+  border-color: #fff;
+  border-radius: 40px;
+  box-shadow: 0px 8px 16px rgba(57, 129, 195, 0.2);
+}
+
+.list_container_header{
+  width: 98%;
+  margin: 0% 1%;
+}
+
+.link_inline{
+  display: flex;
+
+  align-items: flex-start;
+}
+
+.link_nounderline{
+  text-decoration: none;
+}
+
+
 /*END TESAURO */
-
-
-
-
-
 
 
 
@@ -1225,9 +1274,15 @@ h6 {
 
 
 }
-@media (max-width: 600px) {
+@media (max-width: 1000px) {
   .list_item_tesauro {
     flex: 1 1 calc(100% - 10px); /* Dos columnas en pantallas pequeñas */
+  }
+
+  .scroll-container {
+    max-width: 90%;
+    margin: 0% 5% 0% 5%;
+    
   }
 }
 
