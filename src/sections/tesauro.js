@@ -1,6 +1,7 @@
 import '../App.css';
 import { Container, Grid, Button, Tooltip } from '@mui/material';
 import React, { useState, useEffect } from 'react';
+import SearchBarSmall from '../components/searchBarSmall.js';
 
 
 export default function Tesauro() {
@@ -190,8 +191,8 @@ export default function Tesauro() {
             'Autorizar La Salida Del País De Las Personas Que Se Acojan A La Jurisdicción Especial Para La Paz Use_termino Autorización De Salida Del País',
             'Avocamiento De La Supervisión Y Revisión De Beneficios',
             'Ayuda E Inducción Al Empleo, Producción Y Transferencia De Minas Antipersonal'
-            
-        ], 
+
+        ],
         b: ['Batallon',
             'Bacrim',
             'Beneficios definitivos'
@@ -298,39 +299,48 @@ export default function Tesauro() {
     }
 
     const [activeLetter, setActiveLetter] = useState(null);
-    
-  
-    return (  
+
+    const getButtonActiveClass = (letter) => {
+        return letter === activeLetter ? 'button_alphabet_active' : 'button_terciary';
+    };
+
+
+    return (
+        <Container> 
         <Grid container spacing={2} className="justify_center">
-        <Grid item xs={12} sm={12} md={10} lg={10} xl={10} >
-    
-      <div className="margin_bottom_m wrap justify_center">
-      <h1 className="width_100 text_center">Teusaro </h1> 
-      <p className="width_100 text_center">Encuentre las decisiones a través de conceptos clave </p>
-        {Object.keys(data).map((letter) => (
-          <Button className="button_terciary shadow button_alphabet " key={letter} onClick={() => setActiveLetter(letter)}>
-            {letter.toUpperCase()}
-          </Button>
-        ))}
-      </div>
-      <div className="container_list_tesauro ">
-       
-      <div className="list_container_tesauro scroll-container text_center">
-      <h2> Términos encontrados por A</h2>
-      {activeLetter && (
-          <div className="list_tesauro">
-            {data[activeLetter].map((term, index) => (
-              <div className="list_item_tesauro text_blue link_simple" key={index} title={term}>
-                {term}
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
-    </div>  
+            <Grid item xs={12} sm={12} md={12} lg={12} xl={12} >
 
+                <div className="margin_bottom_m wrap justify_center  button_alphabet_container">
+
+
+                    <h1 className="width_100 text_center">Teusaro </h1>
+                    <p className="width_100 text_center">Encuentre las decisiones a través de conceptos clave </p>
+                    {Object.keys(data).map((letter) => (
+
+                        <Button className={`shadow button_alphabet ${getButtonActiveClass(letter)}  `} key={letter} onClick={() => setActiveLetter(letter)}>
+                            {letter.toUpperCase()}
+                        </Button>
+                    ))}
+                </div>
+
+                <div className="container_list_tesauro ">
+
+                    <div className="list_container_tesauro scroll-container text_center">
+                        <h2> Términos encontrados por {activeLetter ? activeLetter.toUpperCase() : ''}</h2>
+                        {activeLetter && (
+                            <div className="list_tesauro">
+                                {data[activeLetter].map((term, index) => (
+                                    <div className="list_item_tesauro text_blue link_simple" key={index} title={term}>
+                                        {term}
+                                    </div>
+                                ))}
+                            </div>
+                        )}
+                    </div>
+                </div>
+
+            </Grid>
         </Grid>
-        </Grid> 
-
+        </Container>
     );
 }

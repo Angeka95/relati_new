@@ -5,6 +5,8 @@
 
 body {
   font-family: 'Open Sans', Arial, sans-serif;
+
+
 }
 
 h1,
@@ -151,6 +153,8 @@ h6 {
   padding: 10px 30px !important;
   font-weight: 600 !important;
 }
+
+
 
 .link_primary {
   background-color: none !important;
@@ -1037,7 +1041,8 @@ h6 {
   min-width: 52px !important;
 }
 
-/* App.css */
+
+
 .container_list_tesauro {
   display: flex;
   flex-direction: column;
@@ -1045,7 +1050,9 @@ h6 {
   padding: 20px 0px;
   border-radius: 20px;
   max-height: 500px;
+
   overflow-y: auto;
+
 
 
   
@@ -1060,7 +1067,7 @@ h6 {
 
 .list_container_tesauro {
   width: 100%;
-  max-width: 1000px; 
+  max-width: 850px; 
 
 
 }
@@ -1078,15 +1085,15 @@ h6 {
   overflow-y: auto; /* Scroll vertical */
   box-shadow: 0px 8px 16px rgba(57, 129, 195, 0.2);
   border-radius: 20px; /* Radio del borde */
-  padding: 20px; /* Espaciado interno */
-  background-color: #fff; /* Color de fondo */
+  padding: 10px; /* Espaciado interno */
+  background-color: #fff; 
 }
 
 
 /* Firefox */
 .scroll-container {
   scrollbar-width: thin; /* Ancho de la barra de desplazamiento: auto, thin, none */
-  scrollbar-color: #98C438 transparent; /*Color del control deslizante y el fondo */
+  scrollbar-color: #98C438 transparent; /*Color del control deslizante del scroll y el fondo */
 
 
   scroll-behavior: smooth;
@@ -1100,13 +1107,15 @@ h6 {
   flex: 1 1 calc(50% - 10px); /* Ajusta el ancho de las columnas */
   box-sizing: border-box;
   padding: 10px;
+  line-height: 1.2rem;
 
   border-radius: 4px;
   text-align: left;
+  cursor: pointer;
 
   overflow: hidden; /* Oculta el texto que desborda */
-  text-overflow: ellipsis; /* Muestra elipsis cuando el texto es demasiado largo */
-  white-space: nowrap; /* Evita que el texto se rompa en varias líneas */
+  text-overflow: ellipsis; 
+  white-space: nowrap;
 }
 
 /* Tooltip */
@@ -1151,6 +1160,15 @@ h6 {
   opacity: 1;
 }
 
+.button_alphabet_active {
+  background-color: #111D31 !important;
+  color: #ffffff !important;
+}
+
+.button_alphabet_container{
+
+
+}
 /*END TESAURO */
 
 
@@ -1174,6 +1192,8 @@ h6 {
 /*--------------------------------------------------------------------*/
 
 /*QUERIES*/
+
+
 
 @media (max-width: 1130px) {
   .filter_justify_between {
