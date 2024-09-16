@@ -125,6 +125,10 @@ h6 {
 .text_white {
   color: #fff !important;
 }
+.text_italic {
+  font-style: italic;
+}
+
 
 /*END COLOR PALETTE */
 
@@ -189,7 +193,7 @@ h6 {
   color: #111D31 !important;
 }
 
-.link_simple:hover { 
+.link_simple:hover {
   color: #111D31 !important;
 }
 
@@ -381,7 +385,7 @@ h6 {
   align-content: center;
 }
 
-.position_float{ 
+.position_float{
 
   position: absolute;
   z-index: 20;
@@ -398,7 +402,7 @@ h6 {
 
 .container_main{
   background-color: #FFF;
-  width: 80%; 
+  width: 80%;
   min-width: 400px;
   box-shadow: rgba(57, 129, 195, 0.2) 0px 8px 24px;
 
@@ -667,7 +671,7 @@ h6 {
   min-width: 60px;
   margin: 0px 10px !important;
 }
- 
+
 .select_items_results_small {
   width: 60px;
   height: 40px;
@@ -790,7 +794,7 @@ h6 {
   align-items: center;
   align-content: center;
   z-index: 10;
- 
+
 }
 
 .card_filter_large_active {
@@ -818,12 +822,12 @@ h6 {
 
 .button_function .MuiButton-endIcon {
   margin-left: 70% !important;
-  color: #98C438; 
+  color: #98C438;
 }
 
 .button_function_noradius .MuiButton-endIcon {
   margin-left: 70% !important;
-  color: #98C438; 
+  color: #98C438;
 }
 
 .button_function_noradius .MuiButton-startIcon {
@@ -857,7 +861,7 @@ h6 {
 
 .map{
   height: 100%;
-  width: auto; 
+  width: auto;
   min-height: 520px;
 }
 
@@ -909,7 +913,7 @@ h6 {
 
 /*TEXTAREA BUSQUEDA AVANZADA*/
 
-.textarea_size{ 
+.textarea_size{
   width: 100%;
 }
 
@@ -931,19 +935,19 @@ h6 {
 .container_help_advance{
   left:-280px;
   background-color: #FFF;
-  width: 300px; 
+  width: 300px;
   max-width: 300px;
   height: auto;
   box-shadow: rgba(57, 129, 195, 0.2) 0px 8px 24px;
   z-index: 100;
   border-radius: 16px;
   padding: 16px;
-  
+
 }
 
 .info_help_position{
   margin-top: 200px;
- 
+
 }
 
 .modal_help_container{
@@ -963,7 +967,7 @@ h6 {
   justify-content: center;
   width: auto;
   max-width: none;
-  
+
 }
 
 .autocomplete_bar_search_advance .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline {
@@ -1067,7 +1071,7 @@ h6 {
 
 
 
-  
+
 }
 
 .button_group_tesauro{
@@ -1079,7 +1083,7 @@ h6 {
 
 .list_container_tesauro {
   width: 100%;
-  max-width: 850px; 
+  max-width: 850px;
 
 
 }
@@ -1098,7 +1102,7 @@ h6 {
   box-shadow: 0px 8px 16px rgba(57, 129, 195, 0.2);
   border-radius: 20px; /* Radio del borde */
   padding: 10px; /* Espaciado interno */
-  background-color: #fff; 
+  background-color: #fff;
 }
 
 
@@ -1118,19 +1122,23 @@ h6 {
   position: relative;
   flex: 1 1 calc(50% - 10px); /* Ajusta el ancho de las columnas */
   box-sizing: border-box;
-  padding: 10px;
+  padding: 6px 0px;
   line-height: 1.2rem;
 
   border-radius: 4px;
   text-align: left;
   cursor: pointer;
-
-  overflow: hidden; /* Oculta el texto que desborda */
-  text-overflow: ellipsis; 
+  overflow: hidden; 
+  text-overflow: ellipsis;
   white-space: nowrap;
+
 }
 
-/* Tooltip */
+.text_ellipsis{
+  overflow: hidden; 
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 
 
 /* Estilos personalizados para el Tooltip de MUI */
@@ -1216,6 +1224,8 @@ h6 {
   display: flex;
 
   align-items: flex-start;
+  
+
 }
 
 .link_nounderline{
@@ -1282,7 +1292,7 @@ h6 {
   .scroll-container {
     max-width: 90%;
     margin: 0% 5% 0% 5%;
-    
+
   }
 }
 

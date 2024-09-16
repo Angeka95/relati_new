@@ -36,7 +36,9 @@ export default function Tesauro() {
             'Acceso Carnal Violento En Persona Protegida',
             'Acción De Tutela',
             'Acción De Tutela Contra Providencia Judicial',
-            'Actuación Temeraria Use_termino Temeridad En La Acción De Tutela',
+            {nombreReal: 'Temeridad En La Acción De Tutela',
+                alias: 'Actuación Temeraria'
+            },
             'Acciones Afirmativas',
             'Aceptación Indebida De Honores',
             'Aclaración De Providencia',
@@ -46,7 +48,10 @@ export default function Tesauro() {
             'Ámbito De Competencia Material En La Libertad Condicionada Use_termino Ámbito De Aplicación Material Para La Libertad Condicionada',
             'Ámbito De Competencia Personal En La Amnistía Use_termino Ámbito De Aplicación Personal Para La Amnistía',
             'Ámbito De Competencia Personal En La Libertad Condicionada Use_termino Ámbito De Aplicación Personal Para La Libertad Condicionada',
-            'Ámbito De Competencia Personal En La Renuncia A La Persecución Penal Use_termino Ámbito De Aplicación Personal Para La Renuncia A La Persecución Penal',
+            {nombreReal: 'Ámbito De Aplicación Personal Para La Renuncia A La Persecución Penal',
+                alias: 'Ámbito De Competencia Personal En La Renuncia A La Persecución Penal'
+            },
+         
             'Ámbito De Competencia Temporal En La Amnistía Use_termino Ámbito De Aplicación Temporal Para La Amnistía',
             'Ámbito De Competencia Temporal En La Libertad Condicionada Use_termino Ámbito De Aplicación Temporal Para La Libertad Condicionada',
             'Acreditación De Condición De Víctima Use_termino Acreditación De Calidad De Víctima',
@@ -393,14 +398,10 @@ export default function Tesauro() {
                                                         e.preventDefault(); // Previene la navegación
                                                         handleTermClick(term); // Actualiza el término seleccionado
                                                     }}
-                                                >   <div>
+                                                >   <div className="text_ellipsis">
                                                     {term} 
                                                     </div> 
-
-
-
-                                                
-                                                    
+  
                                                     
                                                 </a>
                                             </div>
@@ -408,20 +409,20 @@ export default function Tesauro() {
                                             <div
                                                 className="list_item_tesauro text_blue link_simple"
                                                 key={index}
-                                                title={term}
+                                                
                                             >
-                                                <a  className="link_inline link_nounderline text_blue"
+                                                <a  className="link_inline link_nounderline text_blue "
                                                     href="#"
                                                     onClick={(e) => {
                                                         e.preventDefault(); // Previene la navegación
-                                                        handleTermClick(term); // Actualiza el término seleccionado
+                                                        handleTermClick(term.nombreReal); // Actualiza el término seleccionado
                                                     }}
                                                 >   
-                                                    <div className="text_green margin_right_s">
+                                                    <div title={term.alias} className="text_green margin_right_s text_ellipsis" >
                                                     {term.alias} 
                                                     </div> 
-                                                    <div className="text_blue">Use el termino:</div>
-                                                    <div className="margin_left_s "> 
+                                                    <div className="text_black text_italic text_bolder">Use término</div>
+                                                    <div title={term.nombreReal} className="margin_left_s text_ellipsis"> 
                                                         {term.nombreReal} 
                                                     </div> 
 
