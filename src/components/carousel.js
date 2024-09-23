@@ -15,33 +15,18 @@ return (
       className="double-carousel"
     >
       <Carousel.Item>
-        <div className="carousel-inner-wrapper">
-          <div className="carousel-item-wrapper">
+        <div className="carousel_inner_wrapper">
+          <div className="carousel_item_wrapper">
             <img
               className="d-block w-100"
-              src="https://via.placeholder.com/800x400?text=Slide+1"
+              src="https://relatoria.jep.gov.co/img/boletines/2024/boletin_01_enero_2024.png?ver=2.8"
               alt="Slide 1"
+              
             />
+            
             <img
               className="d-block w-100"
-              src="https://via.placeholder.com/800x400?text=Slide+2"
-              alt="Slide 2"
-            />
-          </div>
-        </div>
-      </Carousel.Item>
-
-      <Carousel.Item>
-        <div className="carousel-inner-wrapper">
-          <div className="carousel-item-wrapper">
-            <img
-              className="d-block w-100"
-              src="https://via.placeholder.com/800x400?text=Slide+3"
-              alt="Slide 3"
-            />
-            <img
-              className="d-block w-100"
-              src="https://via.placeholder.com/800x400?text=Slide+4"
+              src="https://relatoria.jep.gov.co/img/boletines/2024/boletin_02_febrero_2024.png?ver=2.8"
               alt="Slide 4"
             />
           </div>
@@ -49,16 +34,33 @@ return (
       </Carousel.Item>
 
       <Carousel.Item>
-        <div className="carousel-inner-wrapper">
-          <div className="carousel-item-wrapper">
+        <div className="carousel_inner_wrapper">
+          <div className="carousel_item_wrapper">
             <img
               className="d-block w-100"
-              src="https://via.placeholder.com/800x400?text=Slide+5"
+              src="https://relatoria.jep.gov.co/img/boletines/2024/boletin_03_marzo_2024.png?ver=2.8"
+              alt="Slide 3"
+            />
+            <img
+              className="d-block w-100"
+              src="https://relatoria.jep.gov.co/img/boletines/2024/boletin_02_febrero_2024.png?ver=2.8"
+              alt="Slide 4"
+            />
+          </div>
+        </div>
+      </Carousel.Item>
+
+      <Carousel.Item>
+        <div className="carousel_inner_wrapper">
+          <div className="carousel_item_wrapper">
+            <img
+              className="d-block w-100"
+              src="https://relatoria.jep.gov.co/img/boletines/2024/boletin_02_febrero_2024.png?ver=2.8"
               alt="Slide 5"
             />
             <img
               className="d-block w-100"
-              src="https://via.placeholder.com/800x400?text=Slide+6"
+              src="https://relatoria.jep.gov.co/img/boletines/2024/boletin_02_febrero_2024.png?ver=2.8"
               alt="Slide 6"
             />
           </div>

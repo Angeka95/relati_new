@@ -6,7 +6,7 @@ import { Container, Grid, Box, Button } from '@mui/material';
 
 import React, { useState, useEffect } from 'react';
 import Carousel from '../components/carousel.js';
-
+import TabCustom from '../components/tab.js';
 
 
 
@@ -17,8 +17,8 @@ export default function SearchResults() {
   return (
     <div>
     <Container maxWidth="lg" disableGutters>
-          <h1 className="width_100 text_center">Boletines Jurisprudenciales</h1>
-          <p className="width_100 text_center margin_bottom_m">Destacamos aquí las decisiones judiciales más importantes de las Salas y Secciones de la JEP. Este producto editorial plasma la síntesis de los casos, las reglas y argumentos de derecho, así como el sentido de la decisión</p>
+          <h1 className="width_100 text_center margin_top_m">Boletines Jurisprudenciales</h1>
+          <p className="text_center margin_bottom_m title_description ">Destacamos aquí las decisiones judiciales más importantes de las Salas y Secciones de la JEP. Este producto editorial plasma la síntesis de los casos, las reglas y argumentos de derecho, así como el sentido de la decisión</p>
           <div className="nowrap align_center carousel_main_container"> 
             <p className="margin_bottom_m align_center text_carousel_container">Consulte las decisiones más relevantes de la JEP, analizadas mes a mes</p>
             <div className="carousel_container">
@@ -30,7 +30,7 @@ export default function SearchResults() {
           
 
     </Container>
-    <Box className= "cta_boletines_container"> 
+    <Box className= "cta_boletines_container "> 
         <div className="cta">
             <Container > 
                 <div className="cta_container"> 
@@ -40,19 +40,10 @@ export default function SearchResults() {
             </Container>
         </div>
     </Box>
-    <Box > 
-        <div className="list_boletines">
-            <Container className='nowrap width_100'> 
-                <div className="item_boletin"> 
-                </div> 
-                <div className="item_boletin"> 
-                </div> 
-                <div className="item_boletin"> 
-                </div> 
-                <div className="item_boletin"> 
-                </div> 
-            </Container>
-        </div>
+    <Box> 
+        <div className="margin_bottom_xl"> </div> 
+
+            <TabCustom />
     </Box>
     </div>
   );

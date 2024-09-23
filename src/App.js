@@ -6,6 +6,7 @@ import Map from './sections/mapaJurisprudencial';
 import ContextProvider from './context/contextProvider';
 import Tesauro from './sections/tesauro'
 import Boletines from './sections/boletines'
+import Suscripcion from './sections/suscripcion'
 
 function App() {
   return (

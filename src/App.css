@@ -129,6 +129,12 @@ h6 {
   font-style: italic;
 }
 
+.title_description{
+  width: 70%;
+  margin-left: 15%;
+  margin-right: 15%;
+}
+
 
 /*END COLOR PALETTE */
 
@@ -186,6 +192,7 @@ h6 {
   color: #007CAE !important;
   font-weight: 700 !important;
   padding: 0px !important;
+  text-decoration: none !important;
 }
 
 .link_secondary:hover {
@@ -274,6 +281,15 @@ h6 {
   margin-top: 10px !important;
 }
 
+.margin_bottom_xl {
+  margin-bottom: 120px !important;
+}
+
+.margin_bottom_l {
+  margin-bottom: 60px !important;
+}
+
+
 .margin_bottom_m {
   margin-bottom: 30px !important;
 }
@@ -284,6 +300,10 @@ h6 {
 
 .margin_left_s{
   margin-left: 10px !important;
+}
+
+.margin_right_m{
+  margin-right: 30px !important;
 }
 
 .margin_right_s{
@@ -311,7 +331,9 @@ h6 {
   margin: 20px !important;
 }
 
-
+.margin_none{
+  margin: none !important
+}
 
 .padding_none {
   padding: 0px !important;
@@ -372,7 +394,11 @@ h6 {
 }
 
 .shadow {
-  box-shadow: rgba(57, 129, 195, 0.2) 0px 8px 24px;
+  box-shadow: rgba(57, 129, 195, 0.2) 0px 8px 24px !important;
+}
+
+.noshadow {
+  box-shadow: none !important;
 }
 
 .text_center {
@@ -1244,28 +1270,35 @@ h6 {
   flex-direction: row;
 }
 
-.carousel-inner-wrapper {
+.carousel_inner_wrapper {
   display: flex;
   flex-direction: row;
   overflow: hidden;
   width: 100%;
-  height: 360px;
+  height: auto;
  
 }
 
 
-.carousel-item-wrapper {
+.carousel_item_wrapper {
   display: flex;
   flex-direction: row;
   width: calc(100% * 2) !important; /* ancho para que el carrusel pueda desplazarse de dos en dos */
+  
+ 
 }
 
-.carousel-item-wrapper img {
-  width: calc(50% - 0px) !important; /* margen  entre las imágenes */
-  margin-right: 10px;
+.carousel_item_wrapper img {
+  width: calc(46% - 0px) !important; /* margen  entre las imágenes */
+  margin-right: 4%;
+  box-shadow: 0 4px 15px rgba(177, 177, 177, 0.5);
+  z-index: 20;
+  overflow: visible !important;
+  max-width: 100% !important;
+  max-height: 100% !important;
 }
 
-.carousel-item-wrapper img:last-child {
+.carousel_item_wrapper img:last-child {
   margin-right: 0; 
 }
 
@@ -1279,17 +1312,20 @@ h6 {
   height: 55px;
   background-color: #98C438 !important; 
   border-radius: 50%;
-  top: 390px !important;
+  top: 480px !important;
   box-shadow: rgba(142, 195, 57, 0.2) 0px 8px 24px;
   opacity: 1 !important;
 
 }
+/* 
+controlodares carrusel  */
+
 .carousel-control-prev{
   left: 35% !important;
 }
 
 .carousel-control-next{
-  right: 35% !important;
+  right: 38% !important;
 }
 
 .carousel-control-next-icon, .carousel-control-prev-icon {
@@ -1319,7 +1355,7 @@ h6 {
 }
 
 .carousel_container{
-  width: 50%;
+  width: 70%;
 }
 
 .carousel_main_container{
@@ -1359,7 +1395,7 @@ h6 {
 
 
 .cta_boletines_container{
-  margin-top: 160px;
+  margin-top: 240px;
 
 }
 
@@ -1374,24 +1410,179 @@ h6 {
 
 
 .list_boletines {
-  background-color: #E4E4E4; 
+  background-color: #ffffff; 
   width: 100%; 
   height: auto; 
   margin: 0px !important; 
-  padding: 0% 10% !important;
+  padding: 0% 0% !important;
   box-sizing: border-box; 
   align-content: center;
 }
 
 .item_boletin{
-  width: 22%;
-  margin: 60px 1%;
+  min-width:230px;
+  max-width: 231px;
   height: 360px;
   background-color: #272727; 
+  color: white;
+  flex: 1 1 calc(25% - 10px); 
+  margin: 5px; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  box-sizing: border-box;
+  transition: transform 0.3s ease;
+}
+
+.item_boletin:hover{
+  transform: scale(1.1);
+  border: 2px solid #fff;
+}
+
+.item_boletin_container{ 
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  width: 100%;
+
 }
 
 
+
+
 /*END LIST BOLETINES*/
+
+/*TABS BOLETINES*/
+
+.tab:hover {
+  color: #98C438 !important; 
+}
+
+.tab {
+  font-size: 1em !important;
+  letter-spacing: 2px !important;
+  font-weight: 600 !important;
+}
+
+.custom_indicator {
+  background-color: #98C438 !important; 
+  color: #98C438 !important;
+ 
+}
+
+.tab_active {
+  color: #98C438 !important; 
+}
+
+.separator_tab{
+  border: 1px solid rgb(237, 237, 237);
+  margin-top: -2px;
+}
+
+
+/*END TABS BOLETINES*/
+
+
+/*SHARE OPTIONS*/
+
+
+.share_options_container{
+  height: 70px; 
+  width: 100%;
+  background-color: #111D31;
+  border-radius:8px;
+  padding: 5px 0px;
+  font-size: 0.7em;
+}
+
+.icon_share{
+  width: 40px;
+}
+.icon_share:hover{
+  transform: scale(1.2); 
+
+}
+
+.icons_group1{ 
+  width:67%;
+
+}
+
+.icons_group_position{
+  display: flex; 
+  justify-content: space-around;
+  align-content: center;
+  align-items: center;
+  padding: 0px 10px;
+  
+}
+
+.icons_group2{ 
+  width:30%;
+}
+
+.icon_round{
+  border-radius: 50%;
+  background-color: #fff;
+  width:23px;
+  height:23px;
+  transition: transform 0.3s ease;
+}
+
+.icon_round:hover{
+  transform: scale(1.5); 
+  border: 2px solid #fff;
+}
+
+.icon_space{
+  margin-top:4px;
+}
+
+.icon_space2{
+  margin-top:4px;
+}
+
+.icon_border{ 
+  margin-top: 6px;
+  border: 1px solid #98C438;
+  height: 25px;
+}
+
+.icon_bigger{ 
+  width:25px; 
+  height:25px;
+}
+
+/*END SHARE OPTIONS*/
+
+
+/*\ SUBSCRIPTION*/
+
+.form_container{
+  width: 500px;
+  height: auto;
+  margin: 0px 0px 60px 0px;
+  padding: 30px 0px;
+  background-color: #Fff;
+  box-shadow: 0px 8px 16px rgba(57, 129, 195, 0.2);
+}
+.form_item{
+  width: 88%; 
+  padding: 0% 6%; 
+  margin: 12px 0px !important;
+
+}
+
+.text_legal{
+  padding: 20px 40px;
+}
+
+.text_right {
+  text-align: right;
+}
+
+/*\ END SUBSCRIPTION*/
 
 /*--------------------------------------------------------------------*/
 /*--------------------------------------------------------------------*/
@@ -1427,12 +1618,20 @@ h6 {
   .search_advance_size{
     margin: 10px 2%;
   }
+  .title_description{
+    width: 100%;
+    margin-left: 0%;
+    margin-right: 0%;
+  }
 
 
 }
 @media (max-width: 1000px) {
   .list_item_tesauro {
     flex: 1 1 calc(100% - 10px); /* Dos columnas en pantallas pequeñas */
+  }
+  .item_boletin {
+    flex: 1 1 calc(50% - 10px); 
   }
 
   .scroll-container {
@@ -1442,9 +1641,15 @@ h6 {
   }
 }
 
-@media (max-width: 400px) {
+
+
+@media (max-width: 480px) {
   .list_item_tesauro {
-    flex: 1 1 100%; /* Una columna en pantallas muy pequeñas */
+    flex: 1 1 100%; 
+  }
+
+  .item_boletin {
+    flex: 1 1 calc(100% - 10px); 
   }
 }
 
