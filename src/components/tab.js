@@ -10,12 +10,26 @@ import ShareOptions from '../components/shareOptions.js';
 
 
 
-export default function CustomTab() {
+export default function CustomTab({ boletines }) {
     const [value, setValue] = React.useState(0);
 
     const handleChangeTab = (event, newValue) => {
         setValue(newValue);
     };
+
+    // Años del boletin
+
+    const añoBoletin = [...new Set(boletines.map(boletin => new Date(boletin.fecha).getUTCFullYear()))];
+
+    // Estado para el tab activo
+
+    const handleChangeAño = (event, newValue) => {
+        setValue(newValue);
+    };
+
+    // if (!Array.isArray(boletines)) {
+    //     return <p className="justify_center text_bolder">No hay boletines disponibles.</p>;
+    //   }
 
 
     return (
@@ -26,89 +40,37 @@ export default function CustomTab() {
 
                     <AppBar position="static" className="noshadow ">
                         <Tabs value={value} onChange={handleChangeTab} className='light_white ' classes={{ indicator: 'custom_indicator' }}>
-                            <Tab label="2024" className={`tab ${value === 0 ? 'tab_active' : ''}`} />
-                            <Tab label="2023" className={`tab ${value === 1 ? 'tab_active' : ''}`} />
-                            <Tab label="2022" className={`tab ${value === 2 ? 'tab_active' : ''}`} />
+                            {añoBoletin.map((año, index) => (
+                                <Tab key={año} label={año} className={`tab ${value === año ? 'tab_active' : ''}`} />
+
+                            ))}
                         </Tabs>
                         <div className="separator_tab"> </div>
                     </AppBar>
                     <Box p={3}>
-                        {/* Tab 1  */}
-                        {value === 0 &&
+                        <div >
+                            <Container className='width_100 margin_bottom_l'>
+                                <div className="wrap justify_center item_boletin_container">
+                                    <h2 className="width_100 text_center margin_m text_bolder">Boletines {añoBoletin[value]}</h2>
+                                    {boletines
+                                        .filter(boletin => new Date(boletin.fecha).getUTCFullYear() === añoBoletin[value]) // Filtrar por año del tab activo
+                                        .map(boletin => (
 
-                                <div >
-                                    <Container className='width_100'>
-                                        <div className="wrap justify_center item_boletin_container">
-                                            <h2 className="width_100 text_center margin_m text_bolder">Boletines 2024</h2>
-                                            <div className=""> 
-                                                <img className=" item_boletin" src="https://relatoria.jep.gov.co/img/boletines/2024/boletin_01_enero_2024.png?ver=2.8">
-                                                </img>
-                                                <ShareOptions> </ShareOptions>
-                                            </div> 
+                                            <div key={boletin.id}>
+                                               
 
-                                            <div className="">
-                                                <img className="item_boletin" src="https://relatoria.jep.gov.co/img/boletines/2024/boletin_01_enero_2024.png?ver=2.8">
-                                                </img>
-                                                <ShareOptions> </ShareOptions>
+                                                <div>
+                                                    <a href={boletin.pdf} target='_blank' >
+                                                        <img className="item_boletin" src={boletin.imagenPortada}>
+                                                        </img>
+                                                    </a>
+                                                    <ShareOptions boletines={boletines} currentBoletinId={boletin.id} > </ShareOptions>
+                                                </div>
                                             </div>
-
-
-                                            <div className="">
-                                                <img className="item_boletin" src="https://relatoria.jep.gov.co/img/boletines/2024/boletin_01_enero_2024.png?ver=2.8">
-                                                </img>
-                                                <ShareOptions> </ShareOptions>
-                                            </div>
-                                            <div className="">
-                                                <img className="item_boletin" src="https://relatoria.jep.gov.co/img/boletines/2024/boletin_01_enero_2024.png?ver=2.8">
-                                                </img>
-                                                <ShareOptions> </ShareOptions>
-                                            </div>
-                                            
-
-                                        </div>
-                                    </Container>
+                                        ))}
                                 </div>
-                           
-                        }
-
-
-                        {/* Tab 2  */}
-                        {value === 1 && 
-                                <div >
-                                <Container className='width_100'>
-                                    <div className="wrap justify_center item_boletin_container">
-                                    <h2 className="width_100 text_center margin_m text_bolder">Boletines 2023</h2>
-                                        <img className="item_boletin" src="https://relatoria.jep.gov.co/img/boletines/2024/boletin_01_enero_2024.png?ver=2.8">
-                                        </img>
-                                        
-                                        <img className="item_boletin" src="https://relatoria.jep.gov.co/img/boletines/2024/boletin_01_enero_2024.png?ver=2.8">
-                                        </img>
-                                        <img className="item_boletin" src="https://relatoria.jep.gov.co/img/boletines/2024/boletin_01_enero_2024.png?ver=2.8">
-                                        </img>
-                                        <img className="item_boletin" src="https://relatoria.jep.gov.co/img/boletines/2024/boletin_01_enero_2024.png?ver=2.8">
-                                        </img>
-                                    </div>
-                                </Container>
-                            </div>
-                            }
-                         {/* Tab 3  */}
-                        {value === 2 && 
-                                <div >
-                                <Container className='width_100'>
-                                    <div className="wrap justify_center item_boletin_container">
-                                    <h2 className="width_100 text_center margin_m text_bolder">Boletines 2022</h2>
-                                            <img className="item_boletin" src="https://relatoria.jep.gov.co/img/boletines/2024/boletin_01_enero_2024.png?ver=2.8">
-                                            </img>
-                                            <img className="item_boletin" src="https://relatoria.jep.gov.co/img/boletines/2024/boletin_01_enero_2024.png?ver=2.8">
-                                            </img>
-                                            <img className="item_boletin" src="https://relatoria.jep.gov.co/img/boletines/2024/boletin_01_enero_2024.png?ver=2.8">
-                                            </img>
-                                            <img className="item_boletin" src="https://relatoria.jep.gov.co/img/boletines/2024/boletin_01_enero_2024.png?ver=2.8">
-                                            </img>
-                                    </div>
-                                </Container>
-                            </div>
-                            }
+                            </Container>
+                        </div>
                     </Box>
 
                 </Container>

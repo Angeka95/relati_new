@@ -78,7 +78,7 @@ export default function Suscripcion() {
             className="button_primary"
             onClick={handleSubmit}
             >
-                Suscribir
+                Suscribirme
             </Button>
             <Snackbar
                 open={openSnackbar}
