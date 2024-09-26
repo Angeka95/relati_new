@@ -274,6 +274,11 @@ h6 {
   padding: 0px !important;
 }
 
+.margin_top_l {
+  margin-top: 60px !important;
+}
+
+
 .margin_top_m {
   margin-top: 30px !important;
 }
@@ -455,6 +460,9 @@ h6 {
 
 .display_inline{
   display: inline !important;
+}
+.text_transform_none{
+  text-transform: none !important;
 }
 
 /*END CONTAINER*/
@@ -1663,6 +1671,112 @@ controlodares carrusel  */
 
 /*\ END SUBSCRIPTION*/
 
+/*\ MACROCASO*/
+
+.caso_intro{
+  padding:5% 0px;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.underline_green{
+  border-bottom: 3px solid #98C438;
+  width: max-content;
+  
+}
+
+.subtitulo_caso{
+  width: 24%;
+  margin: 0% 3%; 
+}
+
+.actualizacion_caso{
+  width:64%;
+  margin: 0% 3%;
+  max-width: 400px;
+}
+
+/* .timeline {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px;
+  position: relative;
+}
+
+.timeline-item {
+  position: relative;
+  flex: 1;
+  text-align: center;
+}
+
+.timeline-dot {
+  width: 20px;
+  height: 20px;
+  background-color: #3f51b5; 
+  border-radius: 50%;
+  margin: 0 auto;
+}
+
+.timeline-content {
+  margin-top: 10px;
+}
+
+.timeline:before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background-color: #ddd; 
+  z-index: -1;
+} */
+
+.timeline {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px; /* Espacio entre los eventos */
+  padding: 20px;
+  position: relative;
+}
+
+.timeline-item {
+  text-align: center;
+  position: relative; /* Necesario para posicionar los puntos sobre la línea */
+  z-index: 1; /* Asegura que los puntos estén sobre la línea */
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centra los elementos */
+}
+
+.timeline-dot {
+  width: 20px;
+  height: 20px;
+  background-color: #9c9c9c; /* Cambia el color según tu preferencia */
+  border-radius: 50%;
+  margin: 0 auto;
+}
+
+.timeline-content {
+  margin-top: 10px;
+}
+
+.timeline-line {
+  position: absolute;
+  top: 12%; /* Centra la línea verticalmente */
+  left: 0;
+  right: 0;
+  height: 2px; /* Grosor de la línea */
+  background-color: #ddd; /* Color de la línea */
+  z-index: 0; /* Asegura que la línea esté detrás de los puntos */
+}
+
+
+
+/*\ END MACROCASO*/
+
 /*--------------------------------------------------------------------*/
 /*--------------------------------------------------------------------*/
 
@@ -1760,7 +1874,19 @@ controlodares carrusel  */
 
 }
 
+@media (min-width: 600px) {
+  .timeline {
+    grid-template-columns: repeat(4, 1fr); /* 4 columnas en pantallas grandes */
+  }
+}
+
+
 @media (max-width: 600px) {
+
+  .timeline {
+    grid-template-columns: repeat(2, 1fr); /* 2 columnas en pantallas pequeñas */
+  }
+
   .carousel_item_wrapper img {
     
     width: calc(100% - 0px) !important;
