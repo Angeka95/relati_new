@@ -461,7 +461,7 @@ export default function SearchResults() {
   return (
     <div>
     <Container maxWidth="lg" disableGutters>
-          <h1 className="width_100 text_center margin_top_m">Boletines Jurisprudenciales</h1>
+          <h1 className="width_100 text_center margin_top_l">Boletines Jurisprudenciales</h1>
           <p className="text_center title_description margin_bottom_l">Destacamos aquí las decisiones judiciales más importantes de las Salas y Secciones de la JEP. Este producto editorial plasma la síntesis de los casos, las reglas y argumentos de derecho, así como el sentido de la decisión</p>
           <div className="align_center carousel_main_container"> 
             <p className=" align_center text_carousel_container">Consulte las decisiones más relevantes de la JEP, analizadas mes a mes</p>

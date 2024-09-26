@@ -36,7 +36,7 @@ export default function Suscripcion() {
   return (
     <div>
         <Container >
-        <h1 className="width_100 text_center margin_top_m">Suscripción</h1>
+        <h1 className="width_100 text_center margin_top_l">Suscripción</h1>
         <p className="text_center margin_bottom_m title_description ">
         Suscríbase y reciba en su correo electrónico los boletínes jurisprudenciales con las decisiones más relevantes de la JEP, analizadas mes a mes. 
         </p>

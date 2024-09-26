@@ -31,6 +31,7 @@ h1 {
 h4 {
   font-weight: 400 !important;
   font-size: 1.1em !important; 
+  line-height: 1.4em !important;
 }
 
 
@@ -57,7 +58,11 @@ h6 {
 
 
 .text_bolder {
-  font-weight: 700;
+  font-weight: 700 !important;
+}
+
+.text_bold {
+  font-weight: 500 !important;
 }
 
 .text_diabled {
@@ -74,6 +79,17 @@ h6 {
 }
 
 
+.text_capitalize{
+  text-transform: capitalize !important;
+}
+
+.text_lowercase{
+  text-transform: lowercase !important;
+}
+
+.title_description {
+  max-width: 800px;
+}
 
 /*END FONTS*/
 
@@ -176,7 +192,6 @@ h6 {
 
 .link_primary {
   background-color: none !important;
-  text-transform: lowercase !important;
   color: #98C438 !important;
   font-weight: 700 !important;
   padding: 0px !important;
@@ -1674,7 +1689,7 @@ controlodares carrusel  */
 /*\ MACROCASO*/
 
 .caso_intro{
-  padding:5% 0px;
+  padding:60px 0px;
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
@@ -1697,42 +1712,6 @@ controlodares carrusel  */
   max-width: 400px;
 }
 
-/* .timeline {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 20px;
-  position: relative;
-}
-
-.timeline-item {
-  position: relative;
-  flex: 1;
-  text-align: center;
-}
-
-.timeline-dot {
-  width: 20px;
-  height: 20px;
-  background-color: #3f51b5; 
-  border-radius: 50%;
-  margin: 0 auto;
-}
-
-.timeline-content {
-  margin-top: 10px;
-}
-
-.timeline:before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background-color: #ddd; 
-  z-index: -1;
-} */
 
 .timeline {
   display: grid;
@@ -1742,7 +1721,7 @@ controlodares carrusel  */
   position: relative;
 }
 
-.timeline-item {
+.timeline_item {
   text-align: center;
   position: relative; /* Necesario para posicionar los puntos sobre la línea */
   z-index: 1; /* Asegura que los puntos estén sobre la línea */
@@ -1751,7 +1730,7 @@ controlodares carrusel  */
   align-items: center; /* Centra los elementos */
 }
 
-.timeline-dot {
+.timeline_dot {
   width: 20px;
   height: 20px;
   background-color: #9c9c9c; /* Cambia el color según tu preferencia */
@@ -1759,20 +1738,55 @@ controlodares carrusel  */
   margin: 0 auto;
 }
 
-.timeline-content {
+.timeline_dot_initial{
+  position: absolute;
+  width: 10px;
+  top: 29px;
+  left:-12px;
+  height: 10px;
+  background-color: #9c9c9c; 
+  border-radius: 50%;
+  margin: 0 auto;
+  z-index:10;
+}
+
+.timeline_dot_end{
+  margin: 10px auto; /* Centra el dot al final */
+  margin-left: -22px !important;
+  margin-top: 10px !important;
+  position: relative;
+  width: 10px;
+  height: 10px;
+  background-color: #9c9c9c; 
+  border-radius: 50%;
+  margin: 0 auto;
+  z-index: 10;
+}
+
+.timeline_content {
   margin-top: 10px;
 }
 
-.timeline-line {
+.timeline_line {
   position: absolute;
-  top: 12%; /* Centra la línea verticalmente */
-  left: 0;
+  top: 10%; 
+  left: -30px;
+  right: 30px;
   right: 0;
   height: 2px; /* Grosor de la línea */
-  background-color: #ddd; /* Color de la línea */
-  z-index: 0; /* Asegura que la línea esté detrás de los puntos */
+  background-color: #ddd; 
+  z-index: -1; /*  línea esté detrás de los puntos */
 }
 
+.timeline_date{
+  margin-top: -25px;
+  margin-bottom: 10px;
+}
+
+.timeline_month{
+  margin-top: -40px;
+  margin-bottom: 25px;
+}
 
 
 /*\ END MACROCASO*/

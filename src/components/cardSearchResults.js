@@ -45,7 +45,7 @@ export default function CardSearch({ datos }) {
         <p>Pertenece a:  <span className="text_bolder"> {datos.grupoPertence}</span> </p>
 
         {isButtonInfoEnabled && (
-          <Button className="link_primary" onClick={toggleButtonInfo}>ver más</Button>)}
+          <Button className="link_primary text_lowercase" onClick={toggleButtonInfo}>ver más</Button>)}
 
 
 

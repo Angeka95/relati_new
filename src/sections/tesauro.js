@@ -333,7 +333,7 @@ export default function Tesauro() {
                     <div className="margin_bottom_m wrap justify_center  button_alphabet_container">
 
 
-                        <h1 className="width_100 text_center">Tesauro</h1>
+                        <h1 className="width_100 text_center margin_top_l">Tesauro</h1>
                         <p className="width_100 text_center margin_bottom_m">Encuentre las decisiones a través de conceptos clave </p>
                         {Object.keys(data).map((letter) => 
                             (

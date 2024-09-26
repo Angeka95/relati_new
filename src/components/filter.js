@@ -242,7 +242,7 @@ export default function Filter({ setSelectedFilters, isFilterFloat, isShowingFil
           label='Delito' id='delito'></SelectField>
         <div className='justify_center'>
           {isButtonEnabled && (
-            <Button className="link_primary" onClick={toggleButton}> ver más filtros
+            <Button className="link_primary text_lowercase" onClick={toggleButton}> ver más filtros
             </Button>)
             }
 
