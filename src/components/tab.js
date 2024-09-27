@@ -10,7 +10,7 @@ import ShareOptions from '../components/shareOptions.js';
 
 
 
-export default function CustomTab({ boletines }) {
+export default function CustomTab({ boletines}) {
     const [value, setValue] = React.useState(0);
 
     const handleChangeTab = (event, newValue) => {
@@ -35,9 +35,11 @@ export default function CustomTab({ boletines }) {
     return (
         <div>
             <Box className="width_100 list_boletines" >
-
+         
+                <>
+                
                 <Container>
-
+                
                     <AppBar position="static" className="noshadow ">
                         <Tabs value={value} onChange={handleChangeTab} className='light_white ' classes={{ indicator: 'custom_indicator' }}>
                             {añoBoletin.map((año, index) => (
@@ -49,6 +51,8 @@ export default function CustomTab({ boletines }) {
                     </AppBar>
                     <Box p={3}>
                         <div >
+                       
+                            
                             <Container className='width_100 margin_bottom_l'>
                                 <div className="wrap justify_center item_boletin_container">
                                     <h2 className="width_100 text_center margin_m text_bolder">Boletines {añoBoletin[value]}</h2>
@@ -70,10 +74,13 @@ export default function CustomTab({ boletines }) {
                                         ))}
                                 </div>
                             </Container>
+                            
                         </div>
                     </Box>
 
                 </Container>
+                </>
+
             </Box>
         </div>
     );

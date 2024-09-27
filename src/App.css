@@ -87,6 +87,10 @@ h6 {
   text-transform: lowercase !important;
 }
 
+.text_nonecase{
+ text-transform: none !important; 
+}
+
 .title_description {
   max-width: 800px;
 }
@@ -1502,9 +1506,10 @@ controlodares carrusel  */
 }
 
 .tab {
-  font-size: 1em !important;
-  letter-spacing: 2px !important;
+  font-size: 1.1em !important;
+  letter-spacing: 1px !important;
   font-weight: 600 !important;
+  font-family: 'Open Sans', Arial, sans-serif !important;
 }
 
 .custom_indicator {
@@ -1524,6 +1529,12 @@ controlodares carrusel  */
 
 .css-1h9z7r5-MuiButtonBase-root-MuiTab-root.Mui-selected {
   color: #98C438 !important;
+}
+
+.tab_size{
+  font-size: 1.1em !important;
+  letter-spacing: 0px !important;
+  font-family: 'Open Sans', Arial, sans-serif !important;
 }
 
 /*END TABS BOLETINES*/
@@ -1741,7 +1752,7 @@ controlodares carrusel  */
 .timeline_dot_initial{
   position: absolute;
   width: 10px;
-  top: 29px;
+  top: 32px;
   left:-12px;
   height: 10px;
   background-color: #9c9c9c; 
@@ -1753,7 +1764,7 @@ controlodares carrusel  */
 .timeline_dot_end{
   margin: 10px auto; /* Centra el dot al final */
   margin-left: -22px !important;
-  margin-top: 10px !important;
+  margin-top: 8px !important;
   position: relative;
   width: 10px;
   height: 10px;
