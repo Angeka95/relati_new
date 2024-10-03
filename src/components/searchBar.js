@@ -9,7 +9,7 @@ import ClearIcon from '@mui/icons-material/Clear';
 import { styled } from '@mui/material/styles';
 import Context from '../context/context';
 
-export default function Search({isSearchAdvance}) {
+export default function Search({isSearchAdvance, isSearchMain}) {
 
   // Grids personalizadas
 
@@ -76,18 +76,18 @@ export default function Search({isSearchAdvance}) {
 
 
 
-    <div >
+    <div className="justify_center">
       
       <Stack className= {isSearchAdvance ?  ('autocomplete_bar_search_nomargin') : 'autocomplete_bar_search' } >
         
         <SpaceBottom>
 
-          {!isSearchAdvance && (
+          {isSearchMain || !isSearchAdvance && (
                       <FormControlLabel control={<Switch checked={verTodasDecisiones} onChange={handleChange} />} label="ver todas las decisiones" className="switch_search" />)
           }
 
 
-          <Autocomplete className="margin_top_s autoconmplete_container"
+          <Autocomplete className="margin_top_s "
             id="free-solo-demo"
             value={valueBar}
             freeSolo

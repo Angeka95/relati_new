@@ -556,9 +556,9 @@ export default function Card({ selectedFilters, isListSmall, selectedTerm, isLar
 
             {(verTodasDecisiones || busqueda) && (
                 <>
-                    <WrapGrid item xs={12} sm={12} md={12} lg={12} xl={12} className="flex">
+                    <WrapGrid item xs={12} sm={12} md={12} lg={12} xl={12} className="flex " >
                         <Width100Grid>
-                            <p>
+                            <p className="margin_results_page">
                                 
                                 <span> {startIndexPage} </span> a
                                 <span> {endIndexPage} </span> de
@@ -570,8 +570,8 @@ export default function Card({ selectedFilters, isListSmall, selectedTerm, isLar
                         </NoneGrid>
 
                         <div >
-                            <Width100Grid className='width_100 flex'>
-                            <p className="">Resultados por página  </p>
+                            <Width100Grid className='width_100 flex '>
+                            <p className="margin_results_page">Resultados por página  </p>
                                 <Box sx={{ minWidth: 120 }}>
                                     <FormControl fullWidth>
                                         {/* <InputLabel id="demo-simple-select-label"></InputLabel> */}

@@ -8,6 +8,7 @@ import Tesauro from './sections/tesauro';
 import Boletines from './sections/boletines';
 import Suscripcion from './sections/suscripcion';
 import Caso from './sections/caso';
+import Home from './sections/inicio';
 
 
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
@@ -20,7 +21,8 @@ function App() {
           
         <Router>
         <Routes>
-          <Route path="/" element={<Caso />} />
+        <Route path="/" element={<Home />} />
+          <Route path="/caso" element={<Caso />} />
           <Route path="/boletines" element={<Boletines />} />
           <Route path="/suscripcion" element={<Suscripcion />} />
           <Route path="/tesauro" element={<Tesauro />} />

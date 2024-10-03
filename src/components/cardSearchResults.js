@@ -74,7 +74,7 @@ export default function CardSearch({ datos }) {
 
           <CustomGrid>
             <Button className="button_secondary margin_xs" >ver ficha</Button>
-            <Button className="button_primary margin_xs" >descargar decisión</Button>
+            <Button className="button_primary margin_xs" >Descargar decisión</Button>
           </CustomGrid>
         </div>
 

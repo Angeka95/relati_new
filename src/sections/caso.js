@@ -4,31 +4,41 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import TabCustom from '../components/tab.js';
 import axios from 'axios';
+import ListVideos from '../components/listVideos.js';
+
+import Carousel from '../components/carousel.js';
+
+const boletinesMacrocaso = [
+  {
+    id: 1,
+    pdf: 'https://relatoria.jep.gov.co/documentos/providencias/17/23/boletin_01_enero-2024.pdf',
+    fecha: "2024-01",
+    facebook: 'https://www.facebook.com/sharer.php?u=https://relatoria.jep.gov.co/documentos/providencias/17/23/boletin_01_enero-2024.pdf',
+    twitter: 'https://twitter.com/intent/tweet?text=Me gusta boletin_01_enero-2024 &url=https://relatoria.jep.gov.co/documentos/providencias/17/23/boletin_01_enero-2024.pdf',
+    mail: true,
+    versionIngles: '',
+    esEspecial: false,
+    imagenPortada: 'https://relatoria.jep.gov.co/img/boletines/2024/boletin_01_enero_2024.png?ver=2.8'
+  },
+
+  {
+    id: 7,
+    pdf: 'https://relatoria.jep.gov.co/documentos/providencias/17/23/boletin_05_edicion-especial_2024.pdf',
+    fecha: "2024-01",
+    facebook: 'https://www.facebook.com/sharer.php?u=https://relatoria.jep.gov.co/documentos/providencias/17/23/boletin_05_edicion-especial_2024.pdf',
+    twitter: "https://twitter.com/intent/tweet?text=Me gusta boletin_05_edicion-especial_2024 &url=https://relatoria.jep.gov.co/documentos/providencias/17/23/boletin_05_edicion-especial_2024.pdf",
+    mail: true,
+    versionIngles: '',
+    esEspecial: true,
+    imagenPortada: 'https://relatoria.jep.gov.co/img/boletines/2024/boletin_05_especial_2024.png?ver=2.1'
+  },
+
+
+]
+
+
 
 export default function Caso() {
-  const [value, setValue] = React.useState(0);
-
-  const handleChangeTabCaso = (event, newValue) => {
-    setValue(newValue);
-  };
-
-
-  const options = ['Apertura', 'Determinación de hechos y conductas', 'Resolución de conclusiones', 'Acreditación de víctimas individuales y colectivas', 'Auto que fija fecha de audiencia y/o diligencia', 'Régimen de condicionalidad', 'Otras decisiones'];
-  const [selectedOptions, setSelectedOptions] = useState([]);
-
-  const handleSelectChange = (event) => {
-    setSelectedOptions(event.target.value);
-  };
-
-  const [value2, setValue2] = React.useState(0);
-  const subcasos = ['Subcaso 01', 'Subcaso 02', 'Subcaso 03', 'Subcaso 04'];
-  const [selectedSubcasos, setSelectedSubcasos] = useState([]);
-
-  const handleSelectSubcasos = (event2) => {
-    setSelectedSubcasos(event2.target.value2);
-  };
-
-  const playlistId = 'PLbtegW3d3L4IAUQrIcYb8-ADAD1FDPmLc'; // Reemplaza con tu ID de lista de reproducción
 
   const macrocasos = [
     {
@@ -143,9 +153,51 @@ export default function Caso() {
 
   ];
 
+  const [value, setValue] = React.useState(0);
+
+  const handleChangeTabCaso = (event, newValue) => {
+    setValue(newValue);
+  };
+
+
+  const options = ['Apertura', 'Determinación de hechos y conductas', 'Resolución de conclusiones', 'Acreditación de víctimas individuales y colectivas', 'Auto que fija fecha de audiencia y/o diligencia', 'Régimen de condicionalidad', 'Otras decisiones'];
+  const [selectedOptions, setSelectedOptions] = useState([]);
+
+  const handleSelectChange = (event) => {
+    setSelectedOptions(event.target.value);
+  };
+
+  const [value2, setValue2] = React.useState(0);
+  const subcasos = ['Subcaso 01', 'Subcaso 02', 'Subcaso 03', 'Subcaso 04'];
+  const [selectedSubcasos, setSelectedSubcasos] = useState([]);
+
+  const handleSelectSubcasos = (event2) => {
+    setSelectedSubcasos(event2.target.value2);
+  };
+
+
+
+  // timeline
+
+  const [showMore, setShowMore] = useState(false);
+
+  // Limitar la cantidad de eventos de timeline visibles
+  const visibleEvents = showMore ? timeLine : timeLine.slice(0, 4);
+
+  const handleToggle = () => {
+    setShowMore(!showMore);
+  };
+
+
+  // ID de lista de reproducción
+
+  const playlistId = 'PLbtegW3d3L4IAUQrIcYb8-ADAD1FDPmLc';
+
+
+
   return (
     <div>
-      <Box className="secondary_blue caso_intro ">
+      <Box className="secondary_blue section_blue ">
         <div className="width_100 justify_center">
           <h1 className=" text_center text_white underline_green ">Caso 01</h1>
         </div>
@@ -156,14 +208,14 @@ export default function Caso() {
           <h2 className="text_bolder subtitulo_caso">En qué va el Caso 01</h2>
           <div className="actualizacion_caso">
             <p>La Sala de Reconocimiento (SRVR) activó el componente de reparación integral y requirió a la Unidad de Víctimas revisar la inclusión en el Registro Único de Víctimas (RUV) de 664 víctimas de secuestro de las Farc-EP representadas por IIRESOHD. En febrero de 2024 se finalizaron las versiones voluntarias de todos los comparecientes de los cuales se conocía su paradero. </p>
-            <Button className="button_terciary shadow text_transform_none margin_bottom_m" >Saber más del Caso</Button>
+            <Button target="_blank" href="https://relatoria.jep.gov.co/documentos/infografias/macrocaso001.pdf" className="button_terciary shadow_smooth text_transform_none margin_bottom_m" >Saber más del Caso</Button>
           </div>
         </div>
       </Container>
-      <Container className="margin_top_l">
-        <div className="timeline">
+      <Container className="margin_top_l ">
+        <div className="timeline ">
           <div className="timeline_dot_initial" />
-          {timeLine.map((event, index) => (
+          {visibleEvents.map((event, index) => (
 
             <div className="timeline_item" key={index}>
               <h6 className="timeline_month">{event.mes}</h6>
@@ -187,23 +239,47 @@ export default function Caso() {
 
               </div>
 
+
             </div>
           ))}
-          <div className="timeline_dot_end" />
+          {showMore && <div className="timeline_dot_end" />}
+        </div>
+        <div className="justify_center ">
 
+          {timeLine.length > 4 && (
+            <Button onClick={handleToggle} className="link_secondary text_lowercase">
+              {showMore ? 'Ver menos sucesos' : 'Ver más Sucesos'}
+            </Button>
+          )}
         </div>
 
 
+
+
       </Container>
-      <Container>
-        <div className="">
-          <h2 className="text_bolder width_100 text_center">Decisiones relacionadas al caso</h2>
+
+      <Box className="cta_boletines_container ">
+        <div className="cta">
+          <Container >
+            <div className="cta_container">
+              <h6 className="text_bolder cta_text">Conozca los lineamientos en materia de sanción propia y Trabajos, Obras y Actividades con contenido Reparador (TOAR)</h6>
+              <Link to="/suscripcion">
+                <Button className="button_primary">Ver TOAR</Button>
+              </Link>
+            </div>
+          </Container>
+        </div>
+      </Box>
+
+      <Container >
+        <div className="margin_top_xl">
+          <h2 className="text_bolder width_100 text_center ">Decisiones relacionadas al Caso</h2>
           <h5 className="margin_top_m text_center margin_bottom_l">Encuentre las decisiones relacionadas al Caso 01</h5>
         </div>
 
         <></>
 
-        <Container>
+        <Container className="shadow_smooth tab_container">
 
           <AppBar position="static" className="noshadow ">
             <Tabs value={value} onChange={handleChangeTabCaso} className='light_white ' classes={{ indicator: 'custom_indicator' }}>
@@ -218,14 +294,14 @@ export default function Caso() {
             <div >
 
 
-              <Container className='width_100 margin_bottom_l'>
+              <Container className='width_100'>
                 <div className="wrap justify_center item_boletin_container">
 
 
                   {value === 0 && (
                     <Box sx={{ p: 3 }}>
-                      <h5 className="width_100 text_center margin_m text_bolder">Seleccione tipo de decisión o subcaso para ver las decisiones</h5>
-                      <Grid container spacing={2} >
+                      <h5 className="width_100 text_center margin_m text_bolder">Seleccione tipo de decisión o subcaso para ver las decisiones por Sala</h5>
+                      <Grid container spacing={2} className="margin_bottom_l">
                         <Grid item xs={12} sm={12} className="wrap">
                           <Grid item xs={12} sm={6}>
                             <FormControl fullWidth>
@@ -285,7 +361,7 @@ export default function Caso() {
                   )}
                   {value === 1 && (
                     <Box sx={{ p: 3 }}>
-                      <h5 className="width_100 text_center margin_m text_bolder">Seleccione tipo de decisión o subcaso para ver las decisiones</h5>
+                      <h5 className="width_100 text_center margin_m text_bolder">Seleccione tipo de decisión o subcaso para ver las decisiones por Tribunal</h5>
                     </Box>
                   )}
 
@@ -299,22 +375,46 @@ export default function Caso() {
           </Box>
 
         </Container>
-        <div className="margin_top_l">
-                <h2 className="text_bolder width_100 text_center margin_bottom_m">Audiencias</h2>
-                  <div className="justify_center"> 
-                    <iframe
-                      width="560"
-                      height="315"
-                      src={`https://www.youtube.com/embed/videoseries?list=${playlistId}`}
-                      frameBorder="0"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                      allowFullScreen
-                      title="YouTube Playlist"
-                    ></iframe>
-                  </div>
-              </div>
+        <div className="margin_top_xxl ">
+          <h2 className="text_bolder width_100 text_center margin_bottom_m">Audiencias del Caso</h2>
+          <ListVideos> playlistId = {playlistId}</ListVideos>
+        </div>
 
       </Container>
+
+      <Container maxWidth="lg" disableGutters className="margin_top_l">
+        <div className="align_center carousel_main_container margin_top_l" >
+          <div className="wrap text_carousel_container" >
+            <h2 className="align_center text_bolder"> Boletines y documentos relacionados</h2>
+            <p className=" align_center margin_top_s margin_bottom_m">Acceda al análisis de las decisiones y a las publicaciones relacionadas a este Caso</p>
+            <Button className="button_primary "> Ver todos los boletines</Button>
+          </div>
+          <div className="carousel_container">
+
+            <Carousel boletines={boletinesMacrocaso} />
+
+          </div>
+        </div>
+
+
+
+      </Container>
+
+      <Container>
+
+        <div className="margin_top_xxl margin_bottom_xl">
+          <h2 className="text_bolder width_100 text_center margin_bottom_m">Podcast relacionados al Caso</h2>
+
+          <iframe className="podcast_container shadow_smooth"
+            src='https://widget.spreaker.com/player?show_id=5701029&theme=dark&playlist=show&playlist-continuous=true&chapters-image=true' width='100%' height='400px' frameborder='0'>
+
+          </iframe>
+        </div>
+
+      </Container>
+
+
+
 
 
 

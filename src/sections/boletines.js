@@ -465,10 +465,10 @@ export default function SearchResults() {
           <p className="text_center title_description margin_bottom_l">Destacamos aquí las decisiones judiciales más importantes de las Salas y Secciones de la JEP. Este producto editorial plasma la síntesis de los casos, las reglas y argumentos de derecho, así como el sentido de la decisión</p>
           <div className="align_center carousel_main_container"> 
             <p className=" align_center text_carousel_container">Consulte las decisiones más relevantes de la JEP, analizadas mes a mes</p>
-            <div className="carousel_container ">
 
+            <div className="carousel_container ">
                 <Carousel boletines={boletines}/>
-                </div> 
+            </div> 
           </div> 
 
           

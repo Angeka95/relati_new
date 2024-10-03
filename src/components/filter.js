@@ -257,7 +257,7 @@ export default function Filter({ setSelectedFilters, isFilterFloat, isShowingFil
                 label='Procedimiento' id='procedimiento'></SelectField>
 
               <Button
-                className="link_primary"
+                className="link_primary text_lowercase"
                 onClick={toggleButton}>
                 {!isButtonEnabled && 'ver menos filtros'}
 
@@ -271,7 +271,7 @@ export default function Filter({ setSelectedFilters, isFilterFloat, isShowingFil
 
 
         <div className="justify_center width_100 margin_top_s">
-          <Button disabled={isFilterDisabled} className="button_primary margin_xs " onClick={applyFilters}>aplicar filtros</Button>
+          <Button disabled={isFilterDisabled} className="button_primary margin_xs " onClick={applyFilters}>Aplicar filtros</Button>
         </div>
       </CardContent>
 
