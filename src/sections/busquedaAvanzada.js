@@ -235,10 +235,10 @@ export default function BusquedaAvanzada() {
             <Grid item xs={8} sm={8} md={8} lg={8} xl={8}>
             <h1 className="text_center margin_top_l">Búsqueda avanzada</h1> 
            
-                <h4 className="text_center margin_bottom_m">Delimite su búsqueda usando una o más palabras claves para los siguientes parámetros.
+                <h5 className="text_center margin_bottom_m">Delimite su búsqueda usando una o más palabras claves para los siguientes parámetros.
                     {/* <br></br>
                     Si va a  incluir más de un criterio por campo, sepárelo con una coma. */}
-                    </h4> 
+                    </h5> 
             </Grid>
             
             
@@ -363,7 +363,7 @@ export default function BusquedaAvanzada() {
 
         <Grid items xs={12} sm={12} md={8} lg={8} xl={8}>
               {(selectedFilters.length === 0 && busquedaAvanzada.length === 0) &&(
-                        <h4 className="text_diabled text_center margin_top_m">(Aún no ha agregado ningún parámetro a su búsqueda)</h4>
+                        <h5 className="text_diabled text_center margin_top_m">(Aún no ha agregado ningún parámetro a su búsqueda)</h5>
                     )}
                     {(selectedFilters.length > 0  ||  busquedaAvanzada.length > 0 )&&(
                       

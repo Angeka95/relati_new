@@ -9,6 +9,7 @@ import Boletines from './sections/boletines';
 import Suscripcion from './sections/suscripcion';
 import Caso from './sections/caso';
 import Home from './sections/inicio';
+import Analisis from './sections/analisisTematico';
 
 
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
@@ -29,6 +30,7 @@ function App() {
           <Route path="/mapaJurisprudencial" element={<MapaJurisprudencial />} />
           <Route path="/busquedaAvanzada" element={<BusquedaAvanzada />} />
           <Route path="/resultadosBusqueda" element={<ResultadosBusqueda />} />
+          <Route path="/analisisTematico" element={<Analisis />} />
 
           {/* Pagina no encontrada  */}
           {/* <Route path="*" element={<NotFound />} /> */}

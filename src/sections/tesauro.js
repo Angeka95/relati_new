@@ -334,7 +334,7 @@ export default function Tesauro() {
 
 
                         <h1 className="width_100 text_center margin_top_l">Tesauro</h1>
-                        <p className="width_100 text_center margin_bottom_m">Encuentre las decisiones a través de conceptos clave </p>
+                        <h5 className="width_100 text_center margin_bottom_m">Encuentre las decisiones a través de conceptos clave </h5>
                         {Object.keys(data).map((letter) => 
                             (
 
@@ -346,11 +346,11 @@ export default function Tesauro() {
 
                     <div className="container_list_tesauro ">
                         {!activeLetter && (
-                            <p class="text_diabled">(Seleccione una letra para mostrarle términos del Tesauro)</p> 
+                            <p class="text_diabled text_center padding_x">(Seleccione una letra para mostrarle términos del Tesauro)</p> 
                         )}
 
                         {!selectedTerm && activeLetter && (
-                            <div className="list_container_tesauro scroll-container text_center ">
+                            <div className="list_container_tesauro scroll-container text_center padding_x">
                                 <div className="wrap justify_between margin_bottom_m margin_top_s list_container_header">
                                     <h3> Términos encontrados por {activeLetter ? activeLetter.toUpperCase() : ''}</h3>
 

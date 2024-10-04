@@ -277,7 +277,7 @@ let decisionesRecientes = [
                 <div className="align_center carousel_main_container " >
                     <div className="wrap text_carousel_container" >
                         <h2 className="align_center text_bolder"> Boletines</h2>
-                        <p className=" align_center margin_top_s margin_bottom_m">Acceda al análisis de las decisiones más importantes de la JEP</p>
+                        <h5 className=" align_center margin_top_s margin_bottom_m">Acceda al análisis de las decisiones más importantes de la JEP</h5>
                         <Button className="button_primary "> Ver todos los boletines</Button>
                     </div>
                     <div className="carousel_container">
@@ -293,7 +293,7 @@ let decisionesRecientes = [
 
             <Container className="space_top "> 
                 <h2 className="justify_center text_bolder">Macrocasos</h2>
-                <p className="justify_center  align_center margin_top_s margin_bottom_m">Conozca las últimas decisiones de cada macrocaso</p>
+                <h5 className="justify_center  align_center margin_top_s margin_bottom_m">Conozca las últimas decisiones de cada macrocaso</h5>
                 
 
                 <div className="wrap transition_smooth">    
@@ -324,7 +324,7 @@ let decisionesRecientes = [
                 <h2 className="justify_center text_bolder text_center">Podcast
                 <br></br>Relatos de la JEP </h2>
 
-                <p className="justify_center  align_center margin_top_s margin_bottom_m">Escuche la historia detrás de cada decisión de la JEP</p>
+                <h5 className="justify_center  align_center margin_top_s margin_bottom_m">Escuche la historia detrás de cada decisión de la JEP</h5>
                 <iframe className="podcast_container shadow_smooth"
                     src='https://widget.spreaker.com/player?show_id=5701029&theme=dark&playlist=show&playlist-continuous=true&chapters-image=true' width='100%' height='400px' frameborder='0'>
 
@@ -335,7 +335,7 @@ let decisionesRecientes = [
                 <div className="width_100 justify_center">
                 <h1 className=" text_center text_white ">Mapa Jurisprudencial</h1>
                 </div>
-                <h4 className="width_100 text_center margin_bottom_m text_white text_bold title_description">Encuentre las decisiones de cada departamento (y municipio) colombiano navegando nuestro mapa interactivo</h4>
+                <h5 className="width_100 text_center margin_bottom_m text_white text_bold title_description">Encuentre las decisiones de cada departamento (y municipio) colombiano navegando nuestro mapa interactivo</h5>
                 <div className="justify_center margin_top_m"> 
 
                 <Button className="button_primary">Ver mapa</Button>
@@ -348,7 +348,7 @@ let decisionesRecientes = [
                 <div className="wrap">
                     <div className="container_40"> 
                         <h2 className="text_bolder text_left">Documentos</h2>
-                        <p>Conozca los documentos de Sentencias Interpretativas y Comisiones de Género </p>
+                        <h5>Conozca los documentos de Sentencias Interpretativas y Comisiones de Género </h5>
                     </div> 
                     <div className="wrap container_60">
                         <ul> 
