@@ -1,134 +1,152 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef, useContext } from 'react';
 import '../App.css';
 import LogoRelati from '../assets/images/logo_Relativ2.png';
-import { Box, Container, Grid, Button } from '@mui/material';
+import { Box, Container, Grid, Button, List, ListItem } from '@mui/material';
 import SearchBar from '../components/searchBar';
 import Carousel from '../components/carousel';
+import CardDecision from '../components/cardDecision.js';
+import { useNavigate } from 'react-router-dom';
+import TextField from '@mui/material/TextField';
+import SearchIcon from '@mui/icons-material/Search';
+import Autocomplete from '@mui/material/Autocomplete';
+import Masonry from 'masonry-layout';
+import Context from '../context/context';
+
 
 export default function Home() {
+    const masonryGridRef = useRef(null);
+    const navigate = useNavigate();
+    const { verMasDecisionesRecientes } = useContext(Context);
+    const goToMapaJurispudencialPage = () => {
+        navigate('/mapa-jurisprudencial');
+    };
 
+    const goToBoletinesPage = () => {
+        navigate('/boletines');
+    };
 
     const macrocasos = [
 
-        {   
+        {
             id: 1,
-            numeroCaso : "01",
-            nombreCaso : "Secuestro",
+            numeroCaso: "01",
+            nombreCaso: "Secuestro",
         },
 
-        {   
+        {
             id: 2,
-            numeroCaso : "02",
-            nombreCaso : "Situación territorial de Nariño ",
+            numeroCaso: "02",
+            nombreCaso: "Situación territorial de Nariño ",
         },
 
-        {   
+        {
             id: 3,
-            numeroCaso : "03",
-            nombreCaso : " “Falsos positivos” ",
+            numeroCaso: "03",
+            nombreCaso: " “Falsos positivos” ",
         },
 
-        {   
+        {
             id: 4,
-            numeroCaso : "04",
-            nombreCaso : "Situación territorial de Urabá",
+            numeroCaso: "04",
+            nombreCaso: "Situación territorial de Urabá",
         },
 
-        {   
+        {
             id: 5,
-            numeroCaso : "05",
-            nombreCaso : "Situación territorial de Cauca y Valle",
+            numeroCaso: "05",
+            nombreCaso: "Situación territorial de Cauca y Valle",
         },
-        {   
+        {
             id: 6,
-            numeroCaso : "06",
-            nombreCaso : "Victimización de la UP",
+            numeroCaso: "06",
+            nombreCaso: "Victimización de la UP",
         },
-        {   
+        {
             id: 7,
-            numeroCaso : "07",
-            nombreCaso : "Reclutamiento de niñas y niños",
+            numeroCaso: "07",
+            nombreCaso: "Reclutamiento de niñas y niños",
         },
-        {   
+        {
             id: 8,
-            numeroCaso : "08",
-            nombreCaso : "Crímenes de la fuerza pública y paramilitares",
+            numeroCaso: "08",
+            nombreCaso: "Crímenes de la fuerza pública y paramilitares",
         },
-        {   
+        {
             id: 9,
-            numeroCaso : "09",
-            nombreCaso : "Crímenes contra Pueblos Étnicos"
+            numeroCaso: "09",
+            nombreCaso: "Crímenes contra Pueblos Étnicos"
         },
-        {   
+        {
             id: 10,
-            numeroCaso : "10",
-            nombreCaso : " Crímenes cometidos por Farc-EP",
+            numeroCaso: "10",
+            nombreCaso: " Crímenes cometidos por Farc-EP",
         },
-        {   
+        {
             id: 11,
-            numeroCaso : "11",
-            nombreCaso : " Violencia de género, sexual y reproductiva",
+            numeroCaso: "11",
+            nombreCaso: " Violencia de género, sexual y reproductiva",
         },
 
 
     ]
 
-    
-let decisionesRecientes = [
-    {
-        id: 1,
-        "fecha": "2023-06-15",
-        "asunto": "En el asunto de héctor orlando bastidas bravo",
-        "nombreDecision": "Sentencia SRT-ST-117-2024",
-        "grupoPertence": "Grupo armado no firmante",
-        "lugarHechos": "Acacías, Meta",
-        "magistrado": "Augusto Rodriguez",
-        "macrocaso": "08 ",
-        "conclusionDecision": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes,",
-        "extractoBusqueda": "Et has minim elitr intellegat. Mea aeterno eleifend antiopam ad, nam no suscipit quaerendum. At nam ite minimum secuestro. Est audiam animal molestiae te. Ex duo eripuit mentitum. As min...Et has minim elitr intellegat. Mea aeterno eleifend antiopam ad, nam no suscipit quaerendum. At nam ite minimum secuestro. Est audiam animal molestiae te. Ex duo eripuit mentitum. As min..."
-    },
-    {
-        id: 2,
-        "fecha": "2022-03-18",
-        "asunto": "En el asunto de martin gonzales leal",
-        "nombreDecision": "Sentencia SRT-ST-120-2024",
-        "grupoPertence": "Grupo armado no firmante",
-        "lugarHechos": "Acacías, Meta",
-        "magistrado": "Augusto Rodriguez",
-        "macrocaso": "08 ",
-        "conclusionDecision": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes,",
-        "extractoBusqueda": "Et has minim elitr intellegat. Mea aeterno eleifend antiopam ad, nam no suscipit quaerendum. At nam ite minimum secuestro. Est audiam animal molestiae te. Ex duo eripuit mentitum. As min...Et has minim elitr intellegat. Mea aeterno eleifend antiopam ad, nam no suscipit quaerendum. At nam ite minimum secuestro. Est audiam animal molestiae te. Ex duo eripuit mentitum. As min..."
+    let decisionesRecientes = [
+        {
+            id: 1,
+            "fecha": "2023-06-15",
+            "asunto": "En el asunto de héctor orlando bastidas bravo",
+            "nombreDecision": "Sentencia SRT-ST-117-2024",
+            "salaOSeccion": "Sala de Amnistía",
+            "grupoPertence": "Grupo armado no firmante",
+            "lugarHechos": "Acacías, Meta",
+            "magistrado": "Augusto Rodriguez",
+            "macrocaso": "08 ",
+            "conclusionDecision": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes,",
+            "extractoBusqueda": "Et has minim elitr intellegat. Mea aeterno eleifend antiopam ad, nam no suscipit quaerendum. At nam ite minimum secuestro. Est audiam animal molestiae te. Ex duo eripuit mentitum. As min...Et has minim elitr intellegat. Mea aeterno eleifend antiopam ad, nam no suscipit quaerendum. At nam ite minimum secuestro. Est audiam animal molestiae te. Ex duo eripuit mentitum. As min..."
+        },
+        {
+            id: 2,
+            "fecha": "2022-03-18",
+            "asunto": "En el asunto de martin gonzales leal",
+            "nombreDecision": "Sentencia SRT-ST-120-2024",
+            "salaOSeccion": "Sección de Revisión",
+            "grupoPertence": "Grupo armado no firmante",
+            "lugarHechos": "Acacías, Meta",
+            "magistrado": "Augusto Rodriguez",
+            "macrocaso": "08 ",
+            "conclusionDecision": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes,",
+            "extractoBusqueda": "Et has minim elitr intellegat. Mea aeterno eleifend antiopam ad, nam no suscipit quaerendum. At nam ite minimum secuestro. Est audiam animal molestiae te. Ex duo eripuit mentitum. As min...Et has minim elitr intellegat. Mea aeterno eleifend antiopam ad, nam no suscipit quaerendum. At nam ite minimum secuestro. Est audiam animal molestiae te. Ex duo eripuit mentitum. As min..."
 
-    },
-    {
-        id: 3,
-        "fecha": "2021-06-22",
-        "asunto": "En el asunto de juana castellanos rodriguez",
-        "nombreDecision": "Sentencia SRT-ST-104-2024",
-        "grupoPertence": "Grupo armado no firmante",
-        "lugarHechos": "Acacías, Meta",
-        "magistrado": "Augusto Rodriguez",
-        "macrocaso": "08 ",
-        "conclusionDecision": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes,",
-        "extractoBusqueda": "Et has minim elitr intellegat. Mea aeterno eleifend antiopam ad, nam no suscipit quaerendum. At nam ite minimum secuestro. Est audiam animal molestiae te. Ex duo eripuit mentitum. As min..."
+        },
+        {
+            id: 3,
+            "fecha": "2021-06-22",
+            "asunto": "En el asunto de juana castellanos rodriguez",
+            "nombreDecision": "Sentencia SRT-ST-104-2024",
+            "salaOSeccion": "Sala de Amnistía",
+            "grupoPertence": "Grupo armado no firmante",
+            "lugarHechos": "Acacías, Meta",
+            "magistrado": "Augusto Rodriguez",
+            "macrocaso": "08 ",
+            "conclusionDecision": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes,",
+            "extractoBusqueda": "Et has minim elitr intellegat. Mea aeterno eleifend antiopam ad, nam no suscipit quaerendum. At nam ite minimum secuestro. Est audiam animal molestiae te. Ex duo eripuit mentitum. As min..."
 
-    },
-    {
-        id: 4,
-        "fecha": "2023-08-11",
-        "asunto": "En el asunto de mario leal prado",
-        "nombreDecision": "Sentencia SRT-ST-104-2024",
-        "grupoPertence": "Grupo armado no firmante",
-        "lugarHechos": "Acacías, Meta",
-        "magistrado": "Augusto Rodriguez",
-        "macrocaso": "08 ",
-        "conclusionDecision": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes,",
-        "extractoBusqueda": "Et has minim elitr intellegat. Mea aeterno eleifend antiopam ad, nam no suscipit quaerendum. At nam ite minimum secuestro. Est audiam animal molestiae te. Ex duo eripuit mentitum. As min..."
+        },
+        {
+            id: 4,
+            "fecha": "2023-08-11",
+            "asunto": "En el asunto de mario leal prado",
+            "nombreDecision": "Sentencia SRT-ST-104-2024",
+            "salaOSeccion": "Sección de Revisión",
+            "grupoPertence": "Grupo armado no firmante",
+            "lugarHechos": "Acacías, Meta",
+            "magistrado": "Augusto Rodriguez",
+            "macrocaso": "08 ",
+            "conclusionDecision": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes,",
+            "extractoBusqueda": "Et has minim elitr intellegat. Mea aeterno eleifend antiopam ad, nam no suscipit quaerendum. At nam ite minimum secuestro. Est audiam animal molestiae te. Ex duo eripuit mentitum. As min..."
 
-    },
-]
-
-    
+        },
+    ]
 
     const boletinesMacrocaso = [
         {
@@ -205,12 +223,12 @@ let decisionesRecientes = [
         },
 
 
-        
+
     ]
 
     const documentosAdicionales = [
 
-        
+
         {
             id: 1,
             nombreDocumento: 'Comisión de Género',
@@ -225,7 +243,19 @@ let decisionesRecientes = [
 
     ]
 
+    const options = [''];
 
+    useEffect(() => {
+        if (masonryGridRef.current) {
+          
+          new Masonry(masonryGridRef.current, {
+            itemSelector: '.masonry-item',
+            columnWidth: '.masonry-item',
+            gutter: 20,
+            fitWidth: true,
+          });
+        }
+      }, [verMasDecisionesRecientes]); 
 
     return (
         <div className="nowrap">
@@ -247,29 +277,68 @@ let decisionesRecientes = [
                 <div className="search_home">
 
                     <div classname="search_size ">
-                        <SearchBar className="justify_center" isSearchMain={true} ></SearchBar>
+                       <Container> 
+                        <div>
+                            <>
+                                <Autocomplete className="margin_top_s "
+                                    id="free-solo-demo"
+                                    value
+                                    freeSolo
+                                    onChange
+                                    options = {options}
+                                    renderInput={(params) => <TextField {...params}  placeholder= "Busque por palabra clave, número de decisión, radicado...  " inputProps={{
+                                        ...params.inputProps,
+                                        maxLength: 80
+                                    }} />}
+
+                                />
+
+                              
+                                    <Button onClick className="autocomplete_button button_primary" startIcon={<SearchIcon />}>
+                                        Buscar
+                                    </Button>
+                              
+                        
+                              
+                                        <Button className="light_white text_blue autocomplete_button_help button_terciary">?</Button>
+                                 
+                            
+                             
+                                    <Button className="autocomplete_button_advance primary_blue text_white button_secondary_border">Búsqueda Avanzada</Button>
+                              
+                            </>
+                        </div>
+                        </Container>
                     </div>
                 </div>
             </div>
 
-            <Container item xs={12} sm={12} md={8} lg={8} xl={8} className="margin_top_xl " >
+            <Container item xs={12} sm={12} md={12} lg={12} xl={12} className="margin_top_xl " >
                 <h2 className="text_bolder text_left padding_x">Decisiones recientes </h2>
-                <div className="wrap ">
 
-               
-                    {/* Usamos map para iterar sobre el array de macrocasos */}
-                    {decisionesRecientes.map((decision) => (
-
-                    <div key={decision.id} className="card_medium">
-                        <p className="text_uppercase text_bolder"> {decision.asunto}</p>
-                        <p> {decision.nombreDecision}</p>
-
-                    </div>
-                    
-                    ))}
-               
-
+                <div ref={masonryGridRef} className="masonry-grid width_100 wrap">
+                {decisionesRecientes.map((decisiones, index) => (
+                    // <div key={index} className="masonry-item wrap">
+                        <CardDecision decisiones={decisiones}> </CardDecision>
+                    // </div>
+                ))}
                 </div>
+
+                {/* <div className="wrap ">
+
+
+                        {decisionesRecientes.map((decisiones) => (
+
+                            <CardDecision decisiones={decisiones}> </CardDecision>
+                        ))}
+
+
+
+
+
+
+                </div> */}
+
             </Container>
 
 
@@ -278,7 +347,7 @@ let decisionesRecientes = [
                     <div className="wrap text_carousel_container" >
                         <h2 className="align_center text_bolder"> Boletines</h2>
                         <h5 className=" align_center margin_top_s margin_bottom_m">Acceda al análisis de las decisiones más importantes de la JEP</h5>
-                        <Button className="button_primary "> Ver todos los boletines</Button>
+                        <Button onClick={goToBoletinesPage} className="button_primary "> Ver todos los boletines</Button>
                     </div>
                     <div className="carousel_container">
 
@@ -291,86 +360,86 @@ let decisionesRecientes = [
 
             </Container>
 
-            <Container className="space_top "> 
+            <Container className="space_top ">
                 <h2 className="justify_center text_bolder">Macrocasos</h2>
                 <h5 className="justify_center  align_center margin_top_s margin_bottom_m">Conozca las últimas decisiones de cada macrocaso</h5>
-                
 
-                <div className="wrap transition_smooth">    
-                             
+
+                <div className="wrap transition_smooth">
+
                     {macrocasos.map((caso) => (
-                        
-                            <div key={caso.id} className="card_small transition_smooth">
-                            <p className="text_center">  Caso 
-                            <span className="text_big display_block margin_top_s margin_bottom_s text_green text_bolder">  {caso.numeroCaso} </span>
-                            {caso.nombreCaso}
+
+                        <div key={caso.id} className="card_small transition_smooth">
+                            <p className="text_center">  Caso
+                                <span className="text_big display_block margin_top_s margin_bottom_s text_green text_bolder">  {caso.numeroCaso} </span>
+                                {caso.nombreCaso}
                             </p>
-                            </div>
-                        
-                    
+                        </div>
+
+
                     ))}
                 </div>
-                
 
 
-                <div className="justify_center margin_top_m"> 
 
-                <Button className="button_primary"> Ver todos los casos</Button>
-                </div> 
-            </Container> 
+                <div className="justify_center margin_top_m">
 
-            
-            <Container className="margin_top_xl "> 
+                    <Button className="button_primary"> Ver todos los casos</Button>
+                </div>
+            </Container>
+
+
+            <Container className="margin_top_xl ">
                 <h2 className="justify_center text_bolder text_center">Podcast
-                <br></br>Relatos de la JEP </h2>
+                    <br></br>Relatos de la JEP </h2>
 
                 <h5 className="justify_center  align_center margin_top_s margin_bottom_m">Escuche la historia detrás de cada decisión de la JEP</h5>
                 <iframe className="podcast_container shadow_smooth"
                     src='https://widget.spreaker.com/player?show_id=5701029&theme=dark&playlist=show&playlist-continuous=true&chapters-image=true' width='100%' height='400px' frameborder='0'>
 
-                 </iframe>
+                </iframe>
 
-            </Container> 
+            </Container>
             <Box className="secondary_blue section_blue width_100 margin_top_xl">
                 <div className="width_100 justify_center">
-                <h1 className=" text_center text_white ">Mapa Jurisprudencial</h1>
+                    <h1 className=" text_center text_white ">Mapa Jurisprudencial</h1>
                 </div>
                 <h5 className="width_100 text_center margin_bottom_m text_white text_bold title_description">Encuentre las decisiones de cada departamento (y municipio) colombiano navegando nuestro mapa interactivo</h5>
-                <div className="justify_center margin_top_m"> 
+                <div className="justify_center margin_top_m">
 
-                <Button className="button_primary">Ver mapa</Button>
-                </div> 
-            
-            
+                    <Button onClick={goToMapaJurispudencialPage} className="button_primary">Ver mapa</Button>
+                </div>
+
+
             </Box>
 
             <Container item xs={12} sm={12} md={8} lg={8} xl={8} className="margin_top_xl " >
-                <div className="wrap">
-                    <div className="container_40"> 
+                <div className="wrap margin_bottom_xl">
+                    <div className="container_40">
                         <h2 className="text_bolder text_left">Documentos</h2>
                         <h5>Conozca los documentos de Sentencias Interpretativas y Comisiones de Género </h5>
-                    </div> 
+                    </div>
                     <div className="wrap container_60">
-                        <ul> 
+                        <ul>
                             {documentosSentencias.map((sentencia) => (
-                                <li key={sentencia.id}> 
-                            <a className="link_secondary text_capitalize" href={sentencia.pdf}>
-                                {sentencia.nombreDocumento} 
-                            </a>
-                                
+                                <li key={sentencia.id}>
+                                    <a target="_blank" className="link_secondary text_capitalize" href={sentencia.pdf} >
+                                        {sentencia.nombreDocumento}
+                                    </a>
+
                                 </li>
                             )
 
                             )}
 
-                            <div className="separator_blue"> </div> 
+                            <div className="separator_blue"> </div>
 
                             {documentosAdicionales.map((adicional) => (
-                                <li key={adicional.id}> 
-                            <a className="link_secondary text_capitalize" href={adicional.pdf}>
-                                {adicional.nombreDocumento} 
-                            </a>
-                                
+                                <li key={adicional.id}>
+                                    <a target="_blank" className="link_secondary text_capitalize" href={adicional.pdf}>
+                                        {adicional.nombreDocumento}
+                                    </a>
+
                                 </li>
                             )
 
@@ -379,7 +448,7 @@ let decisionesRecientes = [
                         </ul>
 
 
-        
+
                     </div>
                 </div>
             </Container>

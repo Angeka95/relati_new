@@ -10,6 +10,8 @@ import Suscripcion from './sections/suscripcion';
 import Caso from './sections/caso';
 import Home from './sections/inicio';
 import Analisis from './sections/analisisTematico';
+import Glosario from './sections/glosario'
+import PreguntasFrecuentes from './sections/preguntasFrecuentes'
 
 
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
@@ -27,10 +29,12 @@ function App() {
           <Route path="/boletines" element={<Boletines />} />
           <Route path="/suscripcion" element={<Suscripcion />} />
           <Route path="/tesauro" element={<Tesauro />} />
-          <Route path="/mapaJurisprudencial" element={<MapaJurisprudencial />} />
-          <Route path="/busquedaAvanzada" element={<BusquedaAvanzada />} />
-          <Route path="/resultadosBusqueda" element={<ResultadosBusqueda />} />
-          <Route path="/analisisTematico" element={<Analisis />} />
+          <Route path="/mapa-jurisprudencial" element={<MapaJurisprudencial />} />
+          <Route path="/busqueda-avanzada" element={<BusquedaAvanzada />} />
+          <Route path="/resultados-busqueda" element={<ResultadosBusqueda />} />
+          <Route path="/analisis-tematico" element={<Analisis />} />
+          <Route path="/glosario" element={<Glosario />} />
+          <Route path="/preguntas-frecuentes" element={<PreguntasFrecuentes />} />
 
           {/* Pagina no encontrada  */}
           {/* <Route path="*" element={<NotFound />} /> */}

@@ -69,6 +69,7 @@ h6 {
 }
 
 
+
 .text_bolder {
   font-weight: 700 !important;
 }
@@ -176,6 +177,10 @@ h6 {
   width: 70%;
   margin-left: 15%;
   margin-right: 15%;
+}
+
+.text_space_min{
+  margin-bottom: 0.5rem;
 }
 
 
@@ -386,13 +391,45 @@ h6 {
   margin: 20px !important;
 }
 
+.margin_l {
+  margin: 60px !important;
+}
+
+
+.margin_xl {
+  margin: 120px !important;
+}
+
 .margin_none{
   margin: 0 !important
 }
 
+
+
 .padding_none {
   padding: 0px !important;
 }
+
+.padding_vertical {
+  padding-top: -4px !important; 
+  padding-bottom: -4px !important;
+}
+
+
+.padding_s {
+  padding: 10px !important;
+}
+
+.padding_m {
+  padding: 20px !important;
+}
+.padding_l {
+  padding: 60px !important;
+}
+.padding_xl {
+  padding: 120px !important;
+}
+
 
 .justify_end_spacing {
   display: flex;
@@ -752,6 +789,11 @@ h6 {
   margin: 20px 0px 10px 0px
 }
 
+.separator_green {
+  border: 1px solid #98C438;
+  margin: 20px 0px 10px 0px
+}
+
 .margin_results_page{
   margin-top: 8px;
 }
@@ -977,6 +1019,11 @@ h6 {
 /*FILTER LARGE OR FLOAT */
 
 .button_filter_size{
+  width: 300px;
+  min-width: 300px;
+}
+
+.button_filter_size_s{
   width: 300px;
   min-width: 300px;
 }
@@ -1216,7 +1263,7 @@ h6 {
 /* Firefox */
 .scroll-container {
   scrollbar-width: thin; /* Ancho de la barra de desplazamiento: auto, thin, none */
-  scrollbar-color: #98C438 transparent; /*Color del control deslizante del scroll y el fondo */
+  scrollbar-color: #dedede transparent; /*Color del control deslizante del scroll y el fondo */
 
 
   scroll-behavior: smooth;
@@ -1924,6 +1971,16 @@ padding: 0px 0% 0% 3%;
 }
 
 
+.button_container{ 
+  min-width: 140px !important;
+}
+
+.input_caso{
+  min-width: 380px !important;
+  max-width: 380px !important;
+  margin: 0px 20px !important;
+}
+
 
 /*\ END MACROCASO*/
 
@@ -1979,12 +2036,32 @@ padding: 0px 0% 0% 3%;
   max-width: 280px;
 }
 
+
 .card_medium{
   width: 46%;
   margin: 2%; 
   box-shadow: rgba(57, 129, 195, 0.2) 0px 8px 24px;
   padding: 2% 2% 1% 2%;
   border-radius: 16px;
+   background: #fff; /* Fondo de la card */
+  display: flex;
+  flex-direction: column;
+  overflow: hidden; /* Evita que el contenido se desborde */
+  transition: all 0.3s ease-in-out;
+
+}
+
+.masonry-grid {
+  display: block;
+}
+
+.masonry-itemx {
+  width: 300px; /* Ancho de las cards */
+  background-color: #f0f0f0;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 5px 15px;
+  border-radius: 8px;
 }
 
 .card_small{
@@ -2015,6 +2092,7 @@ padding: 0px 0% 0% 3%;
 .container_40{
   width: 36%;
   margin: 0% 2%; 
+  align-content: center;
 }
 
 .container_60{
@@ -2052,11 +2130,41 @@ padding: 0px 0% 0% 3%;
 
 /*\END HEADER*/
 
+
+/*\ GLOSARIO /  PREGUNTAS FRECUENTES */
+
+.box_scrolleable{
+  background-color: #FFF;
+  border-radius: 20px;
+  box-shadow: rgba(57, 129, 195, 0.2) 0px 8px 24px;
+  width: 1000px;
+  height: 350px;
+  overflow-y: auto;
+}
+
+.box_separator_margin{
+  margin: 15px 0px;
+}
+
+.box_scrolleable_spacing{
+  padding: 60px;
+}
+
+.text_accordion_size{
+  width: 70%;
+}
+
 /*--------------------------------------------------------------------*/
 /*--------------------------------------------------------------------*/
 
 /*QUERIES*/
 
+@media (min-width: 1300px) {
+.box_scrolleable{
+  height: 450px;
+}
+
+}
 
 
 @media (max-width: 1130px) {
@@ -2177,6 +2285,27 @@ padding: 0px 0% 0% 3%;
 }
 
 
+.container_40{
+  width: 98%;
+  margin: 0% 1% 5% 1%; 
+  align-content: center;
+  text-align: center;
+
+}
+
+.container_60{
+  display: flex;
+  justify-content: center;
+  width: 98%;
+  margin: 0% 1%; 
+  
+}
+
+
+
+
+
+
 }
 
 @media (min-width: 600px) {
@@ -2246,7 +2375,9 @@ padding: 0px 0% 0% 3%;
   margin: 2%; 
 }
 
-
+.box_scrolleable_spacing{
+  padding: 30px;
+}
 
 
 }

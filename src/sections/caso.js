@@ -5,8 +5,9 @@ import { Link } from 'react-router-dom';
 import TabCustom from '../components/tab.js';
 import axios from 'axios';
 import ListVideos from '../components/listVideos.js';
-
 import Carousel from '../components/carousel.js';
+import ListCardSearch from '../components/listCardSearchResults.js';
+
 
 const boletinesMacrocaso = [
   {
@@ -172,7 +173,7 @@ export default function Caso() {
   const [selectedSubcasos, setSelectedSubcasos] = useState([]);
 
   const handleSelectSubcasos = (event2) => {
-    setSelectedSubcasos(event2.target.value2);
+    setSelectedSubcasos(event2.target.value);
   };
 
 
@@ -264,7 +265,7 @@ export default function Caso() {
             <div className="cta_container">
               <h6 className="text_bolder cta_text">Conozca los lineamientos en materia de sanción propia y Trabajos, Obras y Actividades con contenido Reparador (TOAR)</h6>
               <Link to="/suscripcion">
-                <Button className="button_primary">Ver TOAR</Button>
+                <Button className="button_primary button_container">Ver TOAR</Button>
               </Link>
             </div>
           </Container>
@@ -276,8 +277,6 @@ export default function Caso() {
           <h2 className="text_bolder width_100 text_center ">Decisiones relacionadas al Caso</h2>
           <h5 className="margin_top_m text_center margin_bottom_l">Encuentre las decisiones relacionadas al Caso 01</h5>
         </div>
-
-        <></>
 
         <Container className="shadow_smooth tab_container">
 
@@ -299,13 +298,13 @@ export default function Caso() {
 
 
                   {value === 0 && (
-                    <Box sx={{ p: 3 }}>
-                      <h5 className="width_100 text_center margin_m text_bolder">Seleccione tipo de decisión o subcaso para ver las decisiones por Sala</h5>
-                      <Grid container spacing={2} className="margin_bottom_l">
-                        <Grid item xs={12} sm={12} className="wrap">
-                          <Grid item xs={12} sm={6}>
-                            <FormControl fullWidth>
-                              <InputLabel id="multi-select-label">Tipo de Decisión</InputLabel>
+                    <Box >
+                      <h5 className="width_100 text_center margin_m text_bolder">Resultados de búsqueda</h5>
+                      <div  className="margin_bottom_l">
+                        <div className="wrap width_100">
+                           
+                            <FormControl className="input_caso">
+                              <InputLabel className="" id="multi-select-label">Tipo de Decisión</InputLabel>
                               <Select
                                 labelId="multi-select-label"
                                 multiple
@@ -327,10 +326,11 @@ export default function Caso() {
                               </Select>
 
                             </FormControl>
-                          </Grid>
+                          
+                        
 
-                          <Grid item xs={12} sm={6}>
-                            <FormControl fullWidth>
+                         
+                            <FormControl  className="input_caso">
                               <InputLabel id="multi-select-label">Subcaso</InputLabel>
                               <Select
                                 labelId="multi-select-label"
@@ -353,14 +353,19 @@ export default function Caso() {
                               </Select>
 
                             </FormControl>
-                          </Grid>
+                         
 
-                        </Grid>
-                      </Grid>
+                          {(selectedOptions.length > 0 || selectedSubcasos.length > 0) && (
+                            <div className='width_100'>
+                              <ListCardSearch isExternalFilters={true}/>
+                            </div>
+                          )}
+                        </div>
+                      </div>
                     </Box>
                   )}
                   {value === 1 && (
-                    <Box sx={{ p: 3 }}>
+                    <Box >
                       <h5 className="width_100 text_center margin_m text_bolder">Seleccione tipo de decisión o subcaso para ver las decisiones por Tribunal</h5>
                     </Box>
                   )}

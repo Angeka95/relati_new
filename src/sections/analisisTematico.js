@@ -13,6 +13,19 @@ export default function Analisis() {
             id: 1,
             numeroPaso: "1",
             nombreTema: "Definición y priorización de los temas",
+            dscripcionTema: `Esta es una labor preparatoria que corresponde al responsable de la elaboración de cada línea jurisprudencial, con la validación interna por parte de la Relatora General, donde se definen temas generales de interés que se abordan en decisiones judiciales de la JEP y que orientarán la posterior obtención, consolidación y análisis de providencia que se desarrollarán a través de la línea jurisprudencial.
+
+            El tema, por tanto, se puede identificar de la relación que se haga entre los hechos que se exponen en la sentencia o de las pretensiones de cada actuación y su relación con la parte considerativa, en donde se encuentran las razones directas bajo las cuales se aprueba el fallo.
+
+            Este ejercicio preparatorio no se reflejaría en un contenido específico del módulo de líneas jurisprudenciales de Relati, sino que corresponde al trabajo previo a la elaboración de los productos que allí se publicarían.
+
+            En términos de información empleada, la priorización de temas tiene como insumos:
+
+            Revisión de material bibliográfico interno de la JEP (cuyos ejemplares en formato digital se encuentran al acceso desde la página web oficial);
+            Estudio especial de las sentencias interpretativas (SENIT) de la JEP (cuya consulta se puede hacer a través de Relati);
+            Análisis de documentos de política de la JEP, como Manuales, Protocolos, Lineamientos, Procedimientos internos (cuya consulta se puede hacer a través de Relati; Banner de “Normativa” de la página principal de la JEP; Jurinfo – Normativa interna de la JEP)
+            Estudio de temas abordados a través de los espacios de formación promovidos desde la JEP (cuya consulta se puede hacer desde el Campus Virtual de la JEP).
+            Identificación de temas a través de espacios de divulgación y difusión de información de la JEP (cuya consulta se puede hacer a través del Canal de Youtube de la JEP y espacio de “Boletines de jurisprudencia” en Relati)`
         },
 
         {
@@ -41,22 +54,22 @@ export default function Analisis() {
         {
             id: 6,
             numeroPaso: "6",
-            nombreTema: "Documento analítico (Línea)",
+            nombreTema: "Identificación de la decisión arquimédica Documento analítico (Línea)",
         },
         {
             id: 7,
             numeroPaso: "7",
-            nombreTema: "Construcción de la tesis jurisprudencial (Respuesta)",
+            nombreTema: " Análisis estático de la decisión de apoyo o punto arquimédico",
         },
         {
             id: 8,
             numeroPaso: "8",
-            nombreTema: "Análisis estático de la decisión de apoyo o punto arquimédico",
+            nombreTema: "Construcción de la tesis jurisprudencial (Respuesta)",
         },
         {
             id: 9,
             numeroPaso: "9",
-            nombreTema: "Identificación de la decisión arquimédica",
+            nombreTema: "Documento analítico (Línea)",
         },
 
 
@@ -90,11 +103,6 @@ export default function Analisis() {
                 </div>
 
 
-
-                <div className="justify_center margin_top_m">
-
-                    <Button className="button_primary"> Ver todos los casos</Button>
-                </div>
             </Container>
             <Container className="margin_top_xl ">
                 <h2 className="text_bolder text_center"> Documentos de análisis <span className="display_block"> Líneas jurisprudenciales </span>  </h2>

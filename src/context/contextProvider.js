@@ -7,9 +7,10 @@ const ContextProvider = ({ children }) => {
   const [verTodasDecisiones, setVerTodasDecisiones] = useState(true);
   const [busqueda, setBusqueda] = useState();
   const [busquedaAvanzada, setBusquedaAvanzada] = useState('');
+  const [verMasDecisionesRecientes, setVerMasDecisionesRecientes] = useState(0);
 
   return (
-    <Context.Provider value={{ verTodasDecisiones, setVerTodasDecisiones, busqueda, setBusqueda }}>
+    <Context.Provider value={{ verTodasDecisiones, setVerTodasDecisiones, busqueda, setBusqueda, verMasDecisionesRecientes, setVerMasDecisionesRecientes }}>
       {children}
     </Context.Provider>
   );

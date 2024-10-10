@@ -39,10 +39,11 @@ export default function CardSearch({ datos }) {
     <React.Fragment>
 
       <CardContent className="card_container">
-        <p className="text_uppercase justify_end_spacing text_spacing">{datos.fecha}</p>
-        <p className="text_bolder text_uppercase">{datos.asunto}</p>
-        <p className="text_bolder">{datos.nombreDecision}</p>
-        <p>Pertenece a:  <span className="text_bolder"> {datos.grupoPertence}</span> </p>
+        <p className="text_uppercase justify_end_spacing text_spacing text_space_min">{datos.fecha}</p>
+        <p className="text_bolder text_uppercase text_space_min">{datos.asunto}</p>
+        <p className="text_bolder text_space_min">{datos.nombreDecision}</p>
+        <p className="text_space_min">{datos.salaOSeccion}</p>
+        <p className="text_space_min">• Pertenece a:  <span className="text_bolder"> {datos.grupoPertence}</span> </p>
 
         {isButtonInfoEnabled && (
           <Button className="link_primary text_lowercase" onClick={toggleButtonInfo}>ver más</Button>)}
@@ -51,13 +52,13 @@ export default function CardSearch({ datos }) {
 
         {!isButtonInfoEnabled && (
           <div className="width_100 ">
-            <p>Lugar de los hechos: <span className="text_bolder"> {datos.lugarHechos}</span></p>
-            <p>Magistrado: <span className="text_bolder">{datos.magistrado}</span></p>
-            <p>Macrocaso: <span className="text_bolder">{datos.macrocaso}</span></p>
-            <p>Conclusión de la decisión: <span className="text_bolder">{datos.conclusionDecision}</span></p>
+            <p className="text_space_min">• Lugar de los hechos: <span className="text_bolder"> {datos.lugarHechos}</span></p>
+            <p className="text_space_min">• Magistrado: <span className="text_bolder">{datos.magistrado}</span></p>
+            <p className="text_space_min">• Macrocaso: <span className="text_bolder">{datos.macrocaso}</span></p>
+            <p className="text_space_min">• Conclusión de la decisión: <span className="text_bolder">{datos.conclusionDecision}</span></p>
 
             <Button
-              className="link_primary"
+              className="link_primary text_lowercase"
               onClick={toggleButtonInfo}>
               {!isButtonInfoEnabled && 'ver menos'}
             </  Button>

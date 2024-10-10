@@ -14,12 +14,17 @@ import { Container, Grid } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { EditCalendar } from '@mui/icons-material';
 import Context from '../context/context';
+import ExpandLessOutlinedIcon from '@mui/icons-material/ExpandLessOutlined';
+import ExpandMoreOutlinedIcon from '@mui/icons-material/ExpandMoreOutlined';
+import Filter from './filter';
+import FilterListIcon from '@mui/icons-material/FilterList';
 
 let datos = [
     {
         id: 1,
         "fecha": "2023-06-15",
         "asunto": "En el asunto de héctor orlando bastidas bravo",
+        "salaOSeccion": "Sala de Reconocimiento",
         "nombreDecision": "Sentencia SRT-ST-117-2024",
         "grupoPertence": "Grupo armado no firmante",
         "lugarHechos": "Acacías, Meta",
@@ -32,6 +37,7 @@ let datos = [
         id: 2,
         "fecha": "2022-03-18",
         "asunto": "En el asunto de martin gonzales leal",
+        "salaOSeccion": "Sala de Amnistía",
         "nombreDecision": "Sentencia SRT-ST-120-2024",
         "grupoPertence": "Grupo armado no firmante",
         "lugarHechos": "Acacías, Meta",
@@ -45,6 +51,7 @@ let datos = [
         id: 3,
         "fecha": "2021-06-22",
         "asunto": "En el asunto de juana castellanos rodriguez",
+        "salaOSeccion": "Sección de Apelacion",
         "nombreDecision": "Sentencia SRT-ST-104-2024",
         "grupoPertence": "Grupo armado no firmante",
         "lugarHechos": "Acacías, Meta",
@@ -58,6 +65,7 @@ let datos = [
         id: 4,
         "fecha": "2023-08-11",
         "asunto": "En el asunto de mario leal prado",
+        "salaOSeccion": "Sección de Revisión",
         "nombreDecision": "Sentencia SRT-ST-104-2024",
         "grupoPertence": "Grupo armado no firmante",
         "lugarHechos": "Acacías, Meta",
@@ -71,6 +79,7 @@ let datos = [
         id: 5,
         "fecha": "2021-03-15",
         "asunto": "En el asunto de juan camilo molano pedraza",
+        "salaOSeccion": "Sección de Apelacion",
         "nombreDecision": "Sentencia SRT-ST-104-2024",
         "grupoPertence": "Grupo armado no firmante",
         "lugarHechos": "Acacías, Meta",
@@ -84,6 +93,7 @@ let datos = [
         id: 6,
         "fecha": "2022-03-08",
         "asunto": "En el asunto de camila moreno daza",
+        "salaOSeccion": "Sección de Apelacion",
         "nombreDecision": "Sentencia SRT-ST-104-2024",
         "grupoPertence": "Grupo armado no firmante",
         "lugarHechos": "Acacías, Meta",
@@ -97,6 +107,7 @@ let datos = [
         id: 7,
         "fecha": "2024-02-01",
         "asunto": "En el asunto de guillermo fernandez moreno",
+        "salaOSeccion": "Sección de Revisión",
         "nombreDecision": "Sentencia SRT-ST-104-2024",
         "grupoPertence": "Grupo armado no firmante",
         "lugarHechos": "Acacías, Meta",
@@ -110,6 +121,7 @@ let datos = [
         id: 8,
         "fecha": "2021-02-14",
         "asunto": "En el asunto de valentina lozano paz",
+        "salaOSeccion": "Sección de Revisión",
         "nombreDecision": "Sentencia SRT-ST-104-2024",
         "grupoPertence": "Grupo armado no firmante",
         "lugarHechos": "Acacías, Meta",
@@ -123,6 +135,7 @@ let datos = [
         id: 9,
         "fecha": "2021-02-14",
         "asunto": "En el asunto de alejandra arias vasquez",
+        "salaOSeccion": "Sección de Revisión",
         "nombreDecision": "Sentencia SRT-ST-104-2024",
         "grupoPertence": "Grupo armado no firmante",
         "lugarHechos": "Acacías, Meta",
@@ -136,6 +149,7 @@ let datos = [
         id: 10,
         "fecha": "2021-02-14",
         "asunto": "En el asunto de camilo puentes alvarado",
+        "salaOSeccion": "Sección de Revisión",
         "nombreDecision": "Sentencia SRT-ST-104-2024",
         "grupoPertence": "Grupo armado no firmante",
         "lugarHechos": "Acacías, Meta",
@@ -149,6 +163,7 @@ let datos = [
         id: 11,
         "fecha": "2021-08-22",
         "asunto": "En el asunto de mario ramirez duarte",
+        "salaOSeccion": "Sección de Revisión",
         "nombreDecision": "Sentencia SRT-ST-104-2024",
         "grupoPertence": "Grupo armado no firmante",
         "lugarHechos": "Acacías, Meta",
@@ -162,6 +177,7 @@ let datos = [
         id: 12,
         "fecha": "2021-05-11",
         "asunto": "En el asunto de viviana suarez mondragon",
+        "salaOSeccion": "Sección de Revisión",
         "nombreDecision": "Sentencia SRT-ST-104-2024",
         "grupoPertence": "Grupo armado no firmante",
         "lugarHechos": "Acacías, Meta",
@@ -175,6 +191,7 @@ let datos = [
         id: 13,
         "fecha": "2020-02-14",
         "asunto": "En el asunto de diego gomez valencia",
+        "salaOSeccion": "Sección de Revisión",
         "nombreDecision": "Sentencia SRT-ST-104-2024",
         "grupoPertence": "Grupo armado no firmante",
         "lugarHechos": "Acacías, Meta",
@@ -188,6 +205,7 @@ let datos = [
         id: 14,
         "fecha": "2020-02-01",
         "asunto": "En el asunto de pablo bohórquez garzón",
+        "salaOSeccion": "Sección de Revisión",
         "nombreDecision": "Sentencia SRT-ST-104-2024",
         "grupoPertence": "Grupo armado no firmante",
         "lugarHechos": "Acacías, Meta",
@@ -201,6 +219,7 @@ let datos = [
         id: 15,
         "fecha": "2019-02-14",
         "asunto": "En el asunto de luis benavides romero",
+        "salaOSeccion": "Sección de Revisión",
         "nombreDecision": "Sentencia SRT-ST-104-2024",
         "grupoPertence": "Grupo armado no firmante",
         "lugarHechos": "Acacías, Meta",
@@ -214,6 +233,7 @@ let datos = [
         id: 16,
         "fecha": "2016-02-14",
         "asunto": "En el asunto de andrea castillo diaz",
+        "salaOSeccion": "Sección de Apelacion",
         "nombreDecision": "Sentencia SRT-ST-104-2024",
         "grupoPertence": "Grupo armado no firmante",
         "lugarHechos": "Acacías, Meta",
@@ -227,6 +247,7 @@ let datos = [
         id: 17,
         "fecha": "2021-02-09",
         "asunto": "En el asunto de esteban vargas jaramillo",
+        "salaOSeccion": "Sección de Apelacion",
         "nombreDecision": "Sentencia SRT-ST-104-2024",
         "grupoPertence": "Grupo armado no firmante",
         "lugarHechos": "Acacías, Meta",
@@ -240,6 +261,7 @@ let datos = [
         id: 18,
         "fecha": "2021-08-07",
         "asunto": "En el asunto de ricardo castro salazar",
+        "salaOSeccion": "Sección de Apelacion",
         "nombreDecision": "Sentencia SRT-ST-104-2024",
         "grupoPertence": "Grupo armado no firmante",
         "lugarHechos": "Acacías, Meta",
@@ -253,6 +275,7 @@ let datos = [
         id: 19,
         "fecha": "2019-02-14",
         "asunto": "En el asunto de sergio ramirez torres",
+        "salaOSeccion": "Sección de Revisión",
         "nombreDecision": "Sentencia SRT-ST-104-2024",
         "grupoPertence": "Grupo armado no firmante",
         "lugarHechos": "Acacías, Meta",
@@ -266,6 +289,7 @@ let datos = [
         id: 20,
         "fecha": "2018-02-14",
         "asunto": "En el asunto de catalina moreno vargas",
+        "salaOSeccion": "Sección de Revisión",
         "nombreDecision": "Sentencia SRT-ST-104-2024",
         "grupoPertence": "Grupo armado no firmante",
         "lugarHechos": "Acacías, Meta",
@@ -279,6 +303,7 @@ let datos = [
         id: 21,
         "fecha": "2016-06-14",
         "asunto": "En el asunto de alejandro torres castro",
+        "salaOSeccion": "Sección de Apelacion",
         "nombreDecision": "Sentencia SRT-ST-104-2024",
         "grupoPertence": "Grupo armado no firmante",
         "lugarHechos": "Acacías, Meta",
@@ -292,6 +317,7 @@ let datos = [
         id: 22,
         "fecha": "2017-01-15",
         "asunto": "En el asunto de isabel castillo vargas",
+        "salaOSeccion": "Sección de Apelacion",
         "nombreDecision": "Sentencia SRT-ST-104-2024",
         "grupoPertence": "Grupo armado no firmante",
         "lugarHechos": "Acacías, Meta",
@@ -305,7 +331,7 @@ let datos = [
 
 
 
-export default function Card({ selectedFilters, isListSmall, selectedTerm, isLargeResult }) {
+export default function Card({ selectedFilters, isListSmall, selectedTerm, isLargeResult, isExternalFilters }) {
     const { verTodasDecisiones, busqueda } = useContext(Context);
 
     if (!selectedFilters) {
@@ -319,6 +345,13 @@ export default function Card({ selectedFilters, isListSmall, selectedTerm, isLar
     };
 
 
+    const [showFilter, setShowFilter] = useState(false);
+
+    const handleFilter = () => {
+      setShowFilter(!showFilter);
+    };
+
+    const [externalFilters, setExternalFilters] = useState([]);
 
     const [currentData, setCurrentData] = useState([]);
 
@@ -478,13 +511,16 @@ export default function Card({ selectedFilters, isListSmall, selectedTerm, isLar
             <div className=  {isListSmall ? ('text_results_search', 'no-spacing') :  ('text_results_search','margin_search') } >
                 <SpaceGrid>
                     <JustMapNoneGrid>
-                    <h3 className="">Resultados de búsqueda</h3>
+
+                    {!isExternalFilters && (
+                        <h3 className="">Resultados de búsqueda</h3>
+                    )}
                     {!busqueda && !verTodasDecisiones && (
                         <h4 className="text_diabled">Cuando ingrese una búsqueda verá los resultados aquí</h4>
                     )}
 
 
-                    {!selectedTerm && verTodasDecisiones && (
+                    {!isExternalFilters && !selectedTerm && verTodasDecisiones && (
                         <h4 >Está buscando por <span className="text_bolder">"Todas las decisiones"</span> </h4>
                     )}
 
@@ -498,7 +534,7 @@ export default function Card({ selectedFilters, isListSmall, selectedTerm, isLar
                         <h4 >Está buscando por <span className="text_bolder">"{busqueda}"</span> </h4>
                     )}
 
-                    {selectedFilters.length === 0 && (
+                    {!isExternalFilters && selectedFilters.length === 0 && (
                         <h4 className="text_diabled">(Aún no ha agregado ningún filtro a su búsqueda)</h4>
                     )}
                     {selectedFilters.length > 0 && (
@@ -530,6 +566,22 @@ export default function Card({ selectedFilters, isListSmall, selectedTerm, isLar
                                         <h4 className="text_bolder"> Decisiones </h4> 
                                     </JustMapGrid>
                                     <NoneGrid>
+
+                                        {isExternalFilters && (
+                                            <>
+                                                <Button className={showFilter ? ("button_function_noradius button_filter_size_s" ) : ("button_function button_filter_size_s" )} 
+                                                endIcon ={showFilter ? <ExpandMoreOutlinedIcon /> : <ExpandLessOutlinedIcon/>}
+                                                startIcon={<FilterListIcon /> } 
+                                                onClick={handleFilter}>
+                                                    {showFilter ? ('Filtrar' ) : 'Filtrar'} 
+                                                </Button>
+                                        
+                                                <div className="position_float"> 
+                                                <Filter isShowingFilter={showFilter} isFilterFloat={true} setSelectedFilters={setExternalFilters}/>
+                                                
+                                                </div> 
+                                            </>
+                                        )}
 
                                         <Button className="button_function" startIcon={<SortIcon />} onClick={toggleButton}>Ordenar
                                         </Button>
