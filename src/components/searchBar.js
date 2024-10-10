@@ -9,7 +9,7 @@ import ClearIcon from '@mui/icons-material/Clear';
 import { styled } from '@mui/material/styles';
 import Context from '../context/context';
 
-export default function Search({isSearchAdvance, isSearchMain}) {
+export default function Search({ isSearchAdvance, isSearchMain }) {
 
   // Grids personalizadas
 
@@ -45,14 +45,14 @@ export default function Search({isSearchAdvance, isSearchMain}) {
 
   const [valueBar, setValueBar] = useState('');
 
-    // Trae el valor de la busqueda y del switch desde el contexto 
+  // Trae el valor de la busqueda y del switch desde el contexto 
 
   const { verTodasDecisiones, setVerTodasDecisiones, setBusqueda, busquedaAvanzada } = useContext(Context);
   const updateSelectedValue = (event, value) => {
     setValueBar(value);
   };
 
-      // Busqueda por palabra
+  // Busqueda por palabra
 
   const search = () => {
     setBusqueda(valueBar);
@@ -60,7 +60,7 @@ export default function Search({isSearchAdvance, isSearchMain}) {
   };
 
 
-    // Encender y apagar switch ver todas las decisiones 
+  // Encender y apagar switch ver todas las decisiones 
 
   const handleChange = () => {
     setVerTodasDecisiones(prev => !prev);
@@ -77,23 +77,23 @@ export default function Search({isSearchAdvance, isSearchMain}) {
 
 
     <div className="justify_center">
-      
-      <Stack className= {isSearchAdvance ?  ('autocomplete_bar_search_nomargin') : 'autocomplete_bar_search' } >
-        
+
+      <Stack className={isSearchAdvance ? ('autocomplete_bar_search_nomargin') : 'autocomplete_bar_search'} >
+
         <SpaceBottom>
 
           {isSearchMain || !isSearchAdvance && (
-                      <FormControlLabel control={<Switch checked={verTodasDecisiones} onChange={handleChange} />} label="ver todas las decisiones" className="switch_search" />)
+            <FormControlLabel control={<Switch checked={verTodasDecisiones} onChange={handleChange} />} label="ver todas las decisiones" className="switch_search" />)
           }
 
 
-          <Autocomplete className="margin_top_s "
+          <Autocomplete style={{ color: 'black', }} className="margin_top_s z-index_front text_black"
             id="free-solo-demo"
             value={valueBar}
             freeSolo
             onChange={updateSelectedValue}
             options={searchOptions.map((option) => option.title)}
-            renderInput={(params) => <TextField {...params}  label= {isSearchAdvance ? "" : "Ingrese su búsqueda"} placeholder= {isSearchAdvance ? "" : "Busque por palabra clave, número de decisión, radicado...  "} inputProps={{
+            renderInput={(params) => <TextField {...params} label={isSearchAdvance ? "" : "Ingrese su búsqueda"} placeholder={isSearchAdvance ? "" : "Busque por palabra clave, número de decisión, radicado...  "} inputProps={{
               ...params.inputProps,
               maxLength: 80
             }} />}
@@ -113,12 +113,12 @@ export default function Search({isSearchAdvance, isSearchMain}) {
           </ShowGrid>
 
           {!isSearchAdvance && (
-          <NoneGrid>
-            <Button className="light_white text_blue autocomplete_button_help button_terciary">?</Button>
-          </NoneGrid>
+            <NoneGrid>
+              <Button className="light_white text_blue autocomplete_button_help button_terciary">?</Button>
+            </NoneGrid>
           )}
           {!isSearchAdvance && (
-          <Button className="autocomplete_button_advance primary_blue text_white button_secondary_border">Búsqueda Avanzada</Button>
+            <Button className="autocomplete_button_advance primary_blue text_white button_secondary_border">Búsqueda Avanzada</Button>
           )}
         </SpaceBottom>
       </Stack>

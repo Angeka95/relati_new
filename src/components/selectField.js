@@ -14,7 +14,7 @@ import CloseIcon from '@mui/icons-material/Close';
 export default function Select_field({ datos_filtros, label, id, setSelectedData, isDisabled }) {
   const [selectedValues, setSelectedValues] = useState([]);
 
-// Filtros
+  // Filtros
 
   useEffect(() => {
     if (isDisabled) {
@@ -68,7 +68,7 @@ export default function Select_field({ datos_filtros, label, id, setSelectedData
         MenuProps={{
           PaperProps: {
             sx: {
-              boxShadow: '0px 8px 24px rgba(57, 129, 195, 0.2) ', 
+              boxShadow: '0px 8px 24px rgba(57, 129, 195, 0.2) ',
             },
           },
         }}
@@ -78,22 +78,22 @@ export default function Select_field({ datos_filtros, label, id, setSelectedData
         {datos_filtros.map(dato => (
           <MenuItem key={dato.nombre_campo} value={dato.nombre_campo}
             sx={{
-              backgroundColor: 'white', 
+              backgroundColor: 'white',
               '&.Mui-selected': {
-                backgroundColor: '#F2F8FB', 
+                backgroundColor: '#F2F8FB',
               },
               '&:hover': {
-                backgroundColor: '#F2F8FB', 
+                backgroundColor: '#F2F8FB',
               },
-           
+
               '&.Mui-selected:hover': {
-                backgroundColor: '#F2F8FB', 
+                backgroundColor: '#F2F8FB',
               }
             }}>
             <Checkbox sx={{
-              color: '#98C438', 
+              color: '#98C438',
               '&.Mui-checked': {
-                color: '#98C438', 
+                color: '#98C438',
               },
             }} checked={selectedValues.indexOf(dato.nombre_campo) > -1} />
             <ListItemText primary={dato.nombre_campo} />

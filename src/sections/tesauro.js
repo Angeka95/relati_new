@@ -312,14 +312,21 @@ export default function Tesauro() {
     const [activeLetter, setActiveLetter] = useState(null);
     const [selectedTerm, setSelectedTerm] = useState(null);
 
+    // Valor de los terminos al seleccionar letra
     const selectLetter = (letter) => {
         setActiveLetter(letter);
         setSelectedTerm ('');
     } ;
 
+    // Boton de letra activa
+
     const getButtonActiveClass = (letter) => {
         return letter === activeLetter ? 'button_alphabet_active' : 'button_terciary';
     };
+
+    // Actualiza el término seleccionado
+
+
     const handleTermClick = (term) => {
         setSelectedTerm(term);
     };

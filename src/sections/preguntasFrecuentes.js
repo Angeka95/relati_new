@@ -32,9 +32,9 @@ export default function PreguntasFrecuentes() {
             id: 4,
             pregunta: '¿Qué es la Titulación?',
             descripcion: 'Además de la extracción de los datos propios de identificación de la providencia o criterios del documento, la Relatoría General de la JEP también se encarga de realizar un análisis más detallado de la decisión, enfocado en la parte jurídica. Para ello, identifica los problemas jurídicos que se planteó la magistratura al momento de pronunciarse, así como las respectivas tesis que dan respuesta a esos interrogantes. Para esto, la ficha jurisprudencial incluye unas palabras clave que describen el contenido y los temas de la providencia, las cuales conforman el tesauro. Asimismo, se extraen los bancos de enfoques diferenciales: de: Género; Étnico-racial; Grupos vulnerables; Territorial; Ambiental. ',
-           
-        
-        
+
+
+
         },
 
         {
@@ -51,8 +51,8 @@ export default function PreguntasFrecuentes() {
             id: 7,
             pregunta: '¿Por qué hay fichas jurisprudenciales sin problema jurídico y tesis?',
             descripcion: 'Teniendo en cuenta que la Relatoría emplea dos niveles de titulación, encontrará unas fichas jurisprudenciales con un análisis más minucioso, más allá de los datos de identificación y la síntesis del caso. El criterio para esta diferenciación es la novedad jurídica o de innovación en las reglas de derecho para la resolución de cada caso concreto. En el primer nivel, además de los datos de identificación de la providencia o criterios del documento, resuelves, normas aplicables, y la sección de palabras clave, la Relatoría construye una síntesis del caso, notas de relatoría y enfoques diferenciales. La titulación en segundo nivel incluye, además de los campos que extraen en la titulación de primer nivel, una parte enfocada en los problemas jurídicos y las tesis jurisprudenciales.'
-        
-        
+
+
         },
 
 
@@ -73,9 +73,9 @@ export default function PreguntasFrecuentes() {
     return (
         <div>
             <Container>
-            <h1 className="text_center margin_top_l">Preguntas Frecuentes</h1>
-            <h5 className="text_center">Encuentre las decisiones de la JEP y conozca la actividad judicial en el territorio Colombiano</h5>
-            
+                <h1 className="text_center margin_top_l">Preguntas Frecuentes</h1>
+                <h5 className="text_center">Encuentre las decisiones de la JEP y conozca la actividad judicial en el territorio Colombiano</h5>
+
                 <div className="justify_center ">
                     <div className="box_scrolleable scroll-container margin_top_l">
 

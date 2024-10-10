@@ -155,7 +155,7 @@ h6 {
 }
 
 .text_black {
-  color: #575757;
+  color: #575757 !important;
 }
 
 .text_blue {
@@ -312,7 +312,7 @@ h6 {
 
 /*END BUTTONS*/
 
-/*CONTAINER*/
+/*CONTAINER*/ 
 
 .no-spacing {
   margin: 0px !important;
@@ -536,7 +536,7 @@ h6 {
 }
 
 .z-index_front{
-  z-index: 10;
+  z-index: 10 !important;
 }
 
 .display_flex{
@@ -555,6 +555,9 @@ h6 {
   display: block
 }
 
+.z-index{
+  z-index: 10;
+}
 
 
 /*END CONTAINER*/
@@ -667,7 +670,7 @@ h6 {
 
 
 .MuiInputLabel-root {
-  color: #c4c4c4 !important;
+  color: #272727 !important;
 
 }
 
@@ -675,6 +678,13 @@ h6 {
   color: #111D31 !important;
 }
 
+.MuiInputBase-input {
+  color: black;
+}
+.MuiAutocomplete-input{
+  color: black;
+  z-index: 10;
+}
 
 
 /*END SEARCH BAR */
