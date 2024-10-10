@@ -101,12 +101,12 @@ export default function CardSearch({ datos }) {
 
               {isButtonExtractEnabled && (
                 <Button
-                  className="link_secondary justify_center" onClick={toggleButtonExtract}> ver menos del extracto
+                  className="link_secondary justify_center text_lowercase" onClick={toggleButtonExtract}> ver menos del extracto
                 </Button>
               )}
               {!isButtonExtractEnabled && (
                 <Button
-                  className="link_secondary justify_center" onClick={toggleButtonExtract}> ver más del extracto
+                  className="link_secondary justify_center text_lowercase" onClick={toggleButtonExtract}> ver más del extracto
                 </Button>
               )}
             </>

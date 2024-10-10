@@ -103,7 +103,7 @@ export default function Search({ isSearchAdvance, isSearchMain }) {
           <ClearIcon />
         </div> */}
           <NoneGrid>
-            <Button onClick={search} className="autocomplete_button button_primary" startIcon={<SearchIcon />}>
+            <Button onClick={search} className="autocomplete_button button_primary z-index100" startIcon={<SearchIcon />}>
               Buscar
             </Button>
           </NoneGrid>
