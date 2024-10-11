@@ -670,8 +670,8 @@ export default function Card({ selectedFilters, isListSmall, selectedTerm, isLar
 
                     <List className="width_100">
 
-                        {currentData.map(item => (
-                            <SpaceGrid >
+                        {currentData.map((item, k) => (
+                            <SpaceGrid key={k}>
                                 <ListItem className="padding_none" key={item.id}>
                                     <CardSearch className="padding_none" datos={item}></CardSearch>
                                 </ListItem>
