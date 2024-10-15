@@ -262,12 +262,14 @@ h6 {
   background-color: #111D31 !important;
   -webkit-transition: all 1s ease;
   transition: all 1s ease;
+  box-shadow: rgba(57, 129, 195, 0.2) 0px 8px 24px;
 }
 
 .button_secondary_border:hover {
   background-color: #111D31 !important;
   -webkit-transition: all 1s ease;
   transition: all 1s ease;
+  box-shadow: rgba(57, 129, 195, 0.2) 0px 8px 24px;
 }
 
 .button_terciary:hover {
@@ -275,6 +277,7 @@ h6 {
   color: #fff !important;
   -webkit-transition: all 1s ease;
   transition: all 1s ease;
+  box-shadow: rgba(57, 129, 195, 0.2) 0px 8px 24px;
 }
 
 .button_primary:hover {
@@ -980,7 +983,7 @@ h6 {
 }
 
 .button_function .MuiButton-endIcon {
-  margin-left: 70% !important;
+  /* margin-left: 70% !important; */
   color: #98C438;
 }
 
@@ -1029,8 +1032,8 @@ h6 {
 /*FILTER LARGE OR FLOAT */
 
 .button_filter_size{
-  width: 300px;
-  min-width: 300px;
+  /* width: 300px;
+  min-width: 300px; */
 }
 
 .button_filter_size_s{
@@ -1142,11 +1145,13 @@ h6 {
 
 .search-advance-width{
   width: 100%;
+  /* display: flex; */
 }
 
 .filter_advance{
   margin-top: 10px;
   max-width: 299px;
+  display: flex;
 }
 
 
@@ -1999,7 +2004,7 @@ padding: 0px 0% 0% 3%;
   background-color: #1f1f1f;
   border-radius: 20px;
   padding: 10px;
-  margin: 2%;
+  margin-top: 20px;
 }
 
 /*\ END PODCAST*/
@@ -2062,7 +2067,19 @@ padding: 0px 0% 0% 3%;
 }
 
 .masonry-grid {
-  display: block;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.my-masonry-grid {
+  display: flex;
+  gap: 20px; /* Espaciado entre las columnas */
+}
+
+.my-masonry-grid_column{
+  /* background: #fff;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
 }
 
 .masonry-itemx {
@@ -2137,6 +2154,13 @@ padding: 0px 0% 0% 3%;
   align-content: center;
 }
 
+.autocomplete_button_home {
+  position: absolute !important;
+  top: 16px;
+  right: 20%;
+  text-transform: initial !important;
+
+}
 
 /*\END HEADER*/
 

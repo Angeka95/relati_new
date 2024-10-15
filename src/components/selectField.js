@@ -16,11 +16,11 @@ export default function Select_field({ datos_filtros, label, id, setSelectedData
 
   // Filtros
 
-  useEffect(() => {
-    if (isDisabled) {
-      setSelectedValues([])
-    }
-  }, [isDisabled]);
+  // useEffect(() => {
+  //   if (isDisabled) {
+  //     setSelectedValues([])
+  //   }
+  // }, [isDisabled]);
 
   const handleChange = (event) => {
     setSelectedValues(event.target.value);

@@ -534,12 +534,26 @@ export default function Card({ selectedFilters, isListSmall, selectedTerm, isLar
                         <h4 >Está buscando por <span className="text_bolder">"{busqueda}"</span> </h4>
                     )}
 
-                    {!isExternalFilters && selectedFilters.length === 0 && (
+                    {!selectedTerm && !isExternalFilters && selectedFilters.length === 0 && (
                         <h4 className="text_diabled">(Aún no ha agregado ningún filtro a su búsqueda)</h4>
                     )}
                     {selectedFilters.length > 0 && (
                         <Box sx={{ marginBottom: '20px', display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
                             {selectedFilters.map((value) => (
+                                <Chip
+                                    onMouseDown={e => {
+                                        e.stopPropagation()
+                                    }}
+                                    className="chip_select" key={value} label={value}
+                                />
+
+
+                            ))}
+                        </Box>
+                    )}
+                    {externalFilters.length > 0 && (
+                        <Box sx={{ marginBottom: '20px', display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                            {externalFilters.map((value) => (
                                 <Chip
                                     onMouseDown={e => {
                                         e.stopPropagation()
@@ -573,10 +587,10 @@ export default function Card({ selectedFilters, isListSmall, selectedTerm, isLar
                                                 endIcon ={showFilter ? <ExpandMoreOutlinedIcon /> : <ExpandLessOutlinedIcon/>}
                                                 startIcon={<FilterListIcon /> } 
                                                 onClick={handleFilter}>
-                                                    {showFilter ? ('Filtrar' ) : 'Filtrar'} 
+                                                    Filtrar 
                                                 </Button>
                                         
-                                                <div className="position_float"> 
+                                                <div className="position_float card_filter_size"> 
                                                 <Filter isShowingFilter={showFilter} isFilterFloat={true} setSelectedFilters={setExternalFilters}/>
                                                 
                                                 </div> 
@@ -659,8 +673,8 @@ export default function Card({ selectedFilters, isListSmall, selectedTerm, isLar
                             count={totalPages}
                             page={page}
                             onChange={handleChange}
-                            renderItem={(item) => (
-                                <PaginationItem
+                            renderItem={(item, id) => (
+                                <PaginationItem key={id}
                                     slots={{ previous: ArrowBackIcon, next: ArrowForwardIcon }}
                                     {...item}
                                 />
@@ -671,7 +685,7 @@ export default function Card({ selectedFilters, isListSmall, selectedTerm, isLar
                     <List className="width_100">
 
                         {currentData.map(item => (
-                            <SpaceGrid >
+                            <SpaceGrid key={item.id}>
                                 <ListItem className="padding_none" key={item.id}>
                                     <CardSearch className="padding_none" datos={item}></CardSearch>
                                 </ListItem>
