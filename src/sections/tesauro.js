@@ -353,7 +353,7 @@ export default function Tesauro() {
 
                     <div className="container_list_tesauro ">
                         {!activeLetter && (
-                            <p class="text_diabled text_center padding_x">(Seleccione una letra para mostrarle términos del Tesauro)</p> 
+                            <p className="text_diabled text_center padding_x">(Seleccione una letra para mostrarle términos del Tesauro)</p> 
                         )}
 
                         {!selectedTerm && activeLetter && (
