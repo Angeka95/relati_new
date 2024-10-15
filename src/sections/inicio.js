@@ -9,14 +9,27 @@ import { useNavigate } from 'react-router-dom';
 import TextField from '@mui/material/TextField';
 import SearchIcon from '@mui/icons-material/Search';
 import Autocomplete from '@mui/material/Autocomplete';
-import Masonry from 'masonry-layout';
+import Masonry from 'react-masonry-css';
 import Context from '../context/context';
 
 
 export default function Home() {
+
+    // Layout Masonry Decisiones Recientes
     const masonryGridRef = useRef(null);
-    const navigate = useNavigate();
+    const breakpointColumnsObj = {
+        default: 2,
+        1100: 2,
+        700: 1,
+    };
+
     const { verMasDecisionesRecientes } = useContext(Context);
+
+
+    // Links otras secciones
+
+    const navigate = useNavigate();
+
     const goToMapaJurispudencialPage = () => {
         navigate('/mapa-jurisprudencial');
     };
@@ -24,6 +37,8 @@ export default function Home() {
     const goToBoletinesPage = () => {
         navigate('/boletines');
     };
+
+
 
     const macrocasos = [
 
@@ -146,6 +161,62 @@ export default function Home() {
             "extractoBusqueda": "Et has minim elitr intellegat. Mea aeterno eleifend antiopam ad, nam no suscipit quaerendum. At nam ite minimum secuestro. Est audiam animal molestiae te. Ex duo eripuit mentitum. As min..."
 
         },
+
+        // {
+        //     id: 5,
+        //     "fecha": "2023-06-15",
+        //     "asunto": "En el asunto de héctor orlando bastidas bravo",
+        //     "nombreDecision": "Sentencia SRT-ST-117-2024",
+        //     "salaOSeccion": "Sala de Amnistía",
+        //     "grupoPertence": "Grupo armado no firmante",
+        //     "lugarHechos": "Acacías, Meta",
+        //     "magistrado": "Augusto Rodriguez",
+        //     "macrocaso": "08 ",
+        //     "conclusionDecision": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes,",
+        //     "extractoBusqueda": "Et has minim elitr intellegat. Mea aeterno eleifend antiopam ad, nam no suscipit quaerendum. At nam ite minimum secuestro. Est audiam animal molestiae te. Ex duo eripuit mentitum. As min...Et has minim elitr intellegat. Mea aeterno eleifend antiopam ad, nam no suscipit quaerendum. At nam ite minimum secuestro. Est audiam animal molestiae te. Ex duo eripuit mentitum. As min..."
+        // },
+        // {
+        //     id: 6,
+        //     "fecha": "2022-03-18",
+        //     "asunto": "En el asunto de martin gonzales leal",
+        //     "nombreDecision": "Sentencia SRT-ST-120-2024",
+        //     "salaOSeccion": "Sección de Revisión",
+        //     "grupoPertence": "Grupo armado no firmante",
+        //     "lugarHechos": "Acacías, Meta",
+        //     "magistrado": "Augusto Rodriguez",
+        //     "macrocaso": "08 ",
+        //     "conclusionDecision": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes,",
+        //     "extractoBusqueda": "Et has minim elitr intellegat. Mea aeterno eleifend antiopam ad, nam no suscipit quaerendum. At nam ite minimum secuestro. Est audiam animal molestiae te. Ex duo eripuit mentitum. As min...Et has minim elitr intellegat. Mea aeterno eleifend antiopam ad, nam no suscipit quaerendum. At nam ite minimum secuestro. Est audiam animal molestiae te. Ex duo eripuit mentitum. As min..."
+
+        // },
+        // {
+        //     id: 7,
+        //     "fecha": "2021-06-22",
+        //     "asunto": "En el asunto de juana castellanos rodriguez",
+        //     "nombreDecision": "Sentencia SRT-ST-104-2024",
+        //     "salaOSeccion": "Sala de Amnistía",
+        //     "grupoPertence": "Grupo armado no firmante",
+        //     "lugarHechos": "Acacías, Meta",
+        //     "magistrado": "Augusto Rodriguez",
+        //     "macrocaso": "08 ",
+        //     "conclusionDecision": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes,",
+        //     "extractoBusqueda": "Et has minim elitr intellegat. Mea aeterno eleifend antiopam ad, nam no suscipit quaerendum. At nam ite minimum secuestro. Est audiam animal molestiae te. Ex duo eripuit mentitum. As min..."
+
+        // },
+        // {
+        //     id: 8,
+        //     "fecha": "2023-08-11",
+        //     "asunto": "En el asunto de mario leal prado",
+        //     "nombreDecision": "Sentencia SRT-ST-104-2024",
+        //     "salaOSeccion": "Sección de Revisión",
+        //     "grupoPertence": "Grupo armado no firmante",
+        //     "lugarHechos": "Acacías, Meta",
+        //     "magistrado": "Augusto Rodriguez",
+        //     "macrocaso": "08 ",
+        //     "conclusionDecision": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes,",
+        //     "extractoBusqueda": "Et has minim elitr intellegat. Mea aeterno eleifend antiopam ad, nam no suscipit quaerendum. At nam ite minimum secuestro. Est audiam animal molestiae te. Ex duo eripuit mentitum. As min..."
+
+        // },
     ]
 
     const boletinesMacrocaso = [
@@ -187,39 +258,39 @@ export default function Home() {
         {
             id: 2,
             nombreDocumento: 'Sentencia Interpretativa 2',
-            pdf: 'https://relatoria.jep.gov.co/documentos/providencias/7/2/Sentencia-Interpretativa_TP-SA-SENIT-01_03-abril-2019.pdf'
+            pdf: 'https://relatoria.jep.gov.co/documentos/providencias/7/2/Sentencia-Interpretativa_TP-SA-SENIT-02_09-octubre-2019.docx"'
         },
 
         {
             id: 3,
             nombreDocumento: 'Sentencia Interpretativa 3',
-            pdf: 'https://relatoria.jep.gov.co/documentos/providencias/7/2/Sentencia-Interpretativa_TP-SA-SENIT-01_03-abril-2019.pdf'
+            pdf: 'https://relatoria.jep.gov.co/documentos/providencias/7/2/Sentencia-Interpretativa_TP-SA-SENIT-03_21-diciembre-2022.pdf'
         },
 
         {
             id: 4,
             nombreDocumento: 'Sentencia Interpretativa 3 (Reglas)',
-            pdf: 'https://relatoria.jep.gov.co/documentos/providencias/7/2/Sentencia-Interpretativa_TP-SA-SENIT-01_03-abril-2019.pdf'
+            pdf: 'https://relatoria.jep.gov.co/documentos/providencias/7/24/Reglas-Sentencia-Interpretativa_TP-SA-SENIT-03_21-diciembre-2022.pdf'
         },
         {
             id: 5,
             nombreDocumento: 'Sentencia Interpretativa 4',
-            pdf: 'https://relatoria.jep.gov.co/documentos/providencias/7/2/Sentencia-Interpretativa_TP-SA-SENIT-01_03-abril-2019.pdf'
+            pdf: 'https://relatoria.jep.gov.co/documentos/providencias/7/2/Sentencia-Interpretativa_TP-SA-SENIT-04_26-abril-2023.pdf'
         },
         {
             id: 6,
             nombreDocumento: 'Sentencia Interpretativa 5',
-            pdf: 'https://relatoria.jep.gov.co/documentos/providencias/7/2/Sentencia-Interpretativa_TP-SA-SENIT-01_03-abril-2019.pdf'
+            pdf: 'https://relatoria.jep.gov.co/documentos/providencias/7/2/Sentencia-Interpretativa_TP-SA-SENIT-05_17-mayo-2023.pdf'
         },
         {
             id: 7,
             nombreDocumento: 'Sentencia Interpretativa 6',
-            pdf: 'https://relatoria.jep.gov.co/documentos/providencias/7/2/Sentencia-Interpretativa_TP-SA-SENIT-01_03-abril-2019.pdf'
+            pdf: 'https://relatoria.jep.gov.co/documentos/providencias/7/2/Sentencia-Interpretativa_TP-SA-SENIT-06_06-septiembre-2023.pdf'
         },
         {
             id: 8,
             nombreDocumento: 'Sentencia Interpretativa 7',
-            pdf: 'https://relatoria.jep.gov.co/documentos/providencias/7/2/Sentencia-Interpretativa_TP-SA-SENIT-01_03-abril-2019.pdf'
+            pdf: 'https://relatoria.jep.gov.co/documentos/providencias/7/2/Sentencia-Interpretativa_TP-SA-SENIT-07_16-noviembre-2023.pdf'
         },
 
 
@@ -237,7 +308,7 @@ export default function Home() {
         {
             id: 2,
             nombreDocumento: 'Comisión de Étnica y Racial',
-            pdf: 'https://relatoria.jep.gov.co/documentos/providencias/7/2/Sentencia-Interpretativa_TP-SA-SENIT-01_03-abril-2019.pdf'
+            pdf: 'documentos/providencias/15/11/Protocolo-001_comision-etnico-racial_05-junio-2019.docx'
         },
 
 
@@ -245,17 +316,43 @@ export default function Home() {
 
     const options = [''];
 
+
+
+
+    const [showAll, setShowAll] = useState(false);
+
+    // Estado Boton ver todos los casos
+
+    const handleSeeAllCases = () => {
+        setShowAll(true);
+    };
+
+    // Función para manejar el clic en el botón "Ver menos"
+    const handleSeeLessCases = () => {
+        setShowAll(false);  // Cambia el estado a `false` para mostrar solo los primeros 6 casos
+    };
+
+
+    // Mostrar solo los primeros 6 casos, si `showAll` es false
+    const casesToDisplay = showAll ? macrocasos : macrocasos.slice(0, 6);
+
+
+
+
+
+
+
     useEffect(() => {
         if (masonryGridRef.current) {
-          
-          new Masonry(masonryGridRef.current, {
-            itemSelector: '.masonry-item',
-            columnWidth: '.masonry-item',
-            gutter: 20,
-            fitWidth: true,
-          });
+
+            new Masonry(masonryGridRef.current, {
+                itemSelector: '.masonry-item',
+                columnWidth: '.masonry-item',
+                gutter: 20,
+                fitWidth: true,
+            });
         }
-      }, [verMasDecisionesRecientes]); 
+    }, [verMasDecisionesRecientes]);
 
     return (
         <div className="nowrap">
@@ -277,37 +374,37 @@ export default function Home() {
                 <div className="search_home">
 
                     <div classname="search_size ">
-                       <Container> 
-                        <div>
-                            <>
-                                <Autocomplete className="margin_top_s "
-                                    id="free-solo-demo"
-                                    value
-                                    freeSolo
-                                    onChange
-                                    options = {options}
-                                    renderInput={(params) => <TextField {...params}  placeholder= "Busque por palabra clave, número de decisión, radicado...  " inputProps={{
-                                        ...params.inputProps,
-                                        maxLength: 80
-                                    }} />}
+                        <Container>
+                            <div>
+                                <>
+                                    <Autocomplete className="margin_top_s "
+                                        id="free-solo-demo"
+                                        value
+                                        freeSolo
+                                        onChange
+                                        options={options}
+                                        renderInput={(params) => <TextField {...params} placeholder="Busque por palabra clave, número de decisión, radicado...  " inputProps={{
+                                            ...params.inputProps,
+                                            maxLength: 80
+                                        }} />}
 
-                                />
+                                    />
 
-                              
-                                    <Button onClick className="autocomplete_button button_primary" startIcon={<SearchIcon />}>
+
+                                    <Button className="autocomplete_button_home button_primary z-index_front" startIcon={<SearchIcon />}>
                                         Buscar
                                     </Button>
-                              
-                        
-                              
-                                        <Button className="light_white text_blue autocomplete_button_help button_terciary">?</Button>
-                                 
-                            
-                             
+
+
+
+                                    <Button className="light_white text_blue autocomplete_button_help button_terciary">?</Button>
+
+
+
                                     <Button className="autocomplete_button_advance primary_blue text_white button_secondary_border">Búsqueda Avanzada</Button>
-                              
-                            </>
-                        </div>
+
+                                </>
+                            </div>
                         </Container>
                     </div>
                 </div>
@@ -316,13 +413,17 @@ export default function Home() {
             <Container item xs={12} sm={12} md={12} lg={12} xl={12} className="margin_top_xl " >
                 <h2 className="text_bolder text_left padding_x">Decisiones recientes </h2>
 
-                <div ref={masonryGridRef} className="masonry-grid width_100 wrap">
-                {decisionesRecientes.map((decisiones, index) => (
-                    // <div key={index} className="masonry-item wrap">
-                        <CardDecision decisiones={decisiones}> </CardDecision>
-                    // </div>
-                ))}
-                </div>
+                <Masonry ref={masonryGridRef} breakpointCols={breakpointColumnsObj}
+                    className="my-masonry-grid"
+                    >
+                    {/* <div className='masonry-grid'> */}
+                    {decisionesRecientes.map((decisiones, index) => (
+                        // <Grid item key={index} xs={12} sm={6} md={6} lg={6} xl={6} className="masonry-item">
+                        <CardDecision key={index} decisiones={decisiones}> </CardDecision>
+                        // </Grid>
+                    ))}
+                    {/* </div> */}
+                </Masonry>
 
                 {/* <div className="wrap ">
 
@@ -367,7 +468,7 @@ export default function Home() {
 
                 <div className="wrap transition_smooth">
 
-                    {macrocasos.map((caso) => (
+                    {casesToDisplay.map((caso) => (
 
                         <div key={caso.id} className="card_small transition_smooth">
                             <p className="text_center">  Caso
@@ -380,12 +481,18 @@ export default function Home() {
                     ))}
                 </div>
 
-
-
                 <div className="justify_center margin_top_m">
-
-                    <Button className="button_primary"> Ver todos los casos</Button>
+                    {!showAll ? (
+                        <Button className="button_primary" onClick={handleSeeAllCases}>
+                            Ver todos los casos
+                        </Button>
+                    ) : (
+                        <Button className="button_primary" onClick={handleSeeLessCases}>
+                            Ver menos casos
+                        </Button>
+                    )}
                 </div>
+
             </Container>
 
 
@@ -395,7 +502,7 @@ export default function Home() {
 
                 <h5 className="justify_center  align_center margin_top_s margin_bottom_m">Escuche la historia detrás de cada decisión de la JEP</h5>
                 <iframe className="podcast_container shadow_smooth"
-                    src='https://widget.spreaker.com/player?show_id=5701029&theme=dark&playlist=show&playlist-continuous=true&chapters-image=true' width='100%' height='400px' frameborder='0'>
+                    src='https://widget.spreaker.com/player?show_id=5701029&theme=dark&playlist=show&playlist-continuous=true&chapters-image=true' width='100%' height='400px' frameBorder='0'>
 
                 </iframe>
 

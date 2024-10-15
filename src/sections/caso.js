@@ -300,64 +300,64 @@ export default function Caso() {
                   {value === 0 && (
                     <Box >
                       <h5 className="width_100 text_center margin_m text_bolder">Resultados de búsqueda</h5>
-                      <div  className="margin_bottom_l">
+                      <div className="margin_bottom_l">
                         <div className="wrap width_100">
-                           
-                            <FormControl className="input_caso">
-                              <InputLabel className="" id="multi-select-label">Tipo de Decisión</InputLabel>
-                              <Select
-                                labelId="multi-select-label"
-                                multiple
-                                value={selectedOptions}
-                                onChange={handleSelectChange}
-                                renderValue={(selected) => (
-                                  <Box sx={{ display: 'flex', flexWrap: 'wrap' }}>
-                                    {selected.map((value) => (
-                                      <Chip key={value} label={value} sx={{ m: 0.5 }} />
-                                    ))}
-                                  </Box>
-                                )}
-                              >
-                                {options.map((option) => (
-                                  <MenuItem key={option} value={option}>
-                                    {option}
-                                  </MenuItem>
-                                ))}
-                              </Select>
 
-                            </FormControl>
-                          
-                        
+                          <FormControl className="input_caso">
+                            <InputLabel className="" id="multi-select-label">Tipo de Decisión</InputLabel>
+                            <Select
+                              labelId="multi-select-label"
+                              multiple
+                              value={selectedOptions}
+                              onChange={handleSelectChange}
+                              renderValue={(selected) => (
+                                <Box sx={{ display: 'flex', flexWrap: 'wrap' }}>
+                                  {selected.map((value) => (
+                                    <Chip key={value} label={value} sx={{ m: 0.5 }} />
+                                  ))}
+                                </Box>
+                              )}
+                            >
+                              {options.map((option) => (
+                                <MenuItem key={option} value={option}>
+                                  {option}
+                                </MenuItem>
+                              ))}
+                            </Select>
 
-                         
-                            <FormControl  className="input_caso">
-                              <InputLabel id="multi-select-label">Subcaso</InputLabel>
-                              <Select
-                                labelId="multi-select-label"
-                                multiple
-                                value={selectedSubcasos}
-                                onChange={handleSelectSubcasos}
-                                renderValue={(selected) => (
-                                  <Box sx={{ display: 'flex', flexWrap: 'wrap' }}>
-                                    {selected.map((value2) => (
-                                      <Chip key={value2} label={value2} sx={{ m: 0.5 }} />
-                                    ))}
-                                  </Box>
-                                )}
-                              >
-                                {subcasos.map((subcasos) => (
-                                  <MenuItem key={subcasos} value={subcasos}>
-                                    {subcasos}
-                                  </MenuItem>
-                                ))}
-                              </Select>
+                          </FormControl>
 
-                            </FormControl>
-                         
+
+
+
+                          <FormControl className="input_caso">
+                            <InputLabel id="multi-select-label">Subcaso</InputLabel>
+                            <Select
+                              labelId="multi-select-label"
+                              multiple
+                              value={selectedSubcasos}
+                              onChange={handleSelectSubcasos}
+                              renderValue={(selected) => (
+                                <Box sx={{ display: 'flex', flexWrap: 'wrap' }}>
+                                  {selected.map((value2) => (
+                                    <Chip key={value2} label={value2} sx={{ m: 0.5 }} />
+                                  ))}
+                                </Box>
+                              )}
+                            >
+                              {subcasos.map((subcasos) => (
+                                <MenuItem key={subcasos} value={subcasos}>
+                                  {subcasos}
+                                </MenuItem>
+                              ))}
+                            </Select>
+
+                          </FormControl>
+
 
                           {(selectedOptions.length > 0 || selectedSubcasos.length > 0) && (
                             <div className='width_100'>
-                              <ListCardSearch isExternalFilters={true}/>
+                              <ListCardSearch isExternalFilters={true} />
                             </div>
                           )}
                         </div>
@@ -411,21 +411,12 @@ export default function Caso() {
           <h2 className="text_bolder width_100 text_center margin_bottom_m">Podcast relacionados al Caso</h2>
 
           <iframe className="podcast_container shadow_smooth"
-            src='https://widget.spreaker.com/player?show_id=5701029&theme=dark&playlist=show&playlist-continuous=true&chapters-image=true' width='100%' height='400px' frameborder='0'>
+            src='https://widget.spreaker.com/player?show_id=5701029&theme=dark&playlist=show&playlist-continuous=true&chapters-image=true' width='100%' height='400px' frameBorder='0'>
 
           </iframe>
         </div>
 
       </Container>
-
-
-
-
-
-
-
-
-
     </div>
   );
 }

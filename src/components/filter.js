@@ -165,7 +165,7 @@ const datos_procedimiento = [
 
 
 
-export default function Filter({ setSelectedFilters, isFilterFloat, isShowingFilter, selectedData, isSearchAdvance}) {
+export default function Filter({ setSelectedFilters, isFilterFloat, isShowingFilter, selectedData, isSearchAdvance }) {
   // Estado para controlar si el botón está habilitado o deshabilitado
   const { verTodasDecisiones, busqueda } = useContext(Context);
   const [isButtonEnabled, setIsButtonEnabled] = useState(true);
@@ -185,7 +185,7 @@ export default function Filter({ setSelectedFilters, isFilterFloat, isShowingFil
   };
 
   const applyFilters = () => {
-    setSelectedDataAllFilters(
+    setSelectedFilters(
       [
         ...selectedDataFilter1,
         ...selectedDataFilter2,
@@ -198,15 +198,10 @@ export default function Filter({ setSelectedFilters, isFilterFloat, isShowingFil
     )
   };
 
-
-  useEffect(() => {
-    setSelectedFilters(selectedDataAllFilters);
-  }, [selectedDataAllFilters]);
-
   useEffect(() => {
     if (!verTodasDecisiones && !busqueda) {
       setIsFilterDisabled(true);
-      setSelectedDataAllFilters([])
+      // setSelectedDataAllFilters([])
     }
     else {
       setIsFilterDisabled(false);
@@ -215,18 +210,18 @@ export default function Filter({ setSelectedFilters, isFilterFloat, isShowingFil
 
   }, [verTodasDecisiones, busqueda]);
 
-  const  JustFilterFloatNoneGrid = styled(Grid)(({ theme }) => ({
+  const JustFilterFloatNoneGrid = styled(Grid)(({ theme }) => ({
 
     [theme.breakpoints.up('xs')]: {
-        display: isFilterFloat || isSearchAdvance ? 'none' : '',
+      display: isFilterFloat || isSearchAdvance ? 'none' : '',
     }
-}));
+  }));
 
   return (
 
-    <Card className= {isFilterFloat ? (!isShowingFilter ? ("card_filter_float_hidden" ) : "card_filter_float") : "card_filter"} >
+    <Card className={isFilterFloat ? (!isShowingFilter ? "card_filter_float_hidden" : "card_filter_float") : "card_filter"} >
       <CardContent>
-        <JustFilterFloatNoneGrid> 
+        <JustFilterFloatNoneGrid>
           <div className="vertical_align">
             <h3> <FilterListIcon /> Filtrar </h3>
           </div>
@@ -244,7 +239,7 @@ export default function Filter({ setSelectedFilters, isFilterFloat, isShowingFil
           {isButtonEnabled && (
             <Button className="link_primary text_lowercase" onClick={toggleButton}> ver más filtros
             </Button>)
-            }
+          }
 
           {!isButtonEnabled && (
             <div className="width_100 text_center">

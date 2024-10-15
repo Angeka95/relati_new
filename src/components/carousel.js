@@ -29,11 +29,11 @@ export default function Carrusel({ boletines }) {
         className="double-carousel"
       >
         {pares.map((par, index) => (
-          <Carousel.Item>
+          <Carousel.Item key={index}>
             <div className="carousel_inner_wrapper">
               <div className="carousel_item_wrapper" style={{}}>
-                {par.map((boletin) => (
-                  <a href={boletin.pdf} target='_blank' className="width_100" >
+                {par.map((boletin, index_par) => (
+                  <a key={index_par} href={boletin.pdf} target='_blank' className="width_100" >
                     <img
                       className="width_100"
                       src={boletin.imagenPortada}
