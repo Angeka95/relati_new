@@ -6,9 +6,12 @@ import TextField from '@mui/material/TextField';
 import Stack from '@mui/material/Stack';
 import SearchIcon from '@mui/icons-material/Search';
 import ListCardSearch from '../components/listCardSearchResults.js';
+import tesauroService from '../services/tesauro';
 
 export default function Tesauro() {
 
+    console.log("IMPRIMIENDO VAR", tesauroService.tesauroVar);
+    
     const data = {
         a: [
             'Abandono De Hijo Fruto De Acceso Carnal Violento, Abusivo, O De Inseminación Artificial O Transferencia De Óvulo Fecundado No Consentidas',
