@@ -10,7 +10,19 @@ import tesauroService from '../services/tesauro';
 
 export default function Tesauro() {
 
-    console.log("IMPRIMIENDO VAR", tesauroService.tesauroVar);
+    const [terminos, setTerminos] = useState([])
+    
+     useEffect(() => {
+        tesauroService
+        .getTermsByLetter("a")
+        .then(terminos =>
+            setTerminos(terminos)
+        )
+    }, [terminos])
+
+    if (terminos.length > 0) {
+        console.log(terminos);
+    }
     
     const data = {
         a: [
@@ -307,8 +319,6 @@ export default function Tesauro() {
             'Caribe Afirmativo',
             'Causales de'
         ]
-
-
 
     }
 
