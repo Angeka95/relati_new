@@ -5,5 +5,5 @@ Authorization: Bearer {{$dotenv REACT_APP_API_ACCESS_TOKEN}}
 Content-Type: application/json
 
 {
-    "search": "Abandono"
+    "search": "ACCIÓN DE TUTELA"
 }

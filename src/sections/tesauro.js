@@ -152,7 +152,7 @@ export default function Tesauro() {
                         )}
                     </div>
                     
-                             {selectedTerm && (
+                            {selectedTerm && (
                                 <div className="">
                                     <ListCardSearch selectedTerm={selectedTerm} isLargeResult={true}/>
                                 </div>
