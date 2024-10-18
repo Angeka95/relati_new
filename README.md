@@ -2,10 +2,14 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## System Requirements
+Node Version: 16.20.2
+NPM Version: 8.19.4
+
 ## IMPORTANT: Setting up .env file 
 Before to start is essential to take a copy of .env.sample renamed as .env and setting up the environmental variables before execute the app.
 It's important to execute `npm run build` to add or update custom environmental variables. 
-All environmental variables start with the prexis REACT_APP_
+All environmental variables start with the prefix REACT_APP_
 
 ## Available Scripts
 
