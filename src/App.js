@@ -12,6 +12,7 @@ import Home from './sections/inicio';
 import Analisis from './sections/analisisTematico';
 import Glosario from './sections/glosario'
 import PreguntasFrecuentes from './sections/preguntasFrecuentes'
+import Acerca from './sections/acercaDeNosotros'
 
 
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
@@ -35,6 +36,7 @@ function App() {
           <Route path="/analisis-tematico" element={<Analisis />} />
           <Route path="/glosario" element={<Glosario />} />
           <Route path="/preguntas-frecuentes" element={<PreguntasFrecuentes />} />
+          <Route path="/acerca-de-nosotros" element={<Acerca />} />
 
           {/* Pagina no encontrada  */}
           {/* <Route path="*" element={<NotFound />} /> */}

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, useRef } from 'react';
 import TextField from '@mui/material/TextField';
 import Stack from '@mui/material/Stack';
 import Autocomplete from '@mui/material/Autocomplete';
@@ -41,9 +41,12 @@ export default function Search({ isSearchAdvance, isSearchMain }) {
     }
   }));
 
-  // valor en el buscador 
+  // referencia para poder acceder al valor escrito en el buscador
+  const inputRef = useRef(null);
 
+  // valor en el buscador 
   const [valueBar, setValueBar] = useState('');
+  const [inputValue, setInputValue] = useState('');
 
   // Trae el valor de la busqueda y del switch desde el contexto 
 
@@ -55,7 +58,11 @@ export default function Search({ isSearchAdvance, isSearchMain }) {
   // Busqueda por palabra
 
   const search = () => {
-    setBusqueda(valueBar);
+    // Se trae el valor escrito en el buscador
+    let searchValue = inputRef.current.querySelector('input').value;
+    
+    setValueBar(searchValue);
+    setBusqueda(searchValue);
     setVerTodasDecisiones(false)
   };
 
@@ -89,11 +96,11 @@ export default function Search({ isSearchAdvance, isSearchMain }) {
 
           <Autocomplete style={{ color: 'black', }} className="margin_top_s z-index_front text_black"
             id="free-solo-demo"
-            value={valueBar}
             freeSolo
+            value={valueBar}
             onChange={updateSelectedValue}
             options={searchOptions.map((option) => option.title)}
-            renderInput={(params) => <TextField {...params} label={isSearchAdvance ? "" : "Ingrese su búsqueda"} placeholder={isSearchAdvance ? "" : "Busque por palabra clave, número de decisión, radicado...  "} inputProps={{
+            renderInput={(params) => <TextField ref={inputRef} {...params} label={isSearchAdvance ? "" : "Ingrese su búsqueda"} placeholder={isSearchAdvance ? "" : "Busque por palabra clave, número de decisión, radicado...  "} inputProps={{
               ...params.inputProps,
               maxLength: 80
             }} />}
