@@ -7,18 +7,20 @@ import Stack from '@mui/material/Stack';
 import SearchIcon from '@mui/icons-material/Search';
 import ListCardSearch from '../components/listCardSearchResults.js';
 import ABCTermList from '../components/tesauro/ABCTermList.js';
+import AutoCompleteList from '../components/tesauro/AutoCompleteList.js';
 
 export default function Tesauro() {
 
     const data = ABCTermList();
-
     const [activeLetter, setActiveLetter] = useState("a");
     const [selectedTerm, setSelectedTerm] = useState(null);
+    const [searchOptions, setSearchOptions] = useState([]);
 
     // Valor de los terminos al seleccionar letra
     const selectLetter = (letter) => {
         setActiveLetter(letter);
-        setSelectedTerm ('');
+        setSelectedTerm('');
+        setSearchOptions(AutoCompleteList(data[letter]));
     } ;
 
     // Boton de letra activa
@@ -77,10 +79,7 @@ export default function Tesauro() {
                                                 }} />}
 
                                             />
-
-
                                             <Button className="autocomplete_button_terms button_primary"><SearchIcon /></Button>
-
                                         </Stack>
                                     </div>
                                 </div>
@@ -167,11 +166,4 @@ export default function Tesauro() {
     );
 }
 
-const searchOptions = [
-    { title: 'Abandono' },
-    { title: 'Abigeato' },
-    { title: 'Aborto' },
-    { title: 'Aborto Sin Consentimiento' },
-    { title: 'Acaparamiento' },
-    { title: 'Actos De Barbarie' },
-];
+
