@@ -2182,6 +2182,15 @@ padding: 0px 0% 0% 3%;
 
 /*\END HEADER*/
 
+/*\NAV MENU*/
+
+.menu_container{
+  background-color: #fff !important;
+  color: #111D31 !important;
+}
+
+/*\END NAV*/
+
 
 /*\ GLOSARIO /  PREGUNTAS FRECUENTES */
 

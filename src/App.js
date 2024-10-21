@@ -13,6 +13,7 @@ import Analisis from './sections/analisisTematico';
 import Glosario from './sections/glosario'
 import PreguntasFrecuentes from './sections/preguntasFrecuentes'
 import Acerca from './sections/acercaDeNosotros'
+import Menu from './sections/menu'
 
 
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
@@ -24,6 +25,7 @@ function App() {
         <ContextProvider>
           
         <Router>
+        <Menu />
         <Routes>
         <Route path="/" element={<Home />} />
           <Route path="/caso" element={<Caso />} />
