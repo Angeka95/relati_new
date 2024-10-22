@@ -29,7 +29,24 @@ export default function ABCTermList () {
         x: useGetTermsByLetter("x").terminos,
         y: useGetTermsByLetter("y").terminos,
         z: useGetTermsByLetter("z").terminos
-    }
+    };
+
+    console.log("data", JSON.parse(data));
+    if(!('tesauroABCTerms' in localStorage)){
+        console.log("var no definida en localstorage");
+        localStorage.setItem('tesauroABCTerms', null);
+    } 
+
+    setInterval(function(){
+        if('tesauroABCTerms' in localStorage) {
+            console.log("ya definida");
+            localStorage.setItem('tesauroABCTerms', data);
+            let dataTerms = JSON.parse(localStorage.getItem('tesauroABCTerms'));
+            localStorage.getItem('tesauroABCTerms', JSON.stringify(data));
+            console.log(dataTerms.a);
+        }
+    } , 8000);
+    
     
     return data;
 

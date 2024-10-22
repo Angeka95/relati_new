@@ -8,13 +8,19 @@ import SearchIcon from '@mui/icons-material/Search';
 import ListCardSearch from '../components/listCardSearchResults.js';
 import ABCTermList from '../components/tesauro/ABCTermList.js';
 import AutoCompleteList from '../components/tesauro/AutoCompleteList.js';
+import useGetTermsByLetter from '../hooks/tesauro/useGetTermsByLetter';
 
 export default function Tesauro() {
 
     const data = ABCTermList();
+
     const [activeLetter, setActiveLetter] = useState("a");
     const [selectedTerm, setSelectedTerm] = useState(null);
     const [searchOptions, setSearchOptions] = useState([]);
+
+    useEffect(() => {
+        console.log("Data esta cargada");
+    },[]);
 
     // Valor de los terminos al seleccionar letra
     const selectLetter = (letter) => {
