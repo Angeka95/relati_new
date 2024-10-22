@@ -531,7 +531,7 @@ export default function Card({ selectedFilters, isListSmall, selectedTerm, isLar
 
 
                     {busqueda && (
-                        <h4 >Está buscando por <span className="text_bolder">"{busqueda}"</span> </h4>
+                        <h4 >Está buscando por <span className="text_bolder">{busqueda}</span> </h4>
                     )}
 
                     {!selectedTerm && !isExternalFilters && selectedFilters.length === 0 && (

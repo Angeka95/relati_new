@@ -24,7 +24,7 @@ export default function Home() {
         700: 1,
     };
 
-    const { verMasDecisionesRecientes } = useContext(Context);
+    const { verMasDecisionesRecientes, setBusqueda, setVerTodasDecisiones } = useContext(Context);
 
 
     // Links otras secciones
@@ -733,6 +733,8 @@ export default function Home() {
 
     ];
 
+    const inputRef = useRef(null);
+
     const [valueBar, setValueBar] = useState('');
     const updateSelectedValue = (event, value) => {
         setValueBar(value);
@@ -756,7 +758,11 @@ export default function Home() {
     // Mostrar solo los primeros 6 casos, si `showAll` es false
     const casesToDisplay = showAll ? macrocasos : macrocasos.slice(0, 6);
 
-
+    const handleSearch = () => {
+        let searchValue = inputRef.current.querySelector('input').value;
+        setBusqueda(searchValue);
+        setVerTodasDecisiones(false)
+    };
 
 
 
@@ -803,7 +809,7 @@ export default function Home() {
                                         freeSolo
                                         onChange={updateSelectedValue}
                                         options={options.map((option) => option.title)}
-                                        renderInput={(params) => <TextField {...params} placeholder="Busque por palabra clave, número de decisión, radicado...  " inputProps={{
+                                        renderInput={(params) => <TextField ref={inputRef} {...params} placeholder="Busque por palabra clave, número de decisión, radicado...  " inputProps={{
                                             ...params.inputProps,
                                             maxLength: 80
                                         }} />}
@@ -811,7 +817,7 @@ export default function Home() {
                                     />
                                     <Button className="light_white text_blue autocomplete_button_help button_terciary query_none">?</Button>
                                     <Link to="resultados-busqueda"> 
-                                        <Button className="autocomplete_button_home button_primary z-index_front" startIcon={<SearchIcon />}>
+                                        <Button onClick={handleSearch} className="autocomplete_button_home button_primary z-index_front" startIcon={<SearchIcon />}>
                                             Buscar
                                         </Button>
                                     </Link> 

@@ -12,10 +12,11 @@ import ExpandMoreOutlinedIcon from '@mui/icons-material/ExpandMoreOutlined';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import Context from '../context/context';
 import SearchIcon from '@mui/icons-material/Search';
+import { useNavigate } from 'react-router-dom';
 
 export default function BusquedaAvanzada() {
 
-
+  const navigate = useNavigate();
 
   const [busquedaAvanzada, setBusquedaAvanzada] = useState('');
 
@@ -82,11 +83,13 @@ export default function BusquedaAvanzada() {
   //     setter(event.target.value);
   //   };
 
+  const { setBusqueda, setVerTodasDecisiones } = useContext(Context);
 
   const [value, setValue] = useState('');
   const [value2, setValue2] = useState('');
   const [value3, setValue3] = useState('');
   const [value4, setValue4] = useState('');
+  const [cadenaBusqueda, setCadenaBusqueda] = useState('');
 
   const textAreaRef = useRef(null);
   const textAreaRef2 = useRef(null);
@@ -135,34 +138,48 @@ export default function BusquedaAvanzada() {
     const values3 = processTextAreaValue(value3, true);
     const values4 = processTextAreaValue(value4, true);
 
-
     let result = '';
-    let estilosOperadores = ' <p class="text_bolder operador_size">operadorLogico</p> ';
+    let result_text = '';
+    let estilosOperadores = ' <p class="text_bolder operador_size">*operadorLogico*</p> ';
     if (values.length > 0) {
       result += values.join(estilosOperadores.replace('operadorLogico', 'y'));
+      result_text += values.join(' *y* ');
     }
 
     if (values2.length > 0) {
       if (result) result += estilosOperadores.replace('operadorLogico', 'y');
+      if (result_text) result_text += ' *y* ';
       result += values2.join(estilosOperadores.replace('operadorLogico', 'y'));
+      result_text += values2.join(' *y* ');
     }
 
     if (values3.length > 0) {
       if (result) result += estilosOperadores.replace('operadorLogico', 'o');
+      if (result_text) result_text += ' *o* ';
       result += values3.join(estilosOperadores.replace('operadorLogico', 'o'));
+      result_text += values3.join(' *o* ');
     }
 
     if (values4.length > 0) {
       if (result) result += estilosOperadores.replace('operadorLogico', 'excluyendo');
+      if (result_text) result_text += ' *excluyendo* ';
       result += values4.join(estilosOperadores.replace('operadorLogico', 'excluyendo'));
+      result_text += values4.join(' *excluyendo* ');
     }
 
     setBusquedaAvanzada(result);
+    setCadenaBusqueda(result_text);
   }, [value, value2, value3, value4]);
 
   const handleChange = (setter) => (event) => {
     setter(event.target.value);
   };
+
+  const handleSearch = () => {
+    setBusqueda(cadenaBusqueda);
+    setVerTodasDecisiones(false);
+    navigate('/resultados-busqueda');
+};
 
 
   // Boton help 
@@ -401,7 +418,7 @@ export default function BusquedaAvanzada() {
                   <div className="flex width_100 vertical_align wrap" dangerouslySetInnerHTML={{ __html: busquedaAvanzada }}>
 
                   </div>
-                  <Button className=" button_primary button_search_advance " startIcon={<SearchIcon />}>
+                  <Button onClick={handleSearch} className=" button_primary button_search_advance " startIcon={<SearchIcon />}>
                     Buscar
                   </Button>
                 </div>
@@ -412,13 +429,6 @@ export default function BusquedaAvanzada() {
               </>
             )}
           </Grid>
-
-          {/* <Grid items xs={12} sm={12} md={12} lg={4} xl={4} className="filter_advance_position">
-            {busquedaAvanzada.length > 0 && (
-            )}
-          </Grid> */}
-
-
         </Grid>
 
       </div>
