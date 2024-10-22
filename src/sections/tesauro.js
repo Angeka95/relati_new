@@ -12,15 +12,26 @@ import AutoCompleteList from '../components/tesauro/AutoCompleteList.js';
 export default function Tesauro() {
 
     const data = ABCTermList();
+    //console.log(datos);
     const [activeLetter, setActiveLetter] = useState("a");
     const [selectedTerm, setSelectedTerm] = useState(null);
     const [searchOptions, setSearchOptions] = useState([]);
+    const [datos, setDatos] = useState({});
+
+    useEffect(() => { 
+        const fetchData = async () => {
+            const terminos = await ABCTermList();
+            console.log("termi", terminos);
+            setDatos(terminos);
+        };
+        fetchData().catch(error => console.log(error));
+    }, []);
 
     // Valor de los terminos al seleccionar letra
     const selectLetter = (letter) => {
         setActiveLetter(letter);
         setSelectedTerm('');
-        setSearchOptions(AutoCompleteList(data[letter]));
+        setSearchOptions(AutoCompleteList(datos[letter]));
     } ;
 
     // Boton de letra activa
