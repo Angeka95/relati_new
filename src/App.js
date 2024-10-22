@@ -36,6 +36,7 @@ function App() {
           <Route path="/busqueda-avanzada" element={<BusquedaAvanzada />} />
           <Route path="/resultados-busqueda" element={<ResultadosBusqueda />} />
           <Route path="/analisis-tematico" element={<Analisis />} />
+       
           <Route path="/glosario" element={<Glosario />} />
           <Route path="/preguntas-frecuentes" element={<PreguntasFrecuentes />} />
           <Route path="/acerca-de-nosotros" element={<Acerca />} />

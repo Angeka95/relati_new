@@ -1,6 +1,6 @@
 import SearchBarSmall from '../components/searchBarSmall.js';
 import Filter from '../components/filter.js';
-import FilterLarge from '../components/filterLarge.js';
+import FilterShort from '../components/filterShort.js';
 import '../App.css';
 import { Container, Grid, Button, Box, Chip } from '@mui/material';
 import React, { useState, useEffect, useRef, useContext } from 'react';
@@ -405,19 +405,9 @@ export default function BusquedaAvanzada() {
                     Buscar
                   </Button>
                 </div>
-                <div className="filter_advance">
-                  <Button className={showFilter ? ("button_function_noradius button_filter_size") : ("button_function button_filter_size")}
-                    endIcon={showFilter ? <ExpandMoreOutlinedIcon /> : <ExpandLessOutlinedIcon />}
-                    startIcon={<FilterListIcon />}
-                    onClick={handleFilter}>
-                    Filtrar
-                  </Button>
-                  <div className="justify_center margin_bottom_m">
-                    <div className="position_float card_filter_size ">
-                      <Filter isShowingFilter={showFilter} isFilterFloat={true} setSelectedFilters={setSelectedFilters} />
-                    </div>
-                  </div>
 
+                <div className="filter_advance">
+                  <FilterShort setSelectedFilters={setSelectedFilters} isFilterWindowLeft={true}/>
                 </div>
               </>
             )}

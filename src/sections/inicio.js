@@ -11,6 +11,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import Autocomplete from '@mui/material/Autocomplete';
 import Masonry from 'react-masonry-css';
 import Context from '../context/context';
+import { Link } from 'react-router-dom';
 
 
 export default function Home() {
@@ -219,7 +220,7 @@ export default function Home() {
         // },
     ]
 
-    const boletinesMacrocaso = [
+    const boletines = [
         {
             id : 1,
             pdf: 'https://relatoria.jep.gov.co/documentos/providencias/17/23/boletin_01_enero-2024.pdf', 
@@ -808,13 +809,17 @@ export default function Home() {
                                         }} />}
 
                                     />
-                                    <Button className="light_white text_blue autocomplete_button_help button_terciary">?</Button>
+                                    <Button className="light_white text_blue autocomplete_button_help button_terciary query_none">?</Button>
+                                    <Link to="resultados-busqueda"> 
+                                        <Button className="autocomplete_button_home button_primary z-index_front" startIcon={<SearchIcon />}>
+                                            Buscar
+                                        </Button>
+                                    </Link> 
 
-                                    <Button className="autocomplete_button_home button_primary z-index_front" startIcon={<SearchIcon />}>
-                                        Buscar
-                                    </Button>
 
+                                    <Link to="busqueda-avanzada"> 
                                     <Button className="autocomplete_button_advance primary_blue text_white button_secondary_border">Búsqueda Avanzada</Button>
+                                    </Link> 
                                 </div>
                             </div>
                         </Container>
@@ -826,7 +831,7 @@ export default function Home() {
                 <h2 className="text_bolder text_left padding_x">Decisiones recientes </h2>
 
                 <Masonry ref={masonryGridRef} breakpointCols={breakpointColumnsObj}
-                    className="my-masonry-grid"
+                    className="my-masonry-grid "
                 >
                     {/* <div className='masonry-grid'> */}
                     {decisionesRecientes.map((decisiones, index) => (
@@ -864,7 +869,7 @@ export default function Home() {
                     </div>
                     <div className="carousel_container">
 
-                        <Carousel boletines={boletinesMacrocaso} />
+                        <Carousel boletines={boletines} />
 
                     </div>
                 </div>
@@ -913,10 +918,12 @@ export default function Home() {
                     <br></br>Relatos de la JEP </h2>
 
                 <h5 className="justify_center  align_center margin_top_s margin_bottom_m">Escuche la historia detrás de cada decisión de la JEP</h5>
-                <iframe className="podcast_container shadow_smooth"
+                <div className="justify_center"> 
+                <iframe className="podcast_container shadow_smooth "
                     src='https://widget.spreaker.com/player?show_id=5701029&theme=dark&playlist=show&playlist-continuous=true&chapters-image=true' width='100%' height='400px' frameBorder='0'>
 
                 </iframe>
+                </div>
 
             </Container>
             <Box className="secondary_blue section_blue width_100 margin_top_xl">
@@ -934,16 +941,16 @@ export default function Home() {
 
             <Container item xs={12} sm={12} md={8} lg={8} xl={8} className="margin_top_xl " >
                 <div className="wrap margin_bottom_xl">
-                    <div className="container_40">
+                    <div className="container_40 ">
                         <h2 className="text_bolder text_left">Documentos</h2>
                         <h5>Conozca los documentos de Sentencias Interpretativas y Comisiones de Género </h5>
                     </div>
                     <div className="wrap container_60">
                         <ul>
-                            {documentosSentencias.map((sentencia) => (
-                                <li key={sentencia.id}>
-                                    <a target="_blank" className="link_secondary text_capitalize" href={sentencia.pdf} >
-                                        {sentencia.nombreDocumento}
+                            {documentosSentencias.map((adicional) => (
+                                <li key={adicional.id}>
+                                    <a target="_blank" className="link_secondary text_capitalize" href={adicional.pdf} >
+                                        {adicional.nombreDocumento}
                                     </a>
 
                                 </li>
