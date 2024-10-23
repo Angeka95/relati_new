@@ -6,27 +6,47 @@ import TextField from '@mui/material/TextField';
 import Stack from '@mui/material/Stack';
 import SearchIcon from '@mui/icons-material/Search';
 import ListCardSearch from '../components/listCardSearchResults.js';
-import ABCTermList from '../components/tesauro/ABCTermList.js';
-import AutoCompleteList from '../components/tesauro/AutoCompleteList.js';
-import useGetTermsByLetter from '../hooks/tesauro/useGetTermsByLetter';
+import tesauroService from '../services/tesauro.js';
 
 export default function Tesauro() {
-
-    const data = ABCTermList();
-
+   
+    const [data, setData] = useState({ a: [], b: [], c: [], d: [], e: [], f: [], g: [], h: [], i: [], j: [], k: [], l: [], m: [], n: [], o: [], p: [], q: [], r: [], s: [], t: [], u: [], v: [], w: [], x: [], y: [], z: [] });
+    const [message, setMessage] = useState("");
     const [activeLetter, setActiveLetter] = useState("a");
     const [selectedTerm, setSelectedTerm] = useState(null);
     const [searchOptions, setSearchOptions] = useState([]);
 
-    useEffect(() => {
-        console.log("Data esta cargada");
-    },[]);
+    useEffect(() => {   
+        getTerms();
+    },[activeLetter]);
 
+    const getTerms = () => {
+        tesauroService
+            .getTermsByLetter(activeLetter)
+            .then(response => { 
+                if((response.status !== undefined) && (response.status === 401)) {
+                    setMessage(`Error: ${response.status}. ${response.reason}`);
+                } else {
+                const terminosArr = ((response.terms.result === undefined) || (response.terms.result === null)) ? [] : Object.values(response.terms.result);
+                const newTerminosArr = terminosArr.map(item => item.string);
+                setMessage(`Success: 200. OK`); 
+                setData(objTerms => ({...objTerms, [activeLetter] : newTerminosArr }));
+                setSearchOptions(autoCompleteList(newTerminosArr));
+                }
+            }
+            )
+            .catch(error => console.log(error));
+    };
+
+    // Autocompletar la lista
+    const autoCompleteList = (lista) => {
+        return lista.map(item => { return { "title": item } });
+    }
+    
     // Valor de los terminos al seleccionar letra
     const selectLetter = (letter) => {
         setActiveLetter(letter);
         setSelectedTerm('');
-        setSearchOptions(AutoCompleteList(data[letter]));
     } ;
 
     // Boton de letra activa
