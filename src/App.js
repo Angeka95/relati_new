@@ -12,6 +12,8 @@ import Home from './sections/inicio';
 import Analisis from './sections/analisisTematico';
 import Glosario from './sections/glosario'
 import PreguntasFrecuentes from './sections/preguntasFrecuentes'
+import Acerca from './sections/acercaDeNosotros'
+import Menu from './sections/menu'
 
 
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
@@ -23,6 +25,7 @@ function App() {
         <ContextProvider>
           
         <Router>
+        <Menu />
         <Routes>
         <Route path="/" element={<Home />} />
           <Route path="/caso" element={<Caso />} />
@@ -33,8 +36,11 @@ function App() {
           <Route path="/busqueda-avanzada" element={<BusquedaAvanzada />} />
           <Route path="/resultados-busqueda" element={<ResultadosBusqueda />} />
           <Route path="/analisis-tematico" element={<Analisis />} />
+       
           <Route path="/glosario" element={<Glosario />} />
           <Route path="/preguntas-frecuentes" element={<PreguntasFrecuentes />} />
+          <Route path="/acerca-de-nosotros" element={<Acerca />} />
+
 
           {/* Pagina no encontrada  */}
           {/* <Route path="*" element={<NotFound />} /> */}

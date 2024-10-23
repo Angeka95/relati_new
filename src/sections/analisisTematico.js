@@ -83,7 +83,7 @@ export default function Analisis() {
         <div className="nowrap">
 
             <Container className="margin_top_l ">
-                <h2 className="justify_center text_bolder">Análisis Temático de Decisiones</h2>
+                <h1 className="justify_center text_bolder">Análisis Temático de Decisiones</h1>
                 <h5 className="justify_center  align_center margin_top_s margin_bottom_m text_center">Explore como se realiza el análisis sobre temas jurídicos de la JEP, basado en el estudio de sus decisiones judiciales e instrumentos normativos aplicables.   </h5>
 
 
