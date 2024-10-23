@@ -16,7 +16,7 @@ import { EditCalendar } from '@mui/icons-material';
 import Context from '../context/context';
 import ExpandLessOutlinedIcon from '@mui/icons-material/ExpandLessOutlined';
 import ExpandMoreOutlinedIcon from '@mui/icons-material/ExpandMoreOutlined';
-import Filter from './filter';
+import FilterShort from './filterShort';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import tesauroService from './../services/tesauro.js';
 
@@ -116,16 +116,12 @@ export default function Card({ selectedFilters, isListSmall, selectedTerm, isLar
     }, [page, itemsPerPage, datos]);
 
     const getCurrentData = (items = 0) => {
-        console.log("Primer set de data", page);
-      
-            console.log("Se supone que hay datos", datos.length, currentData.length);
-            if (items === 0) {
-                items = itemsPerPage;
-            }
-        
-            const startIndex = (page - 1) * items;
-            console.log("start index", startIndex);
-            setCurrentData(datos.slice(startIndex, startIndex + items));
+        if (items === 0) {
+            items = itemsPerPage;
+        }
+    
+        const startIndex = (page - 1) * items;
+        setCurrentData(datos.slice(startIndex, startIndex + items));
      
     }
 
@@ -256,7 +252,7 @@ export default function Card({ selectedFilters, isListSmall, selectedTerm, isLar
     
     
                         {busqueda && (
-                            <h4 >Está buscando por <span className="text_bolder">"{busqueda}"</span> </h4>
+                            <h4 >Está buscando por <span className="text_bolder">{busqueda}</span> </h4>
                         )}
     
                         {!selectedTerm && !isExternalFilters && selectedFilters.length === 0 && (
@@ -304,33 +300,34 @@ export default function Card({ selectedFilters, isListSmall, selectedTerm, isLar
                                         <JustMapGrid > 
                                             <h4 className="text_bolder"> Decisiones </h4> 
                                         </JustMapGrid>
-                                        <NoneGrid>
-    
                                             {isExternalFilters && (
-                                                <>
-                                                    <Button className={showFilter ? ("button_function_noradius button_filter_size_s" ) : ("button_function button_filter_size_s" )} 
-                                                    endIcon ={showFilter ? <ExpandMoreOutlinedIcon /> : <ExpandLessOutlinedIcon/>}
-                                                    startIcon={<FilterListIcon /> } 
-                                                    onClick={handleFilter}>
-                                                        Filtrar 
-                                                    </Button>
-                                            
-                                                    <div className="position_float card_filter_size"> 
-                                                    <Filter isShowingFilter={showFilter} isFilterFloat={true} setSelectedFilters={setExternalFilters}/>
-                                                    
-                                                    </div> 
-                                                </>
-                                            )}
-    
-                                            <Button className="button_function" startIcon={<SortIcon />} onClick={toggleButton}>Ordenar
-                                            </Button>
-                                            {isButtonSorterEnabled && (
-                                                <div className='container_date_sorted'>
-                                                    <Button onClick={sortAscByDate} className='items_sorted'>fecha ascendente </Button>
-                                                    <Button onClick={sortDescByDate} className='items_sorted'>fecha descendente </Button>
+                                                <div className='filter_sort_container'>
+                                                    <FilterShort setSelectedFilters={setExternalFilters}/>
+                                                    <NoneGrid className='margin_left_s'>
+                                                        <Button className="button_function" startIcon={<SortIcon />} onClick={toggleButton}>Ordenar
+                                                        </Button>
+                                                        {isButtonSorterEnabled && (
+                                                            <div className='container_date_sorted'>
+                                                                <Button onClick={sortAscByDate} className='items_sorted'>fecha ascendente </Button>
+                                                                <Button onClick={sortDescByDate} className='items_sorted'>fecha descendente </Button>
+                                                            </div>
+                                                        )}
+                                                    </NoneGrid>
                                                 </div>
                                             )}
-                                        </NoneGrid>
+    
+                                            {!isExternalFilters && (
+                                                <NoneGrid>
+                                                  <Button className="button_function" startIcon={<SortIcon />} onClick={toggleButton}>Ordenar
+                                                  </Button>
+                                                  {isButtonSorterEnabled && (
+                                                      <div className='container_date_sorted'>
+                                                          <Button onClick={sortAscByDate} className='items_sorted'>fecha ascendente </Button>
+                                                          <Button onClick={sortDescByDate} className='items_sorted'>fecha descendente </Button>
+                                                      </div>
+                                                  )}
+                                                </NoneGrid>  
+                                            )}
                                     </Grid>
     
                                     <Grid item  className="justify_end_partial" xs={12} sm={12} md= {(isListSmall ? 12 : 6)} lg={(isListSmall ? 12 : 6)} xl={(isListSmall ? 12 : 6) }>
@@ -441,6 +438,4 @@ export default function Card({ selectedFilters, isListSmall, selectedTerm, isLar
     
         );
      } 
-
-    
 }

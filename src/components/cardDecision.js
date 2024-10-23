@@ -17,7 +17,7 @@ export default function CardDecision({ decisiones }) {
 
 
     return (
-        <div className="margin_bottom_l card_medium width_100 wrap masonry-item">
+        <div className="margin_bottom_l card_medium  wrap masonry-item">
 
 
 
