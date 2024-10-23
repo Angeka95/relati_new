@@ -275,7 +275,7 @@ export default function Caso() {
       <Container >
         <div className="margin_top_xl">
           <h2 className="text_bolder width_100 text_center ">Decisiones relacionadas al Caso</h2>
-          <h5 className="margin_top_m text_center margin_bottom_l">Encuentre las decisiones relacionadas al Caso 01</h5>
+          <h5 className="margin_top_m text_center margin_bottom_l"></h5>
         </div>
 
         <Container className="shadow_smooth tab_container">
@@ -299,7 +299,7 @@ export default function Caso() {
 
                   {value === 0 && (
                     <Box >
-                      <h5 className="width_100 text_center margin_m text_bolder">Resultados de búsqueda</h5>
+                      <h5 className="width_100 text_center margin_m text_bolder">Seleccione tipo de decisión o subcaso para ver las decisiones por Sala</h5>
                       <div className="margin_bottom_l">
                         <div className="wrap width_100">
 
@@ -387,14 +387,14 @@ export default function Caso() {
 
       </Container>
 
-      <Container maxWidth="lg" disableGutters className="margin_top_l">
-        <div className="align_center carousel_main_container margin_top_l" >
+      <Container maxWidth="lg" disableGutters className="margin_top_l ">
+        <div className="align_center carousel_main_container margin_top_l " >
           <div className="wrap text_carousel_container" >
             <h2 className="align_center text_bolder"> Boletines y documentos relacionados</h2>
             <p className=" align_center margin_top_s margin_bottom_m">Acceda al análisis de las decisiones y a las publicaciones relacionadas a este Caso</p>
             <Button className="button_primary "> Ver todos los boletines</Button>
           </div>
-          <div className="carousel_container">
+          <div className="carousel_container ">
 
             <Carousel boletines={boletinesMacrocaso} />
 
@@ -407,13 +407,14 @@ export default function Caso() {
 
       <Container>
 
-        <div className="margin_top_xxl margin_bottom_xl">
-          <h2 className="text_bolder width_100 text_center margin_bottom_m">Podcast relacionados al Caso</h2>
-
-          <iframe className="podcast_container shadow_smooth"
+        <div className="podcast_space margin_bottom_xl ">
+          <h2 className="text_bolder width_100 text_center margin_bottom_m ">Podcast relacionados al Caso</h2>
+          <div className="justify_center"> 
+          <iframe className="podcast_container shadow_smooth "
             src='https://widget.spreaker.com/player?show_id=5701029&theme=dark&playlist=show&playlist-continuous=true&chapters-image=true' width='100%' height='400px' frameBorder='0'>
 
           </iframe>
+          </div> 
         </div>
 
       </Container>

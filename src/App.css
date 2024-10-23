@@ -9,6 +9,10 @@ body {
 
 }
 
+a, button {
+  text-decoration: none !important;
+}
+
 h1,
 h2 {
   font-family: 'Gentium Plus', serif;
@@ -151,7 +155,7 @@ h6 {
 }
 
 .text_green {
-  color: #98C438;
+  color: #98C438 !important;
 }
 
 .text_black {
@@ -159,7 +163,11 @@ h6 {
 }
 
 .text_blue {
-  color: #007CAE;
+  color: #007CAE !important;
+}
+
+.text_grey{
+  color: #b4b4b4 !important;
 }
 
 .text_white {
@@ -171,6 +179,10 @@ h6 {
 
 .text_transform_none{
   text-transform: none !important;
+}
+
+.text_decoration_none{
+  text-decoration: none !important;
 }
 
 .title_description{
@@ -381,6 +393,17 @@ h6 {
   margin-right: 5px !important;
 }
 
+.margin_eje_xs{
+  margin: 0px 10px !important; 
+  }
+
+.margin_eje_xm{
+    margin: 0px 30px !important; 
+  }
+  .margin_eje_xl{
+    margin: 0px 60px !important; 
+  }
+
 .margin_xs {
   margin: 5px !important;
 }
@@ -494,11 +517,26 @@ h6 {
   width: 100% !important;
 }
 
+.width_50 {
+  width: 50% !important;
+}
+
+.width_40 {
+  width: 40% !important;
+}
+
+.width_30 {
+  width: 30% !important;
+}
+
 .shadow {
   box-shadow: rgba(57, 129, 195, 0.2) 0px 8px 24px !important;
 }
 .shadow_smooth {
   box-shadow: rgba(57, 129, 195, 0.2) 0px 8px 24px !important;
+}
+.shadow_smoother {
+  box-shadow: rgba(57, 128, 195, 0.087) 0px 8px 24px !important;
 }
 
 .noshadow {
@@ -983,7 +1021,7 @@ h6 {
 }
 
 .button_function .MuiButton-endIcon {
-  /* margin-left: 70% !important; */
+  margin-left: 70% !important;
   color: #98C438;
 }
 
@@ -1029,19 +1067,32 @@ h6 {
 
 /*END MAP*/
 
+/*FILTER SHORT */
+
+.button_filter_size_s{
+  width: 120px;
+}
+
+.filter_window_size{
+  width: 300px;
+}
+
+.is_filter_window_left {
+  right: 0;
+}
+
+.filter_sort_container {
+  display: flex;
+}
+
+/*END FILTER SHORT */
+
 /*FILTER LARGE OR FLOAT */
 
 .button_filter_size{
-  /* width: 300px;
-  min-width: 300px; */
-}
-
-.button_filter_size_s{
   width: 300px;
   min-width: 300px;
 }
-
-
 
 .chip_select_large {
   margin:2px;
@@ -1145,13 +1196,12 @@ h6 {
 
 .search-advance-width{
   width: 100%;
-  /* display: flex; */
+  display: flex;
 }
 
 .filter_advance{
   margin-top: 10px;
   max-width: 299px;
-  display: flex;
 }
 
 
@@ -1184,7 +1234,7 @@ h6 {
 .input_advance{
   width: 88%;
   border: 1px solid #CAF0FF;
-  border-radius: 16px;
+  border-radius: 32px;
   margin: 1.4% 1% 0% 1%;
   padding: 8px;
   box-shadow: 0px 8px 16px rgba(57, 129, 195, 0.2);
@@ -1205,6 +1255,7 @@ h6 {
   padding-top: 0.5px;
   margin-left: 8px;
   margin-right: 8px;
+  margin-bottom: 0;
 }
 
 
@@ -2005,6 +2056,16 @@ padding: 0px 0% 0% 3%;
   border-radius: 20px;
   padding: 10px;
   margin-top: 20px;
+  margin: 0px 4%;
+  max-width: 1180px;
+}
+
+.widget.theme_dark {
+  max-width: 900px; 
+}
+
+.podcast_space{
+  margin-top: 250px !important;
 }
 
 /*\ END PODCAST*/
@@ -2028,7 +2089,7 @@ padding: 0px 0% 0% 3%;
 
 .search_home{
   position: absolute;
-  bottom: -12%;
+  bottom: -5%;
   width:100%;
 }
 
@@ -2053,10 +2114,10 @@ padding: 0px 0% 0% 3%;
 
 
 .card_medium{
-  width: 46%;
-  margin: 2%; 
+  width: 90%;
+  margin: 1%; 
   box-shadow: rgba(57, 129, 195, 0.2) 0px 8px 24px;
-  padding: 2% 2% 1% 2%;
+  padding: 25px 25px 20px 25px;
   border-radius: 16px;
    background: #fff; /* Fondo de la card */
   display: flex;
@@ -2073,6 +2134,8 @@ padding: 0px 0% 0% 3%;
 
 .my-masonry-grid {
   display: flex;
+  justify-content: center !important;
+  margin: 0px 2%;
   gap: 20px; /* Espaciado entre las columnas */
 }
 
@@ -2154,15 +2217,76 @@ padding: 0px 0% 0% 3%;
   align-content: center;
 }
 
-.autocomplete_button_home {
-  position: absolute !important;
-  top: 16px;
-  right: 20%;
-  text-transform: initial !important;
-
+.autocomplete_home {
+  background-color: white;
+  border-radius: 40px !important;
 }
 
+.autocomplete_home_container {
+  position: relative;
+  width: 90%;
+}
+
+.autocomplete_button_home {
+  border: #111D31 !important;
+  position: absolute !important;
+  top: 15px;
+  right: 7px;
+  z-index: 10; 
+}
+
+.autocomplete_home .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline {
+  border-color: #fff;
+  border-radius: 40px !important; 
+  box-shadow: 0px 8px 16px rgba(57, 129, 195, 0.2);
+}
+
+
+
 /*\END HEADER*/
+
+/*\NAV MENU*/
+
+.menu_container{
+  background-color: #fff !important;
+  color: #111D31 !important;
+  padding: 4px 0px;
+}
+
+.logo_relati_min{
+  width: 130px !important; 
+}
+
+.logo_escudo_min{ 
+  width: 50px;
+  min-width: 50px;
+  min-height: 50px;
+  max-height: 50px;
+}
+
+.menu_text{
+  font-size: 1rem !important;
+  min-width: 50px;
+  margin: 0px 20px !important;
+  line-height: 1.2rem !important;
+}
+
+.menu_text:hover{
+  color: #98C438 !important;
+  background-color: transparent !important;
+}
+
+.menu_link:hover{
+  color: #007CAE !important;
+  background-color: transparent !important;
+}
+
+.css-3dzjca-MuiPaper-root-MuiPopover-paper-MuiMenu-paper {
+  box-shadow: rgba(57, 128, 195, 0.326) 0px 8px 24px !important;
+}
+
+
+/*\END NAV*/
 
 
 /*\ GLOSARIO /  PREGUNTAS FRECUENTES */
@@ -2188,6 +2312,69 @@ padding: 0px 0% 0% 3%;
   width: 70%;
 }
 
+
+/*\ ACERCA DE NOSOTROS  */
+
+.imagen_equipo_relatoria{
+  margin-top: 15px;
+  max-width: 550px;
+}
+
+.large_text_about{
+  width: 80%;
+  margin: 0px 10%;
+}
+
+/*\ FIN ACERCA DE NOSOTROS  */
+
+
+/*\ MODAL  */
+
+.modal_box {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 800px;
+  background-color: white;
+  border-radius: 16px;
+  box-shadow: 24px;
+  padding: 24px 60px;
+}
+
+.modal_title {
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+.modal_description {
+  margin-top: 16px;
+}
+
+.modal_close_button {
+  margin-top: 16px;
+}
+
+.modal_double_border{
+  border-top: 1px solid #b8b8b8;
+  padding: 20px 0px 13px 0px;
+  border-bottom: 1px solid #b8b8b8;
+}
+
+.modal_border{
+  padding: 20px 0px 13px 0px;
+  border-bottom: 1px solid #b8b8b8;
+}
+
+.space_border{
+  padding: 20px 0px 13px 0px;
+}
+
+
+
+/*\ FIN MODAL  */
+
+
 /*--------------------------------------------------------------------*/
 /*--------------------------------------------------------------------*/
 
@@ -2206,6 +2393,10 @@ padding: 0px 0% 0% 3%;
     justify-content: center;
     flex-wrap: wrap;
   }
+
+  .query_none{
+    display: none !important;
+  }
 }
 
 @media (max-width: 1300px) {
@@ -2222,7 +2413,9 @@ padding: 0px 0% 0% 3%;
   max-width: 980px;
 }
 
-
+.autocomplete_home_container {
+  top: -35px;
+}
 
 
 
