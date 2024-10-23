@@ -41,6 +41,7 @@ function App() {
           <Route path="/preguntas-frecuentes" element={<PreguntasFrecuentes />} />
           <Route path="/acerca-de-nosotros" element={<Acerca />} />
 
+
           {/* Pagina no encontrada  */}
           {/* <Route path="*" element={<NotFound />} /> */}
         

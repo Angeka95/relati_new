@@ -18,7 +18,7 @@ export default function FilterShort({ setSelectedFilters, isFilterWindowLeft }) 
   };
 
   return (
-    <div className="position_relative ">
+    <div className="position_relative query_none">
         <Button className={showFilter ? ("button_function_noradius button_filter_size_s") : ("button_function button_filter_size_s")}
         startIcon={<FilterListIcon />}
         onClick={handleFilter}>

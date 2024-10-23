@@ -9,10 +9,12 @@ import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import LogoRelati from '../assets/images/logo_Relativ4.png';
 import Escudo from '../assets/images/escudo.png';
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 
 
 export default function MenuBar() {
+
 
     const [openDrawer, setOpenDrawer] = useState(false);  // Para abrir/cerrar el Drawer / version mobile
     const theme = useTheme();
@@ -25,6 +27,8 @@ export default function MenuBar() {
     const handleCloseDrawer = () => {
       setOpenDrawer(false);  // Cierra el drawer
     };
+
+    
 
 // Estado para manejar si el menú está expandido o no
   const [anchor, setAnchor] = useState(null);
@@ -83,7 +87,7 @@ export default function MenuBar() {
           {!isMobile ? (
             <div className="justify_center">
             <div className="justify_center">
-              <Button className="text_bolder text_grey menu_text text_center" onClick={handleToggleMenu1}  startIcon={anchor ? <ExpandLessIcon /> : <ExpandMoreIcon />} >Sobre la Relatoría </Button> 
+              <Button className="text_black menu_text text_center" onClick={handleToggleMenu1}  startIcon={anchor ? <ExpandLessIcon /> : <ExpandMoreIcon />} >Sobre la Relatoría </Button> 
                 <Menu
                     
                     id="basic-menu"
@@ -104,7 +108,7 @@ export default function MenuBar() {
                         <MenuItem className="text_decoration_none text_black menu_text" >Preguntas Frecuentes</MenuItem>
                     </Link>
                 </Menu>
-              <Button  className="text_bolder text_grey menu_text text_center"  onClick={handleToggleMenu2} startIcon={anchor ? <ExpandLessIcon /> : <ExpandMoreIcon />} >Nuestras Publicaciones</Button>
+              <Button  className=" text_black menu_text text_center"  onClick={handleToggleMenu2} startIcon={anchor ? <ExpandLessIcon /> : <ExpandMoreIcon />} >Nuestras Publicaciones</Button>
               <Menu
                     id="basic-menu2"
                     anchorEl={anchor2}
@@ -125,7 +129,7 @@ export default function MenuBar() {
                     </Link> */}
                 </Menu>
              
-                    <Button  className="text_bolder text_grey menu_text text_center" onClick={handleToggleMenu3} startIcon={anchor ? <ExpandLessIcon /> : <ExpandMoreIcon />} >Análisis Jurisprudencial</Button>
+                    <Button  className=" text_black menu_text text_center" onClick={handleToggleMenu3} startIcon={anchor ? <ExpandLessIcon /> : <ExpandMoreIcon />} >Análisis Jurisprudencial</Button>
            
               <Menu
                     id="basic-menu2"
@@ -142,15 +146,15 @@ export default function MenuBar() {
                     <Link to="/Mapa-jurisprudencial">
                         <MenuItem className="text_decoration_none text_black menu_text" >Mapa Jurisprudencial</MenuItem>
                     </Link>
-                    <Link to="/">
+                      <Link to="">
                         <MenuItem className="text_decoration_none text_black menu_text" >Macrocasos</MenuItem>
-                    </Link>
+                        </Link>
                     <Link to="/Analisis-tematico">
                         <MenuItem className="text_decoration_none text_black menu_text " >Análisis Temático</MenuItem>
                     </Link>
                 </Menu>
 
-              <Button component="a"  className="text_bolder  text_blue menu_text margin_left_xs text_center"  href="https://relatoria.jep.gov.co/concurso" target="_blank">Concurso Universitario</Button>
+              <Button component="a"  className=" text_blue menu_text margin_left_xs text_center"  href="https://relatoria.jep.gov.co/concurso" target="_blank">Concurso Universitario</Button>
               </div>
 
               <img src={Escudo} className="logo_escudo_min margin_left_s" >

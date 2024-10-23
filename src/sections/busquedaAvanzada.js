@@ -161,10 +161,10 @@ export default function BusquedaAvanzada() {
     }
 
     if (values4.length > 0) {
-      if (result) result += estilosOperadores.replace('operadorLogico', 'excluyendo');
-      if (result_text) result_text += ' *excluyendo* ';
-      result += values4.join(estilosOperadores.replace('operadorLogico', 'excluyendo'));
-      result_text += values4.join(' *excluyendo* ');
+      if (result) result += estilosOperadores.replace('operadorLogico', 'excluir');
+      if (result_text) result_text += ' *excluir* ';
+      result += values4.join(estilosOperadores.replace('operadorLogico', 'excluir'));
+      result_text += values4.join(' *excluir* ');
     }
 
     setBusquedaAvanzada(result);

@@ -12,6 +12,7 @@ import Autocomplete from '@mui/material/Autocomplete';
 import Masonry from 'react-masonry-css';
 import Context from '../context/context';
 import { Link } from 'react-router-dom';
+import ModalInfo from '../components/modal'
 
 
 export default function Home() {
@@ -765,6 +766,11 @@ export default function Home() {
     };
 
 
+    // Modal 
+    const [openModal, setOpenModal] = useState(false);
+
+    const handleOpenModal = () => setOpenModal(true);
+    const handleCloseModal = () => setOpenModal(false);
 
 
 
@@ -815,7 +821,8 @@ export default function Home() {
                                         }} />}
 
                                     />
-                                    <Button className="light_white text_blue autocomplete_button_help button_terciary query_none">?</Button>
+                                    <Button className="light_white text_blue autocomplete_button_help button_terciary query_none" onClick={handleOpenModal}>?</Button>
+                                    <ModalInfo openModal={openModal} handleCloseModal={handleCloseModal}> </ModalInfo> 
                                     <Link to="resultados-busqueda"> 
                                         <Button onClick={handleSearch} className="autocomplete_button_home button_primary z-index_front" startIcon={<SearchIcon />}>
                                             Buscar
@@ -884,7 +891,7 @@ export default function Home() {
 
             </Container>
 
-            <Container className="space_top ">
+            <Container className="space_top " id="macrocaso">
                 <h2 className="justify_center text_bolder">Macrocasos</h2>
                 <h5 className="justify_center  align_center margin_top_s margin_bottom_m">Conozca las últimas decisiones de cada macrocaso</h5>
 

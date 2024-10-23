@@ -2056,11 +2056,16 @@ padding: 0px 0% 0% 3%;
   border-radius: 20px;
   padding: 10px;
   margin-top: 20px;
-  max-width: 900px; 
+  margin: 0px 4%;
+  max-width: 1180px;
 }
 
 .widget.theme_dark {
   max-width: 900px; 
+}
+
+.podcast_space{
+  margin-top: 250px !important;
 }
 
 /*\ END PODCAST*/
@@ -2260,7 +2265,10 @@ padding: 0px 0% 0% 3%;
 }
 
 .menu_text{
-  font-size: 0.8rem !important;
+  font-size: 1rem !important;
+  min-width: 50px;
+  margin: 0px 20px !important;
+  line-height: 1.2rem !important;
 }
 
 .menu_text:hover{
@@ -2317,8 +2325,55 @@ padding: 0px 0% 0% 3%;
   margin: 0px 10%;
 }
 
-
 /*\ FIN ACERCA DE NOSOTROS  */
+
+
+/*\ MODAL  */
+
+.modal_box {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 800px;
+  background-color: white;
+  border-radius: 16px;
+  box-shadow: 24px;
+  padding: 24px 60px;
+}
+
+.modal_title {
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+.modal_description {
+  margin-top: 16px;
+}
+
+.modal_close_button {
+  margin-top: 16px;
+}
+
+.modal_double_border{
+  border-top: 1px solid #b8b8b8;
+  padding: 20px 0px 13px 0px;
+  border-bottom: 1px solid #b8b8b8;
+}
+
+.modal_border{
+  padding: 20px 0px 13px 0px;
+  border-bottom: 1px solid #b8b8b8;
+}
+
+.space_border{
+  padding: 20px 0px 13px 0px;
+}
+
+
+
+/*\ FIN MODAL  */
+
 
 /*--------------------------------------------------------------------*/
 /*--------------------------------------------------------------------*/

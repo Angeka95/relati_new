@@ -8,6 +8,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import ClearIcon from '@mui/icons-material/Clear';
 import { styled } from '@mui/material/styles';
 import Context from '../context/context';
+import { Link } from 'react-router-dom';
 
 export default function Search({ isSearchAdvance, isSearchMain }) {
 
@@ -125,7 +126,9 @@ export default function Search({ isSearchAdvance, isSearchMain }) {
             </NoneGrid>
           )}
           {!isSearchAdvance && (
+            <Link to="/busqueda-avanzada"> 
             <Button className="autocomplete_button_advance primary_blue text_white button_secondary_border">Búsqueda Avanzada</Button>
+            </Link> 
           )}
         </SpaceBottom>
       </Stack>
