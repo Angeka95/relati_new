@@ -20,11 +20,6 @@ export default function Tesauro() {
         getTerms();
     },[activeLetter]);
 
-    // Ordena lista de términos
-     const sortTermList = (lista) => {
-        return [...lista].sort((a, b) => a.string.toLowerCase().localeCompare(b.string.toLowerCase()) );
-    };
-
     const getTerms = () => {
         tesauroService
             .getTermsByLetter(activeLetter)
@@ -32,12 +27,10 @@ export default function Tesauro() {
                 if((response.status !== undefined) && (response.status === 401)) {
                     setMessage(`Error: ${response.status}. ${response.reason}`);
                 } else {
-                const terminosArr = ((response.terms.result === undefined) || (response.terms.result === null)) ? [] : sortTermList(Object.values(response.terms.result));
-                console.log(sortTermList(terminosArr));
-                const newTerminosArr = terminosArr.map(item => item.string);
-                setMessage(`Success: 200. OK`); 
-                setData(objTerms => ({...objTerms, [activeLetter] : newTerminosArr }));
-                setSearchOptions(autoCompleteList(newTerminosArr));
+                    const terminosArr = response.data;
+                    setMessage(`Success: 200. OK`); 
+                    setData(objTerms => ({...objTerms, [activeLetter] : terminosArr }));
+                    setSearchOptions(autoCompleteList(terminosArr));
                 }
             }
             )
@@ -46,7 +39,13 @@ export default function Tesauro() {
 
     // Autocompletar la lista
     const autoCompleteList = (lista) => {
-        return lista.map(item => { return { "title": item } });
+        return lista.map(item => {
+            if(typeof item !== 'string'){
+              return { "title": `${item.alias} - ${item.nombreReal}` };
+            } else {
+              return { "title": item };
+            }
+          });    
     }
     
     // Valor de los terminos al seleccionar letra
@@ -158,12 +157,12 @@ export default function Tesauro() {
                                                         handleTermClick(term.nombreReal); // Actualiza el término seleccionado
                                                     }}
                                                 >   
-                                                    <div title={term.alias} className="text_green margin_right_s text_ellipsis" >
-                                                    {term.alias} 
+                                                    <div title={term.alias.toUpperCase()} className="text_green margin_right_s text_ellipsis text_capitalize">
+                                                    {term.alias.toLowerCase()} 
                                                     </div> 
                                                     <div className="text_black text_italic text_bolder">Use término</div>
-                                                    <div title={term.nombreReal} className="margin_left_s text_ellipsis"> 
-                                                        {term.nombreReal} 
+                                                    <div title={term.nombreReal} className="margin_left_s text_ellipsis text_capitalize"> 
+                                                        {term.nombreReal.toLowerCase()} 
                                                     </div> 
 
                                                 </a>

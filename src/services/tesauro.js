@@ -11,7 +11,23 @@ const getTermsByLetter = (letter) => {
     params: { 'letter': letter }
   };
   const request =  axios.get('https://relatoria.jep.gov.co/geterms', config);
-  return request.then(response => response.data )
+  return request.then(response => {
+    if((response.data.status !== undefined) || (response.data.status === 401) || (response.data.status === 403)) {
+      return { "data": [], "status_info": { "status": response.data.status, "reason": response.data.reason } };
+    } else {
+      let termsListTemp = Object.values(response.data.terms.result);
+      let termsList = termsListTemp.map(item => {
+        if((typeof item.no_term_string === 'string') && ( item.no_term_string.length > 0)){
+          return { "nombreReal": item.string, "alias": item.no_term_string.toUpperCase() };
+        } else {
+          return item.string; 
+        }
+      });
+      return { "data": termsList, "status_info": { "status": 200, "reason": "OK" } };
+    }
+  }).catch(error => { 
+      return { "data": [], "status_info": { "status": error.response.data.status, "reason": error.response.data.reason } };
+  });
 }
 
 const getDocsByTerm = (term) => {
@@ -31,7 +47,9 @@ const getDocsByTerm = (term) => {
     } else {
       return { "data": response.data.data.hits.hits, "status_info": { "status": 200, "reason": "OK" } };
     }
-  })
+  }).catch(error => { 
+    return { "data": [], "status_info": { "status": error.response.data.status, "reason": error.response.data.reason } };
+  });
 }
 
 export default { getTermsByLetter, getDocsByTerm }
