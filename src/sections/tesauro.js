@@ -95,7 +95,6 @@ export default function Tesauro() {
                                     <div>
                                         <Stack className='autocomplete_bar_search_terms'>
                                             <Autocomplete
-
                                                 id="free-solo-demo"
                                                 freeSolo
                                                 options={searchOptions.map((option) => option.title)}
@@ -133,8 +132,8 @@ export default function Tesauro() {
                                                         e.preventDefault(); // Previene la navegación
                                                         handleTermClick(term); // Actualiza el término seleccionado
                                                     }}
-                                                >   <div className="text_ellipsis">
-                                                    {term} 
+                                                >   <div className="text_ellipsis text_capitalize">
+                                                    {term.toLowerCase()} 
                                                     </div> 
   
                                                     
