@@ -20,6 +20,11 @@ export default function Tesauro() {
         getTerms();
     },[activeLetter]);
 
+    // Ordena lista de términos
+     const sortTermList = (lista) => {
+        return [...lista].sort((a, b) => a.string.toLowerCase().localeCompare(b.string.toLowerCase()) );
+    };
+
     const getTerms = () => {
         tesauroService
             .getTermsByLetter(activeLetter)
@@ -27,7 +32,8 @@ export default function Tesauro() {
                 if((response.status !== undefined) && (response.status === 401)) {
                     setMessage(`Error: ${response.status}. ${response.reason}`);
                 } else {
-                const terminosArr = ((response.terms.result === undefined) || (response.terms.result === null)) ? [] : Object.values(response.terms.result);
+                const terminosArr = ((response.terms.result === undefined) || (response.terms.result === null)) ? [] : sortTermList(Object.values(response.terms.result));
+                console.log(sortTermList(terminosArr));
                 const newTerminosArr = terminosArr.map(item => item.string);
                 setMessage(`Success: 200. OK`); 
                 setData(objTerms => ({...objTerms, [activeLetter] : newTerminosArr }));
