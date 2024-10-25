@@ -107,7 +107,12 @@ export default function Tesauro() {
                                                     ...params.inputProps,
                                                     maxLength: 80
                                                 }} />}
-
+                                                onChange = {
+                                                    (event, newTerm) => {
+                                                      console.log(newTerm);
+                                                      setSelectedTerm(newTerm);
+                                                    }
+                                                }
                                             />
                                             <Button className="autocomplete_button_terms button_primary"><SearchIcon /></Button>
                                         </Stack>
