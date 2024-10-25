@@ -9,7 +9,7 @@ import ClearIcon from '@mui/icons-material/Clear';
 
 
 
-export default function search() {
+export default function search({searchOptions, handlerSetSelectedOption}) {
   return (
 
     <Stack className='autocomplete_bar_search_small this_is_a_test'>
@@ -20,8 +20,12 @@ export default function search() {
         renderInput={(params) => <TextField {...params} label="Buscar en los resultados" inputProps={{
           ...params.inputProps,
           maxLength: 80
-        }} />}
-
+        }}/>}
+        onChange = {
+          (event, newOption) => {
+            handlerSetSelectedOption(newOption);
+          }
+        }
       />
       {/* <div className="autocomplete_delete_small">
           <ClearIcon />
@@ -33,13 +37,3 @@ export default function search() {
 
   );
 }
-
-
-const searchOptions = [
-  { title: 'Competencia de la JEP' },
-  { title: 'Competencia y Jurisdicción' },
-  { title: 'Competencia de la Jurisdicción Ordinaria' },
-  { title: 'Competencia Temporal de la JEP' },
-  { title: 'Requisitos de la competencia' },
-  { title: 'Competencia de las Salas de Justicia' },
-];

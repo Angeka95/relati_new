@@ -52,6 +52,7 @@ export default function Tesauro() {
     const selectLetter = (letter) => {
         setActiveLetter(letter);
         setSelectedTerm('');
+        setSearchOptions([]);
     } ;
 
     // Boton de letra activa
@@ -109,7 +110,6 @@ export default function Tesauro() {
                                                 }} />}
                                                 onChange = {
                                                     (event, newTerm) => {
-                                                      console.log(newTerm);
                                                       setSelectedTerm(newTerm);
                                                     }
                                                 }

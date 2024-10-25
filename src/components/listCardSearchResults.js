@@ -23,7 +23,10 @@ import tesauroService from './../services/tesauro.js';
 export default function Card({ selectedFilters, isListSmall, selectedTerm, isLargeResult, isExternalFilters }) {
 
     const [datos, setDatos] = useState([]);
+    const [datosOriginales, setDatosOriginales] = useState([]);
     const [message, setMessage] = useState("");
+    const [selectedDoc, setSelectedDoc] = useState("");
+    const [searchDocsOptions, setSearchDocsOptions] = useState([]);
 
     const getDocsTerm = () => {
         tesauroService
@@ -32,27 +35,49 @@ export default function Card({ selectedFilters, isListSmall, selectedTerm, isLar
                 if((response.status_info.status === 200) && (response.data.length > 0)) {
                     const cardsArr = response.data.map(item => {
                         return {
-                        id: item._source.id,
-                        fecha: item._source.fecha_documento,
-                        asunto: item._source.asunto,
-                        salaOSeccion: item._source.despacho,
-                        nombreDecision: "Sentencia SRT-ST-117-2024",
-                        grupoPertence: "Grupo armado no firmante",
-                        lugarHechos: "Acacías, Meta",
-                        magistrado: "Augusto Rodriguez",
-                        macrocaso: "08 ",
-                        conclusionDecision: "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes,",
-                        extractoBusqueda: "extracto busqueda"
+                            id: item._source.id,
+                            fecha: item._source.fecha_documento,
+                            asunto: item._source.asunto,
+                            salaOSeccion: item._source.despacho,
+                            nombreDecision: "Sentencia SRT-ST-117-2024",
+                            grupoPertence: "Grupo armado no firmante",
+                            lugarHechos: "Acacías, Meta",
+                            magistrado: "Augusto Rodriguez",
+                            macrocaso: "08 ",
+                            conclusionDecision: "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes,",
+                            extractoBusqueda: "extracto busqueda"
                         }
                     });
                     setMessage(`Success: ${response.status_info.status}. ${response.status_info.reason}`)
                     setDatos(cardsArr);
+                    setDatosOriginales(cardsArr);
+                    const newOpcionesDocs = getOpcionesDocs(cardsArr);
+                    setSearchDocsOptions(newOpcionesDocs);
                 } else {
                 setMessage(`Error: ${response.status_info.status}. ${response.status_info.reason}`)
                 }
             }
             )
             .catch(error => console.log(error));
+    }
+
+    // Genera el listado de opciones de documentos para el autocompletar
+    const getOpcionesDocs = (arrDatos) => {
+        const arrLinted = Array.from(
+            new Map(arrDatos.map(item => [item.asunto, item])).values()
+        );
+        return [ { "title": "*" } ].concat(arrLinted.map( item => { return { "title": item.asunto } }));
+    };
+
+    const handlerSetSelectedDoc = (newSelectedOption) => {
+        if(newSelectedOption !== "*"){
+            const newArrDatos = datos.filter(item => item.asunto === newSelectedOption);
+            setSelectedDoc(newSelectedOption);
+            setDatos(newArrDatos);
+        } else {
+            setSelectedDoc("");
+            setDatos(datosOriginales);
+        }
     }
 
     const { verTodasDecisiones, busqueda } = useContext(Context);
@@ -332,7 +357,7 @@ export default function Card({ selectedFilters, isListSmall, selectedTerm, isLar
     
                                     <Grid item  className="justify_end_partial" xs={12} sm={12} md= {(isListSmall ? 12 : 6)} lg={(isListSmall ? 12 : 6)} xl={(isListSmall ? 12 : 6) }>
                                         
-                                        <SearchBarSmall> </SearchBarSmall>
+                                        <SearchBarSmall searchOptions={searchDocsOptions} handlerSetSelectedOption={handlerSetSelectedDoc}> </SearchBarSmall>
     
                                     </Grid>
                                 </SpaceBetweenGrid>
