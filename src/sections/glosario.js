@@ -62,7 +62,7 @@ export default function Glosario() {
 
     return (
         <div>
-            <Container>
+            <Container className="margin_bottom_xl">
                 <h1 className="text_center margin_top_l">Glosario de Términos</h1>
                 <h5 className="text_center ">Confirme el significado de algunos términos que encontrará en nuestro portal</h5>
 

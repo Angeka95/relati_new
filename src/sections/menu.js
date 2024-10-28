@@ -65,6 +65,12 @@ export default function MenuBar() {
     window.location.href = 'https://www.spreaker.com/podcast/relatos-de-la-jep--5701029';
   };
 
+  const scrollToSection = () => {
+    const section = document.getElementById('seccion_caso');
+    if (section) {
+      section.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
 
   
 
@@ -122,7 +128,7 @@ export default function MenuBar() {
                         <MenuItem className="text_decoration_none text_black menu_text " >Boletines</MenuItem>
                     </Link>
                   
-                    <MenuItem className="text_decoration_none text_black menu_text"   onClick={podcastURL} >Podcast</MenuItem>
+                    <MenuItem className="text_decoration_none text_black menu_text" onClick={podcastURL} >Podcast</MenuItem>
                     
                     {/* <Link to="/mapa-jurisprudencial">
                         <MenuItem className="text_decoration_none text_black menu_text" >Libros</MenuItem>
@@ -146,9 +152,9 @@ export default function MenuBar() {
                     <Link to="/Mapa-jurisprudencial">
                         <MenuItem className="text_decoration_none text_black menu_text" >Mapa Jurisprudencial</MenuItem>
                     </Link>
-                      <Link to="">
-                        <MenuItem className="text_decoration_none text_black menu_text" >Macrocasos</MenuItem>
-                        </Link>
+                     
+                        <MenuItem onClick={scrollToSection} className="text_decoration_none text_black menu_text" >Macrocasos</MenuItem>
+                        
                     <Link to="/Analisis-tematico">
                         <MenuItem className="text_decoration_none text_black menu_text " >Análisis Temático</MenuItem>
                     </Link>

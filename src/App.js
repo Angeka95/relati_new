@@ -14,6 +14,7 @@ import Glosario from './sections/glosario'
 import PreguntasFrecuentes from './sections/preguntasFrecuentes'
 import Acerca from './sections/acercaDeNosotros'
 import Menu from './sections/menu'
+import Footer from './sections/footer'
 
 
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
@@ -26,6 +27,7 @@ function App() {
           
         <Router>
         <Menu />
+       
         <Routes>
         <Route path="/" element={<Home />} />
           <Route path="/caso" element={<Caso />} />
@@ -46,6 +48,7 @@ function App() {
           {/* <Route path="*" element={<NotFound />} /> */}
         
         </Routes>
+        <Footer />
       </Router>
         </ContextProvider>
         
