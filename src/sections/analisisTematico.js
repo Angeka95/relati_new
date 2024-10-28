@@ -80,7 +80,7 @@ export default function Analisis() {
 
 
     return (
-        <div className="nowrap">
+        <div className="nowrap margin_bottom_xl">
 
             <Container className="margin_top_l ">
                 <h1 className="justify_center text_bolder">Análisis Temático de Decisiones</h1>
