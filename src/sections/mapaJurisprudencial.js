@@ -7,14 +7,12 @@ import { Container, Grid } from '@mui/material';
 import React, { useState, useEffect, PureComponent } from 'react';
 import { styled } from '@mui/material/styles';
 import mapaJurisprudencialService from '../services/mapa_jurisprudencial.js';
-import axios from "axios";
-
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Legend, ResponsiveContainer } from 'recharts';
-
-import { MapContainer, TileLayer, Tooltip, CircleMarker } from 'react-leaflet'
+import { MapContainer, TileLayer, Tooltip, CircleMarker } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 
 export default function Mapa() {
+
     const SmallResultsGrid = styled(Grid)(({ theme }) => ({
 
         [theme.breakpoints.up('sm')]: {
@@ -53,30 +51,28 @@ export default function Mapa() {
     const [listdpto, setListdpto] = useState([]);
     const [graf, setGraf] = useState([]);
     const [dptoselect, setDptoselect] = useState([]);
-    const token = 'eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJzZ0xWR1hHUV9CVmNEaVN3c3gwdXd0VHktRGdXLUNpME9qWFRudGJhOHRNIn0.eyJleHAiOjE2ODM2ODIyMTgsImlhdCI6MTY4MzYzOTA';
+    const [message, setMessage] = useState("");
 
     //funcion que hace el llamado para traer la data de los dpto del mapa
-    const getdpto = () => {
-        let datagraf = [];
-        const instance = axios.create({
-            baseURL: 'https://relatoria.jep.gov.co/',
-            headers: {'Authorization': `Bearer ${token}`, 'user': 'relati_user', 'password': 'D3lf@317o3'}
-        });
-        instance.get('/initmap')
+    const getMapaDptos = () => {
+        mapaJurisprudencialService
+            .getMapaDptos()
             .then(response => {
-                setListdpto(response['data']['data'][0]['dpto'])
-                datagraf = [];
-                for (let m = 0; m < Object.keys(response['data']['data'][1]['grafica'][0]['totales']).length; ++m) {
-                    datagraf.push(
-                        {
-                            name: Object.keys(response['data']['data'][1]['grafica'][0]['totales'])[m],
-                            fecha: response['data']['data'][1]['grafica'][0]['totales'][Object.keys(response['data']['data'][1]['grafica'][0]['totales'])[m]]
-                        }
-                    )
+                if((response.status_info.status === 200) && (response.data.length > 0)) {
+                    setListdpto(response.data[0].dpto);
+                    setGraf(response.data[0].datagraf);
+                    setMessage(`Success: ${response.status_info.status}. ${response.status_info.reason}`);
+                } else {
+                    setMessage(`Error: ${response.status_info.status}. ${response.status_info.reason}`)
                 }
-                setGraf(datagraf)
-            })
+            }
+            )
+            .catch(error => console.log(error));
     }
+
+    useEffect(() => {
+        getMapaDptos()
+    }, []);
 
     //funcion que realiza el filtro de las providencias cuando se da clic en un dpto
     const searchprodpto = (data) => {
@@ -85,13 +81,6 @@ export default function Mapa() {
 
         //setDptoselect(datoss)
     }
-
-    useEffect(() => {
-
-        getdpto()
-
-    }, []);
-
 
   return (
     <div> 
