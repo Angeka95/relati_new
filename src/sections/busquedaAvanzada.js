@@ -245,7 +245,7 @@ export default function BusquedaAvanzada() {
 
 
   return (
-    <Container>
+    <Container className="margin_bottom_xl">
       <div className="search_advance_size">
         <Grid item xs={8} sm={8} md={12} lg={12} xl={12}>
 

@@ -13,6 +13,8 @@ import Masonry from 'react-masonry-css';
 import Context from '../context/context';
 import { Link } from 'react-router-dom';
 import ModalInfo from '../components/modal'
+import ExpandLessOutlinedIcon from '@mui/icons-material/ExpandLessOutlined';
+import ExpandMoreOutlinedIcon from '@mui/icons-material/ExpandMoreOutlined';
 
 
 export default function Home() {
@@ -668,7 +670,7 @@ export default function Home() {
         {
             id: 2,
             nombreDocumento: 'Sentencia Interpretativa 2',
-            pdf: 'https://relatoria.jep.gov.co/documentos/providencias/7/2/Sentencia-Interpretativa_TP-SA-SENIT-02_09-octubre-2019.docx"'
+            pdf: 'https://relatoria.jep.gov.co/documentos/providencias/7/2/Sentencia-Interpretativa_TP-SA-SENIT-02_09-octubre-2019.docx'
         },
 
         {
@@ -707,22 +709,6 @@ export default function Home() {
 
     ]
 
-    const documentosAdicionales = [
-
-
-        {
-            id: 1,
-            nombreDocumento: 'Comisión de Género',
-            pdf: 'https://relatoria.jep.gov.co/documentos/providencias/7/2/Sentencia-Interpretativa_TP-SA-SENIT-01_03-abril-2019.pdf'
-        },
-        {
-            id: 2,
-            nombreDocumento: 'Comisión de Étnica y Racial',
-            pdf: 'documentos/providencias/15/11/Protocolo-001_comision-etnico-racial_05-junio-2019.docx'
-        },
-
-
-    ]
 
     const options = [
         { title: 'Competencia de la JEP' },
@@ -773,7 +759,17 @@ export default function Home() {
     const handleCloseModal = () => setOpenModal(false);
 
 
+     // Docs Comision de Genero
+   
+        const [isOpen, setIsOpen] = useState(false);
+    
+        const toggleContent = () => {
+            setIsOpen(!isOpen);
+        };
 
+
+
+    // Masonry
     useEffect(() => {
         if (masonryGridRef.current) {
 
@@ -891,7 +887,7 @@ export default function Home() {
 
             </Container>
 
-            <Container className="space_top " id="macrocaso">
+            <Container className="space_top "   id="seccion_caso">
                 <h2 className="justify_center text_bolder">Macrocasos</h2>
                 <h5 className="justify_center  align_center margin_top_s margin_bottom_m">Conozca las últimas decisiones de cada macrocaso</h5>
 
@@ -901,10 +897,12 @@ export default function Home() {
                     {casesToDisplay.map((caso) => (
 
                         <div key={caso.id} className="card_small transition_smooth">
-                            <p className="text_center">  Caso
-                                <span className="text_big display_block margin_top_s margin_bottom_s text_green text_bolder">  {caso.numeroCaso} </span>
-                                {caso.nombreCaso}
-                            </p>
+                            <Link to="/caso">
+                                <p className="text_center text_black" >  Caso
+                                    <span className="text_big display_block margin_top_s margin_bottom_s text_green text_bolder">  {caso.numeroCaso} </span>
+                                    {caso.nombreCaso}
+                                </p>
+                            </Link>
                         </div>
 
 
@@ -970,10 +968,43 @@ export default function Home() {
                             )
 
                             )}
-
+                            
                             <div className="separator_blue"> </div>
+                            <li> 
+                                <a className="link_secondary text_capitalize cursor_pointer" onClick={toggleContent}>
+                                
+                                Comisión de Género 
+                                {isOpen ? <ExpandLessOutlinedIcon /> : <ExpandMoreOutlinedIcon />}
+                                
+                                </a>
+                                
+                                {isOpen && (
+                                <div  className="margin_top_s"> 
+                                    <p>• <a target="_blank" className="link_secondary text_capitalize " href="https://relatoria.jep.gov.co/documentos/providencias/14/13/Concepto_comisi%C3%B3n-g%C3%A9nero_04-mayo-2022.pdf">  Concepto comisión de género (04 de Mayo de 2022) </a></p>
+                                    <p>• <a target="_blank"  className="link_secondary text_capitalize" href="https://relatoria.jep.gov.co/documentos/providencias/14/13/Concepto_comisi%C3%B3n-g%C3%A9nero_28-febrero-2022.pdf">  Concepto comisión de género (28 de Febrero de 2022) </a></p>
+                                    <p>• <a target="_blank" className="link_secondary text_capitalize" href="https://relatoria.jep.gov.co/documentos/providencias/14/13/Concepto_comisi%C3%B3n-g%C3%A9nero_24-enero-2022.pdf">  Concepto comisión de género (24 de enero de 2022) </a></p>
+                                    <p>• <a target="_blank" className="link_secondary text_capitalize" href="https://relatoria.jep.gov.co/documentos/providencias/14/13/Concepto_comisi%C3%B3n-g%C3%A9nero_02-diciembre-2021.pdf">  Concepto comisión de género (02 de Diciembre de 2021) </a></p>
+                                    <p>• <a target="_blank" className="link_secondary text_capitalize" href="https://relatoria.jep.gov.co/documentos/providencias/14/13/Concepto_comisi%C3%B3n-g%C3%A9nero_22-septiembre-2021.pdf">  Concepto comisión de género (22 de Septiembre de 2021) </a></p>
+                                    <p>• <a target="_blank" className="link_secondary text_capitalize" href="https://relatoria.jep.gov.co/documentos/providencias/14/13/Concepto_comisi%C3%B3n-g%C3%A9nero_14-julio-2021.pdf">  Concepto comisión de género (14 de Julio de 2021) </a></p>
+                                    <p>• <a target="_blank" className="link_secondary text_capitalize" href="https://relatoria.jep.gov.co/documentos/providencias/14/13/Concepto_comisi%C3%B3n-g%C3%A9nero_22-diciembre-2020.pdf">  Concepto comisión de género (22 de Diciembre de 2020) </a></p>
+                                    <p>• <a target="_blank" className="link_secondary text_capitalize" href="https://relatoria.jep.gov.co/documentos/providencias/14/13/Concepto_comisi%C3%B3n-g%C3%A9nero_03-septiembre-2020.pdf">  Concepto comisión de género (03 de Septiembre de 2020) </a></p>
+                                    <p>• <a target="_blank" className="link_secondary text_capitalize" href="https://relatoria.jep.gov.co/documentos/providencias/14/13/Concepto_comisi%C3%B3n-g%C3%A9nero_19-mayo-2020.pdf">  Concepto comisión de género (19 de Mayo de 2020) </a></p>
+                                    <p>• <a target="_blank" className="link_secondary text_capitalize" href="https://relatoria.jep.gov.co/documentos/providencias/14/13/Concepto_comisi%C3%B3n-g%C3%A9nero_02-diciembre-2019.pdf">  Concepto comisión de género (02 de Diciembre de 2019) </a></p>
 
-                            {documentosAdicionales.map((adicional) => (
+                                </div>
+                                 )}
+
+                            </li>
+
+                            <li> 
+                                <a className="link_secondary text_capitalize cursor_pointer" href="https://relatoria.jep.gov.co/documentos/providencias/15/11/Protocolo-001_comision-etnico-racial_05-junio-2019.docx">
+                                Comisión de Étnica y Racial
+                                </a>
+                                
+
+                            </li>
+
+                            {/* {documentosAdicionales.map((adicional) => (
                                 <li key={adicional.id}>
                                     <a target="_blank" className="link_secondary text_capitalize" href={adicional.pdf}>
                                         {adicional.nombreDocumento}
@@ -982,7 +1013,7 @@ export default function Home() {
                                 </li>
                             )
 
-                            )}
+                            )} */}
 
                         </ul>
 
