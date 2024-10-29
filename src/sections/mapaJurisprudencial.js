@@ -4,12 +4,13 @@ import FilterLarge from '../components/filterLarge.js';
 import ListCardMapaSearch from '../components/listCardSearchMapaResults.js';
 import '../App.css';
 import { Container, Grid } from '@mui/material';
-import React, { useState, useEffect, PureComponent } from 'react';
+import React, { useState, useEffect, PureComponent, useContext } from 'react';
 import { styled } from '@mui/material/styles';
 import mapaJurisprudencialService from '../services/mapa_jurisprudencial.js';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Legend, ResponsiveContainer } from 'recharts';
 import { MapContainer, TileLayer, Tooltip, CircleMarker } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
+import Context from '../context/context.js';
 
 export default function Mapa() {
 
@@ -48,6 +49,9 @@ export default function Mapa() {
 
 
     }));
+
+    const { dptoSelMapaJurisprudencial, setDptoSelMapaJurisprudencial } = useContext(Context);
+    
     const [listdpto, setListdpto] = useState([]);
     const [graf, setGraf] = useState([]);
     const [dptoselect, setDptoselect] = useState([]);
@@ -76,10 +80,8 @@ export default function Mapa() {
 
     //funcion que realiza el filtro de las providencias cuando se da clic en un dpto
     const searchprodpto = (data) => {
-
-        //console.log(data) comentado temporalmente
-
-        //setDptoselect(datoss)
+        setDptoselect(data);
+        setDptoSelMapaJurisprudencial(data);
     }
 
   return (

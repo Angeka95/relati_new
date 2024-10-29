@@ -22,6 +22,8 @@ import mapaJurisprudencialService from './../services/mapa_jurisprudencial.js';
 
 export default function Card({ selectedFilters, isListSmall, selectedTerm, isLargeResult, isExternalFilters }) {
 
+    const { dptoSelMapaJurisprudencial, setDptoSelMapaJurisprudencial } = useContext(Context);
+
     const [datos, setDatos] = useState([]);
     const [datosOriginales, setDatosOriginales] = useState([]);
     const [message, setMessage] = useState("");
@@ -140,8 +142,12 @@ export default function Card({ selectedFilters, isListSmall, selectedTerm, isLar
             getDocsByProvidencias();
         } else {
             getCurrentData();
+            if( dptoSelMapaJurisprudencial !== null ){
+                const newDatos = datos.filter(item => (item.departamentoNombre === dptoSelMapaJurisprudencial.dpto));
+                setDatos(newDatos);
+            }
         }
-    }, [page, itemsPerPage, datos]);
+    }, [page, itemsPerPage, datos, dptoSelMapaJurisprudencial]);
 
     const getCurrentData = (items = 0) => {
         if (items === 0) {
