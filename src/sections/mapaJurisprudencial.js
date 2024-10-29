@@ -49,8 +49,8 @@ export default function Mapa() {
 
 
     }));
-
-    const { dptoSelMapaJurisprudencial, setDptoSelMapaJurisprudencial } = useContext(Context);
+ 
+    const { isDatosMapaJurisprudencial, setIsDatosMapaJurisprudencial, dptoSelMapaJurisprudencial, setDptoSelMapaJurisprudencial } = useContext(Context);
     
     const [listdpto, setListdpto] = useState([]);
     const [graf, setGraf] = useState([]);
@@ -93,73 +93,78 @@ export default function Mapa() {
     {/*<FilterLarge> 
         
     </FilterLarge>*/}
-    <WrapMapGrid container spacing={0} >
-        <SmallResultsGrid item xs={12} sm={12} md={5} lg={5} xl={5} className="padding_none" >
-            <ListCardMapaSearch 
-                  isListSmall={true}
-            > </ListCardMapaSearch> 
+    { !(isDatosMapaJurisprudencial ) && (
+        <div>Esperando datos...</div>
+    )} 
+    { isDatosMapaJurisprudencial && (
+        <WrapMapGrid container spacing={0} >
+            <SmallResultsGrid item xs={12} sm={12} md={5} lg={5} xl={5} className="padding_none" >
+                <ListCardMapaSearch 
+                    isListSmall={true}
+                > </ListCardMapaSearch> 
 
-        </SmallResultsGrid>
+            </SmallResultsGrid>
 
-        <MapGrid item xs={12} sm={12} md={7} lg={7} xl={7} >
-            <div>
-                {/*<LineChart width={500} height={300} data={graf}>
-                    <CartesianGrid stroke="#f5f5f5" />
-                    <XAxis dataKey="name" padding={{ left: 30, right: 30 }}/>
-                    <YAxis label={{
-                        value: `Desiciones publicadas`,
-                        style: { textAnchor: 'middle', paddingBottom: '10%'},
-                        angle: -90,
+            <MapGrid item xs={12} sm={12} md={7} lg={7} xl={7} >
+                <div>
+                    {/*<LineChart width={500} height={300} data={graf}>
+                        <CartesianGrid stroke="#f5f5f5" />
+                        <XAxis dataKey="name" padding={{ left: 30, right: 30 }}/>
+                        <YAxis label={{
+                            value: `Desiciones publicadas`,
+                            style: { textAnchor: 'middle', paddingBottom: '10%'},
+                            angle: -90,
+                    
+                            position: 'insideLeft',
+                            offset: 0,
+                        }}/>
+                        <Legend />
+                        <Line type="monotone" dataKey="fecha" stroke="#8884d8" activeDot={{ r: 8 }} label={'fffff'}/>
+                    </LineChart>*/}
+                </div>
+
+                <div className="map light_blue">
+                    <MapContainer center={[4.624335, -74.063645]} zoom={6}  style={{ height: "100vh", zIndex: 0 }} scrollWheelZoom={false} fadeAnimation={true} markerZoomAnimation={true} doubleClickZoom={false} dragging={true}>
+                <TileLayer
+                    attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                />
+
+                { listdpto.map( (maker) => {
+
+                    //console.log(maker) comentado temporalmente
+
+                    return (
+                        <CircleMarker
+                            center={[maker.lat, maker.long]}
+                            pathOptions={{ color: 'red' }}
+                            eventHandlers={{
+                                click: (e) => {
+                                    searchprodpto(maker)
+                                },
+                            }}
+                            radius={6}>
+                            <Tooltip direction="top" offset={[13, 0]} opacity={1}>
+                                <span>{maker.dpto}</span><br/>
+                                <span>Decisiones publicadas : {maker.cantidad}</span><br/>
+                                <p>Medidas cautelares: {maker.medidas_cautelares}</p>
+                            </Tooltip>
+                        </CircleMarker>
+                        )
+                    })
+
+                }
+
+
+            </MapContainer>
+                </div>
                 
-                        position: 'insideLeft',
-                        offset: 0,
-                    }}/>
-                    <Legend />
-                    <Line type="monotone" dataKey="fecha" stroke="#8884d8" activeDot={{ r: 8 }} label={'fffff'}/>
-                </LineChart>*/}
-            </div>
-
-            <div className="map light_blue">
-                <MapContainer center={[4.624335, -74.063645]} zoom={6}  style={{ height: "100vh", zIndex: 0 }} scrollWheelZoom={false} fadeAnimation={true} markerZoomAnimation={true} doubleClickZoom={false} dragging={true}>
-            <TileLayer
-                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-            />
-
-            { listdpto.map( (maker) => {
-
-                //console.log(maker) comentado temporalmente
-
-                return (
-                    <CircleMarker
-                        center={[maker.lat, maker.long]}
-                        pathOptions={{ color: 'red' }}
-                        eventHandlers={{
-                            click: (e) => {
-                                searchprodpto(maker)
-                            },
-                        }}
-                        radius={6}>
-                        <Tooltip direction="top" offset={[13, 0]} opacity={1}>
-                            <span>{maker.dpto}</span><br/>
-                            <span>Decisiones publicadas : {maker.cantidad}</span><br/>
-                            <p>Medidas cautelares: {maker.medidas_cautelares}</p>
-                        </Tooltip>
-                    </CircleMarker>
-                    )
-                })
-
-            }
-
-
-        </MapContainer>
-            </div>
-            
-        </MapGrid> 
-    </WrapMapGrid> 
+            </MapGrid> 
+        </WrapMapGrid> 
+     )} 
     </Container>
     
     </div>
- 
+    
   );
 }

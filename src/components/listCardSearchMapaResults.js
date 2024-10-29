@@ -22,7 +22,7 @@ import mapaJurisprudencialService from './../services/mapa_jurisprudencial.js';
 
 export default function Card({ selectedFilters, isListSmall, selectedTerm, isLargeResult, isExternalFilters }) {
 
-    const { dptoSelMapaJurisprudencial, setDptoSelMapaJurisprudencial } = useContext(Context);
+    const { isDatosMapaJurisprudencial, setIsDatosMapaJurisprudencial, dptoSelMapaJurisprudencial, setDptoSelMapaJurisprudencial } = useContext(Context);
 
     const [datos, setDatos] = useState([]);
     const [datosOriginales, setDatosOriginales] = useState([]);
