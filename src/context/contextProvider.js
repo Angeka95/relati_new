@@ -8,7 +8,7 @@ const ContextProvider = ({ children }) => {
   const [busqueda, setBusqueda] = useState();
   const [busquedaAvanzada, setBusquedaAvanzada] = useState('');
   const [verMasDecisionesRecientes, setVerMasDecisionesRecientes] = useState(0);
-  const [isDatosMapaJurisprudencial, setIsDatosMapaJurisprudencial] = useState(true);
+  const [isDatosMapaJurisprudencial, setIsDatosMapaJurisprudencial] = useState(false);
   const [dptoSelMapaJurisprudencial, setDptoSelMapaJurisprudencial] = useState(null);
 
   return (
