@@ -7,7 +7,7 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
-import CardSearch from '../components/cardSearchResults.js';
+import CardSearch from '../components/cardSearchMapaResults.js';
 import SearchBarSmall from '../components/searchBarSmall.js';
 import SortIcon from '@mui/icons-material/Sort';
 import { Container, Grid } from '@mui/material';
@@ -18,6 +18,7 @@ import ExpandLessOutlinedIcon from '@mui/icons-material/ExpandLessOutlined';
 import ExpandMoreOutlinedIcon from '@mui/icons-material/ExpandMoreOutlined';
 import FilterShort from './filterShort';
 import FilterListIcon from '@mui/icons-material/FilterList';
+import LinearWithValueLabel from '../components/linearProgress.js';
 import mapaJurisprudencialService from './../services/mapa_jurisprudencial.js';
 
 export default function Card({ selectedFilters, isListSmall, selectedTerm, isLargeResult, isExternalFilters }) {
@@ -39,7 +40,7 @@ export default function Card({ selectedFilters, isListSmall, selectedTerm, isLar
                         return {
                             id: item.id,
                             fecha: item.fecha_providencia,
-                            asunto: item.asuntocaso,
+                            nombre: item.nombre,
                             salaOSeccion: item.despacho.nombre,
                             nombreDecision: item.nombre,
                             grupoPertence: item.departamento_ext[0].nombre_dpto,
@@ -50,7 +51,8 @@ export default function Card({ selectedFilters, isListSmall, selectedTerm, isLar
                             extractoBusqueda: "extracto busqueda",
                             departamentoId: item.departamento_ext[0].id,
                             providencia: item.departamento_ext[0].providencia_id,
-                            departamentoNombre: item.departamento_ext[0].nombre_dpto
+                            departamentoNombre: item.departamento_ext[0].nombre_dpto,
+                            hipervinculo: item.hipervinculo
                         }
                     });
                     setMessage(`Success: ${response.status_info.status}. ${response.status_info.reason}`)
@@ -59,24 +61,23 @@ export default function Card({ selectedFilters, isListSmall, selectedTerm, isLar
                     const newOpcionesDocs = getOpcionesDocs(cardsArr);
                     setSearchDocsOptions(newOpcionesDocs);
                 } else {
-                setMessage(`Error: ${response.status_info.status}. ${response.status_info.reason}`)
+                    setMessage(`Error: ${response.status_info.status}. ${response.status_info.reason}`)
                 }
-            }
-            )
-            .catch(error => console.log(error));
+            })
+            .catch(error => console.log(error))
     }
 
     // Genera el listado de opciones de documentos para el autocompletar
     const getOpcionesDocs = (arrDatos) => {
         const arrLinted = Array.from(
-            new Map(arrDatos.map(item => [item.asunto, item])).values()
+            new Map(arrDatos.map(item => [item.nombre, item])).values()
         );
-        return [ { "title": "*" } ].concat(arrLinted.map( item => { return { "title": item.asunto } }));
+        return [ { "title": "*" } ].concat(arrLinted.map( item => { return { "title": item.nombre } }));
     };
 
     const handlerSetSelectedDoc = (newSelectedOption) => {
         if(newSelectedOption !== "*"){
-            const newArrDatos = datos.filter(item => item.asunto === newSelectedOption);
+            const newArrDatos = datos.filter(item => item.nombre === newSelectedOption);
             setSelectedDoc(newSelectedOption);
             setDatos(newArrDatos);
         } else {
@@ -142,6 +143,7 @@ export default function Card({ selectedFilters, isListSmall, selectedTerm, isLar
             getDocsByProvidencias();
         } else {
             getCurrentData();
+            setIsDatosMapaJurisprudencial(true);
             if( dptoSelMapaJurisprudencial !== null ){
                 const newDatos = datos.filter(item => (item.departamentoNombre === dptoSelMapaJurisprudencial.dpto));
                 setDatos(newDatos);
@@ -257,87 +259,102 @@ export default function Card({ selectedFilters, isListSmall, selectedTerm, isLar
             display: isListSmall ? 'none' : '',
         }
     }));
-
-     if(datos.length === 0) {
-        return (<><div>Cargando...</div></>)
-     } else {
-        return (
-            <Stack>
-                <div className=  {isListSmall ? ('text_results_search', 'no-spacing') :  ('text_results_search','margin_search') } >
-                    <SpaceGrid>
-                        <JustMapNoneGrid>
     
-                        {!isExternalFilters && (
-                            <h3 className="">Resultados de búsqueda</h3>
-                        )}
-                        {!busqueda && !verTodasDecisiones && (
-                            <h4 className="text_diabled">Cuando ingrese una búsqueda verá los resultados aquí</h4>
-                        )}
-    
-    
-                        {!isExternalFilters && !selectedTerm && verTodasDecisiones && (
-                            <h4 >Está buscando por <span className="text_bolder">"Todas las decisiones"</span> </h4>
-                        )}
-    
-                        {selectedTerm && (
-                            <h4 >Está buscando por <span className="text_bolder">{selectedTerm}</span> </h4>
-            
-                        )}
-    
-    
-                        {busqueda && (
-                            <h4 >Está buscando por <span className="text_bolder">{busqueda}</span> </h4>
-                        )}
-    
-                        {!selectedTerm && !isExternalFilters && selectedFilters.length === 0 && (
-                            <h4 className="text_diabled">(Aún no ha agregado ningún filtro a su búsqueda)</h4>
-                        )}
-                        {selectedFilters.length > 0 && (
-                            <Box sx={{ marginBottom: '20px', display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
-                                {selectedFilters.map((value) => (
-                                    <Chip
-                                        onMouseDown={e => {
-                                            e.stopPropagation()
-                                        }}
-                                        className="chip_select" key={value} label={value}
-                                    />
-    
-    
-                                ))}
-                            </Box>
-                        )}
-                        {externalFilters.length > 0 && (
-                            <Box sx={{ marginBottom: '20px', display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
-                                {externalFilters.map((value) => (
-                                    <Chip
-                                        onMouseDown={e => {
-                                            e.stopPropagation()
-                                        }}
-                                        className="chip_select" key={value} label={value}
-                                    />
-    
-    
-                                ))}
-                            </Box>
-                        )}
-                        </JustMapNoneGrid>
-                    </SpaceGrid>
-    
-                    {(verTodasDecisiones || busqueda) && (
-                        <div >
-    
-                            <Grid container spacing={2}>
-    
-    
-                                <SpaceBetweenGrid item xs={12} sm={12} md={12} lg={12} xl={12} >
-                                    <Grid item xs={12} sm={12} md= {(isListSmall ? 12 : 6)} lg={(isListSmall ? 12 : 6)} xl={(isListSmall ? 12 : 6)}>
-                                        <JustMapGrid > 
-                                            <h4 className="text_bolder"> Decisiones </h4> 
-                                        </JustMapGrid>
-                                            {isExternalFilters && (
-                                                <div className='filter_sort_container'>
-                                                    <FilterShort setSelectedFilters={setExternalFilters}/>
-                                                    <NoneGrid className='margin_left_s'>
+    if(isDatosMapaJurisprudencial) {
+        if(datos.length === 0) {
+            return (<LinearWithValueLabel></LinearWithValueLabel>)
+        } else {
+            return (
+                <Stack>
+                    <div className=  {isListSmall ? ('text_results_search', 'no-spacing') :  ('text_results_search','margin_search') } >
+                        <SpaceGrid>
+                            <JustMapNoneGrid>
+        
+                            {!isExternalFilters && (
+                                <h3 className="">Resultados de búsqueda</h3>
+                            )}
+                            {!busqueda && !verTodasDecisiones && (
+                                <h4 className="text_diabled">Cuando ingrese una búsqueda verá los resultados aquí</h4>
+                            )}
+        
+        
+                            {!isExternalFilters && !selectedTerm && verTodasDecisiones && (
+                                <h4 >Está buscando por <span className="text_bolder">"Todas las decisiones"</span> </h4>
+                            )}
+        
+                            {selectedTerm && (
+                                <h4 >Está buscando por <span className="text_bolder">{selectedTerm}</span> </h4>
+                
+                            )}
+        
+        
+                            {busqueda && (
+                                <h4 >Está buscando por <span className="text_bolder">{busqueda}</span> </h4>
+                            )}
+        
+                            {!selectedTerm && !isExternalFilters && selectedFilters.length === 0 && (
+                                <h4 className="text_diabled">(Aún no ha agregado ningún filtro a su búsqueda)</h4>
+                            )}
+                            {selectedFilters.length > 0 && (
+                                <Box sx={{ marginBottom: '20px', display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                                    {selectedFilters.map((value) => (
+                                        <Chip
+                                            onMouseDown={e => {
+                                                e.stopPropagation()
+                                            }}
+                                            className="chip_select" key={value} label={value}
+                                        />
+        
+        
+                                    ))}
+                                </Box>
+                            )}
+                            {externalFilters.length > 0 && (
+                                <Box sx={{ marginBottom: '20px', display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                                    {externalFilters.map((value) => (
+                                        <Chip
+                                            onMouseDown={e => {
+                                                e.stopPropagation()
+                                            }}
+                                            className="chip_select" key={value} label={value}
+                                        />
+        
+        
+                                    ))}
+                                </Box>
+                            )}
+                            </JustMapNoneGrid>
+                        </SpaceGrid>
+        
+                        {(verTodasDecisiones || busqueda) && (
+                            <div >
+        
+                                <Grid container spacing={2}>
+        
+        
+                                    <SpaceBetweenGrid item xs={12} sm={12} md={12} lg={12} xl={12} >
+                                        <Grid item xs={12} sm={12} md= {(isListSmall ? 12 : 6)} lg={(isListSmall ? 12 : 6)} xl={(isListSmall ? 12 : 6)}>
+                                            <JustMapGrid > 
+                                                <h4 className="text_bolder"> Decisiones </h4> 
+                                            </JustMapGrid>
+                                                {isExternalFilters && (
+                                                    <div className='filter_sort_container'>
+                                                        <FilterShort setSelectedFilters={setExternalFilters}/>
+                                                        <NoneGrid className='margin_left_s'>
+                                                            <Button className="button_function" startIcon={<SortIcon />} onClick={toggleButton}>Ordenar
+                                                            </Button>
+                                                            {isButtonSorterEnabled && (
+                                                                <div className='container_date_sorted'>
+                                                                    <Button onClick={sortAscByDate} className='items_sorted'>fecha ascendente </Button>
+                                                                    <Button onClick={sortDescByDate} className='items_sorted'>fecha descendente </Button>
+                                                                </div>
+                                                            )}
+                                                        </NoneGrid>
+                                                    </div>
+                                                )}
+        
+                                                {!isExternalFilters && (
+                                                    <NoneGrid>
                                                         <Button className="button_function" startIcon={<SortIcon />} onClick={toggleButton}>Ordenar
                                                         </Button>
                                                         {isButtonSorterEnabled && (
@@ -346,130 +363,116 @@ export default function Card({ selectedFilters, isListSmall, selectedTerm, isLar
                                                                 <Button onClick={sortDescByDate} className='items_sorted'>fecha descendente </Button>
                                                             </div>
                                                         )}
-                                                    </NoneGrid>
-                                                </div>
-                                            )}
-    
-                                            {!isExternalFilters && (
-                                                <NoneGrid>
-                                                  <Button className="button_function" startIcon={<SortIcon />} onClick={toggleButton}>Ordenar
-                                                  </Button>
-                                                  {isButtonSorterEnabled && (
-                                                      <div className='container_date_sorted'>
-                                                          <Button onClick={sortAscByDate} className='items_sorted'>fecha ascendente </Button>
-                                                          <Button onClick={sortDescByDate} className='items_sorted'>fecha descendente </Button>
-                                                      </div>
-                                                  )}
-                                                </NoneGrid>  
-                                            )}
-                                    </Grid>
-    
-                                    <Grid item  className="justify_end_partial" xs={12} sm={12} md= {(isListSmall ? 12 : 6)} lg={(isListSmall ? 12 : 6)} xl={(isListSmall ? 12 : 6) }>
-                                        
-                                        <SearchBarSmall searchOptions={searchDocsOptions} handlerSetSelectedOption={handlerSetSelectedDoc}> </SearchBarSmall>
-    
-                                    </Grid>
-                                </SpaceBetweenGrid>
-    
-                            </Grid>
-                        </div>
-                    )}
-                </div>
-    
-                {(verTodasDecisiones || busqueda) && (
-                    <>
-                        <WrapGrid item xs={12} sm={12} md={12} lg={12} xl={12} className="flex " >
-                            <Width100Grid>
-                                <p className="margin_results_page">
-                                    
-                                    <span> {startIndexPage} </span> a
-                                    <span> {endIndexPage} </span> de
-                                    <span className="text_bolder"> {datos.length} </span> decisiones
-                                </p>
-                            </Width100Grid>
-                            <NoneGrid>
-                                <p className='margin_xs'> | </p>
-                            </NoneGrid>
-    
-                            <div >
-                                <Width100Grid className='width_100 flex '>
-                                <p className="margin_results_page">Resultados por página  </p>
-                                    <Box sx={{ minWidth: 120 }}>
-                                        <FormControl fullWidth>
-                                            {/* <InputLabel id="demo-simple-select-label"></InputLabel> */}
-                                            <Select className= {isListSmall ? "select_items_results_small" : ("select_items_results justify_center")} 
-                                                value={itemsPerPage}
-                                                onChange={handleChange2}
-                                                MenuProps={{
-                                                    PaperProps: {
-                                                        sx: {
-                                                            boxShadow: '0px 8px 24px rgba(57, 129, 195, 0.2) ', // Sombra 
-                                                        },
-                                                    },
-                                                }}
-                                            >
-                                                <MenuItem value={2}>2</MenuItem>
-                                                <MenuItem value={3}>3</MenuItem>
-                                                <MenuItem value={5}>5</MenuItem>
-                                                <MenuItem value={datos.length}>Todas</MenuItem>
-                                            </Select>
-                                        </FormControl>
-                                    </Box>
-                                    
-                                </Width100Grid>
+                                                    </NoneGrid>  
+                                                )}
+                                        </Grid>
+        
+                                        <Grid item  className="justify_end_partial" xs={12} sm={12} md= {(isListSmall ? 12 : 6)} lg={(isListSmall ? 12 : 6)} xl={(isListSmall ? 12 : 6) }>
+                                            
+                                            <SearchBarSmall searchOptions={searchDocsOptions} handlerSetSelectedOption={handlerSetSelectedDoc}> </SearchBarSmall>
+        
+                                        </Grid>
+                                    </SpaceBetweenGrid>
+        
+                                </Grid>
                             </div>
-    
-                        </WrapGrid>
-    
-                        <div className="separator width_100"></div>
-    
-                        <SpaceGrid className="justify_end">
-    
-                            <Pagination className="margin_top_s"
-                                count={totalPages}
-                                page={page}
-                                onChange={handleChange}
-                                renderItem={(item, id) => (
-                                    <PaginationItem key={id}
-                                        slots={{ previous: ArrowBackIcon, next: ArrowForwardIcon }}
-                                        {...item}
-                                    />
-                                )}
-                            />
-                        </SpaceGrid>
-    
-                        <List className="width_100">
-                            {currentData.map((item, k) => (
-                                <SpaceGrid key={k}>
-                                    <ListItem className="padding_none" key={item.id}>
-                                        <CardSearch className="padding_none" datos={item}></CardSearch>
-                                    </ListItem>
-                                </SpaceGrid>
-                            ))}
-    
-                        </List>
-    
-                        <SpaceGrid className="justify_end">
-                            <Pagination className="pagination_container margin_bottom_s"
-                                count={totalPages}
-                                page={page}
-                                onChange={handleChange}
-                                renderItem={(item) => (
-                                    <PaginationItem
-                                        slots={{ previous: ArrowBackIcon, next: ArrowForwardIcon }}
-                                        {...item}
-                                    />
-                                )}
-                            />
-    
-                        </SpaceGrid>
-                    </>
-                )
-    
-                }
-    
-            </Stack>
-    
-        );
-     } 
+                        )}
+                    </div>
+        
+                    {(verTodasDecisiones || busqueda) && (
+                        <>
+                            <WrapGrid item xs={12} sm={12} md={12} lg={12} xl={12} className="flex " >
+                                <Width100Grid>
+                                    <p className="margin_results_page">
+                                        
+                                        <span> {startIndexPage} </span> a
+                                        <span> {endIndexPage} </span> de
+                                        <span className="text_bolder"> {datos.length} </span> decisiones
+                                    </p>
+                                </Width100Grid>
+                                <NoneGrid>
+                                    <p className='margin_xs'> | </p>
+                                </NoneGrid>
+        
+                                <div >
+                                    <Width100Grid className='width_100 flex '>
+                                    <p className="margin_results_page">Resultados por página  </p>
+                                        <Box sx={{ minWidth: 120 }}>
+                                            <FormControl fullWidth>
+                                                {/* <InputLabel id="demo-simple-select-label"></InputLabel> */}
+                                                <Select className= {isListSmall ? "select_items_results_small" : ("select_items_results justify_center")} 
+                                                    value={itemsPerPage}
+                                                    onChange={handleChange2}
+                                                    MenuProps={{
+                                                        PaperProps: {
+                                                            sx: {
+                                                                boxShadow: '0px 8px 24px rgba(57, 129, 195, 0.2) ', // Sombra 
+                                                            },
+                                                        },
+                                                    }}
+                                                >
+                                                    <MenuItem value={2}>2</MenuItem>
+                                                    <MenuItem value={3}>3</MenuItem>
+                                                    <MenuItem value={5}>5</MenuItem>
+                                                    <MenuItem value={datos.length}>Todas</MenuItem>
+                                                </Select>
+                                            </FormControl>
+                                        </Box>
+                                        
+                                    </Width100Grid>
+                                </div>
+        
+                            </WrapGrid>
+        
+                            <div className="separator width_100"></div>
+        
+                            <SpaceGrid className="justify_end">
+        
+                                <Pagination className="margin_top_s"
+                                    count={totalPages}
+                                    page={page}
+                                    onChange={handleChange}
+                                    renderItem={(item, id) => (
+                                        <PaginationItem key={id}
+                                            slots={{ previous: ArrowBackIcon, next: ArrowForwardIcon }}
+                                            {...item}
+                                        />
+                                    )}
+                                />
+                            </SpaceGrid>
+        
+                            <List className="width_100">
+                                {currentData.map((item, k) => (
+                                    <SpaceGrid key={k}>
+                                        <ListItem className="padding_none" key={item.id}>
+                                            <CardSearch className="padding_none" datos={item}></CardSearch>
+                                        </ListItem>
+                                    </SpaceGrid>
+                                ))}
+        
+                            </List>
+        
+                            <SpaceGrid className="justify_end">
+                                <Pagination className="pagination_container margin_bottom_s"
+                                    count={totalPages}
+                                    page={page}
+                                    onChange={handleChange}
+                                    renderItem={(item) => (
+                                        <PaginationItem
+                                            slots={{ previous: ArrowBackIcon, next: ArrowForwardIcon }}
+                                            {...item}
+                                        />
+                                    )}
+                                />
+        
+                            </SpaceGrid>
+                        </>
+                    )
+        
+                    }
+        
+                </Stack>
+            );
+        }
+    } 
 }

@@ -18,6 +18,7 @@ import ExpandLessOutlinedIcon from '@mui/icons-material/ExpandLessOutlined';
 import ExpandMoreOutlinedIcon from '@mui/icons-material/ExpandMoreOutlined';
 import FilterShort from './filterShort';
 import FilterListIcon from '@mui/icons-material/FilterList';
+import LinearWithValueLabel from '../components/linearProgress.js';
 import tesauroService from './../services/tesauro.js';
 
 export default function Card({ selectedFilters, isListSmall, selectedTerm, isLargeResult, isExternalFilters }) {
@@ -250,7 +251,7 @@ export default function Card({ selectedFilters, isListSmall, selectedTerm, isLar
     }));
 
      if(datos.length === 0) {
-        return (<><div>Cargando...</div></>)
+        return (<LinearWithValueLabel></LinearWithValueLabel>)
      } else {
         return (
             <Stack>
