@@ -55,8 +55,71 @@ export default function Mapa() {
     
     const [listdpto, setListdpto] = useState([]);
     const [graf, setGraf] = useState([]);
-    const [dptoselect, setDptoselect] = useState([]);
     const [message, setMessage] = useState("");
+
+    const [datos, setDatos] = useState([]);
+    const [datosOriginales, setDatosOriginales] = useState([]);
+    const [selectedDoc, setSelectedDoc] = useState("");
+    const [searchDocsOptions, setSearchDocsOptions] = useState([]);
+
+    const verificarActuacion = (actuacion) => {
+        if(actuacion && actuacion.length > 0) {
+           let arrActuacion = actuacion.map(item => item.actuacion);
+           return arrActuacion[0].toLowerCase();
+        } else {
+            return null;
+        }
+    }
+
+    const getDocsByProvidencias = () => {
+        mapaJurisprudencialService
+            .getProvidencias()
+            .then(response => {
+                if((response.status_info.status === 200) && (response.data.length > 0)) {
+                    const cardsArr = response.data.map(item => {
+                        return {
+                            id: item.id,
+                            fecha: item.fecha_providencia,
+                            nombre: item.nombre,
+                            actuacion: verificarActuacion(item.actuacion),
+                            caso: item.caso,
+                            despacho: item.despacho.nombre,
+                            descripcion: item.despacho.descripcion,
+                            asuntoCaso: item.asuntocaso,
+                            departamentoId: item.departamento_ext[0].id,
+                            providencia: item.departamento_ext[0].providencia_id,
+                            departamentoNombre: item.departamento_ext[0].nombre_dpto,
+                            hipervinculo: item.hipervinculo
+                        }
+                    });
+                    setMessage(`Success: ${response.status_info.status}. ${response.status_info.reason}`)
+                    setDatos(cardsArr);
+                    setDatosOriginales(cardsArr);
+                    const newOpcionesDocs = getOpcionesDocs(cardsArr);
+                    setSearchDocsOptions(newOpcionesDocs);
+                } else {
+                    setMessage(`Error: ${response.status_info.status}. ${response.status_info.reason}`)
+                }
+            })
+            .catch(error => console.log(error))
+    }
+    
+    // Genera el listado de opciones de documentos para el autocompletar
+    const getOpcionesDocs = (arrDatos) => {
+        const arrLinted = Array.from(
+            new Map(arrDatos.map(item => [item.nombre, item])).values()
+        );
+        return [ { "title": "*" } ].concat(arrLinted.map( item => { return { "title": item.nombre } }));
+    };
+
+    useEffect(() => {
+        if(datos.length === 0){
+            getDocsByProvidencias();
+        } else {
+            setIsDatosMapaJurisprudencial(true);
+            getMapaDptos();
+        }
+    }, [datos]);
 
     //funcion que hace el llamado para traer la data de los dpto del mapa
     const getMapaDptos = () => {
@@ -75,33 +138,36 @@ export default function Mapa() {
             .catch(error => console.log(error));
     }
 
-    useEffect(() => {
-        getMapaDptos()
-    }, []);
-
     //funcion que realiza el filtro de las providencias cuando se da clic en un dpto
     const searchprodpto = (data) => {
-        setDptoselect(data);
         setDptoSelMapaJurisprudencial(data);
     }
     
   return (
     <div> 
-    <Container className="container_large">
-    <h1 className="text_center margin_top_l">Mapa Jurisprudencial </h1>  
-    <p className="text_center">Encuentre las decisiones de la JEP y conozca la actividad judicial en el territorio Colombiano</p>
+        
+        <Container className="container_large">
+        <h1 className="text_center margin_top_l">Mapa Jurisprudencial </h1>  
+        <p className="text_center">Encuentre las decisiones de la JEP y conozca la actividad judicial en el territorio Colombiano</p>
+        { (dptoSelMapaJurisprudencial !== null) && (
+            <p className="text_bolder text_center text_uppercase">Fichas relacionadas con el {dptoSelMapaJurisprudencial.dpto}</p>
+        ) }
+        
+        {/*<FilterLarge> </FilterLarge>*/}
 
-    {/*<FilterLarge> </FilterLarge>*/}
-
-    {( !isDatosMapaJurisprudencial ) && (
-        <LinearWithValueLabel></LinearWithValueLabel>
-    )}
+        {( !isDatosMapaJurisprudencial ) && (
+            <LinearWithValueLabel></LinearWithValueLabel>
+        )}
 
         <WrapMapGrid container spacing={0} >
             <SmallResultsGrid item xs={12} sm={12} md={5} lg={5} xl={5} className="padding_none" >
                 <ListCardMapaSearch 
-                    isListSmall={true}
-                > </ListCardMapaSearch> 
+                    isListSmall={true} 
+                    datosMapa={datos}
+                    datosOriginalesMapa={datosOriginales}
+                    searchDocsOptionsMapa={searchDocsOptions}
+                > 
+                </ListCardMapaSearch>
             </SmallResultsGrid>
 
             { ( isDatosMapaJurisprudencial === true ) && (
@@ -130,12 +196,13 @@ export default function Mapa() {
                         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                     />
 
-                    { listdpto.map( (maker) => {
+                    { listdpto.map( (maker, k) => {
 
                         //console.log(maker) comentado temporalmente
 
                         return (
                             <CircleMarker
+                                key={k}
                                 center={[maker.lat, maker.long]}
                                 pathOptions={{ color: 'red' }}
                                 eventHandlers={{
@@ -164,8 +231,8 @@ export default function Mapa() {
             
             
         </WrapMapGrid> 
-
-    </Container>
+        
+        </Container>
     
     </div>
     

@@ -39,24 +39,37 @@ export default function CardSearch({ datos, tipo }) {
     <React.Fragment>
 
       <CardContent className="card_container">
-        <p className="text_uppercase justify_end_spacing text_spacing text_space_min">{datos.fecha}</p>
-        <p className="text_bolder text_uppercase text_space_min">{datos.nombre}</p>
-        <p className="text_bolder text_space_min">{datos.nombreDecision}</p>
-        <p className="text_space_min">{datos.salaOSeccion}</p>
-        <p className="text_space_min">• Pertenece a:  <span className="text_bolder"> {datos.grupoPertence}</span> </p>
-
+        {((typeof datos.fecha === 'string' ) && (datos.fecha.trim() !== '')) && (
+          <p className="text_uppercase justify_end_spacing text_spacing text_space_min">{datos.fecha}</p>
+        )}
+        {((typeof datos.nombre === 'string' ) && (datos.nombre.trim() !== '')) && (
+          <p className="text_bolder text_uppercase text_space_min">{datos.nombre}</p>
+        )}
+        {((typeof datos.caso === 'string' ) && datos.actuacion.trim() !== '') && (
+            <p className="text_space_min"><span className="text_bolder">• Actuación:</span> <span className="text_capitalize"></span>{datos.actuacion}</p>
+        )}
+        {((typeof datos.caso === 'string' ) && (datos.caso.trim() !== '')) && (
+            <p className="text_space_min"><span className="text_bolder">• Caso:</span> {datos.caso}</p>
+        )}
+        {((typeof datos.despacho === 'string' ) && (datos.despacho.trim() !== '')) && (
+            <p className="text_space_min"><span className="text_bolder">• Despacho:</span> {datos.despacho}</p>
+        )}
+        {((typeof datos.descripcion === 'string' ) && (datos.descripcion.trim() !== '')) && (
+            <p className="text_space_min"><span className="text_bolder">• Descripción:</span> {datos.descripcion}</p>
+        )}
+        
         {isButtonInfoEnabled && (
           <Button className="link_primary text_lowercase" onClick={toggleButtonInfo}>ver más</Button>)}
 
-
-
         {!isButtonInfoEnabled && (
           <div className="width_100 ">
-            <p className="text_space_min">• Lugar de los hechos: <span className="text_bolder"> {datos.lugarHechos}</span></p>
-            <p className="text_space_min">• Magistrado: <span className="text_bolder">{datos.magistrado}</span></p>
-            <p className="text_space_min">• Macrocaso: <span className="text_bolder">{datos.macrocaso}</span></p>
-            <p className="text_space_min">• Conclusión de la decisión: <span className="text_bolder">{datos.conclusionDecision}</span></p>
-
+            {((typeof datos.asuntoCaso === 'string' ) && (datos.asuntoCaso.trim() !== '')) && (
+              <p className="text_space_min"><span className="text_bolder">• Asunto caso:</span> {datos.asuntoCaso}</p>
+            )}
+            {((typeof datos.departamentoNombre === 'string') && (datos.departamentoNombre.trim() !== '')) && (
+              <p className="text_space_min"><span className="text_bolder">• Pertenece a:</span> {datos.departamentoNombre}</p>
+            )}
+          
             <Button
               className="link_primary text_lowercase"
               onClick={toggleButtonInfo}>
@@ -72,50 +85,16 @@ export default function CardSearch({ datos, tipo }) {
       <CardActions className="no-spacing card_actions_container">
         <div className="card_search_button_spacing">
 
-
           <CustomGrid>
-            <Button className="button_secondary margin_xs" >ver ficha</Button>
-            <Button className="button_primary margin_xs" >Descargar decisión</Button>
+            {((typeof datos.hipervinculo === 'string' ) && (datos.hipervinculo.trim() !== '')) && (
+              <a href={datos.hipervinculo} target='_blank'>
+                <Button className="button_primary margin_xs" >Descargar </Button>
+              </a> 
+            )}
           </CustomGrid>
         </div>
 
-        <div className="width_100">
-          {!verTodasDecisiones && (
-            <>
-              <p className="text_center"
-                style={{
-                  height: isButtonExtractEnabled ? 'auto' : '50px',
-                  overflow: 'hidden'
-                }}>
-                {datos.extractoBusqueda.split('secuestro').map((extracto, index) => (
-                  <React.Fragment key={index}>
-                    {extracto}
-                    {index != datos.extractoBusqueda.split('secuestro').length - 1 ? (
-                      <span className="text_bolder">{busqueda}</span>
-                    ) : (
-                      <></>
-                    )}
-                  </React.Fragment>
-                ))}
-              </p>
-
-              {isButtonExtractEnabled && (
-                <Button
-                  className="link_secondary justify_center text_lowercase" onClick={toggleButtonExtract}> ver menos del extracto
-                </Button>
-              )}
-              {!isButtonExtractEnabled && (
-                <Button
-                  className="link_secondary justify_center text_lowercase" onClick={toggleButtonExtract}> ver más del extracto
-                </Button>
-              )}
-            </>
-          )
-          }
-        </div>
       </CardActions>
-
-
 
     </React.Fragment>
 
