@@ -90,7 +90,7 @@ export default function CardSearch({ datos, tipo }) {
 
           <CustomGrid>
             {((typeof datos.hipervinculo === 'string' ) && (datos.hipervinculo.trim() !== '')) && (
-              <a href={datos.hipervinculo} target='_blank'>
+              <a href={datos.hipervinculo} target='_blank' rel="noreferrer">
                 <Button className="button_primary margin_xs" >Descargar Decisión</Button>
               </a> 
             )}
