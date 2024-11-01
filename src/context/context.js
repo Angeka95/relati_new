@@ -3,7 +3,7 @@ import React from 'react';
 // Creacion del contexto
 const Context = React.createContext({
     verTodasDecisiones: false,
-    setVerTodasDecisiones: () => {},
+    setVerTodasDecisiones: () => {}
 });
 
 export default Context;

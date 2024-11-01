@@ -1,0 +1,9 @@
+GET https://relatoria.jep.gov.co/geterms HTTP/1.1
+user: {{$dotenv REACT_APP_API_USER}}
+password: {{$dotenv REACT_APP_API_PASS}}
+Authorization: Bearer {{$dotenv REACT_APP_API_ACCESS_TOKEN}}
+Content-Type: application/json
+
+{
+    "letter": "z"
+}

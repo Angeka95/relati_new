@@ -8,9 +8,11 @@ const ContextProvider = ({ children }) => {
   const [busqueda, setBusqueda] = useState();
   const [busquedaAvanzada, setBusquedaAvanzada] = useState('');
   const [verMasDecisionesRecientes, setVerMasDecisionesRecientes] = useState(0);
+  const [isDatosMapaJurisprudencial, setIsDatosMapaJurisprudencial] = useState(false);
+  const [dptoSelMapaJurisprudencial, setDptoSelMapaJurisprudencial] = useState(null);
 
   return (
-    <Context.Provider value={{ verTodasDecisiones, setVerTodasDecisiones, busqueda, setBusqueda, verMasDecisionesRecientes, setVerMasDecisionesRecientes }}>
+    <Context.Provider value={{ verTodasDecisiones, setVerTodasDecisiones, busqueda, setBusqueda, verMasDecisionesRecientes, setVerMasDecisionesRecientes, isDatosMapaJurisprudencial, setIsDatosMapaJurisprudencial, dptoSelMapaJurisprudencial, setDptoSelMapaJurisprudencial }}>
       {children}
     </Context.Provider>
   );
