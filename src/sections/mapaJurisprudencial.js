@@ -3,7 +3,7 @@ import Filter from '../components/filter.js';
 import FilterLarge from '../components/filterLarge.js';
 import ListCardMapaSearch from '../components/listCardSearchMapaResults.js';
 import '../App.css';
-import { Container, Grid } from '@mui/material';
+import { Container, Grid, Box } from '@mui/material';
 import LinearWithValueLabel from '../components/linearProgress.js';
 import React, { useState, useEffect, PureComponent, useContext } from 'react';
 import { styled } from '@mui/material/styles';
@@ -65,7 +65,8 @@ export default function Mapa() {
     const verificarActuacion = (actuacion) => {
         if(actuacion && actuacion.length > 0) {
            let arrActuacion = actuacion.map(item => item.actuacion);
-           return arrActuacion[0].toLowerCase();
+           arrActuacion = [...new Set(arrActuacion)].toString();
+           return arrActuacion.toLowerCase();
         } else {
             return null;
         }
@@ -172,29 +173,42 @@ export default function Mapa() {
 
             { ( isDatosMapaJurisprudencial === true ) && (
                     <MapGrid item xs={12} sm={12} md={7} lg={7} xl={7} >
-                    <div>
-                        {/*<LineChart width={500} height={300} data={graf}>
-                            <CartesianGrid stroke="#f5f5f5" />
-                            <XAxis dataKey="name" padding={{ left: 30, right: 30 }}/>
-                            <YAxis label={{
-                                value: `Desiciones publicadas`,
-                                style: { textAnchor: 'middle', paddingBottom: '10%'},
-                                angle: -90,
-                        
-                                position: 'insideLeft',
-                                offset: 0,
-                            }}/>
-                            <Legend />
-                            <Line type="monotone" dataKey="fecha" stroke="#8884d8" activeDot={{ r: 8 }} label={'fffff'}/>
-                        </LineChart>*/}
-                    </div>
+                    <Box component="section" sx={{ p: 5, border: '1px solid grey', mb: 2 }}>
+                        {<ResponsiveContainer width="100%" height={300}>
+                            <LineChart data={graf} margin={{ top: 30, right: 30, left: 30, bottom: 30 }}>
+                                <CartesianGrid stroke="#f5f5f5" />
+                                <XAxis dataKey="name" padding={{ left: 30, right: 30 }}
+                                    label={{
+                                        value: `Fecha`,
+                                        style: { textAnchor: 'middle', paddingBottom: '0'},
+                                        position: 'insideCenter',
+                                        offset: 0,
+                                        dx: 0,
+                                        dy: 25
+                                    }}
+                                />
+                                <YAxis 
+                                    label={{
+                                        value: `Decisiones Publicadas`,
+                                        style: { textAnchor: 'middle', paddingBottom: '0'},
+                                        angle: -90,
+                                        position: 'insideLeft',
+                                        offset: 0,
+                                        dx: -6
+                                    }}/>
+                                <Legend verticalAlign="top" height={36}/>
+                                <Line type="monotone" dataKey="fecha" stroke="#8884d8" activeDot={{ r: 8 }} label={'fffff'}/>
+                            </LineChart>
+                        </ResponsiveContainer>
+                        }
+                    </Box>
 
                     <div className="map light_blue">
                         <MapContainer center={[4.624335, -74.063645]} zoom={6}  style={{ height: "100vh", zIndex: 0 }} scrollWheelZoom={false} fadeAnimation={true} markerZoomAnimation={true} doubleClickZoom={false} dragging={true}>
-                    <TileLayer
-                        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                    />
+                            <TileLayer
+                                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                            />
 
                     { listdpto.map( (maker, k) => {
 
@@ -223,7 +237,7 @@ export default function Mapa() {
                     }
 
 
-                </MapContainer>
+                        </MapContainer>
                     </div>
                     
                 </MapGrid>
