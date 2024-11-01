@@ -15,9 +15,10 @@ import PreguntasFrecuentes from './sections/preguntasFrecuentes'
 import Acerca from './sections/acercaDeNosotros'
 import Menu from './sections/menu'
 import Footer from './sections/footer'
+import Breadcrumb from './components/breadcrumbs';
+import BreadcrumbWrapper from './components/breadcrumbWrapper';
 
-
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes,  useLocation } from 'react-router-dom';
 
 function App() {
   return (
@@ -27,9 +28,11 @@ function App() {
           
         <Router>
         <Menu />
+
+        <BreadcrumbWrapper />
        
         <Routes>
-        <Route path="/" element={<Home />} />
+          <Route path="/" element={<Home />} />
           <Route path="/caso" element={<Caso />} />
           <Route path="/boletines" element={<Boletines />} />
           <Route path="/suscripcion" element={<Suscripcion />} />

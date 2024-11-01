@@ -507,11 +507,13 @@ h6 {
 }
 
 
-
 .wrap {
   display: flex;
   flex-wrap: wrap;
 }
+
+
+
 
 .width_100 {
   width: 100% !important;
@@ -2399,6 +2401,46 @@ padding: 0px 0% 0% 3%;
 
 /*\ FIN MODAL  */
 
+/* ANALISIS TEMATICO  */
+
+.descripcion_paso_container{
+  margin-top: 60px !important;
+  width: 80%;
+  margin: 0% 10%;
+}
+
+.descripcion_nowrap {
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+
+/* FIN ANALISIS TEMATICO  */
+
+
+/* BREADCRUMB  */
+
+.breadcrumb {
+  list-style: none;
+  margin: 20px 0px 0px 0px;
+  display: flex;
+}
+
+.breadcrumb-item + .breadcrumb-item::before {
+  content: "/" !important;
+  margin: 0 8px;
+}
+
+.breadcrumb-item {
+  font-size: 16px;
+  cursor: pointer;
+}
+
+a, .breadcrumb-item:hover {
+  color: #007CAE !important;
+}
+
+/* FIN BREADCRUMB  */
 
 /*\ FOOTER  */
 
@@ -2602,6 +2644,8 @@ padding: 0px 0% 0% 3%;
 
 
 /*FIN FOOTER*/
+
+
 
 
 
