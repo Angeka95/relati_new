@@ -146,16 +146,16 @@ export default function MenuBar() {
                     'aria-labelledby': 'menu',
                     }}
                 >
-                    <Link to="/Tesauro">
+                    <Link to="/tesauro">
                         <MenuItem className="text_decoration_none text_black menu_text" >Tesauro</MenuItem>
                     </Link>
-                    <Link to="/Mapa-jurisprudencial">
+                    <Link to="/mapa-jurisprudencial">
                         <MenuItem className="text_decoration_none text_black menu_text" >Mapa Jurisprudencial</MenuItem>
                     </Link>
                      
                         <MenuItem onClick={scrollToSection} className="text_decoration_none text_black menu_text" >Macrocasos</MenuItem>
                         
-                    <Link to="/Analisis-tematico">
+                    <Link to="/analisis-tematico">
                         <MenuItem className="text_decoration_none text_black menu_text " >Análisis Temático</MenuItem>
                     </Link>
                 </Menu>
