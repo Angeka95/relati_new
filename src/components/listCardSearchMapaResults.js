@@ -19,61 +19,16 @@ import ExpandMoreOutlinedIcon from '@mui/icons-material/ExpandMoreOutlined';
 import FilterShort from './filterShort';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import LinearWithValueLabel from '../components/linearProgress.js';
-import mapaJurisprudencialService from './../services/mapa_jurisprudencial.js';
 
-export default function Card({ selectedFilters, isListSmall, selectedTerm, isLargeResult, isExternalFilters }) {
+export default function Card({ datosMapa, datosOriginalesMapa, searchDocsOptionsMapa, selectedFilters, isListSmall, selectedTerm, isLargeResult, isExternalFilters }) {
 
     const { isDatosMapaJurisprudencial, setIsDatosMapaJurisprudencial, dptoSelMapaJurisprudencial, setDptoSelMapaJurisprudencial } = useContext(Context);
 
-    const [datos, setDatos] = useState([]);
-    const [datosOriginales, setDatosOriginales] = useState([]);
+    const [datos, setDatos] = useState(datosMapa);
+    const [datosOriginales, setDatosOriginales] = useState(datosOriginalesMapa);
     const [message, setMessage] = useState("");
     const [selectedDoc, setSelectedDoc] = useState("");
-    const [searchDocsOptions, setSearchDocsOptions] = useState([]);
-
-    const getDocsByProvidencias = () => {
-        mapaJurisprudencialService
-            .getProvidencias()
-            .then(response => {
-                if((response.status_info.status === 200) && (response.data.length > 0)) {
-                    const cardsArr = response.data.map(item => {
-                        return {
-                            id: item.id,
-                            fecha: item.fecha_providencia,
-                            nombre: item.nombre,
-                            salaOSeccion: item.despacho.nombre,
-                            nombreDecision: item.nombre,
-                            grupoPertence: item.departamento_ext[0].nombre_dpto,
-                            lugarHechos: "Acacías, Meta",
-                            magistrado: "Augusto Rodriguez",
-                            macrocaso: "08 ",
-                            conclusionDecision: "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes,",
-                            extractoBusqueda: "extracto busqueda",
-                            departamentoId: item.departamento_ext[0].id,
-                            providencia: item.departamento_ext[0].providencia_id,
-                            departamentoNombre: item.departamento_ext[0].nombre_dpto,
-                            hipervinculo: item.hipervinculo
-                        }
-                    });
-                    setMessage(`Success: ${response.status_info.status}. ${response.status_info.reason}`)
-                    setDatos(cardsArr);
-                    setDatosOriginales(cardsArr);
-                    const newOpcionesDocs = getOpcionesDocs(cardsArr);
-                    setSearchDocsOptions(newOpcionesDocs);
-                } else {
-                    setMessage(`Error: ${response.status_info.status}. ${response.status_info.reason}`)
-                }
-            })
-            .catch(error => console.log(error))
-    }
-
-    // Genera el listado de opciones de documentos para el autocompletar
-    const getOpcionesDocs = (arrDatos) => {
-        const arrLinted = Array.from(
-            new Map(arrDatos.map(item => [item.nombre, item])).values()
-        );
-        return [ { "title": "*" } ].concat(arrLinted.map( item => { return { "title": item.nombre } }));
-    };
+    const [searchDocsOptions, setSearchDocsOptions] = useState(searchDocsOptionsMapa);
 
     const handlerSetSelectedDoc = (newSelectedOption) => {
         if(newSelectedOption !== "*"){
@@ -82,6 +37,7 @@ export default function Card({ selectedFilters, isListSmall, selectedTerm, isLar
             setDatos(newArrDatos);
         } else {
             setSelectedDoc("");
+            setDptoSelMapaJurisprudencial(null);
             setDatos(datosOriginales);
         }
     }
@@ -139,26 +95,31 @@ export default function Card({ selectedFilters, isListSmall, selectedTerm, isLar
     const startIndexPage = Math.ceil(page * itemsPerPage + 1 - itemsPerPage);
 
     useEffect(() => {
-        if(datos.length === 0){
-            getDocsByProvidencias();
+        if(datos.length > 0) {
+            setDatos(datosOriginales);
+            if(dptoSelMapaJurisprudencial !== null) {
+                setDatos(newDatos => [...datos].filter(item => (item.departamentoNombre === dptoSelMapaJurisprudencial.dpto)));
+            } 
         } else {
-            getCurrentData();
-            setIsDatosMapaJurisprudencial(true);
-            if( dptoSelMapaJurisprudencial !== null ){
-                const newDatos = datos.filter(item => (item.departamentoNombre === dptoSelMapaJurisprudencial.dpto));
-                setDatos(newDatos);
-            }
+            setDatos(datosOriginales);
         }
-    }, [page, itemsPerPage, datos, dptoSelMapaJurisprudencial]);
+    }, [ dptoSelMapaJurisprudencial]);
+
+    useEffect(() => {
+        if(datos.length > 0) {
+            getCurrentData(); 
+        } 
+    }, [page, itemsPerPage, datos]);
 
     const getCurrentData = (items = 0) => {
+
         if (items === 0) {
             items = itemsPerPage;
         }
     
         const startIndex = (page - 1) * items;
-        setCurrentData(datos.slice(startIndex, startIndex + items));
-     
+
+        setCurrentData(currentData => datos.slice(startIndex, startIndex + items));
     }
 
     const handleChange2 = (event) => {
@@ -261,10 +222,7 @@ export default function Card({ selectedFilters, isListSmall, selectedTerm, isLar
     }));
     
     if(isDatosMapaJurisprudencial) {
-        if(datos.length === 0) {
-            return (<LinearWithValueLabel></LinearWithValueLabel>)
-        } else {
-            return (
+        return (
                 <Stack>
                     <div className=  {isListSmall ? ('text_results_search', 'no-spacing') :  ('text_results_search','margin_search') } >
                         <SpaceGrid>
@@ -425,54 +383,58 @@ export default function Card({ selectedFilters, isListSmall, selectedTerm, isLar
                             </WrapGrid>
         
                             <div className="separator width_100"></div>
-        
-                            <SpaceGrid className="justify_end">
-        
-                                <Pagination className="margin_top_s"
-                                    count={totalPages}
-                                    page={page}
-                                    onChange={handleChange}
-                                    renderItem={(item, id) => (
-                                        <PaginationItem key={id}
-                                            slots={{ previous: ArrowBackIcon, next: ArrowForwardIcon }}
-                                            {...item}
-                                        />
-                                    )}
-                                />
-                            </SpaceGrid>
-        
-                            <List className="width_100">
-                                {currentData.map((item, k) => (
-                                    <SpaceGrid key={k}>
-                                        <ListItem className="padding_none" key={item.id}>
-                                            <CardSearch className="padding_none" datos={item}></CardSearch>
-                                        </ListItem>
-                                    </SpaceGrid>
-                                ))}
-        
-                            </List>
-        
-                            <SpaceGrid className="justify_end">
-                                <Pagination className="pagination_container margin_bottom_s"
-                                    count={totalPages}
-                                    page={page}
-                                    onChange={handleChange}
-                                    renderItem={(item) => (
-                                        <PaginationItem
-                                            slots={{ previous: ArrowBackIcon, next: ArrowForwardIcon }}
-                                            {...item}
-                                        />
-                                    )}
-                                />
-        
-                            </SpaceGrid>
+
+                            { (datos.length > 0) && (
+                                <>            
+                                <SpaceGrid className="justify_end">
+            
+                                    <Pagination className="margin_top_s"
+                                        count={totalPages}
+                                        page={page}
+                                        onChange={handleChange}
+                                        renderItem={(item, id) => (
+                                            <PaginationItem key={id}
+                                                slots={{ previous: ArrowBackIcon, next: ArrowForwardIcon }}
+                                                {...item}
+                                            />
+                                        )}
+                                    />
+                                </SpaceGrid>
+            
+                                <List className="width_100">
+                                    {currentData.map((item, k) => (
+                                        <SpaceGrid key={k}>
+                                            <ListItem className="padding_none" key={item.id}>
+                                                <CardSearch className="padding_none" datos={item}></CardSearch>
+                                            </ListItem>
+                                        </SpaceGrid>
+                                    ))}
+            
+                                </List>
+            
+                                <SpaceGrid className="justify_end">
+                                    <Pagination className="pagination_container margin_bottom_s"
+                                        count={totalPages}
+                                        page={page}
+                                        onChange={handleChange}
+                                        renderItem={(item) => (
+                                            <PaginationItem
+                                                slots={{ previous: ArrowBackIcon, next: ArrowForwardIcon }}
+                                                {...item}
+                                            />
+                                        )}
+                                    />
+            
+                                </SpaceGrid>
+                                </>            
+                            )}
+
                         </>
                     )
         
                     }
         
                 </Stack>
-            );
-        }
+        );
     } 
 }

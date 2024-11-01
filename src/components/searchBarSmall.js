@@ -7,8 +7,6 @@ import '../App.css';
 import SearchIcon from '@mui/icons-material/Search';
 import ClearIcon from '@mui/icons-material/Clear';
 
-
-
 export default function search({searchOptions, handlerSetSelectedOption}) {
   return (
 
