@@ -62,6 +62,7 @@ export default function Mapa() {
     const [selectedDoc, setSelectedDoc] = useState("");
     const [searchDocsOptions, setSearchDocsOptions] = useState([]);
 
+    // El campo actuacion tiene varios elementos, obtener solo el nombre
     const verificarActuacion = (actuacion) => {
         if(actuacion && actuacion.length > 0) {
            let arrActuacion = actuacion.map(item => item.actuacion);
@@ -70,6 +71,14 @@ export default function Mapa() {
         } else {
             return null;
         }
+    }
+
+    // funcionalidad para truncar con Ellipsis
+    const truncateWithEllipsis = (text, maxLength = 50) => {
+        if (text.length > maxLength) {
+          return text.slice(0, maxLength) + '...';
+        }
+        return text;
     }
 
     const getDocsByProvidencias = () => {
@@ -81,6 +90,9 @@ export default function Mapa() {
                         return {
                             id: item.id,
                             fecha: item.fecha_providencia,
+                            asuntoNombreCaso: `${item.asuntocaso} ${item.nombre}`,
+                            asuntoCasoEllipsed: truncateWithEllipsis(item.asuntocaso), 
+                            asuntoNombre: item.nombre,
                             nombre: item.nombre,
                             actuacion: verificarActuacion(item.actuacion),
                             caso: item.caso,
@@ -154,7 +166,7 @@ export default function Mapa() {
             <p className="text_bolder text_center text_uppercase">Fichas relacionadas con el {dptoSelMapaJurisprudencial.dpto}</p>
         ) }
         
-        {/*<FilterLarge> </FilterLarge>*/}
+        <FilterLarge> </FilterLarge>
 
         {( !isDatosMapaJurisprudencial ) && (
             <LinearWithValueLabel></LinearWithValueLabel>
@@ -211,8 +223,6 @@ export default function Mapa() {
                             />
 
                     { listdpto.map( (maker, k) => {
-
-                        //console.log(maker) comentado temporalmente
 
                         return (
                             <CircleMarker
