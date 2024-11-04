@@ -25,7 +25,7 @@ export default function Footer() {
                      <li><span className="titlefoot">Línea de transparencia de la JEP:</span><br></br>
                          01 8000 180422</li>
                      <li><span className="titlefoot">Correo y notificaciones judiciales:</span><br></br>
-                         <a href="mailto:info@jep.gov.co?Subject=Contácto%20portal%20JEP" target="_top"><span class="whitefooter">info@jep.gov.co</span></a>
+                         <a href="mailto:info@jep.gov.co?Subject=Contácto%20portal%20JEP" target="_top"><span className="whitefooter">info@jep.gov.co</span></a>
                      </li>
                      <li><span className="titlefoot">Whatsapp institucional:</span><br></br>
                          (+57) 320 779 0909</li>
