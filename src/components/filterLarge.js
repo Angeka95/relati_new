@@ -7,10 +7,13 @@ import ExpandMoreOutlinedIcon from '@mui/icons-material/ExpandMoreOutlined';
 import Filter from './filter';
 import React, { useState, useEffect, useContext } from 'react';
 import { styled } from '@mui/material/styles';
-
+import Context from '../context/context.js';
 
 
 export default function FilterLarge() {
+
+  const { filtroMapaJurisprudencial, setFiltroMapaJurisprudencial } = useContext(Context);
+
   const [selectedFilters, setSelectedFilters] = useState([]);
 
 
@@ -82,7 +85,6 @@ export default function FilterLarge() {
 
               <div className="position_float">
                 <Filter isShowingFilter={showFilter} isFilterFloat={true} setSelectedFilters={setSelectedFilters} />
-
               </div>
             </div>
           </Grid>

@@ -36,9 +36,35 @@ const datos_sala_seccion = [
 
 
 const datos_anios = [
-
   {
-
+    "nombre_campo": "2024",
+    "valor": "2024"
+  },
+  {
+    "nombre_campo": "2023",
+    "valor": "2023"
+  },
+  {
+    "nombre_campo": "2022",
+    "valor": "2022"
+  },
+  {
+    "nombre_campo": "2021",
+    "valor": "2021"
+  },
+  {
+    "nombre_campo": "2020",
+    "valor": "2020"
+  },
+  {
+    "nombre_campo": "2019",
+    "valor": "2019"
+  },
+  {
+    "nombre_campo": "2018",
+    "valor": "2018"
+  },
+  {
     "nombre_campo": "2017",
     "valor": "2017"
   },
@@ -81,8 +107,8 @@ const datos_departamento = [
 
   {
 
-    "nombre_campo": "Departamento 01",
-    "valor": "01"
+    "nombre_campo": "Departamento 001",
+    "valor": "001"
   },
   {
     "nombre_campo": "Departamento 02",
@@ -168,6 +194,8 @@ const datos_procedimiento = [
 export default function Filter({ setSelectedFilters, isFilterFloat, isShowingFilter, selectedData, isSearchAdvance }) {
   // Estado para controlar si el botón está habilitado o deshabilitado
   const { verTodasDecisiones, busqueda } = useContext(Context);
+  const { filtroMapaJurisprudencial, setFiltroMapaJurisprudencial } = useContext(Context);
+  const { listaDptosMapaJurisprudencial, setListaDptosMapaJurisprudencial } = useContext(Context);
   const [isButtonEnabled, setIsButtonEnabled] = useState(true);
   const [selectedDataFilter1, setSelectedDataFilter1] = useState([]);
   const [selectedDataFilter2, setSelectedDataFilter2] = useState([]);
@@ -195,7 +223,11 @@ export default function Filter({ setSelectedFilters, isFilterFloat, isShowingFil
         ...selectedDataFilter6,
         ...selectedDataFilter7,
       ]
-    )
+    );
+    setFiltroMapaJurisprudencial({
+      departamentos: [...selectedDataFilter3],
+      anios: [...selectedDataFilter2]
+    });
   };
 
   useEffect(() => {
@@ -206,7 +238,6 @@ export default function Filter({ setSelectedFilters, isFilterFloat, isShowingFil
     else {
       setIsFilterDisabled(false);
     }
-
 
   }, [verTodasDecisiones, busqueda]);
 
@@ -221,7 +252,7 @@ export default function Filter({ setSelectedFilters, isFilterFloat, isShowingFil
   }));
 
   return (
-
+ 
     <Card className={isFilterFloat ? (!isShowingFilter ? "card_filter_float_hidden" : "card_filter_float") : "card_filter"} >
       <CardContent>
         <JustFilterFloatNoneGrid>
@@ -234,7 +265,7 @@ export default function Filter({ setSelectedFilters, isFilterFloat, isShowingFil
           label='Sala o Sección' id='sala'></SelectField>
         <SelectField isDisabled={isFilterDisabled} datos_filtros={datos_anios} setSelectedData={setSelectedDataFilter2}
           label='Año de los hechos' id='anio'></SelectField>
-        <SelectField isDisabled={isFilterDisabled} datos_filtros={datos_departamento} setSelectedData={setSelectedDataFilter3}
+        <SelectField isDisabled={isFilterDisabled} datos_filtros={listaDptosMapaJurisprudencial} setSelectedData={setSelectedDataFilter3}
           label='Departamento' id='departamento'></SelectField>
         <SelectField isDisabled={isFilterDisabled} datos_filtros={datos_delito} setSelectedData={setSelectedDataFilter4}
           label='Delito' id='delito'></SelectField>
