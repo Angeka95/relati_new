@@ -22,7 +22,7 @@ import LinearWithValueLabel from '../components/linearProgress.js';
 
 export default function Card({ datosMapa, datosOriginalesMapa, searchDocsOptionsMapa, selectedFilters, isListSmall, selectedTerm, isLargeResult, isExternalFilters }) {
 
-    const { isDatosMapaJurisprudencial, setIsDatosMapaJurisprudencial, dptoSelMapaJurisprudencial, setDptoSelMapaJurisprudencial } = useContext(Context);
+    const { isDatosMapaJurisprudencial, dptoSelMapaJurisprudencial, setDptoSelMapaJurisprudencial, filtroMapaJurisprudencial } = useContext(Context);
 
     const [datos, setDatos] = useState(datosMapa);
     const [datosOriginales, setDatosOriginales] = useState(datosOriginalesMapa);
@@ -110,6 +110,30 @@ export default function Card({ datosMapa, datosOriginalesMapa, searchDocsOptions
             getCurrentData(); 
         } 
     }, [page, itemsPerPage, datos]);
+
+    useEffect(() => {
+        setDatos(datosOriginales);
+        if(!validarfiltroMapaJurisprudencial(filtroMapaJurisprudencial)) { 
+            let datosFiltrados = datos;
+            if(filtroMapaJurisprudencial.departamentos.length > 0){
+                datosFiltrados = datosFiltrados.filter( item => filtroMapaJurisprudencial.departamentos.includes(item.departamentoNombre));
+            }
+            if(filtroMapaJurisprudencial.anios.length > 0){
+                datosFiltrados = datosFiltrados.filter( item => filtroMapaJurisprudencial.anios.includes(item.anio));
+            }
+            setDatos(datosFiltrados);
+        } 
+    }, [filtroMapaJurisprudencial]);
+
+    // Verificar si el array del filtro de mapa tiene sus propiedades de tipo array vacias
+    const validarfiltroMapaJurisprudencial = (obj) => {
+        for (let propiedad in obj) {
+            if (Array.isArray(obj[propiedad]) && obj[propiedad].length > 0) {
+                return false;
+            }
+        }
+        return true;
+    };
 
     const getCurrentData = (items = 0) => {
 

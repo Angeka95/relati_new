@@ -140,7 +140,7 @@ export default function BusquedaAvanzada() {
 
     let result = '';
     let result_text = '';
-    let estilosOperadores = ' <p class="text_bolder operador_size">*operadorLogico*</p> ';
+    let estilosOperadores = ' <p className="text_bolder operador_size">*operadorLogico*</p> ';
     if (values.length > 0) {
       result += values.join(estilosOperadores.replace('operadorLogico', 'y'));
       result_text += values.join(' *y* ');

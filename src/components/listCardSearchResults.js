@@ -299,7 +299,9 @@ export default function Card({ selectedFilters, isListSmall, selectedTerm, isLar
                             </Box>
                         )}
                         {externalFilters.length > 0 && (
-                            <Box sx={{ marginBottom: '20px', display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                            <div>
+                                <h5 className="text_bolder margin_bottom_s margin_top_s">Su búsqueda se está filtrando por:</h5>
+                                <Box className=" margin_bottom_m display_flex flex_wrap" sx={{  gap: 0.5 }}>
                                 {externalFilters.map((value) => (
                                     <Chip
                                         onMouseDown={e => {
@@ -310,7 +312,9 @@ export default function Card({ selectedFilters, isListSmall, selectedTerm, isLar
     
     
                                 ))}
-                            </Box>
+                                </Box>
+                            
+                            </div>    
                         )}
                         </JustMapNoneGrid>
                     </SpaceGrid>

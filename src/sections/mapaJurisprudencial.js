@@ -51,7 +51,7 @@ export default function Mapa() {
 
     }));
  
-    const { isDatosMapaJurisprudencial, setIsDatosMapaJurisprudencial, dptoSelMapaJurisprudencial, setDptoSelMapaJurisprudencial } = useContext(Context);
+    const { isDatosMapaJurisprudencial, setIsDatosMapaJurisprudencial, dptoSelMapaJurisprudencial, setDptoSelMapaJurisprudencial, setListaDptosMapaJurisprudencial } = useContext(Context);
     
     const [listdpto, setListdpto] = useState([]);
     const [graf, setGraf] = useState([]);
@@ -81,6 +81,12 @@ export default function Mapa() {
         return text;
     }
 
+    // Obtener el anio de una fecha
+    function obtenerAnio(fechaStr) {
+        const fecha = new Date(fechaStr);  // Crear un objeto Date a partir de la cadena
+        return fecha.getFullYear().toString();         // Obtener el año
+    }
+
     const getDocsByProvidencias = () => {
         mapaJurisprudencialService
             .getProvidencias()
@@ -90,6 +96,7 @@ export default function Mapa() {
                         return {
                             id: item.id,
                             fecha: item.fecha_providencia,
+                            anio: obtenerAnio(item.fecha_providencia),
                             asuntoNombreCaso: `${item.asuntocaso} ${item.nombre}`,
                             asuntoCasoEllipsed: truncateWithEllipsis(item.asuntocaso), 
                             asuntoNombre: item.nombre,
@@ -143,8 +150,9 @@ export default function Mapa() {
                     setListdpto(response.data[0].dpto);
                     setGraf(response.data[0].datagraf);
                     setMessage(`Success: ${response.status_info.status}. ${response.status_info.reason}`);
+                    setListaDptosMapaJurisprudencial(setDatosDepartamentos(response.data[0].dpto));
                 } else {
-                    setMessage(`Error: ${response.status_info.status}. ${response.status_info.reason}`)
+                    setMessage(`Error: ${response.status_info.status}. ${response.status_info.reason}`);
                 }
             }
             )
@@ -154,6 +162,12 @@ export default function Mapa() {
     //funcion que realiza el filtro de las providencias cuando se da clic en un dpto
     const searchprodpto = (data) => {
         setDptoSelMapaJurisprudencial(data);
+    }
+
+    //funcion que crea un array de objetos enviado a la lista de filtros corrspondiente a dptos
+    const setDatosDepartamentos = (dptos) => {
+        const listaDptos = dptos.map( item => { return { "nombre_campo": item.dpto, "valor": item.dpto } });
+        return listaDptos;
     }
     
   return (
