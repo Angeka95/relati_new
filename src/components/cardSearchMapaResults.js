@@ -66,8 +66,8 @@ export default function CardSearch({ datos, tipo }) {
             {((typeof datos.despacho === 'string' ) && (datos.despacho.trim() !== '')) && (
                 <p className="text_space_min"><span className="text_bolder">• Despacho:</span> {datos.despacho}</p>
             )}
-            {((typeof datos.descripcion === 'string' ) && (datos.descripcion.trim() !== '')) && (
-                <p className="text_space_min"><span className="text_bolder">• Descripción:</span> {datos.descripcion}</p>
+            {((typeof datos.despachoDescripcion === 'string' ) && (datos.despachoDescripcion.trim() !== '')) && (
+                <p className="text_space_min"><span className="text_bolder">• Descripción:</span> {datos.despachoDescripcion}</p>
             )}
             {((typeof datos.departamentoNombre === 'string') && (datos.departamentoNombre.trim() !== '')) && (
               <p className="text_space_min"><span className="text_bolder">• Pertenece a:</span> {datos.departamentoNombre}</p>

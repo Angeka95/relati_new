@@ -4,7 +4,12 @@ import Context from './context';
 
 const filtroMapaByDefault = {
   departamentos: [],
-  anios: []
+  anios: [],
+  salas: [],
+  delitos: [],
+  macrocasos: [],
+  comparecientes: [],
+  procedimientos: []
 }; 
 
 const ContextProvider = ({ children }) => {

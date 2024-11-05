@@ -121,6 +121,9 @@ export default function Card({ datosMapa, datosOriginalesMapa, searchDocsOptions
             if(filtroMapaJurisprudencial.anios.length > 0){
                 datosFiltrados = datosFiltrados.filter( item => filtroMapaJurisprudencial.anios.includes(item.anio));
             }
+            if(filtroMapaJurisprudencial.salas.length > 0){
+                datosFiltrados = datosFiltrados.filter( item => filtroMapaJurisprudencial.salas.includes(item.despacho));
+            }
             setDatos(datosFiltrados);
         } 
     }, [filtroMapaJurisprudencial]);

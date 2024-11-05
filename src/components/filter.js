@@ -13,26 +13,21 @@ import { styled } from '@mui/material/styles';
 import { Container, Grid } from '@mui/material';
 import Context from '../context/context';
 
+
 const datos_sala_seccion = [
-
   {
-
-    "nombre_campo": "Sala de Reconocimiento",
-    "valor": "Sala 01"
+    "nombre_campo": "S - Sala de Amnistía o Indulto",
+    "valor": 2
   },
   {
-    "nombre_campo": "Sala de Amnistía",
-    "valor": "Sala 02"
+    "nombre_campo": "S - Sala de Definición de Situaciones Jurídicas",
+    "valor": 3
   },
   {
-    "nombre_campo": "Sala de Definición",
-    "valor": "Sala 03"
-  },
-  {
-    "nombre_campo": "Sección de Reconocimiento",
-    "valor": "Sección 01"
+    "nombre_campo": "T - Sección con Ausencia de Reconocimiento de Verdad y de Responsabilidad",
+    "valor": 5
   }
-]
+];
 
 
 const datos_anios = [
@@ -226,7 +221,12 @@ export default function Filter({ setSelectedFilters, isFilterFloat, isShowingFil
     );
     setFiltroMapaJurisprudencial({
       departamentos: [...selectedDataFilter3],
-      anios: [...selectedDataFilter2]
+      anios: [...selectedDataFilter2],
+      salas: [...selectedDataFilter1],
+      delitos: [],
+      macrocasos: [],
+      comparecientes: [],
+      procedimientos: []
     });
   };
 
