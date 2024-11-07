@@ -1,11 +1,12 @@
 import '../App.css';
-import { Container, TextField, Button, Snackbar, Alert } from '@mui/material';
+import { Container, TextField, Button, Snackbar, Alert, Modal } from '@mui/material';
 
 import React, { useState, useEffect } from 'react';
 import DOMPurify from 'dompurify';
 import Carousel from '../components/carousel.js';
 import TabCustom from '../components/tab.js';
 import boletinesService from '../services/boletines.js';
+import LinearWithValueLabel from '../components/linearProgress.js';
 
 export default function Suscripcion() {
 
@@ -70,12 +71,13 @@ export default function Suscripcion() {
     const validateForm = () => {
         const newErrors = objErrors;
     
-        if(nombre.trim() === "") {
+        /*if(nombre.trim() === "") {
           newErrors.nombre.message = 'Por favor, ingrese un nombre.';
           newErrors.nombre.error = true;  
-        } else if (!/^[a-zA-Z\s]{2,50}$/.test(nombre)) {
+        } else */
+        if (!/^[a-zA-Z\s]{2,50}$/.test(nombre)) {
           newErrors.nombre.message = 'El nombre solo debe contener letras y espacios.';
-          newErrors.nombre.error = true;
+          newErrors.nombre.error = false; //true
         } 
     
         if(email.trim() === "") {
@@ -86,12 +88,13 @@ export default function Suscripcion() {
           newErrors.email.error = true;
         }
 
-        if(ocupacion.trim() === "") {
+        /*if(ocupacion.trim() === "") {
             newErrors.ocupacion.message = 'Por favor, ingrese una ocupación.';
             newErrors.ocupacion.error = true;  
-        } else if (!/^[a-zA-Z\s]{2,50}$/.test(ocupacion)) {
+        } else */
+        if (!/^[a-zA-Z\s]{2,50}$/.test(ocupacion)) {
           newErrors.ocupacion.message = 'La ocupación solo debe contener letras y espacios.';
-          newErrors.ocupacion.error = true;
+          newErrors.ocupacion.error = false; //true
         }
         
         setErrors({...newErrors});
