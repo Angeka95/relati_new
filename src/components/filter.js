@@ -1,4 +1,3 @@
-
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Box from '@mui/material/Box';
@@ -12,7 +11,8 @@ import FilterListIcon from '@mui/icons-material/FilterList';
 import { styled } from '@mui/material/styles';
 import { Container, Grid } from '@mui/material';
 import Context from '../context/context';
-
+import delitos from '../data/delitos.js';
+import tipoProcedimientos from '../data/tipo_procedimientos.js';
 
 const datos_sala_seccion = [
   {
@@ -161,26 +161,7 @@ const datos_departamento = [
   }
 ]
 
-const datos_delito = [
-
-  {
-
-    "nombre_campo": "Delito 01",
-    "valor": "01"
-  },
-  {
-    "nombre_campo": "Delito 02",
-    "valor": "02"
-  },
-  {
-    "nombre_campo": "Delito 03",
-    "valor": "03"
-  },
-  {
-    "nombre_campo": "Delito 04 ",
-    "valor": "04"
-  }
-]
+const datos_delito = delitos;
 
 const datos_compareciente = [
   { "nombre_campo": "AENIFPU- AGENTE DEL ESTADO NO INTEGRANTE DE LA FUERZA PÚBLICA", "valor": "AENIFPU- AGENTE DEL ESTADO NO INTEGRANTE DE LA FUERZA PÚBLICA" },
@@ -198,30 +179,7 @@ const datos_compareciente = [
   { "nombre_campo": "VÍCTIMA(S)", "valor": "VÍCTIMA(S)" }
 ]
 
-const datos_procedimiento = [
-
-  {
-
-    "nombre_campo": "Procedimiento 01",
-    "valor": "01"
-  },
-  {
-    "nombre_campo": "Procedimiento 02",
-    "valor": "02"
-  },
-  {
-    "nombre_campo": "Procedimiento 03",
-    "valor": "03"
-  },
-  {
-    "nombre_campo": "Procedimiento 04",
-    "valor": "04"
-  }
-]
-
-
-
-
+const datos_procedimiento = tipoProcedimientos;
 
 export default function Filter({ setSelectedFilters, isFilterFloat, isShowingFilter, selectedData, isSearchAdvance }) {
   // Estado para controlar si el botón está habilitado o deshabilitado
@@ -260,10 +218,10 @@ export default function Filter({ setSelectedFilters, isFilterFloat, isShowingFil
       departamentos: [...selectedDataFilter3],
       anios: [...selectedDataFilter2],
       salas: [...selectedDataFilter1],
-      delitos: [],
+      delitos: [...selectedDataFilter4],
       macrocasos: [...selectedDataFilter5],
       comparecientes: [...selectedDataFilter6],
-      procedimientos: []
+      procedimientos: [...selectedDataFilter7]
     });
   };
 

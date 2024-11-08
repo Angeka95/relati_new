@@ -92,6 +92,7 @@ export default function Mapa() {
             .getProvidencias()
             .then(response => {
                 if((response.status_info.status === 200) && (response.data.length > 0)) {
+                    console.log("actuaciones", response.data[0].actuacion);
                     const cardsArr = response.data.map(item => {
                         return {
                             id: item.id,
@@ -111,7 +112,9 @@ export default function Mapa() {
                             providencia: item.departamento_ext[0].providencia_id,
                             departamentoNombre: item.departamento_ext[0].nombre_dpto,
                             hipervinculo: item.hipervinculo,
-                            compareciente: (item.tipopeti.length > 0 ) ? item.tipopeti[0].tipo : "NO APLICA"
+                            compareciente: (item.tipopeti.length > 0 ) ? item.tipopeti[0].tipo : "",
+                            delitos: (item.delitos.length > 0 ) ? item.delitos[0].delito : "",
+                            procedimientos: (item.actuacion.length > 0 ) ? item.actuacion[0].actuacion : "",
                         }
                     });
                     setMessage(`Success: ${response.status_info.status}. ${response.status_info.reason}`)
