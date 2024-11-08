@@ -128,13 +128,13 @@ export default function Card({ datosMapa, datosOriginalesMapa, searchDocsOptions
                 datosFiltrados = datosFiltrados.filter( item => filtroMapaJurisprudencial.macrocasos.includes(item.caso));
             }
             if(filtroMapaJurisprudencial.comparecientes.length > 0){
-                datosFiltrados = datosFiltrados.filter( item => filtroMapaJurisprudencial.comparecientes.includes(item.compareciente) );
+                datosFiltrados = datosFiltrados.filter( item => filtroMapaJurisprudencial.comparecientes.includes(item.compareciente));
             }
             if(filtroMapaJurisprudencial.delitos.length > 0){
-                datosFiltrados = datosFiltrados.filter( item => {console.log("delito", item.delitos ); filtroMapaJurisprudencial.delitos.includes(item.delitos); });
+                datosFiltrados = datosFiltrados.filter( item => filtroMapaJurisprudencial.delitos.includes(item.delitos));
             } 
             if(filtroMapaJurisprudencial.procedimientos.length > 0){
-                datosFiltrados = datosFiltrados.filter( item => {console.log("procedimientos", item.procedimientos ); filtroMapaJurisprudencial.delitos.includes(item.delitos); });
+                datosFiltrados = datosFiltrados.filter( item => filtroMapaJurisprudencial.procedimientos.includes(item.procedimientos));
             } 
             setDatos(datosFiltrados);
         } 

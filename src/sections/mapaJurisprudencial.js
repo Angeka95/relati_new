@@ -92,7 +92,6 @@ export default function Mapa() {
             .getProvidencias()
             .then(response => {
                 if((response.status_info.status === 200) && (response.data.length > 0)) {
-                    console.log("actuaciones", response.data[0].actuacion);
                     const cardsArr = response.data.map(item => {
                         return {
                             id: item.id,
