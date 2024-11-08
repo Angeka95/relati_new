@@ -16,6 +16,10 @@ import Context from '../context/context';
 
 const datos_sala_seccion = [
   {
+    "nombre_campo": "S - Sala de Reconocimiento de Verdad, de Responsabilidad y de Determinación de los Hechos y Conductas",
+    "valor": 1
+  },
+  {
     "nombre_campo": "S - Sala de Amnistía o Indulto",
     "valor": 2
   },
@@ -24,11 +28,22 @@ const datos_sala_seccion = [
     "valor": 3
   },
   {
+    "nombre_campo": "T - Sección de Reconocimiento de Verdad y Responsabilidad",
+    "valor": 4
+  },
+  {
     "nombre_campo": "T - Sección con Ausencia de Reconocimiento de Verdad y de Responsabilidad",
     "valor": 5
-  }
+  },
+  {
+    "nombre_campo": "T - Sección de Revisión de Sentencias",
+    "valor": 6
+  },
+  {
+    "nombre_campo": "T - Sección de Apelación",
+    "valor": 7
+  },
 ];
-
 
 const datos_anios = [
   {
@@ -80,21 +95,48 @@ const datos_anios = [
 const datos_macrocaso = [
 
   {
-
-    "nombre_campo": "Macrocaso 01",
-    "valor": "01"
+    "nombre_campo": "Caso 001",
+    "valor": "Caso 001"
   },
   {
-    "nombre_campo": "Macrocaso 02",
-    "valor": "02"
+    "nombre_campo": "Caso 002",
+    "valor": "Caso 002"
   },
   {
-    "nombre_campo": "Macrocaso 03",
-    "valor": "03"
+    "nombre_campo": "Caso 003",
+    "valor": "Caso 003"
   },
   {
-    "nombre_campo": "Macrocaso 04",
-    "valor": "04"
+    "nombre_campo": "Caso 004",
+    "valor": "Caso 004"
+  },
+  {
+    "nombre_campo": "Caso 005",
+    "valor": "Caso 005"
+  },
+  {
+    "nombre_campo": "Caso 006",
+    "valor": "Caso 006"
+  },
+  {
+    "nombre_campo": "Caso 007",
+    "valor": "Caso 007"
+  },
+  {
+    "nombre_campo": "Caso 008",
+    "valor": "Caso 008"
+  },
+  {
+    "nombre_campo": "Caso 009",
+    "valor": "Caso 009"
+  },
+  {
+    "nombre_campo": "Caso 010",
+    "valor": "Caso 010"
+  },
+  {
+    "nombre_campo": "Caso 011",
+    "valor": "Caso 011"
   }
 ]
 
@@ -141,24 +183,19 @@ const datos_delito = [
 ]
 
 const datos_compareciente = [
-
-  {
-
-    "nombre_campo": "Compareciente 01",
-    "valor": "01"
-  },
-  {
-    "nombre_campo": "Compareciente 02",
-    "valor": "02"
-  },
-  {
-    "nombre_campo": "Compareciente 03",
-    "valor": "03"
-  },
-  {
-    "nombre_campo": "Compareciente 04",
-    "valor": "04"
-  }
+  { "nombre_campo": "AENIFPU- AGENTE DEL ESTADO NO INTEGRANTE DE LA FUERZA PÚBLICA", "valor": "AENIFPU- AGENTE DEL ESTADO NO INTEGRANTE DE LA FUERZA PÚBLICA" },
+  { "nombre_campo": "DELINCUENCIA COMÚN", "valor": "DELINCUENCIA COMÚN" },
+  { "nombre_campo": "FARC-EP", "valor": "FARC-EP" },
+  { "nombre_campo": "FUERZA PÚBLICA", "valor": "FUERZA PÚBLICA" },
+  { "nombre_campo": "GRUPO ARMADO NO FIRMANTE", "valor": "GRUPO ARMADO NO FIRMANTE" },
+  { "nombre_campo": "NO APLICA", "valor": "NO APLICA" },
+  { "nombre_campo": "PROTESTA SOCIAL", "valor": "PROTESTA SOCIAL" },
+  { "nombre_campo": "TERCERO CIVIL", "valor": "TERCERO CIVIL" },
+  { "nombre_campo": "TERCERO CIVIL Y AENIFPU", "valor": "TERCERO CIVIL Y AENIFPU" },
+  { "nombre_campo": "TERCERO FINANCIADOR O COLABORADOR DE LOS PARAMILITARES", "valor": "TERCERO FINANCIADOR O COLABORADOR DE LOS PARAMILITARES" },
+  { "nombre_campo": "TERCERO FINANCIADOR O COLABORADOR DE OTRO ACTOR DEL CONFLICTO", "valor": "TERCERO FINANCIADOR O COLABORADOR DE OTRO ACTOR DEL CONFLICTO" },
+  { "nombre_campo": "TERCERO FINANCIADOR O COLABORADOR DE LAS FARC-EP", "valor": "TERCERO FINANCIADOR O COLABORADOR DE LAS FARC-EP" },
+  { "nombre_campo": "VÍCTIMA(S)", "valor": "VÍCTIMA(S)" }
 ]
 
 const datos_procedimiento = [
@@ -224,8 +261,8 @@ export default function Filter({ setSelectedFilters, isFilterFloat, isShowingFil
       anios: [...selectedDataFilter2],
       salas: [...selectedDataFilter1],
       delitos: [],
-      macrocasos: [],
-      comparecientes: [],
+      macrocasos: [...selectedDataFilter5],
+      comparecientes: [...selectedDataFilter6],
       procedimientos: []
     });
   };

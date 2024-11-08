@@ -124,6 +124,12 @@ export default function Card({ datosMapa, datosOriginalesMapa, searchDocsOptions
             if(filtroMapaJurisprudencial.salas.length > 0){
                 datosFiltrados = datosFiltrados.filter( item => filtroMapaJurisprudencial.salas.includes(item.despacho));
             }
+            if(filtroMapaJurisprudencial.macrocasos.length > 0){
+                datosFiltrados = datosFiltrados.filter( item => filtroMapaJurisprudencial.macrocasos.includes(item.caso));
+            }
+            /*if(filtroMapaJurisprudencial.comparecientes.length > 0){
+                datosFiltrados = datosFiltrados.filter( item => { console.log("compareciente", item.compareciente); return  filtroMapaJurisprudencial.comparecientes.includes(item.compareciente); } );
+            }*/
             setDatos(datosFiltrados);
         } 
     }, [filtroMapaJurisprudencial]);
