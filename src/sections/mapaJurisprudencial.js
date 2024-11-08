@@ -110,7 +110,8 @@ export default function Mapa() {
                             departamentoId: item.departamento_ext[0].id,
                             providencia: item.departamento_ext[0].providencia_id,
                             departamentoNombre: item.departamento_ext[0].nombre_dpto,
-                            hipervinculo: item.hipervinculo
+                            hipervinculo: item.hipervinculo,
+                            compareciente: (item.tipopeti.length > 0 ) ? item.tipopeti[0].tipo : "NO APLICA"
                         }
                     });
                     setMessage(`Success: ${response.status_info.status}. ${response.status_info.reason}`)
