@@ -236,9 +236,6 @@ export default function Filter({ setSelectedFilters, isFilterFloat, isShowingFil
 
   }, [verTodasDecisiones, busqueda]);
 
-  useEffect(() => {
-    console.log('Renderizando...');
-  }, []);
   const JustFilterFloatNoneGrid = styled(Grid)(({ theme }) => ({
 
     [theme.breakpoints.up('xs')]: {

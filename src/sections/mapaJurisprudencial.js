@@ -184,10 +184,12 @@ export default function Mapa() {
             <p className="text_bolder text_center text_uppercase">Fichas relacionadas con el {dptoSelMapaJurisprudencial.dpto}</p>
         ) }
         
-        <FilterLarge> </FilterLarge>
-
         {( !isDatosMapaJurisprudencial ) && (
             <LinearWithValueLabel></LinearWithValueLabel>
+        )}
+
+        {( isDatosMapaJurisprudencial ) && (
+           <FilterLarge> </FilterLarge>
         )}
 
         <WrapMapGrid container spacing={0} >
@@ -202,7 +204,7 @@ export default function Mapa() {
             </SmallResultsGrid>
 
             { ( isDatosMapaJurisprudencial === true ) && (
-                    <MapGrid item xs={12} sm={12} md={7} lg={7} xl={7} >
+                    <MapGrid item xs={12} sm={12} md={7} lg={7} xl={7} sx={{ height: '100%', overflow: 'hidden' }}>
                     <Box component="section" sx={{ p: 5, border: '1px solid grey', mb: 2 }}>
                         {<ResponsiveContainer width="100%" height={300}>
                             <LineChart data={graf} margin={{ top: 30, right: 30, left: 30, bottom: 30 }}>
