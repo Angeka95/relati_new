@@ -64,10 +64,16 @@ export default function CardSearch({ datos, tipo }) {
                 <p className="text_space_min"><span className="text_bolder">• Caso:</span> {datos.caso}</p>
             )}
             {((typeof datos.despacho === 'string' ) && (datos.despacho.trim() !== '')) && (
-                <p className="text_space_min"><span className="text_bolder">• Despacho:</span> {datos.despacho}</p>
+                <p className="text_space_min"><span className="text_bolder">• Sala:</span> {datos.despacho}</p>
             )}
             {((typeof datos.despachoDescripcion === 'string' ) && (datos.despachoDescripcion.trim() !== '')) && (
                 <p className="text_space_min"><span className="text_bolder">• Descripción:</span> {datos.despachoDescripcion}</p>
+            )}
+            {((typeof datos.procedimientos === 'string' ) && (datos.procedimientos.trim() !== '')) && (
+                <p className="text_space_min"><span className="text_bolder">• Procedimientos:</span> {datos.procedimientos}</p>
+            )}
+            {((typeof datos.delitos === 'string' ) && (datos.delitos.trim() !== '')) && (
+                <p className="text_space_min"><span className="text_bolder">• Delitos:</span> {datos.delitos}</p>
             )}
             {((typeof datos.departamentoNombre === 'string') && (datos.departamentoNombre.trim() !== '')) && (
               <p className="text_space_min"><span className="text_bolder">• Pertenece a:</span> {datos.departamentoNombre}</p>

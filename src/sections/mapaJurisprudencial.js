@@ -11,6 +11,7 @@ import mapaJurisprudencialService from '../services/mapa_jurisprudencial.js';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Legend, ResponsiveContainer } from 'recharts';
 import { MapContainer, TileLayer, Tooltip, CircleMarker } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
+import { truncateWithEllipsis, obtenerAnio, obtenerPalabrasFromArrayObject } from '../helpers/utils.js';
 import Context from '../context/context.js';
 
 export default function Mapa() {
@@ -62,37 +63,13 @@ export default function Mapa() {
     const [selectedDoc, setSelectedDoc] = useState("");
     const [searchDocsOptions, setSearchDocsOptions] = useState([]);
 
-    // El campo actuacion tiene varios elementos, obtener solo el nombre
-    const verificarActuacion = (actuacion) => {
-        if(actuacion && actuacion.length > 0) {
-           let arrActuacion = actuacion.map(item => item.actuacion);
-           arrActuacion = [...new Set(arrActuacion)].toString();
-           return arrActuacion.toLowerCase();
-        } else {
-            return null;
-        }
-    }
-
-    // funcionalidad para truncar con Ellipsis
-    const truncateWithEllipsis = (text, maxLength = 50) => {
-        if (text.length > maxLength) {
-          return text.slice(0, maxLength) + '...';
-        }
-        return text;
-    }
-
-    // Obtener el anio de una fecha
-    function obtenerAnio(fechaStr) {
-        const fecha = new Date(fechaStr);  // Crear un objeto Date a partir de la cadena
-        return fecha.getFullYear().toString();         // Obtener el año
-    }
-
     const getDocsByProvidencias = () => {
         mapaJurisprudencialService
             .getProvidencias()
             .then(response => {
                 if((response.status_info.status === 200) && (response.data.length > 0)) {
                     const cardsArr = response.data.map(item => {
+                        //console.log
                         return {
                             id: item.id,
                             fecha: item.fecha_providencia,
@@ -101,7 +78,7 @@ export default function Mapa() {
                             asuntoCasoEllipsed: truncateWithEllipsis(item.asuntocaso), 
                             asuntoNombre: item.nombre,
                             nombre: item.nombre,
-                            actuacion: verificarActuacion(item.actuacion),
+                            actuacion: obtenerPalabrasFromArrayObject(item.actuacion),
                             caso: item.caso,
                             despacho: item.despacho.nombre,
                             despachoDescripcion: item.despacho.descripcion,
@@ -113,7 +90,7 @@ export default function Mapa() {
                             hipervinculo: item.hipervinculo,
                             compareciente: (item.tipopeti.length > 0 ) ? item.tipopeti[0].tipo : "",
                             delitos: (item.delitos.length > 0 ) ? item.delitos[0].delito : "",
-                            procedimientos: (item.actuacion.length > 0 ) ? item.actuacion[0].actuacion : "",
+                            procedimientos: obtenerPalabrasFromArrayObject(item.actuacion),
                         }
                     });
                     setMessage(`Success: ${response.status_info.status}. ${response.status_info.reason}`)
