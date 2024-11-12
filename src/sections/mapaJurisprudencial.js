@@ -69,7 +69,6 @@ export default function Mapa() {
             .then(response => {
                 if((response.status_info.status === 200) && (response.data.length > 0)) {
                     const cardsArr = response.data.map(item => {
-                        //console.log
                         return {
                             id: item.id,
                             fecha: item.fecha_providencia,
@@ -88,9 +87,9 @@ export default function Mapa() {
                             providencia: item.departamento_ext[0].providencia_id,
                             departamentoNombre: item.departamento_ext[0].nombre_dpto,
                             hipervinculo: item.hipervinculo,
-                            compareciente: (item.tipopeti.length > 0 ) ? item.tipopeti[0].tipo : "",
-                            delitos: (item.delitos.length > 0 ) ? item.delitos[0].delito : "",
-                            procedimientos: obtenerPalabrasFromArrayObject(item.actuacion),
+                            comparecientes: obtenerPalabrasFromArrayObject(item.tipopeti, "tipo"),
+                            delitos: obtenerPalabrasFromArrayObject(item.delitos, "delito"),
+                            procedimientos: obtenerPalabrasFromArrayObject(item.actuacion, "actuacion"),
                         }
                     });
                     setMessage(`Success: ${response.status_info.status}. ${response.status_info.reason}`)

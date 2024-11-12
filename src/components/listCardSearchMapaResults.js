@@ -128,13 +128,28 @@ export default function Card({ datosMapa, datosOriginalesMapa, searchDocsOptions
                 datosFiltrados = datosFiltrados.filter( item => filtroMapaJurisprudencial.macrocasos.includes(item.caso));
             }
             if(filtroMapaJurisprudencial.comparecientes.length > 0){
-                datosFiltrados = datosFiltrados.filter( item => filtroMapaJurisprudencial.comparecientes.includes(item.compareciente));
+                datosFiltrados = datosFiltrados.filter( item => {
+                    if(item.comparecientes.length > 0 ){
+                        return filtroMapaJurisprudencial.comparecientes.some(compareciente => item.comparecientes.toLowerCase().includes(compareciente.toLowerCase()));
+                    }
+                    return false;
+                });
             }
             if(filtroMapaJurisprudencial.delitos.length > 0){
-                datosFiltrados = datosFiltrados.filter( item => filtroMapaJurisprudencial.delitos.includes(item.delitos));
+                datosFiltrados = datosFiltrados.filter( item =>  {
+                    if(item.delitos.length > 0 ){
+                        return filtroMapaJurisprudencial.delitos.some(delito => item.delitos.toLowerCase().includes(delito.toLowerCase()));
+                    }
+                    return false;
+                });
             } 
             if(filtroMapaJurisprudencial.procedimientos.length > 0){
-                datosFiltrados = datosFiltrados.filter( item => filtroMapaJurisprudencial.procedimientos.includes(item.procedimientos));
+                datosFiltrados = datosFiltrados.filter( item =>  {
+                    if(item.procedimientos.length > 0 ){
+                        return filtroMapaJurisprudencial.procedimientos.some(procedimiento => item.procedimientos.toLowerCase().includes(procedimiento.toLowerCase()));
+                    }
+                    return false;
+                });
             } 
             setDatos(datosFiltrados);
         } 

@@ -25,13 +25,13 @@ const obtenerAnio = (fechaStr) => {
  * Funcionalidad para obtener una lista de cadenas de texto separadas por comas a partir de una propiedad de tipo array de objetos
 */
 
-const obtenerPalabrasFromArrayObject = (propiedad) => {
-    if(propiedad && propiedad.length > 0) {
-       let arrPropiedad = propiedad.map(item => item.propiedad);
-       arrPropiedad = [...new Set(arrPropiedad)].toString();
-       return arrPropiedad.toLowerCase();
+const obtenerPalabrasFromArrayObject = (arrObj, property) => {
+    if(arrObj && arrObj.length > 0) {
+       let newArr = arrObj.map(item => item[property]);
+       newArr = [...new Set(newArr)].toString();
+       return newArr.toLowerCase();
     } else {
-        return null;
+        return "";
     }
 }
 
