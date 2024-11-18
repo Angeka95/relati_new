@@ -1,12 +1,14 @@
 import '../App.css';
-import { Container, TextField, Button, Snackbar, Alert, Modal } from '@mui/material';
+import { Container, TextField, Button, Snackbar, Alert } from '@mui/material';
 
 import React, { useState, useEffect } from 'react';
 import DOMPurify from 'dompurify';
 import Carousel from '../components/carousel.js';
 import TabCustom from '../components/tab.js';
 import boletinesService from '../services/boletines.js';
-import LinearWithValueLabel from '../components/linearProgress.js';
+import processingDataModal from '../components/processingDataModal.js';
+import ProcessingDataModal from '../components/processingDataModal.js';
+
 
 export default function Suscripcion() {
 
@@ -24,6 +26,10 @@ export default function Suscripcion() {
             error: false
         },
     };
+
+    const [openModal, setOpenModal] = useState(false);
+    const handleOpenModal = () => setOpenModal(true);
+    const handleCloseModal = () => setOpenModal(false);
 
 
     const [nombre, setNombre] = useState('');
@@ -47,7 +53,7 @@ export default function Suscripcion() {
                 }
                 setTimeout(() => {
                     setMessage({ message: "", classname: "" });
-                }, 5000)
+                }, 4000)
             })
             .catch(error => console.log(error));
     };
@@ -104,7 +110,7 @@ export default function Suscripcion() {
 
 
     const handleSubmit = () => {
-    
+        handleOpenModal();
         if(validateForm()) {
             const objNewSuscription = {
                 "nombre": DOMPurify.sanitize(nombre),
@@ -116,6 +122,9 @@ export default function Suscripcion() {
         } else {
             setOpenSnackbar(true);
         }
+        setTimeout(function(){ 
+            handleCloseModal();  
+        }, 2000);
 
     };
   
@@ -193,7 +202,7 @@ export default function Suscripcion() {
                         /> 
             </div> 
         </div> 
-
+        <ProcessingDataModal openModal={openModal} handleOpenModal={handleOpenModal} handleCloseModal={handleCloseModal}/>
         </Container>
 
     </div>
