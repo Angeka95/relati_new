@@ -4,15 +4,27 @@ import Box from '@mui/material/Box';
 import CardActions from '@mui/material/CardActions';
 import Button from '@mui/material/Button';
 import '../App.css';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import Context from '../context/context';
 import { FormControl, InputLabel, Select, MenuItem, OutlinedInput, Chip, Checkbox, ListItemText } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
-
-
+import { validarfiltroMapaJurisprudencial } from '../helpers/utils.js';
 
 
 export default function Select_field({ datos_filtros, label, id, setSelectedData, isDisabled }) {
   const [selectedValues, setSelectedValues] = useState([]);
+  
+  const { filtroMapaJurisprudencial, setFiltroMapaJurisprudencial } = useContext(Context);
+
+  useEffect(() => {
+    if(label === 'Departamento') { 
+      let newValues = selectedValues.concat(filtroMapaJurisprudencial.departamentos);
+      if(filtroMapaJurisprudencial.departamentos.length === 1){
+        newValues = [].concat(filtroMapaJurisprudencial.departamentos);
+      } 
+      setSelectedValues([...new Set(newValues)]);
+    }
+  }, [filtroMapaJurisprudencial]);
 
   // Filtros
 

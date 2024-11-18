@@ -19,6 +19,7 @@ import ExpandMoreOutlinedIcon from '@mui/icons-material/ExpandMoreOutlined';
 import FilterShort from './filterShort';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import LinearWithValueLabel from '../components/linearProgress.js';
+import { validarfiltroMapaJurisprudencial } from '../helpers/utils.js';
 
 export default function Card({ datosMapa, datosOriginalesMapa, searchDocsOptionsMapa, selectedFilters, isListSmall, selectedTerm, isLargeResult, isExternalFilters }) {
 
@@ -30,6 +31,7 @@ export default function Card({ datosMapa, datosOriginalesMapa, searchDocsOptions
     const [selectedDoc, setSelectedDoc] = useState("");
     const [searchDocsOptions, setSearchDocsOptions] = useState(searchDocsOptionsMapa);
 
+    // Funcion que permite mostrar la lista de providencias en el autocompletar
     const handlerSetSelectedDoc = (newSelectedOption) => {
         if(newSelectedOption !== "*"){
             const newArrDatos = datos.filter(item => item.nombre === newSelectedOption);
@@ -112,7 +114,6 @@ export default function Card({ datosMapa, datosOriginalesMapa, searchDocsOptions
     }, [page, itemsPerPage, datos]);
 
     useEffect(() => {
-        setDatos(datosOriginales);
         if(!validarfiltroMapaJurisprudencial(filtroMapaJurisprudencial)) { 
             let datosFiltrados = datos;
             if(filtroMapaJurisprudencial.departamentos.length > 0){
@@ -152,18 +153,10 @@ export default function Card({ datosMapa, datosOriginalesMapa, searchDocsOptions
                 });
             } 
             setDatos(datosFiltrados);
-        } 
-    }, [filtroMapaJurisprudencial]);
-
-    // Verificar si el array del filtro de mapa tiene sus propiedades de tipo array vacias
-    const validarfiltroMapaJurisprudencial = (obj) => {
-        for (let propiedad in obj) {
-            if (Array.isArray(obj[propiedad]) && obj[propiedad].length > 0) {
-                return false;
-            }
+        } else {
+            setDatos(datosOriginales);
         }
-        return true;
-    };
+    }, [filtroMapaJurisprudencial]);
 
     const getCurrentData = (items = 0) => {
 

@@ -13,6 +13,7 @@ import { Container, Grid } from '@mui/material';
 import Context from '../context/context';
 import delitos from '../data/delitos.js';
 import tipoProcedimientos from '../data/tipo_procedimientos.js';
+import { validarfiltroMapaJurisprudencial } from '../helpers/utils.js';
 
 const datos_sala_seccion = [
   {
@@ -203,6 +204,13 @@ export default function Filter({ setSelectedFilters, isFilterFloat, isShowingFil
   };
 
   const applyFilters = () => {
+    //console.log("Filtro mapa juris", filtroMapaJurisprudencial);
+    //console.log("Deptos ", selectedDataFilter3);
+
+    if(filtroMapaJurisprudencial.departamentos.length === 1){
+      setSelectedDataFilter3([...filtroMapaJurisprudencial.departamentos]);
+    }
+
     setSelectedFilters(
       [
         ...selectedDataFilter1,
@@ -214,6 +222,7 @@ export default function Filter({ setSelectedFilters, isFilterFloat, isShowingFil
         ...selectedDataFilter7,
       ]
     );
+
     setFiltroMapaJurisprudencial({
       departamentos: [...selectedDataFilter3],
       anios: [...selectedDataFilter2],
@@ -235,6 +244,34 @@ export default function Filter({ setSelectedFilters, isFilterFloat, isShowingFil
     }
 
   }, [verTodasDecisiones, busqueda]);
+
+  useEffect(() => {
+    if(!validarfiltroMapaJurisprudencial(filtroMapaJurisprudencial)) { 
+      //console.log("datos en filter 3", selectedDataFilter3);
+      let updateSelectedFilters = [...new Set([
+          ...selectedDataFilter1,
+          ...selectedDataFilter2,
+          ...selectedDataFilter3,
+          ...selectedDataFilter4,
+          ...selectedDataFilter5,
+          ...selectedDataFilter6,
+          ...selectedDataFilter7,
+        ].concat([...filtroMapaJurisprudencial.departamentos]))];
+      if(filtroMapaJurisprudencial.departamentos.length === 1){
+        updateSelectedFilters = [...new Set([
+          ...selectedDataFilter1,
+          ...selectedDataFilter2,
+          ...selectedDataFilter4,
+          ...selectedDataFilter5,
+          ...selectedDataFilter6,
+          ...selectedDataFilter7,
+        ].concat([...filtroMapaJurisprudencial.departamentos]))];
+      } 
+      //console.log("updateselectedfilters", updateSelectedFilters);
+      setSelectedFilters(updateSelectedFilters);
+    }
+  }, [filtroMapaJurisprudencial]);
+
 
   const JustFilterFloatNoneGrid = styled(Grid)(({ theme }) => ({
 

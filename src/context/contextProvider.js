@@ -1,16 +1,8 @@
 // ContextProvider.js
 import React, { useState } from 'react';
 import Context from './context';
+import { filtroMapaByDefault } from '../helpers/utils.js';
 
-const filtroMapaByDefault = {
-  departamentos: [],
-  anios: [],
-  salas: [],
-  delitos: [],
-  macrocasos: [],
-  comparecientes: [],
-  procedimientos: []
-}; 
 
 const ContextProvider = ({ children }) => {
   // Estado que se va a compartir a través del contexto

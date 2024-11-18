@@ -13,6 +13,7 @@ import { MapContainer, TileLayer, Tooltip, CircleMarker } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import { truncateWithEllipsis, obtenerAnio, obtenerPalabrasFromArrayObject } from '../helpers/utils.js';
 import Context from '../context/context.js';
+import { filtroMapaByDefault } from '../helpers/utils.js';
 
 export default function Mapa() {
 
@@ -52,7 +53,7 @@ export default function Mapa() {
 
     }));
  
-    const { isDatosMapaJurisprudencial, setIsDatosMapaJurisprudencial, dptoSelMapaJurisprudencial, setDptoSelMapaJurisprudencial, setListaDptosMapaJurisprudencial } = useContext(Context);
+    const { isDatosMapaJurisprudencial, setIsDatosMapaJurisprudencial, dptoSelMapaJurisprudencial, setDptoSelMapaJurisprudencial, setListaDptosMapaJurisprudencial,  filtroMapaJurisprudencial, setFiltroMapaJurisprudencial } = useContext(Context);
     
     const [listdpto, setListdpto] = useState([]);
     const [graf, setGraf] = useState([]);
@@ -79,9 +80,9 @@ export default function Mapa() {
                             nombre: item.nombre,
                             actuacion: obtenerPalabrasFromArrayObject(item.actuacion),
                             caso: item.caso,
-                            despacho: item.despacho.nombre,
-                            despachoDescripcion: item.despacho.descripcion,
-                            despachoId: item.despacho.id,
+                            sala: item.despacho.nombre,
+                            salaDescripcion: item.despacho.descripcion,
+                            salaId: item.despacho.id,
                             asuntoCaso: item.asuntocaso,
                             departamentoId: item.departamento_ext[0].id,
                             providencia: item.departamento_ext[0].providencia_id,
@@ -112,15 +113,6 @@ export default function Mapa() {
         return [ { "title": "*" } ].concat(arrLinted.map( item => { return { "title": item.nombre } }));
     };
 
-    useEffect(() => {
-        if(datos.length === 0){
-            getDocsByProvidencias();
-        } else {
-            setIsDatosMapaJurisprudencial(true);
-            getMapaDptos();
-        }
-    }, [datos]);
-
     //funcion que hace el llamado para traer la data de los dpto del mapa
     const getMapaDptos = () => {
         mapaJurisprudencialService
@@ -139,9 +131,21 @@ export default function Mapa() {
             .catch(error => console.log(error));
     }
 
+    useEffect(() => {
+        if(datos.length === 0){
+            setFiltroMapaJurisprudencial(filtroMapaByDefault);
+            setIsDatosMapaJurisprudencial(false);
+            getDocsByProvidencias();
+        } else {
+            setIsDatosMapaJurisprudencial(true);
+            getMapaDptos();
+        }
+    }, [datos]);
+
     //funcion que realiza el filtro de las providencias cuando se da clic en un dpto
     const searchprodpto = (data) => {
         setDptoSelMapaJurisprudencial(data);
+        setFiltroMapaJurisprudencial({...filtroMapaJurisprudencial, departamentos: [ data.dpto ]});
     }
 
     //funcion que crea un array de objetos enviado a la lista de filtros corrspondiente a dptos
@@ -156,9 +160,6 @@ export default function Mapa() {
         <Container className="container_large">
         <h1 className="text_center margin_top_l">Mapa Jurisprudencial </h1>  
         <p className="text_center">Encuentre las decisiones de la JEP y conozca la actividad judicial en el territorio Colombiano</p>
-        { (dptoSelMapaJurisprudencial !== null) && (
-            <p className="text_bolder text_center text_uppercase">Fichas relacionadas con el {dptoSelMapaJurisprudencial.dpto}</p>
-        ) }
         
         {( !isDatosMapaJurisprudencial ) && (
             <LinearWithValueLabel></LinearWithValueLabel>

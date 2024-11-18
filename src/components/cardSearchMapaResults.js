@@ -57,23 +57,23 @@ export default function CardSearch({ datos, tipo }) {
             {((typeof datos.asuntoCaso === 'string' ) && (datos.asuntoCaso.trim() !== '')) && (
               <p className="text_space_min"><span className="text_bolder">• Asunto caso:</span> {datos.asuntoCaso}</p>
             )}
-            {((typeof datos.caso === 'string' ) && datos.actuacion.trim() !== '') && (
+            {((typeof datos.actuacion === 'string' ) && datos.actuacion.trim() !== '') && (
             <p className="text_space_min"><span className="text_bolder">• Actuación:</span> <span className="text_capitalize"></span>{datos.actuacion}</p>
             )}
             {((typeof datos.caso === 'string' ) && (datos.caso.trim() !== '')) && (
-                <p className="text_space_min"><span className="text_bolder">• Caso:</span> {datos.caso}</p>
+                <p className="text_space_min"><span className="text_bolder">• Macrocaso:</span> {datos.caso}</p>
             )}
-            {((typeof datos.despacho === 'string' ) && (datos.despacho.trim() !== '')) && (
-                <p className="text_space_min"><span className="text_bolder">• Sala:</span> {datos.despacho}</p>
-            )}
-            {((typeof datos.despachoDescripcion === 'string' ) && (datos.despachoDescripcion.trim() !== '')) && (
-                <p className="text_space_min"><span className="text_bolder">• Descripción:</span> {datos.despachoDescripcion}</p>
-            )}
-            {((typeof datos.procedimientos === 'string' ) && (datos.procedimientos.trim() !== '')) && (
-                <p className="text_space_min"><span className="text_bolder">• Procedimientos:</span> {datos.procedimientos}</p>
+            {((typeof datos.sala === 'string' ) && (datos.sala.trim() !== '')) && (
+                <p className="text_space_min"><span className="text_bolder">• Sala:</span> {datos.sala}</p>
             )}
             {((typeof datos.delitos === 'string' ) && (datos.delitos.trim() !== '')) && (
                 <p className="text_space_min"><span className="text_bolder">• Delitos:</span> {datos.delitos}</p>
+            )}
+            {((typeof datos.comparecientes === 'string' ) && (datos.comparecientes.trim() !== '')) && (
+                <p className="text_space_min"><span className="text_bolder">• Comparecientes:</span> {datos.comparecientes.toUpperCase()}</p>
+            )}
+            {((typeof datos.procedimientos === 'string' ) && (datos.procedimientos.trim() !== '')) && (
+                <p className="text_space_min"><span className="text_bolder">• Procedimientos:</span> {datos.procedimientos}</p>
             )}
             {((typeof datos.departamentoNombre === 'string') && (datos.departamentoNombre.trim() !== '')) && (
               <p className="text_space_min"><span className="text_bolder">• Pertenece a:</span> {datos.departamentoNombre}</p>
