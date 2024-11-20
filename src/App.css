@@ -109,8 +109,32 @@ h6 {
 }
 
 .text_big{
-  font-size: 2.5rem;
+  font-size: 2.5rem !important;
 }
+
+.text_xs{
+    line-height: 1.4em;
+    font-size: 1.0em !important; 
+    margin-block-start: 0.5em;
+    margin-block-end: 0.5em;
+}
+
+.text_s{
+  line-height: 1.4em;
+  font-size: 1.1em !important; 
+  margin-block-start: 0.5em;
+  margin-block-end: 0.5em;
+}
+
+
+
+.text_m{
+  line-height: 1.4em;
+  font-size: 1.2em !important; 
+  margin-block-start: 0.5em;
+  margin-block-end: 0.5em;
+}
+
 
 .title_description {
   max-width: 800px;

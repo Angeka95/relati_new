@@ -8,7 +8,10 @@ import '../App.css';
 import { Container, Grid } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import Context from '../context/context';
-
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
+import ExpandLessOutlinedIcon from '@mui/icons-material/ExpandLessOutlined';
+import ExpandMoreOutlinedIcon from '@mui/icons-material/ExpandMoreOutlined';
 
 export default function CardSearch({ datos }) {
   const { busqueda, verTodasDecisiones } = useContext(Context);
@@ -35,27 +38,116 @@ export default function CardSearch({ datos }) {
     },
   }));
 
+  const [value, setValue] = useState(0);
+
+  const handleChangeTabCard = (event, newValue) => {
+    setValue(newValue);
+  };
+
+  // Acordiones en card 
+
+  const [isMagistradosExpanded, setIsMagistradosExpanded] = useState(false);
+  const [isSujetosProcesalesExpanded, setIsSujetosProcesalesExpanded] = useState(false);
+
+  const toggleMagistrados = () => {
+    setIsMagistradosExpanded(prev => !prev);
+  };
+
+  const toggleSujetosProcesales = () => {
+    setIsSujetosProcesalesExpanded(prev => !prev);
+  };
+
+  const [isButtonInfoSpecificEnabled, setIsButtonInfoSpecificEnabled] = useState(true);
+
+  const toggleButtonInfoSpecific = () => {
+    setIsButtonInfoSpecificEnabled(prev => !prev);
+  };
+
   const card = (
     <React.Fragment>
 
       <CardContent className="card_container">
-        <p className="text_uppercase justify_end_spacing text_spacing text_space_min">{datos.fecha}</p>
-        <p className="text_bolder text_uppercase text_space_min">{datos.asunto}</p>
-        <p className="text_bolder text_space_min">{datos.nombreDecision}</p>
-        <p className="text_space_min">{datos.salaOSeccion}</p>
-        <p className="text_space_min">• Pertenece a:  <span className="text_bolder"> {datos.grupoPertence}</span> </p>
 
-        {isButtonInfoEnabled && (
+      <p className="text_bolder justify_center text_space_min">{datos.nombreDecision}</p>
+      <p className="text_uppercase justify_center text_spacing text_space_min">{datos.fecha}</p>
+
+      <Tabs value={value} onChange={handleChangeTabCard} >
+          <Tab className="text_nonecase text_bolder text_s" label="Datos generales" />
+          <Tab className="text_nonecase text_bolder text_s" label="Datos específicos" />
+        </Tabs>
+        {value === 0 && 
+        <div className="margin_top_m ">
+            <p className="text_space_min">• Sala o Sección:  <span className="text_bolder"> {datos.salaOSeccion}</span> </p>
+            <p className="text_space_min">• Procedimiento:  <span className="text_bolder"> {datos.procedimiento}</span> </p>
+            <p className="text_space_min">• Expediente:  <span className="text_bolder"> {datos.expediente}</span> </p>
+          </div>
+          }
+        {value === 1 && 
+        
+        <div className="margin_top_m ">
+          <div className="width_100">
+            <Button onClick={toggleMagistrados} className=" link_secondary text_capitalize"  startIcon={isMagistradosExpanded ? <ExpandLessOutlinedIcon /> : <ExpandMoreOutlinedIcon />}>
+              Magistrados 
+              </Button>
+              {isMagistradosExpanded && (
+                <div className="margin_top_s">
+                  <p className="text_space_min">• Magistrado/a:  <span className="text_bolder"> {datos.magistrado}</span> </p>
+                </div>
+              )}
+
+          </div>
+          <div className="width_100">
+            <Button onClick={toggleSujetosProcesales} className=" link_secondary text_capitalize"  startIcon={isSujetosProcesalesExpanded ?<ExpandLessOutlinedIcon /> :  <ExpandMoreOutlinedIcon />}>
+            Sujetos Procesales
+            </Button>
+
+            {isSujetosProcesalesExpanded && (
+                <div className="margin_top_s">
+                  <p className="text_space_min">• Accionante/Solicitante/Compareciente:  <span className="text_bolder"> {datos.actor}</span> </p>
+                  <p className="text_space_min">• Tipo de sujeto:  <span className="text_bolder"> {datos.tipoSujeto}</span> </p>
+                  <p className="text_space_min">• Accionado/Vinculado:  <span className="text_bolder"> {datos.accionadoVinculado}</span> </p>
+                </div>
+              )}
+           </div>
+           <div className="width_100">
+            <Button onClick={toggleSujetosProcesales} className=" link_secondary text_capitalize"  startIcon={isSujetosProcesalesExpanded ?<ExpandLessOutlinedIcon /> :  <ExpandMoreOutlinedIcon />}>
+            Palabras Clave
+            </Button>
+
+            {isSujetosProcesalesExpanded && (
+                <div className="margin_top_s">
+                  <p className="text_space_min">• Accionante/Solicitante/Compareciente:  <span className="text_bolder"> {datos.actor}</span> </p>
+                  <p className="text_space_min">• Tipo de sujeto:  <span className="text_bolder"> {datos.tipoSujeto}</span> </p>
+                  <p className="text_space_min">• Accionado/Vinculado:  <span className="text_bolder"> {datos.accionadoVinculado}</span> </p>
+                </div>
+              )}
+           </div>
+
+
+        </div>
+          }
+        
+
+
+        {/* <p className="text_uppercase justify_end_spacing text_spacing text_space_min">{datos.fecha}</p> */}
+
+
+
+
+        {isButtonInfoEnabled && value === 0 &&(
           <Button className="link_primary text_lowercase" onClick={toggleButtonInfo}>ver más</Button>)}
 
 
 
-        {!isButtonInfoEnabled && (
+        {!isButtonInfoEnabled && value === 0 && (
           <div className="width_100 ">
-            <p className="text_space_min">• Lugar de los hechos: <span className="text_bolder"> {datos.lugarHechos}</span></p>
-            <p className="text_space_min">• Magistrado: <span className="text_bolder">{datos.magistrado}</span></p>
-            <p className="text_space_min">• Macrocaso: <span className="text_bolder">{datos.macrocaso}</span></p>
-            <p className="text_space_min">• Conclusión de la decisión: <span className="text_bolder">{datos.conclusionDecision}</span></p>
+             <p className="text_space_min">• Departamento:  <span className="text_bolder"> {datos.departamento}</span> </p>
+            <p className="text_space_min">• Municipio: <span className="text_bolder"> {datos.municipio}</span></p>
+            <p className="text_space_min">• Delito: <span className="text_bolder">{datos.delito}</span></p>
+            <p className="text_space_min">• Año de los hechos: <span className="text_bolder">{datos.anioHechos}</span></p>
+            <p className="text_space_min">• Órgano: <span className="text_bolder">{datos.organo}</span></p>
+            <p className="text_space_min">• Tipo: <span className="text_bolder">{datos.tipo}</span></p>
+            <p className="text_space_min">• Radicado: <span className="text_bolder">{datos.radicado}</span></p>
 
             <Button
               className="link_primary text_lowercase"
@@ -63,6 +155,76 @@ export default function CardSearch({ datos }) {
               {!isButtonInfoEnabled && 'ver menos'}
             </  Button>
           </div>
+        )}
+
+        
+        {isButtonInfoSpecificEnabled && value === 1 &&(
+          <Button className="link_primary text_lowercase" onClick={toggleButtonInfoSpecific}>ver más</Button>)}
+
+      {!isButtonInfoSpecificEnabled  && value === 1 && (
+        <div> 
+    
+          <div className="width_100">
+            <Button onClick={toggleSujetosProcesales} className=" link_secondary text_capitalize"  startIcon={isSujetosProcesalesExpanded ?<ExpandLessOutlinedIcon /> :  <ExpandMoreOutlinedIcon />}>
+            Resuelve
+            </Button>
+
+            {isSujetosProcesalesExpanded && (
+                <div className="margin_top_s">
+                  <p className="text_space_min">• Accionante/Solicitante/Compareciente:  <span className="text_bolder"> {datos.actor}</span> </p>
+                  <p className="text_space_min">• Tipo de sujeto:  <span className="text_bolder"> {datos.tipoSujeto}</span> </p>
+                  <p className="text_space_min">• Accionado/Vinculado:  <span className="text_bolder"> {datos.accionadoVinculado}</span> </p>
+                </div>
+              )}
+           </div>
+           <div className="width_100">
+            <Button onClick={toggleSujetosProcesales} className=" link_secondary text_capitalize"  startIcon={isSujetosProcesalesExpanded ?<ExpandLessOutlinedIcon /> :  <ExpandMoreOutlinedIcon />}>
+            Documentos Asociados
+            </Button>
+
+            {isSujetosProcesalesExpanded && (
+                <div className="margin_top_s">
+                  <p className="text_space_min">• Accionante/Solicitante/Compareciente:  <span className="text_bolder"> {datos.actor}</span> </p>
+                  <p className="text_space_min">• Tipo de sujeto:  <span className="text_bolder"> {datos.tipoSujeto}</span> </p>
+                  <p className="text_space_min">• Accionado/Vinculado:  <span className="text_bolder"> {datos.accionadoVinculado}</span> </p>
+                </div>
+              )}
+           </div>
+           <div className="width_100">
+            <Button onClick={toggleSujetosProcesales} className=" link_secondary text_capitalize"  startIcon={isSujetosProcesalesExpanded ?<ExpandLessOutlinedIcon /> :  <ExpandMoreOutlinedIcon />}>
+           Enfoques diferenciales
+            </Button>
+
+            {isSujetosProcesalesExpanded && (
+                <div className="margin_top_s">
+                  <p className="text_space_min">• Accionante/Solicitante/Compareciente:  <span className="text_bolder"> {datos.actor}</span> </p>
+                  <p className="text_space_min">• Tipo de sujeto:  <span className="text_bolder"> {datos.tipoSujeto}</span> </p>
+                  <p className="text_space_min">• Accionado/Vinculado:  <span className="text_bolder"> {datos.accionadoVinculado}</span> </p>
+                </div>
+              )}
+           </div>
+           <div className="width_100">
+            <Button onClick={toggleSujetosProcesales} className=" link_secondary text_capitalize"  startIcon={isSujetosProcesalesExpanded ?<ExpandLessOutlinedIcon /> :  <ExpandMoreOutlinedIcon />}>
+           Notas de la Relatoría
+            </Button>
+
+            {isSujetosProcesalesExpanded && (
+                <div className="margin_top_s">
+                  <p className="text_space_min">• Accionante/Solicitante/Compareciente:  <span className="text_bolder"> {datos.actor}</span> </p>
+                  <p className="text_space_min">• Tipo de sujeto:  <span className="text_bolder"> {datos.tipoSujeto}</span> </p>
+                  <p className="text_space_min">• Accionado/Vinculado:  <span className="text_bolder"> {datos.accionadoVinculado}</span> </p>
+                </div>
+              )}
+           </div>
+         
+            <Button
+              className="link_primary text_lowercase"
+              onClick={toggleButtonInfoSpecific}>
+              {!isButtonInfoSpecificEnabled && 'ver menos'}
+            </  Button>
+
+        </div>
+          
         )}
 
 
@@ -74,7 +236,7 @@ export default function CardSearch({ datos }) {
 
 
           <CustomGrid>
-            <Button className="button_secondary margin_xs" >ver ficha</Button>
+            <Button className="button_secondary margin_xs" >Descargar datos</Button>
             <Button className="button_primary margin_xs" >Descargar decisión</Button>
           </CustomGrid>
         </div>
