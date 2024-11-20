@@ -10,177 +10,12 @@ import SelectField from '../components/selectField.js';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import { styled } from '@mui/material/styles';
 import { Container, Grid } from '@mui/material';
+import documentoService from '../services/documento.js';
+import datos_anios from '../data/data_anios.js';
+import datos_macrocaso from '../data/datos_macrocaso.js';
+import datos_sala_seccion from '../data/datos_sala_seccion.js';
 import Context from '../context/context';
-import delitos from '../data/delitos.js';
-import tipoProcedimientos from '../data/tipo_procedimientos.js';
-import { validarfiltroMapaJurisprudencial } from '../helpers/utils.js';
-
-const datos_sala_seccion = [
-  {
-    "nombre_campo": "S - Sala de Reconocimiento de Verdad, de Responsabilidad y de Determinación de los Hechos y Conductas",
-    "valor": 1
-  },
-  {
-    "nombre_campo": "S - Sala de Amnistía o Indulto",
-    "valor": 2
-  },
-  {
-    "nombre_campo": "S - Sala de Definición de Situaciones Jurídicas",
-    "valor": 3
-  },
-  {
-    "nombre_campo": "T - Sección de Reconocimiento de Verdad y Responsabilidad",
-    "valor": 4
-  },
-  {
-    "nombre_campo": "T - Sección con Ausencia de Reconocimiento de Verdad y de Responsabilidad",
-    "valor": 5
-  },
-  {
-    "nombre_campo": "T - Sección de Revisión de Sentencias",
-    "valor": 6
-  },
-  {
-    "nombre_campo": "T - Sección de Apelación",
-    "valor": 7
-  },
-];
-
-const datos_anios = [
-  {
-    "nombre_campo": "2024",
-    "valor": "2024"
-  },
-  {
-    "nombre_campo": "2023",
-    "valor": "2023"
-  },
-  {
-    "nombre_campo": "2022",
-    "valor": "2022"
-  },
-  {
-    "nombre_campo": "2021",
-    "valor": "2021"
-  },
-  {
-    "nombre_campo": "2020",
-    "valor": "2020"
-  },
-  {
-    "nombre_campo": "2019",
-    "valor": "2019"
-  },
-  {
-    "nombre_campo": "2018",
-    "valor": "2018"
-  },
-  {
-    "nombre_campo": "2017",
-    "valor": "2017"
-  },
-  {
-    "nombre_campo": "2016",
-    "valor": "2016"
-  },
-  {
-    "nombre_campo": "2015",
-    "valor": "2015"
-  },
-  {
-    "nombre_campo": "2014",
-    "valor": "2014"
-  }
-]
-
-const datos_macrocaso = [
-
-  {
-    "nombre_campo": "Caso 001",
-    "valor": "Caso 001"
-  },
-  {
-    "nombre_campo": "Caso 002",
-    "valor": "Caso 002"
-  },
-  {
-    "nombre_campo": "Caso 003",
-    "valor": "Caso 003"
-  },
-  {
-    "nombre_campo": "Caso 004",
-    "valor": "Caso 004"
-  },
-  {
-    "nombre_campo": "Caso 005",
-    "valor": "Caso 005"
-  },
-  {
-    "nombre_campo": "Caso 006",
-    "valor": "Caso 006"
-  },
-  {
-    "nombre_campo": "Caso 007",
-    "valor": "Caso 007"
-  },
-  {
-    "nombre_campo": "Caso 008",
-    "valor": "Caso 008"
-  },
-  {
-    "nombre_campo": "Caso 009",
-    "valor": "Caso 009"
-  },
-  {
-    "nombre_campo": "Caso 010",
-    "valor": "Caso 010"
-  },
-  {
-    "nombre_campo": "Caso 011",
-    "valor": "Caso 011"
-  }
-]
-
-const datos_departamento = [
-
-  {
-
-    "nombre_campo": "Departamento 001",
-    "valor": "001"
-  },
-  {
-    "nombre_campo": "Departamento 02",
-    "valor": "02"
-  },
-  {
-    "nombre_campo": "Departamento 03",
-    "valor": "03"
-  },
-  {
-    "nombre_campo": "Departamento 04",
-    "valor": "04"
-  }
-]
-
-const datos_delito = delitos;
-
-const datos_compareciente = [
-  { "nombre_campo": "AENIFPU- AGENTE DEL ESTADO NO INTEGRANTE DE LA FUERZA PÚBLICA", "valor": "AENIFPU- AGENTE DEL ESTADO NO INTEGRANTE DE LA FUERZA PÚBLICA" },
-  { "nombre_campo": "DELINCUENCIA COMÚN", "valor": "DELINCUENCIA COMÚN" },
-  { "nombre_campo": "FARC-EP", "valor": "FARC-EP" },
-  { "nombre_campo": "FUERZA PÚBLICA", "valor": "FUERZA PÚBLICA" },
-  { "nombre_campo": "GRUPO ARMADO NO FIRMANTE", "valor": "GRUPO ARMADO NO FIRMANTE" },
-  { "nombre_campo": "NO APLICA", "valor": "NO APLICA" },
-  { "nombre_campo": "PROTESTA SOCIAL", "valor": "PROTESTA SOCIAL" },
-  { "nombre_campo": "TERCERO CIVIL", "valor": "TERCERO CIVIL" },
-  { "nombre_campo": "TERCERO CIVIL Y AENIFPU", "valor": "TERCERO CIVIL Y AENIFPU" },
-  { "nombre_campo": "TERCERO FINANCIADOR O COLABORADOR DE LOS PARAMILITARES", "valor": "TERCERO FINANCIADOR O COLABORADOR DE LOS PARAMILITARES" },
-  { "nombre_campo": "TERCERO FINANCIADOR O COLABORADOR DE OTRO ACTOR DEL CONFLICTO", "valor": "TERCERO FINANCIADOR O COLABORADOR DE OTRO ACTOR DEL CONFLICTO" },
-  { "nombre_campo": "TERCERO FINANCIADOR O COLABORADOR DE LAS FARC-EP", "valor": "TERCERO FINANCIADOR O COLABORADOR DE LAS FARC-EP" },
-  { "nombre_campo": "VÍCTIMA(S)", "valor": "VÍCTIMA(S)" }
-]
-
-const datos_procedimiento = tipoProcedimientos;
+import { validarfiltroMapaJurisprudencial, generarArrayDeObjetosNombreCampoValor } from '../helpers/utils.js';
 
 export default function Filter({ setSelectedFilters, isFilterFloat, isShowingFilter, selectedData, isSearchAdvance }) {
   // Estado para controlar si el botón está habilitado o deshabilitado
@@ -197,6 +32,33 @@ export default function Filter({ setSelectedFilters, isFilterFloat, isShowingFil
   const [selectedDataFilter7, setSelectedDataFilter7] = useState([]);
   const [selectedDataAllFilters, setSelectedDataAllFilters] = useState([]);
   const [isFilterDisabled, setIsFilterDisabled] = useState(false);
+  const [message, setMessage] = useState("");
+  const [datos_delito, setDatosDelito] = useState([]);
+  const [datos_compareciente, setDatosCompareciente] = useState([]);
+  const [datos_procedimiento, setDatosProcedimiento] = useState([]);
+
+  const getDataFromDocumento = () => {
+    documentoService
+        .getDetailsDocument()
+        .then(response => {
+            if((response.status_info.status === 200) && (response.data !== null)) {
+              let newArrayDelitos = generarArrayDeObjetosNombreCampoValor(response.data.delitos, "delito", "delito");
+              setDatosDelito(newArrayDelitos);
+              let newArrayComparecientes = generarArrayDeObjetosNombreCampoValor(response.data.comparecientes, "nombre", "nombre");
+              setDatosCompareciente(newArrayComparecientes);  
+              let newArrayProcedimientos = generarArrayDeObjetosNombreCampoValor(response.data.procedimientos, "tipo", "tipo");
+              setDatosProcedimiento(newArrayProcedimientos);  
+            } else {
+                setMessage(`Error: ${response.status_info.status}. ${response.status_info.reason}`);
+            }
+        }
+        )
+        .catch(error => console.log(error));
+  };
+
+  useEffect(() => {
+    getDataFromDocumento();
+  }, []);
 
   // Función para alternar el estado del botón
   const toggleButton = () => {

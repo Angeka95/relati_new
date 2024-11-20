@@ -76,4 +76,27 @@ const validarfiltroMapaJurisprudencial = (obj) => {
     return true;
 };
 
-export { filtroMapaByDefault, truncateWithEllipsis, obtenerAnio, obtenerPalabrasFromArrayObject, validarfiltroMapaJurisprudencial };
+/**
+ * generarArrayDeObjetosNombreCampoValor()
+ * Funcionalidad que genera un nuevo array basado en la estructura
+ * 
+ * Parametros de entrada:
+ * - valores: el array de objetos
+ * - propiedad_1: string, nombre de propiedad del objeto
+ * - propiedad_2: string, nombre de propiedad del objeto
+ * Salida:
+ * - Retorna un array de objetos de tipo {
+    "nombre_campo": "mismo_valor",
+    "valor": "mismo_valor"
+    } 
+ * Aplicación:
+ * - getDataFromDocumento() en filter.js
+*/
+const generarArrayDeObjetosNombreCampoValor = (valores, propiedad_1, propiedad_2) => {
+    return valores.map(valor => ({
+      nombre_campo: valor[propiedad_1],
+      valor: valor[propiedad_2]
+    }));
+};
+
+export { filtroMapaByDefault, truncateWithEllipsis, obtenerAnio, obtenerPalabrasFromArrayObject, validarfiltroMapaJurisprudencial, generarArrayDeObjetosNombreCampoValor };
