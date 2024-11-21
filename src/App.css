@@ -842,6 +842,10 @@ h6 {
   width: 15%;
 }
 
+.card_tab{
+  display: flex;
+  justify-content: space-between;
+}
 
 /* Color del paginador*/
 .MuiPaginationItem-root {
@@ -877,6 +881,10 @@ h6 {
 
 .margin_results_page{
   margin-top: 8px;
+}
+
+.css-1aquho2-MuiTabs-indicator{
+  background-color: #98C438 !important;
 }
 
 /*END CARD SEARCH RESULTS */
@@ -2747,9 +2755,20 @@ a, .breadcrumb-item:hover {
     margin-right: 0%;
   }
 
-  
+
 
 }
+@media (max-width: 1100px) {
+.card_tab{
+  flex-wrap: wrap !important;
+  justify-content: center;
+}
+
+.card_size_small{
+  margin-top: 10px !important;
+}
+}
+
 @media (max-width: 1000px) {
   .list_item_tesauro {
     flex: 1 1 calc(100% - 10px); /* Dos columnas en pantallas pequeñas */
@@ -2773,7 +2792,7 @@ a, .breadcrumb-item:hover {
     justify-content: center;
   }
 
-
+ 
 
   .carousel{
     display: flex;
