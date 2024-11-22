@@ -169,6 +169,7 @@ export default function Suscripcion() {
                 setCaptcha('');
             }
         } else {
+            setCaptcha('');
             setOpenSnackbar(true);
         }
     };
@@ -226,7 +227,7 @@ export default function Suscripcion() {
 
             </div>
         
-            <Box sx={{ flexGrow: 1, padding: 0, marginTop: 0 }}>
+            <Box sx={{ flexGrow: 1, padding: 0, marginTop: 0, marginBottom: 2 }}>
                 {/* Primera fila con dos columnas */}
                 <Grid container spacing={0} alignItems="center">
                     <Grid item xs={6}>
@@ -287,7 +288,6 @@ export default function Suscripcion() {
                                 value={captcha}
                                 helperText={(errors.captcha.error) ? errors.captcha.message: ''}
                         />
-                        <p>Captcha Value: {captchaValue}</p>
                     </Box>
                     </Grid>
                 </Grid>
