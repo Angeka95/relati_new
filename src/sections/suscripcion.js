@@ -41,19 +41,31 @@ export default function Suscripcion() {
     const [errors, setErrors] = useState(objErrors);
 
     const postSuscription = (objNewSuscription) => {
+        let message_ = { message: "", classname: "" };
         boletinesService
             .postSuscription(objNewSuscription)
             .then(response => { 
                 if(response.status_info.status === 201){
-                    setMessage({ message: response.data, classname: "success" });
+                    message_ = { message: response.data, classname: "success" };
                 } else if(response.status_info.status === 200){
-                    setMessage({ message: response.data, classname: "warning" })
+                    message_ = { message: response.data, classname: "warning" };
                 } else {
-                    setMessage({ message: response.data, classname: "error" })
+                    message_ = { message: response.data, classname: "error" };
                 }
+                handleOpenModal();
+                setMessage({ message: "", classname: "" });  
+                setTimeout(function(){ 
+                    if(message_.classname === "success"){
+                        setNombre('');
+                        setEmail('');
+                        setOcupacion('');
+                    }
+                    handleCloseModal();
+                    setMessage(message_);
+                }, 3000);
                 setTimeout(() => {
-                    setMessage({ message: "", classname: "" });
-                }, 4000)
+                    setMessage({ message: "", classname: "" }); 
+                }, 6000);
             })
             .catch(error => console.log(error));
     };
@@ -110,7 +122,6 @@ export default function Suscripcion() {
 
 
     const handleSubmit = () => {
-        handleOpenModal();
         if(validateForm()) {
             const objNewSuscription = {
                 "nombre": DOMPurify.sanitize(nombre),
@@ -122,10 +133,6 @@ export default function Suscripcion() {
         } else {
             setOpenSnackbar(true);
         }
-        setTimeout(function(){ 
-            handleCloseModal();  
-        }, 2000);
-
     };
   
     const handleCloseSnackbar = () => {
@@ -150,6 +157,7 @@ export default function Suscripcion() {
                     variant="outlined"
                     onChange={handleNombreChangeSuscribe}
                     error={errors.nombre.error}
+                    value={nombre}
                     helperText={(errors.nombre.error) ? errors.nombre.message  : ''}
                 />
             </div> 
@@ -159,6 +167,7 @@ export default function Suscripcion() {
                     variant="outlined"
                     onChange={handleChangeSuscribe}
                     error={errors.email.error}
+                    value={email}
                     helperText={(errors.email.error) ? errors.email.message : ''}
                     
                 />
@@ -169,6 +178,7 @@ export default function Suscripcion() {
                     variant="outlined"
                     onChange={handleOcupacionChangeSuscribe}
                     error={errors.ocupacion.error}
+                    value={ocupacion}
                     helperText={(errors.ocupacion.error) ? errors.ocupacion.message: ''}
                 />
             </div> 
