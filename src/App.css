@@ -2957,3 +2957,60 @@ a, .breadcrumb-item:hover {
 
 
 /*END QUERIES*/
+
+
+.carousel_image_placeholder {
+  transition: transform 0.3s ease;
+  width: 94% !important; /* margen  entre las imágenes */
+  height: 88% !important;
+  margin: 3%;
+  padding: 0;
+  box-shadow: rgba(57, 129, 195, 0.2) 0px 4px 24px !important;
+  z-index: 20;
+  overflow: visible !important;
+  max-width: 100% !important;
+  max-height: 100% !important;
+  position: relative;
+  background-color: yellow;
+}
+
+.carousel_image_placeholder:hover {
+  cursor: pointer;
+  box-shadow: rgba(3, 103, 196, 0.311) 0px 4px 24px !important;
+  transform: scale(1.06);
+}
+
+.carousel_image_placeholder img {
+  position: relative;
+  width: 100% !important;
+  height: auto !important;
+  margin: 0 !important;
+  transition: unset;
+  box-shadow: unset !important;
+  overflow: unset !important;
+}
+
+.carousel_image_placeholder img:hover {
+  cursor: unset;
+  box-shadow: unset;
+  transform: unset;
+}
+
+.carousel_image_placeholder .carousel_image_placeholder_text {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  background-color: #808080;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 21;
+}
+
+.carousel_image_placeholder .carousel_image_placeholder_text p {
+  padding: 10px;
+  text-align: center;
+}

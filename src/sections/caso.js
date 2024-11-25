@@ -7,6 +7,7 @@ import axios from 'axios';
 import ListVideos from '../components/listVideos.js';
 import Carousel from '../components/carousel.js';
 import ListCardSearch from '../components/listCardSearchResults.js';
+import macrocasoService from '../services/macrocaso.js';
 
 
 const boletinesMacrocaso = [
@@ -159,6 +160,51 @@ export default function Caso() {
   const handleChangeTabCaso = (event, newValue) => {
     setValue(newValue);
   };
+
+  const [caso, setCaso] = useState("Caso 001");
+  const [tipo_decision, setTipoDecision] = useState("Apertura");
+  const [datos, setDatos] = useState([]);
+  const [arrDatosMacrocaso, setArrDatosMacrocaso] = useState([]);
+  const [arrDatosMacrocasoFiltrados, setArrDatosMacrocasoFiltrados] = useState([]);
+  const [message, setMessage] = useState("");
+
+  const getMacrocasos = () => {
+    macrocasoService
+        .getMacrocasos()
+        .then(response => {
+            if((response.status_info.status === 200) && (response.data.length > 0)) {
+                setDatos(response.data);
+                setMessage(`Success: ${response.status_info.status}. ${response.status_info.reason}`);
+            } else {
+                setMessage(`Error: ${response.status_info.status}. ${response.status_info.reason}`);
+            }
+        }
+        )
+        .catch(error => console.log(error));
+  }
+
+  const getMacrocaso = (caso) => {
+    if(datos.length > 0){
+      const objMacrocaso = datos.find(obj => obj.hasOwnProperty(caso));
+      setArrDatosMacrocaso(objMacrocaso[caso]);
+    }
+  }
+
+  const getFichasTipoDecision = (tipo_decision) => {
+    if(arrDatosMacrocaso.length > 0){
+      const newArr = arrDatosMacrocaso.filter(obj => obj["detalle_caso"] === tipo_decision );
+      setArrDatosMacrocasoFiltrados(newArr);
+    }
+  }
+
+  useEffect(() => {
+    if(datos.length === 0){
+      getMacrocasos();
+    } else {
+      getMacrocaso(caso);
+      getFichasTipoDecision("Otras decisiones");
+    }
+  }, [datos]);
 
 
   const tipoDecision = ['Apertura', 'Determinación de hechos y conductas', 'Resolución de conclusiones', 'Acreditación de víctimas individuales y colectivas', 'Auto que fija fecha de audiencia y/o diligencia', 'Régimen de condicionalidad', 'Otras decisiones'];

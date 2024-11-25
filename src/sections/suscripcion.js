@@ -1,5 +1,5 @@
 import '../App.css';
-import { Container, TextField, Button, Snackbar, Alert } from '@mui/material';
+import { Container, TextField, Button, Snackbar, Alert, Box, Grid } from '@mui/material';
 
 import React, { useState, useEffect } from 'react';
 import DOMPurify from 'dompurify';
@@ -8,7 +8,7 @@ import TabCustom from '../components/tab.js';
 import boletinesService from '../services/boletines.js';
 import processingDataModal from '../components/processingDataModal.js';
 import ProcessingDataModal from '../components/processingDataModal.js';
-
+import { Captcha } from "navid-react-captcha-generator";
 
 export default function Suscripcion() {
 
@@ -22,6 +22,10 @@ export default function Suscripcion() {
             error: false
         },
         ocupacion: {
+            message: "",
+            error: false
+        },
+        captcha: {
             message: "",
             error: false
         },
@@ -40,20 +44,45 @@ export default function Suscripcion() {
     const [message, setMessage] = useState({ message: "", classname: "" });
     const [errors, setErrors] = useState(objErrors);
 
+    const [captcha, setCaptcha] = useState('');
+    const [captchaValue, setCaptchaValue] = useState("");
+    const [regenerate, setRegenerate] = useState(false);
+
+    const handleCaptchaChange = (value) => {
+        setCaptchaValue(value);
+    };
+
+    const regenerateCaptcha = () => {
+        setRegenerate((prev) => !prev);
+    };
+
     const postSuscription = (objNewSuscription) => {
+        let message_ = { message: "", classname: "" };
         boletinesService
             .postSuscription(objNewSuscription)
             .then(response => { 
                 if(response.status_info.status === 201){
-                    setMessage({ message: response.data, classname: "success" });
+                    message_ = { message: response.data, classname: "success" };
                 } else if(response.status_info.status === 200){
-                    setMessage({ message: response.data, classname: "warning" })
+                    message_ = { message: response.data, classname: "warning" };
                 } else {
-                    setMessage({ message: response.data, classname: "error" })
+                    message_ = { message: response.data, classname: "error" };
                 }
+                handleOpenModal();
+                setMessage({ message: "", classname: "" });  
+                setTimeout(function(){ 
+                    if(message_.classname === "success"){
+                        setNombre('');
+                        setEmail('');
+                        setOcupacion('');
+                    }
+                    setCaptcha('');
+                    handleCloseModal();
+                    setMessage(message_);
+                }, 3000);
                 setTimeout(() => {
-                    setMessage({ message: "", classname: "" });
-                }, 4000)
+                    setMessage({ message: "", classname: "" }); 
+                }, 6000);
             })
             .catch(error => console.log(error));
     };
@@ -73,6 +102,10 @@ export default function Suscripcion() {
         setErrors({ ...errors, ocupacion: { ...errors.ocupacion, error: (event.target.value.length > 0 && event.target.value.trim() !== "") ? false : true } }); // Reiniciar error al cambiar el valor
     };
 
+    const handleCaptchaChangeSuscribe = (event) => {
+        setCaptcha(event.target.value);
+        setErrors({ ...errors, captcha: { ...errors.captcha, error: (event.target.value.length > 0 && event.target.value.trim() !== "") ? false : true } });  // Reiniciar error al cambiar el valor
+    };
 
     const validateForm = () => {
         const newErrors = objErrors;
@@ -102,30 +135,43 @@ export default function Suscripcion() {
           newErrors.ocupacion.message = 'La ocupación solo debe contener letras y espacios.';
           newErrors.ocupacion.error = false; //true
         }
+
+        if(captcha.trim() === "") {
+            newErrors.captcha.message = 'Por favor, ingrese un captcha válido.';
+            newErrors.captcha.error = true;  
+        } else if (!/^[a-zA-Z\s]{2,50}$/.test(captcha)) {
+            newErrors.captcha.message = 'Por favor, ingrese un captcha válido.';
+            newErrors.captcha.error = true; //true
+        }
         
         setErrors({...newErrors});
 
-        return ((newErrors.nombre.error === false) && (newErrors.email.error === false) && (newErrors.ocupacion.error === false));
+        return ((newErrors.nombre.error === false) && (newErrors.email.error === false) && (newErrors.ocupacion.error === false) && (newErrors.captcha.error === false));
     };
 
 
     const handleSubmit = () => {
-        handleOpenModal();
         if(validateForm()) {
-            const objNewSuscription = {
-                "nombre": DOMPurify.sanitize(nombre),
-                "ocupacion": DOMPurify.sanitize(ocupacion),
-                "email": DOMPurify.sanitize(email)
-            };
-            postSuscription(objNewSuscription);
-            setErrors(objErrors);
+            const captchaFieldVal = DOMPurify.sanitize(captcha);
+            if(captchaFieldVal === captchaValue){
+                const objNewSuscription = {
+                    "nombre": DOMPurify.sanitize(nombre),
+                    "ocupacion": DOMPurify.sanitize(ocupacion),
+                    "email": DOMPurify.sanitize(email)
+                };
+                postSuscription(objNewSuscription);
+                setErrors(objErrors);
+            } else {
+                const newErrors = objErrors;
+                newErrors.captcha.message = 'El captcha no coincide.';
+                newErrors.captcha.error = true; 
+                setErrors({...newErrors});
+                setCaptcha('');
+            }
         } else {
+            setCaptcha('');
             setOpenSnackbar(true);
         }
-        setTimeout(function(){ 
-            handleCloseModal();  
-        }, 2000);
-
     };
   
     const handleCloseSnackbar = () => {
@@ -150,6 +196,7 @@ export default function Suscripcion() {
                     variant="outlined"
                     onChange={handleNombreChangeSuscribe}
                     error={errors.nombre.error}
+                    value={nombre}
                     helperText={(errors.nombre.error) ? errors.nombre.message  : ''}
                 />
             </div> 
@@ -159,6 +206,7 @@ export default function Suscripcion() {
                     variant="outlined"
                     onChange={handleChangeSuscribe}
                     error={errors.email.error}
+                    value={email}
                     helperText={(errors.email.error) ? errors.email.message : ''}
                     
                 />
@@ -169,6 +217,7 @@ export default function Suscripcion() {
                     variant="outlined"
                     onChange={handleOcupacionChangeSuscribe}
                     error={errors.ocupacion.error}
+                    value={ocupacion}
                     helperText={(errors.ocupacion.error) ? errors.ocupacion.message: ''}
                 />
             </div> 
@@ -177,7 +226,72 @@ export default function Suscripcion() {
                 <p>Al suscribirse, está aceptando la política de <a  className="link_secondary" href="https://conti.jep.gov.co/mercurio/ViewerJS/FrameRedirect2.jsp?Tipo=Normal">tratamiento de datos </a> de la Jurisdicción Especial para la Paz  </p>
 
             </div>
-            
+        
+            <Box sx={{ flexGrow: 1, padding: 0, marginTop: 0, marginBottom: 2 }}>
+                {/* Primera fila con dos columnas */}
+                <Grid container spacing={0} alignItems="center">
+                    <Grid item xs={6}>
+                    <Box
+                        sx={{
+                        padding: 2,
+                        textAlign: "center",
+                        }}
+                    >
+                        <Captcha
+                                onChange={handleCaptchaChange}
+                                regenerate={regenerate}
+                                width={150}
+                                height={50}
+                                length={4}
+                                fontSize={24}
+                                bgColor="#c0c0c0"
+                                textColor="#000"
+                                noise={false}
+                                lines={false}
+                                distortion={false}
+                                charStyles={{
+                                    0: { color: "#ff0000" },
+                                    1: { color: "#008000" },
+                                    2: { color: "#0000ff" },
+                                    3: { color: "#ff00ff" },
+                                }}
+                                />
+                            
+                    </Box>
+                    </Grid>
+                    <Grid item xs={6}>
+                    <Box
+                        sx={{
+                        padding: 2,
+                        textAlign: "center",
+                        }}
+                    >
+                        <Button onClick={regenerateCaptcha} variant="contained" size="small">Regenerar Captcha</Button>
+                    </Box>
+                    </Grid>
+                </Grid>
+
+                {/* Segunda fila con una sola columna */}
+                <Grid container spacing={0} mt={0}>
+                    <Grid item xs={12}>
+                    <Box
+                        sx={{
+                        padding: 0,
+                        textAlign: "center"
+                        }}
+                    >
+                        <TextField className="form_item"
+                                label="Ingrese el captcha:"
+                                variant="outlined"
+                                onChange={handleCaptchaChangeSuscribe}
+                                error={errors.captcha.error}
+                                value={captcha}
+                                helperText={(errors.captcha.error) ? errors.captcha.message: ''}
+                        />
+                    </Box>
+                    </Grid>
+                </Grid>
+            </Box>
             <div className="justify_center">
                 {(message.message.trim() !== '') ? (
                         <Alert variant="outlined" severity={message.classname}>
