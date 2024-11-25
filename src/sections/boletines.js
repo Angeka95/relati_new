@@ -9,6 +9,7 @@ import TabCustom from '../components/tab.js';
 import { Link } from 'react-router-dom';
 import boletinesService from '../services/boletines.js';
 import datos_boletines_anios from '../data/data_boletines_anios.js';
+import LinearWithValueLabel from '../components/linearProgress.js';
 
 const boletines_ = datos_boletines_anios;
 
@@ -54,27 +55,6 @@ export default function SearchResults() {
             .catch(error => console.log(error));
     };
 
-    const getBoletinesAnio = (anio) => {
-        let objBoletines = boletines.find(item => item.hasOwnProperty(anio));
-        let arrBoletines = objBoletines[anio].map(item => { return {
-            id : item.id,
-            titulo : item.titulo,
-            idioma : item.idioma,
-            nombre : item.providencias.nombre,
-            nombreWithExt : `${item.providencias.nombre}.pdf`,
-            pdf:  `https://relatoria.jep.gov.co/${item.providencias.hipervinculo}`,
-            fecha: item.anio, 
-            facebook: `https://www.facebook.com/sharer.php?u=https://relatoria.jep.gov.co/${item.providencias.hipervinculo}`,
-            twitter: `https://twitter.com/intent/tweet?text=${item.providencias.nombre}&url=${item.providencias.hipervinculo}`,
-            mail: true,  
-            versionIngles: `https://relatoria.jep.gov.co/documentos/providencias/17/23/en/boletin_eng_diciembre_2022.pdf`,
-            esEspecial: true, 
-            imagenPortada: (item.imagen !== null) ? `https://relatoria.jep.gov.co/${item.imagen}` : ``
-            }
-        });
-        setBoletinesAnio((objBoletines === undefined)? [] : arrBoletines);
-    };
-
     useEffect(() => {
         if(boletines.length === 0){
             getBoletines();
@@ -86,15 +66,17 @@ export default function SearchResults() {
     <Container maxWidth="lg" disableGutters>
           <h1 className="width_100 text_center margin_top_l">Boletines Jurisprudenciales</h1>
           <p className="text_center title_description margin_bottom_l">Destacamos aquí las decisiones judiciales más importantes de las Salas y Secciones de la JEP. Este producto editorial plasma la síntesis de los casos, las reglas y argumentos de derecho, así como el sentido de la decisión</p>
-          <div className="align_center carousel_main_container"> 
-            <p className=" align_center text_carousel_container">Consulte las decisiones más relevantes de la JEP, analizadas mes a mes</p>
+          {( boletines.length === 0 ) ? 
+                    <LinearWithValueLabel></LinearWithValueLabel>
+                :
+                <div className="align_center carousel_main_container"> 
+                  <p className=" align_center text_carousel_container">Consulte las decisiones más relevantes de la JEP, analizadas mes a mes</p>
 
-            <div className="carousel_container ">
-                <Carousel boletines={boletines}/>
-            </div> 
-          </div> 
-
-          
+                  <div className="carousel_container ">
+                      <Carousel boletines={boletines}/>
+                  </div> 
+                </div> 
+          }
 
     </Container>
     <Box className= "cta_boletines_container "> 
@@ -109,32 +91,36 @@ export default function SearchResults() {
             </Container>
         </div>
     </Box>
-    <Box> 
-        <div className="margin_bottom_xl"> </div> 
-        
-        <ul>
+    
+      
+            <Container maxWidth="lg" disableGutters sx={{ mt: 5, mb: 5 }}> 
+            {( boletines.length === 0 ) ? 
+                <LinearWithValueLabel ></LinearWithValueLabel>
+            :
+                <>
+                <div className="margin_bottom_xl"> </div> 
+                
+                <ul>
 
-      </ul>
-        {/* {dataBoletines.length > 0 && (
-        <ul>
-          {dataBoletines.map(dataBoletin => (
-            <li key={dataBoletin.id}>
-              {dataBoletin.url} 
-          ))}
-        </ul>
-      )} */}
-        <div> 
-        {/* {boletines.map(datoBoletin => (
-          <TabCustom key={datoBoletin.id} pdf={datoBoletin.pdf} fecha={datoBoletin.fecha} imagenPortada={datoBoletin.imagenPortada} />
-        ))} */}
+              </ul>
+                {/* {dataBoletines.length > 0 && (
+                <ul>
+                  {dataBoletines.map(dataBoletin => (
+                    <li key={dataBoletin.id}>
+                      {dataBoletin.url} 
+                  ))}
+                </ul>
+              )} */}
+                <div> 
+                {/* {boletines.map(datoBoletin => (
+                  <TabCustom key={datoBoletin.id} pdf={datoBoletin.pdf} fecha={datoBoletin.fecha} imagenPortada={datoBoletin.imagenPortada} />
+                ))} */}
 
-        {/*<TabCustom boletines={boletines}/*/} 
-        <TabCustom boletines={boletines}/> 
-        </div>
-
-
-            
-    </Box>
+                    <TabCustom boletines={boletines}/> 
+                </div> 
+                </>
+              }
+               </Container>
     </div>
   );
 }

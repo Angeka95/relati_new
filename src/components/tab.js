@@ -19,7 +19,7 @@ export default function CustomTab({ boletines}) {
 
     // Anios del boletin
 
-    const anioBoletin = [...new Set(boletines.map(boletin => new Date(boletin.fecha).getUTCFullYear()))];
+    const anioBoletin = [...new Set(boletines.map(boletin => { return new Date(boletin.fecha).getUTCFullYear(); }))];
 
     // Estado para el tab activo
 
