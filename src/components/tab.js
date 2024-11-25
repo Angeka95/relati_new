@@ -12,7 +12,7 @@ import ShareOptions from '../components/shareOptions.js';
 
 export default function CustomTab({ boletines}) {
     const [value, setValue] = React.useState(0);
-
+    
     const handleChangeTab = (event, newValue) => {
         setValue(newValue);
     };
@@ -64,9 +64,15 @@ export default function CustomTab({ boletines}) {
                                                
 
                                                 <div>
-                                                    <a href={boletin.pdf} target='_blank' >
-                                                        <img className="item_boletin" src={boletin.imagenPortada}>
+                                                    <a href={boletin.pdf} target='_blank' rel="noreferrer">
+                                                        {(boletin.imagenPortada ) ?
+                                                        <img className="item_boletin" src={boletin.imagenPortada} alt={boletin.nombreWithExt}>
                                                         </img>
+                                                        : 
+                                                        <div className="item_boletin" style={{backgroundColor: "#808080"}}>
+                                                            <p style={{color: "#ffffff"}}>{boletin.nombreWithExt}</p>
+                                                        </div>
+                                                        }
                                                     </a>
                                                     <ShareOptions boletines={boletines} currentBoletinId={boletin.id} > </ShareOptions>
                                                 </div>

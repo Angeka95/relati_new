@@ -2,6 +2,7 @@ import Carousel from 'react-bootstrap/Carousel';
 import ArrowBackIosOutlinedIcon from '@mui/icons-material/ArrowBackIosOutlined';
 import IconButton from '@mui/material/IconButton';
 import ArrowForwardIosOutlinedIcon from '@mui/icons-material/ArrowForwardIosOutlined';
+import imagenPortadaPlaceHolder from '../assets/images/boletin_placeholder.png';
 
 export default function Carrusel({ boletines }) {
 
@@ -33,14 +34,26 @@ export default function Carrusel({ boletines }) {
             <div className="carousel_inner_wrapper">
               <div className="carousel_item_wrapper" style={{}}>
                 {par.map((boletin, index_par) => (
-                  <a key={index_par} href={boletin.pdf} target='_blank' className="width_100" >
-                    <img
-                      className="width_100"
-                      src={boletin.imagenPortada}
-                      alt="Boletines Jurisprudenciales"
+                  <a key={index_par} href={boletin.pdf} target='_blank' className="width_100" rel="noreferrer">
+                    {(boletin.imagenPortada ) ?                                  
+                      <img
+                        className="width_100"
+                        src={boletin.imagenPortada}
+                        alt="Boletines Jurisprudenciales"
 
-                    />
-
+                      />
+                      : 
+                      <div className="carousel_image_placeholder">
+                        <img
+                          className="width_100"
+                          src={imagenPortadaPlaceHolder}
+                          alt="Boletines Jurisprudenciales"
+                        />
+                        <div className="carousel_image_placeholder_text">
+                          <p style={{color: "#ffffff"}}>{boletin.nombreWithExt}</p>
+                        </div>
+                      </div>
+                    }
                   </a>
                 ))}
                 {par.length === 1 && <div className="width_100" />}
