@@ -12,12 +12,21 @@ import { boletinesMacrocaso_, timeLine } from '../data/datos_macrocaso.js';
 import LinearWithValueLabel from '../components/linearProgress.js';
 import { useNavigate } from 'react-router-dom';
 
+const casoInicial = { 
+                        nombre: "Caso 001", 
+                        macrocaso: "Macrocaso 1", 
+                        titulo: "Caso 01",
+                        tituloDescripcion: "Toma de rehenes, graves privaciones de la libertad y otros crímenes concurrentes cometidos por las Farc-EP",
+                        actualizacion: "La Sala de Reconocimiento (SRVR) activó el componente de reparación integral y requirió a la Unidad de Víctimas revisar la inclusión en el Registro Único de Víctimas (RUV) de 664 víctimas de secuestro de las Farc-EP representadas por IIRESOHD. En febrero de 2024 se finalizaron las versiones voluntarias de todos los comparecientes de los cuales se conocía su paradero. ",
+                        infografia: "https://relatoria.jep.gov.co/documentos/infografias/macrocaso001.pdf",
+};
+
 export default function Caso() {
 
   const navigate = useNavigate();
 
   const [value, setValue] = React.useState(0);
-  const [caso, setCaso] = useState({ nombre: "Caso 001", macrocaso: "Macrocaso 1"});
+  const [caso, setCaso] = useState(casoInicial);
   const [tipo_decision, setTipoDecision] = useState("Apertura");
   const [datos, setDatos] = useState([]);
   const [datosSala, setDatosSala] = useState([]);
@@ -185,16 +194,16 @@ export default function Caso() {
     <div>
       <Box className="secondary_blue section_blue ">
         <div className="width_100 justify_center">
-          <h1 className=" text_center text_white underline_green ">Caso 01</h1>
+          <h1 className=" text_center text_white underline_green ">{caso.titulo}</h1>
         </div>
-        <h4 className="width_100 text_center margin_bottom_m text_white text_bold title_description">Toma de rehenes, graves privaciones de la libertad y otros crímenes concurrentes cometidos por las Farc-EP</h4>
+        <h4 className="width_100 text_center margin_bottom_m text_white text_bold title_description">{caso.tituloDescripcion}</h4>
       </Box>
       <Container>
         <div className="wrap margin_top_l justify_center ">
-          <h2 className="text_bolder subtitulo_caso">En qué va el Caso 01</h2>
+          <h2 className="text_bolder subtitulo_caso">En qué va el {caso.titulo}</h2>
           <div className="actualizacion_caso">
-            <p>La Sala de Reconocimiento (SRVR) activó el componente de reparación integral y requirió a la Unidad de Víctimas revisar la inclusión en el Registro Único de Víctimas (RUV) de 664 víctimas de secuestro de las Farc-EP representadas por IIRESOHD. En febrero de 2024 se finalizaron las versiones voluntarias de todos los comparecientes de los cuales se conocía su paradero. </p>
-            <Button target="_blank" href="https://relatoria.jep.gov.co/documentos/infografias/macrocaso001.pdf" className="button_terciary shadow_smooth text_transform_none margin_bottom_m" >Saber más del Caso</Button>
+            <p>{caso.actualizacion}</p>
+            <Button target="_blank" href={caso.infografia} className="button_terciary shadow_smooth text_transform_none margin_bottom_m" >Saber más del Caso</Button>
           </div>
         </div>
       </Container>
