@@ -22,7 +22,7 @@ const getMacrocasos = () => {
   });
 }
 
-const ggetCasosXTramite = () => {
+const getCasosXTramite = () => {
 
   const config = {
     headers: {

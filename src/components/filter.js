@@ -12,7 +12,7 @@ import { styled } from '@mui/material/styles';
 import { Container, Grid } from '@mui/material';
 import documentoService from '../services/documento.js';
 import datos_anios from '../data/data_anios.js';
-import datos_macrocaso from '../data/datos_macrocaso.js';
+import { datos_macrocaso } from '../data/datos_macrocaso.js';
 import datos_sala_seccion from '../data/datos_sala_seccion.js';
 import Context from '../context/context';
 import { validarfiltroMapaJurisprudencial, generarArrayDeObjetosNombreCampoValor } from '../helpers/utils.js';

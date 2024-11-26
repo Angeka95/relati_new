@@ -6,162 +6,15 @@ import TabCustom from '../components/tab.js';
 import axios from 'axios';
 import ListVideos from '../components/listVideos.js';
 import Carousel from '../components/carousel.js';
-import ListCardSearch from '../components/listCardSearchResults.js';
+import ListCardSearch from '../components/listCardSearchMacrocasoResults.js';
 import macrocasoService from '../services/macrocaso.js';
-
-
-const boletinesMacrocaso = [
-  {
-    id: 1,
-    pdf: 'https://relatoria.jep.gov.co/documentos/providencias/17/23/boletin_01_enero-2024.pdf',
-    fecha: "2024-01",
-    facebook: 'https://www.facebook.com/sharer.php?u=https://relatoria.jep.gov.co/documentos/providencias/17/23/boletin_01_enero-2024.pdf',
-    twitter: 'https://twitter.com/intent/tweet?text=Me gusta boletin_01_enero-2024 &url=https://relatoria.jep.gov.co/documentos/providencias/17/23/boletin_01_enero-2024.pdf',
-    mail: true,
-    versionIngles: '',
-    esEspecial: false,
-    imagenPortada: 'https://relatoria.jep.gov.co/img/boletines/2024/boletin_01_enero_2024.png?ver=2.8'
-  },
-
-  {
-    id: 7,
-    pdf: 'https://relatoria.jep.gov.co/documentos/providencias/17/23/boletin_05_edicion-especial_2024.pdf',
-    fecha: "2024-01",
-    facebook: 'https://www.facebook.com/sharer.php?u=https://relatoria.jep.gov.co/documentos/providencias/17/23/boletin_05_edicion-especial_2024.pdf',
-    twitter: "https://twitter.com/intent/tweet?text=Me gusta boletin_05_edicion-especial_2024 &url=https://relatoria.jep.gov.co/documentos/providencias/17/23/boletin_05_edicion-especial_2024.pdf",
-    mail: true,
-    versionIngles: '',
-    esEspecial: true,
-    imagenPortada: 'https://relatoria.jep.gov.co/img/boletines/2024/boletin_05_especial_2024.png?ver=2.1'
-  },
-
-
-]
-
-
+import { boletinesMacrocaso, timeLine } from '../data/datos_macrocaso.js';
 
 export default function Caso() {
 
-  const macrocasos = [
-    {
-      numeroCaso: '01',
-      descripcionCaso: 'Toma de rehenes, graves privaciones de la libertad y otros crímenes concurrentes cometidos por las Farc-EP',
-      enQueVa: 'La Sala de Reconocimiento (SRVR) activó el componente de reparación integral y requirió a la Unidad de Víctimas revisar la inclusión en el Registro Único de Víctimas (RUV) de 664 víctimas de secuestro de las Farc-EP representadas por IIRESOHD. En febrero de 2024 se finalizaron las versiones voluntarias de todos los comparecientes de los cuales se conocía su paradero.',
-      pdfInfografia: 'https://relatoria.jep.gov.co/documentos/infografias/macrocaso001.pdf',
-    },
-    {
-      numeroCaso: '02',
-      descripcionCaso: 'Toma de rehenes, graves privaciones de la libertad y otros crímenes concurrentes cometidos por las Farc-EP',
-      enQueVa: 'La Sala de Reconocimiento (SRVR) activó el componente de reparación integral y requirió a la Unidad de Víctimas revisar la inclusión en el Registro Único de Víctimas (RUV) de 664 víctimas de secuestro de las Farc-EP representadas por IIRESOHD. En febrero de 2024 se finalizaron las versiones voluntarias de todos los comparecientes de los cuales se conocía su paradero.',
-      pdfInfografia: 'https://relatoria.jep.gov.co/documentos/infografias/macrocaso001.pdf',
-    }
-  ]
-
-  const timeLine = [
-    {
-      mes: 'Abril',
-      año: '2024',
-      hecho: 'Audiencia Pública de Reconocimiento',
-      actor: '',
-      enlace: ''
-    },
-    {
-      mes: 'Marzo',
-      año: '2024',
-      hecho: 'Auto que Decreta Audiencia Pública de Reconocimiento',
-      actor: '',
-      enlace: ''
-    },
-    {
-      mes: 'Diciembre',
-      año: '2023',
-      hecho: 'Tercer auto de determinación de hechos y conductas: ',
-      actor: 'Comando Conjunto de Occidente',
-      enlace: 'https://relatoria.jep.gov.co/documentos/providencias/1/1/Auto_SRVR-08_19-diciembre-2023.pdf'
-    },
-    {
-      mes: 'Noviembre',
-      año: '2023',
-      hecho: 'Participación de las víctimas',
-      actor: '',
-      enlace: ''
-    },
-    {
-      mes: 'Julio',
-      año: '2023',
-      hecho: 'Segundo auto de determinación de hechos y conductas:',
-      actor: 'Comando Conjunto Central',
-      enlace: 'xx'
-    },
-    {
-      mes: 'Junio',
-      año: '2023',
-      hecho: 'Audiencia de observaciones',
-      actor: '',
-      enlace: 'xx'
-    },
-    {
-      mes: 'Enero',
-      año: '2023',
-      hecho: 'Competencia del tribunal para la paz ',
-      actor: '',
-      enlace: 'x'
-    },
-    {
-      mes: 'Noviembre',
-      año: '2022',
-      hecho: 'Resolución de conclusiones',
-      actor: '',
-      enlace: 'x'
-    },
-    {
-      mes: 'Febrero',
-      año: '2022',
-      hecho: 'Audiencia Pública de Reconocimiento',
-      actor: '',
-      enlace: 'xx'
-    },
-
-    {
-      mes: 'Octubre',
-      año: '2021',
-      hecho: 'Observaciones y solicitudes',
-      actor: '',
-      enlace: 'xx'
-    },
-    {
-      mes: 'Agosto',
-      año: '2021',
-      hecho: 'Audiencias',
-      actor: '',
-      enlace: ''
-    },
-
-    {
-      mes: 'Enero',
-      año: '2021',
-      hecho: 'Auto de determinación de hechos y conductas:',
-      actor: 'Antiguo Secretariado',
-      enlace: 'xx'
-    },
-
-    {
-      mes: 'Julio',
-      año: '2018',
-      hecho: 'Auto de Apertura',
-      actor: '',
-      enlace: 'xx'
-    },
-
-  ];
-
   const [value, setValue] = React.useState(0);
-
-  const handleChangeTabCaso = (event, newValue) => {
-    setValue(newValue);
-  };
-
   const [caso, setCaso] = useState("Caso 001");
+  const [tipoSala, setTipoSala] = useState({ nombre: "Sala", prefix: /S -/ });
   const [tipo_decision, setTipoDecision] = useState("Apertura");
   const [datos, setDatos] = useState([]);
   const [arrDatosMacrocaso, setArrDatosMacrocaso] = useState([]);
@@ -186,13 +39,24 @@ export default function Caso() {
   const getMacrocaso = (caso) => {
     if(datos.length > 0){
       const objMacrocaso = datos.find(obj => obj.hasOwnProperty(caso));
+      console.log("caso", objMacrocaso[caso]);
       setArrDatosMacrocaso(objMacrocaso[caso]);
+    }
+  }
+
+  const getCasosXTipoSala = (tipoSala) => {
+    console.log("tipo sala", tipoSala);
+    if(arrDatosMacrocaso.length > 0){
+      const newArr = arrDatosMacrocaso.filter(obj => { return tipoSala["prefix"].test(obj["despacho"]["nombre"]) });
+      console.log("CasosTipoSala", newArr);
+      setArrDatosMacrocasoFiltrados(newArr);
     }
   }
 
   const getFichasTipoDecision = (tipo_decision) => {
     if(arrDatosMacrocaso.length > 0){
       const newArr = arrDatosMacrocaso.filter(obj => obj["detalle_caso"] === tipo_decision );
+      console.log("fichas decision", newArr);
       setArrDatosMacrocasoFiltrados(newArr);
     }
   }
@@ -202,10 +66,28 @@ export default function Caso() {
       getMacrocasos();
     } else {
       getMacrocaso(caso);
-      getFichasTipoDecision("Otras decisiones");
+      getCasosXTipoSala(tipoSala);
+      //getFichasTipoDecision("Otras decisiones");
     }
   }, [datos]);
 
+
+  const handleChangeTabCaso = (event, newValue) => {
+    console.log(value,newValue);
+    switch(newValue){
+      case 0:
+            setTipoSala({ nombre: "Sala", prefix: /S -/ });
+            break;
+      case 1:
+            setTipoSala({ nombre: "Tribunal", prefix: /T -/ });
+            break;
+      default:
+            setTipoSala({ nombre: "Sala", prefix: /S -/ });
+            break;
+    }
+    setValue(newValue);
+    getCasosXTipoSala(tipoSala);
+  };
 
   const tipoDecision = ['Apertura', 'Determinación de hechos y conductas', 'Resolución de conclusiones', 'Acreditación de víctimas individuales y colectivas', 'Auto que fija fecha de audiencia y/o diligencia', 'Régimen de condicionalidad', 'Otras decisiones'];
   const [selectedtipoDecision, setSelectedtipoDecision] = useState([]);
@@ -329,8 +211,8 @@ export default function Caso() {
           <AppBar position="static" className="noshadow ">
             <Tabs value={value} onChange={handleChangeTabCaso} className='light_white ' classes={{ indicator: 'custom_indicator' }}>
 
-              <Tab className="text_bolder text_nonecase tab_size" label="Trámite ante Sala" />
-              <Tab className="text_bolder text_nonecase tab_size" label="Trámite ante Tribunal" />
+              <Tab className="text_bolder text_nonecase tab_size" label="Trámite ante Sala"/>
+              <Tab className="text_bolder text_nonecase tab_size" label="Trámite ante Tribunal"/>
 
             </Tabs>
             <div className="separator_tab"> </div>
