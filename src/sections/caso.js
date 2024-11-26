@@ -14,19 +14,59 @@ export default function Caso() {
 
   const [value, setValue] = React.useState(0);
   const [caso, setCaso] = useState("Caso 001");
-  const [tipoSala, setTipoSala] = useState({ nombre: "Sala", prefix: /S -/ });
   const [tipo_decision, setTipoDecision] = useState("Apertura");
   const [datos, setDatos] = useState([]);
+  const [datosSala, setDatosSala] = useState([]);
+  const [datosTribunal, setDatosTribunal] = useState([]);
   const [arrDatosMacrocaso, setArrDatosMacrocaso] = useState([]);
   const [arrDatosMacrocasoFiltrados, setArrDatosMacrocasoFiltrados] = useState([]);
   const [message, setMessage] = useState("");
 
-  const getMacrocasos = () => {
+
+  const setArrayDatosCasos = (arrData) => {
+    const newArray = arrData.map(item => {
+      return {
+          id: item.id,
+          fecha: item.fecha_providencia,
+          asunto: item.asuntocaso,
+          salaOSeccion: item.despacho.nombre,
+          nombreDecision: item.nombre,
+          procedimiento: (item.getfichas.length > 0 )? item.getfichas[0].actuacion : "???",
+          expediente: (item.getfichas.length > 0 )? item.getfichas[0].nombre : "???",
+          departamento: (item.departamento_ext.length > 0 )? item.departamento_ext[0].nombre_dpto : "???",
+          magistrado: "???",
+          municipio: "???",
+          delito: "???",
+          anioHechos: "???",
+          tipo: "???",
+          radicado: "???",
+          compareciente: "???",
+          tipoSujeto: "???",
+          accionadoVinculado: "???",
+          palabrasClaves: "???",
+          hechos: "???",
+          problemasJuridicos: "???",
+          reglas: "???",
+          aplicacionCasoConcreto: "???",
+          conclusion: "???", 
+          resuelve: "???", 
+          documentosAsociados: "???", 
+          enfoquesDiferenciales: "???", 
+          notasRelatoria: "???", 
+      }
+    });
+    return newArray;
+  }
+
+  const getCasos = (caso) => {
     macrocasoService
-        .getMacrocasos()
+        .getCasosXTramite(caso)
         .then(response => {
             if((response.status_info.status === 200) && (response.data.length > 0)) {
-                setDatos(response.data);
+                const dataSala = setArrayDatosCasos(response.data[0].casosSala);
+                const dataTribunal = setArrayDatosCasos(response.data[0].casosTribunal);
+                setDatosSala(dataSala);
+                setDatosTribunal(dataTribunal);
                 setMessage(`Success: ${response.status_info.status}. ${response.status_info.reason}`);
             } else {
                 setMessage(`Error: ${response.status_info.status}. ${response.status_info.reason}`);
@@ -34,59 +74,29 @@ export default function Caso() {
         }
         )
         .catch(error => console.log(error));
-  }
-
-  const getMacrocaso = (caso) => {
-    if(datos.length > 0){
-      const objMacrocaso = datos.find(obj => obj.hasOwnProperty(caso));
-      console.log("caso", objMacrocaso[caso]);
-      setArrDatosMacrocaso(objMacrocaso[caso]);
-    }
-  }
-
-  const getCasosXTipoSala = (tipoSala) => {
-    console.log("tipo sala", tipoSala);
-    if(arrDatosMacrocaso.length > 0){
-      const newArr = arrDatosMacrocaso.filter(obj => { return tipoSala["prefix"].test(obj["despacho"]["nombre"]) });
-      console.log("CasosTipoSala", newArr);
-      setArrDatosMacrocasoFiltrados(newArr);
-    }
-  }
-
-  const getFichasTipoDecision = (tipo_decision) => {
-    if(arrDatosMacrocaso.length > 0){
-      const newArr = arrDatosMacrocaso.filter(obj => obj["detalle_caso"] === tipo_decision );
-      console.log("fichas decision", newArr);
-      setArrDatosMacrocasoFiltrados(newArr);
-    }
-  }
+  };
 
   useEffect(() => {
-    if(datos.length === 0){
-      getMacrocasos();
+    if((datosSala.length === 0) && (datosTribunal.length === 0)) {
+      getCasos(caso);
     } else {
-      getMacrocaso(caso);
-      getCasosXTipoSala(tipoSala);
-      //getFichasTipoDecision("Otras decisiones");
+      setDatos(datosSala);
     }
-  }, [datos]);
-
+  }, [datosSala, datosTribunal]);
 
   const handleChangeTabCaso = (event, newValue) => {
-    console.log(value,newValue);
     switch(newValue){
       case 0:
-            setTipoSala({ nombre: "Sala", prefix: /S -/ });
+            setDatos(datosSala);
             break;
       case 1:
-            setTipoSala({ nombre: "Tribunal", prefix: /T -/ });
+            setDatos(datosTribunal);
             break;
       default:
-            setTipoSala({ nombre: "Sala", prefix: /S -/ });
+            setDatos([]);
             break;
     }
     setValue(newValue);
-    getCasosXTipoSala(tipoSala);
   };
 
   const tipoDecision = ['Apertura', 'Determinación de hechos y conductas', 'Resolución de conclusiones', 'Acreditación de víctimas individuales y colectivas', 'Auto que fija fecha de audiencia y/o diligencia', 'Régimen de condicionalidad', 'Otras decisiones'];
@@ -291,7 +301,7 @@ export default function Caso() {
                           {(selectedtipoDecision.length > 0 || selectedSubcasos.length > 0) && (
                             <div className='width_100'>
                               
-                              <ListCardSearch isExternalFilters={true} />
+                              <ListCardSearch datosTramite={datos} isExternalFilters={false} />
                             </div>
                           )}
                         </div>
@@ -365,7 +375,7 @@ export default function Caso() {
                           {(selectedtipoDecision.length > 0 || selectedSubcasos.length > 0) && (
                             <div className='width_100'>
                               
-                              <ListCardSearch isExternalFilters={true} />
+                              <ListCardSearch datosTramite={datos} isExternalFilters={true} />
                             </div>
                           )}
                         </div>
