@@ -8,11 +8,16 @@ import ListVideos from '../components/listVideos.js';
 import Carousel from '../components/carousel.js';
 import ListCardSearch from '../components/listCardSearchMacrocasoResults.js';
 import macrocasoService from '../services/macrocaso.js';
-import { boletinesMacrocaso_, timeLine } from '../data/datos_macrocaso.js';
+import { timeLine } from '../data/datos_macrocaso.js';
 import LinearWithValueLabel from '../components/linearProgress.js';
 import { useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+import { macrocasos_home as macrocasosLista } from '../data/datos_macrocaso.js';
 
 const casoInicial = { 
+                        id: 1,
+                        numeroCaso: "01",
+                        nombreCaso: "Secuestro",
                         nombre: "Caso 001", 
                         macrocaso: "Macrocaso 1", 
                         titulo: "Caso 01",
@@ -22,11 +27,11 @@ const casoInicial = {
 };
 
 export default function Caso() {
-
+  
   const navigate = useNavigate();
 
   const [value, setValue] = React.useState(0);
-  const [caso, setCaso] = useState(casoInicial);
+  const [caso, setCaso] = useState({});
   const [tipo_decision, setTipoDecision] = useState("Apertura");
   const [datos, setDatos] = useState([]);
   const [datosSala, setDatosSala] = useState([]);
@@ -35,6 +40,13 @@ export default function Caso() {
   const [arrDatosMacrocasoFiltrados, setArrDatosMacrocasoFiltrados] = useState([]);
   const [message, setMessage] = useState("");
   const [boletinesMacrocaso, setBoletinesMacrocaso] = useState([]);
+
+  const { casoId } = useParams();
+  
+  useEffect(() => {
+      const casoSeleccionado = macrocasosLista.find(caso => caso.id === parseInt(casoId));
+      setCaso(casoSeleccionado);
+  }, [casoId]);
 
   const getBoletinesMacrocaso = (macrocaso) => {
     macrocasoService
@@ -68,12 +80,12 @@ export default function Caso() {
   };
 
   useEffect(() => {
-    if(boletinesMacrocaso.length === 0){
+    if(caso !== null){
+      if(boletinesMacrocaso.length === 0){
         getBoletinesMacrocaso(caso.macrocaso);
-    } else {
-        ///console.log("boletines", boletinesMacrocaso);
+      } 
     }
-  }, [boletinesMacrocaso]);
+  }, [boletinesMacrocaso, caso]);
 
   const handleClickToBoletines = () => {
     navigate('/boletines');
@@ -133,12 +145,14 @@ export default function Caso() {
   };
 
   useEffect(() => {
-    if((datosSala.length === 0) && (datosTribunal.length === 0)) {
-      getCasos(caso.nombre);
-    } else {
-      setDatos(datosSala);
+    if(caso !== null) {
+      if((datosSala.length === 0) && (datosTribunal.length === 0)) {
+        getCasos(caso.nombre);
+      } else {
+        setDatos(datosSala);
+      }
     }
-  }, [datosSala, datosTribunal]);
+  }, [datosSala, datosTribunal, caso]);
 
   const handleChangeTabCaso = (event, newValue) => {
     switch(newValue){

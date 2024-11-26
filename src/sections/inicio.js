@@ -15,7 +15,7 @@ import { Link } from 'react-router-dom';
 import ModalInfo from '../components/modal'
 import ExpandLessOutlinedIcon from '@mui/icons-material/ExpandLessOutlined';
 import ExpandMoreOutlinedIcon from '@mui/icons-material/ExpandMoreOutlined';
-
+import { macrocasos_home as macrocasos } from '../data/datos_macrocaso.js';
 
 export default function Home() {
 
@@ -41,73 +41,6 @@ export default function Home() {
     const goToBoletinesPage = () => {
         navigate('/boletines');
     };
-
-
-
-    const macrocasos = [
-
-        {
-            id: 1,
-            numeroCaso: "01",
-            nombreCaso: "Secuestro",
-        },
-
-        {
-            id: 2,
-            numeroCaso: "02",
-            nombreCaso: "Situación territorial de Nariño ",
-        },
-
-        {
-            id: 3,
-            numeroCaso: "03",
-            nombreCaso: " “Falsos positivos” ",
-        },
-
-        {
-            id: 4,
-            numeroCaso: "04",
-            nombreCaso: "Situación territorial de Urabá",
-        },
-
-        {
-            id: 5,
-            numeroCaso: "05",
-            nombreCaso: "Situación territorial de Cauca y Valle",
-        },
-        {
-            id: 6,
-            numeroCaso: "06",
-            nombreCaso: "Victimización de la UP",
-        },
-        {
-            id: 7,
-            numeroCaso: "07",
-            nombreCaso: "Reclutamiento de niñas y niños",
-        },
-        {
-            id: 8,
-            numeroCaso: "08",
-            nombreCaso: "Crímenes de la fuerza pública y paramilitares",
-        },
-        {
-            id: 9,
-            numeroCaso: "09",
-            nombreCaso: "Crímenes contra Pueblos Étnicos"
-        },
-        {
-            id: 10,
-            numeroCaso: "10",
-            nombreCaso: " Crímenes cometidos por Farc-EP",
-        },
-        {
-            id: 11,
-            numeroCaso: "11",
-            nombreCaso: " Violencia de género, sexual y reproductiva",
-        },
-
-
-    ]
 
     let decisionesRecientes = [
         {
@@ -897,7 +830,7 @@ export default function Home() {
                     {casesToDisplay.map((caso) => (
 
                         <div key={caso.id} className="card_small transition_smooth">
-                            <Link to="/caso">
+                            <Link to={`/caso/${caso.id}`}>
                                 <p className="text_center text_black" >  Caso
                                     <span className="text_big display_block margin_top_s margin_bottom_s text_green text_bolder">  {caso.numeroCaso} </span>
                                     {caso.nombreCaso}
