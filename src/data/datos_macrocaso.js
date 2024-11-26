@@ -47,7 +47,7 @@ const datos_macrocaso = [
   ];
 
 
-  const boletinesMacrocaso = [
+  const boletinesMacrocaso_ = [
     {
       id: 1,
       pdf: 'https://relatoria.jep.gov.co/documentos/providencias/17/23/boletin_01_enero-2024.pdf',
@@ -72,7 +72,30 @@ const datos_macrocaso = [
       imagenPortada: 'https://relatoria.jep.gov.co/img/boletines/2024/boletin_05_especial_2024.png?ver=2.1'
     },
   
-  
+    {
+      id: 8,
+      pdf: 'https://relatoria.jep.gov.co/documentos/providencias/17/23/boletin_05_edicion-especial_2024.pdf',
+      fecha: "2024-01",
+      facebook: 'https://www.facebook.com/sharer.php?u=https://relatoria.jep.gov.co/documentos/providencias/17/23/boletin_05_edicion-especial_2024.pdf',
+      twitter: "https://twitter.com/intent/tweet?text=Me gusta boletin_05_edicion-especial_2024 &url=https://relatoria.jep.gov.co/documentos/providencias/17/23/boletin_05_edicion-especial_2024.pdf",
+      mail: true,
+      versionIngles: '',
+      esEspecial: true,
+      imagenPortada: 'https://relatoria.jep.gov.co/img/boletines/2024/boletin_05_especial_2024.png?ver=2.1'
+    },
+
+    {
+      id: 9,
+      pdf: 'https://relatoria.jep.gov.co/documentos/providencias/17/23/boletin_05_edicion-especial_2024.pdf',
+      fecha: "2024-01",
+      facebook: 'https://www.facebook.com/sharer.php?u=https://relatoria.jep.gov.co/documentos/providencias/17/23/boletin_05_edicion-especial_2024.pdf',
+      twitter: "https://twitter.com/intent/tweet?text=Me gusta boletin_05_edicion-especial_2024 &url=https://relatoria.jep.gov.co/documentos/providencias/17/23/boletin_05_edicion-especial_2024.pdf",
+      mail: true,
+      versionIngles: '',
+      esEspecial: true,
+      imagenPortada: 'https://relatoria.jep.gov.co/img/boletines/2024/boletin_05_especial_2024.png?ver=2.1'
+    }
+    
   ];
 
   const macrocasos = [
@@ -188,4 +211,4 @@ const datos_macrocaso = [
 
   ];
 
-export { datos_macrocaso, boletinesMacrocaso, macrocasos, timeLine };
+export { datos_macrocaso, boletinesMacrocaso_, macrocasos, timeLine };

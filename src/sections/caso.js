@@ -8,12 +8,16 @@ import ListVideos from '../components/listVideos.js';
 import Carousel from '../components/carousel.js';
 import ListCardSearch from '../components/listCardSearchMacrocasoResults.js';
 import macrocasoService from '../services/macrocaso.js';
-import { boletinesMacrocaso, timeLine } from '../data/datos_macrocaso.js';
+import { boletinesMacrocaso_, timeLine } from '../data/datos_macrocaso.js';
+import LinearWithValueLabel from '../components/linearProgress.js';
+import { useNavigate } from 'react-router-dom';
 
 export default function Caso() {
 
+  const navigate = useNavigate();
+
   const [value, setValue] = React.useState(0);
-  const [caso, setCaso] = useState("Caso 001");
+  const [caso, setCaso] = useState({ nombre: "Caso 001", macrocaso: "Macrocaso 1"});
   const [tipo_decision, setTipoDecision] = useState("Apertura");
   const [datos, setDatos] = useState([]);
   const [datosSala, setDatosSala] = useState([]);
@@ -21,7 +25,50 @@ export default function Caso() {
   const [arrDatosMacrocaso, setArrDatosMacrocaso] = useState([]);
   const [arrDatosMacrocasoFiltrados, setArrDatosMacrocasoFiltrados] = useState([]);
   const [message, setMessage] = useState("");
+  const [boletinesMacrocaso, setBoletinesMacrocaso] = useState([]);
 
+  const getBoletinesMacrocaso = (macrocaso) => {
+    macrocasoService
+        .getBoletinesMacrocaso(macrocaso)
+        .then(response => {
+            if((response.status_info.status === 200) && (response.data.length > 0)) {
+                let arrBoletines = response.data.map(item => { return {
+                    id : item.id,
+                    titulo : item.titulo,
+                    idioma : item.idioma,
+                    nombre : item.providencias.nombre,
+                    nombreWithExt : `${item.providencias.nombre}.pdf`,
+                    pdf:  `https://relatoria.jep.gov.co/${item.providencias.hipervinculo}`,
+                    fecha: item.anio, 
+                    facebook: `https://www.facebook.com/sharer.php?u=https://relatoria.jep.gov.co/${item.providencias.hipervinculo}`,
+                    twitter: `https://twitter.com/intent/tweet?text=${item.providencias.nombre}&url=${item.providencias.hipervinculo}`,
+                    mail: true,  
+                    versionIngles: `https://relatoria.jep.gov.co/documentos/providencias/17/23/en/boletin_eng_diciembre_2022.pdf`,
+                    esEspecial: true, 
+                    imagenPortada: (item.imagen !== null) ? `https://relatoria.jep.gov.co/${item.imagen}` : ``
+                    }
+                });
+                setBoletinesMacrocaso(arrBoletines);
+                setMessage(`Success: ${response.status_info.status}. ${response.status_info.reason}`);
+            } else {
+                setMessage(`Error: ${response.status_info.status}. ${response.status_info.reason}`);
+            }
+        }
+        )
+        .catch(error => console.log(error));
+  };
+
+  useEffect(() => {
+    if(boletinesMacrocaso.length === 0){
+        getBoletinesMacrocaso(caso.macrocaso);
+    } else {
+        ///console.log("boletines", boletinesMacrocaso);
+    }
+  }, [boletinesMacrocaso]);
+
+  const handleClickToBoletines = () => {
+    navigate('/boletines');
+  };
 
   const setArrayDatosCasos = (arrData) => {
     const newArray = arrData.map(item => {
@@ -78,7 +125,7 @@ export default function Caso() {
 
   useEffect(() => {
     if((datosSala.length === 0) && (datosTribunal.length === 0)) {
-      getCasos(caso);
+      getCasos(caso.nombre);
     } else {
       setDatos(datosSala);
     }
@@ -402,20 +449,21 @@ export default function Caso() {
 
       <Container maxWidth="lg" disableGutters className="margin_top_l ">
         <div className="align_center carousel_main_container margin_top_l " >
-          <div className="wrap text_carousel_container" >
+            {( boletinesMacrocaso.length === 0) ?
+              <LinearWithValueLabel ></LinearWithValueLabel>
+            :
+              <>
+              <div className="wrap text_carousel_container" >
             <h2 className="align_center text_bolder"> Boletines y documentos relacionados</h2>
             <p className=" align_center margin_top_s margin_bottom_m">Acceda al análisis de las decisiones y a las publicaciones relacionadas a este Caso</p>
-            <Button className="button_primary "> Ver todos los boletines</Button>
-          </div>
-          <div className="carousel_container ">
-
-            <Carousel boletines={boletinesMacrocaso} />
-
-          </div>
+            <Button className="button_primary " onClick={handleClickToBoletines}> Ver todos los boletines</Button>
+              </div>
+                <div className="carousel_container ">
+                  <Carousel boletines={boletinesMacrocaso} />
+                </div>
+              </>
+            }
         </div>
-
-
-
       </Container>
 
       <Container>
