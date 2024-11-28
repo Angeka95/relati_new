@@ -123,7 +123,8 @@ export default function Caso() {
           enfoquesDiferenciales: (item.getfichas.length > 0 )? obtenerPalabrasFromArrayObject(item.getfichas[0].enfoques_diferenciales, "nombre_enfoque", null, false): "???", 
           notasRelatoria: ((item.getfichas.length > 0 ) && (item.getfichas[0].hasOwnProperty("notas"))) ? item.getfichas[0].notas : "???", 
           hipervinculo: item.hipervinculo,
-          hipervinculoFichaJuris: item.hipervinculo 
+          hipervinculoFichaJuris: ((item.getfichas.length > 0 ) && (item.getfichas[0].estado_id === 14)) ? `https://relatoria.jep.gov.co/downloadfichaext/${item.getfichas[0].id}` : "",
+          estadoFichaJuris: ((item.getfichas.length > 0 ) && (item.getfichas[0].estado_id !== null))  ?  item.getfichas[0].estado_id : "???",
       }
     });
     return newArray;
