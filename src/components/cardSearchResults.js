@@ -121,8 +121,12 @@ export default function CardSearch({ datos }) {
             
       
         </Tabs>
-        <Button className="button_secondary margin_xs card_size_small"  startIcon={<FileDownloadOutlinedIcon/>}>Descargar datos</Button>
-     
+        {((typeof datos.hipervinculoFichaJuris === 'string' ) && (datos.hipervinculoFichaJuris.trim() !== '')) && (
+              <a href={datos.hipervinculoFichaJuris} target='_blank' rel="noreferrer">
+                <Button className="button_secondary margin_xs card_size_small"  startIcon={<FileDownloadOutlinedIcon/>}>Descargar datos</Button>
+              </a> 
+        )}
+        
       </div> 
         {value === 0 && 
         <div className="margin_top_m ">
@@ -260,9 +264,6 @@ export default function CardSearch({ datos }) {
                   {((typeof datos.aplicacionCasoConcreto === 'string' ) && (datos.aplicacionCasoConcreto.trim() !== '')) && (
                     <p className="text_space_min">• Aplicación al Caso Concreto:  <span className="text_bolder"> {datos.aplicacionCasoConcreto}</span> </p>
                   )}
-                  {((typeof datos.conclusion === 'string' ) && (datos.conclusion.trim() !== '')) && (
-                    <p className="text_space_min">• Conclusión:  <span className="text_bolder"> {datos.conclusion}</span> </p>
-                  )}
                 </div>
               )}
            </div>
@@ -333,8 +334,11 @@ export default function CardSearch({ datos }) {
 
 
           <CustomGrid className="justify_center">
-
-            <Button startIcon={<FileDownloadOutlinedIcon/>} className="button_primary margin_xs " >Descargar decisión</Button>
+            {((typeof datos.hipervinculo === 'string' ) && (datos.hipervinculo.trim() !== '')) && (
+              <a href={datos.hipervinculo} target='_blank' rel="noreferrer">
+                <Button startIcon={<FileDownloadOutlinedIcon/>} className="button_primary margin_xs " >Descargar decisión</Button>
+              </a> 
+            )}
           </CustomGrid>
         </div>
 

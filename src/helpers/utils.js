@@ -39,18 +39,28 @@ const obtenerAnio = (fechaStr) => {
  * Funcionalidad para obtener una lista de cadenas de texto separadas por comas a partir de una propiedad de tipo array de objetos
  * Parametros de entrada:
  * - arrObj: el array de objetos
- * - property: propiedad para extraer el valor
+ * - property: propiedad para extraer el valor. De tipo de dato string.
+ * - subproperty: es la propiedad para extraer el valor de un objeto que hace parte de un array a nivel secundario. De tipo de dato string. Por defecto es null
+ * - setToLowerCase: es un campo de tipo de dato boolean que permite definir si el campo se ajusta a minusculas, por defecto es true, o dejarlo false si se desea en su formato original
  * Salida:
  * - Retorna un array de elementos de cadenas de texto
  * Aplicación:
  * - Filtros de busqueda en Mapa Jurisprudencial
+ * - Informacion en tarjetas de fichas jurisprudenciales y de decision
 */
 
-const obtenerPalabrasFromArrayObject = (arrObj, property) => {
+const obtenerPalabrasFromArrayObject = (arrObj, property, subproperty = null, setLowerCase = true) => {
     if(arrObj && arrObj.length > 0) {
        let newArr = arrObj.map(item => item[property]);
+       if(subproperty !== null){
+        newArr = newArr.map(item => item[subproperty]);
+       }
        newArr = [...new Set(newArr)].join(", ");
-       return newArr.toLowerCase();
+       if(setLowerCase === false){
+            return newArr;
+       } else {
+            return newArr.toLowerCase();
+       }
     } else {
         return "";
     }
@@ -99,4 +109,10 @@ const generarArrayDeObjetosNombreCampoValor = (valores, propiedad_1, propiedad_2
     }));
 };
 
-export { filtroMapaByDefault, truncateWithEllipsis, obtenerAnio, obtenerPalabrasFromArrayObject, validarfiltroMapaJurisprudencial, generarArrayDeObjetosNombreCampoValor };
+export { filtroMapaByDefault, 
+         truncateWithEllipsis, 
+         obtenerAnio, 
+         obtenerPalabrasFromArrayObject, 
+         validarfiltroMapaJurisprudencial, 
+         generarArrayDeObjetosNombreCampoValor 
+        };

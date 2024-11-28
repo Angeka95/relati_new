@@ -13,6 +13,7 @@ import LinearWithValueLabel from '../components/linearProgress.js';
 import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import { macrocasos_home as macrocasosLista } from '../data/datos_macrocaso.js';
+import { obtenerPalabrasFromArrayObject } from '../helpers/utils.js';
 
 const casoInicial = { 
                         id: 1,
@@ -93,36 +94,36 @@ export default function Caso() {
 
   const setArrayDatosCasos = (arrData) => {
     const newArray = arrData.map(item => {
-      console.log("data",  (item.anio_hechos.length > 0 )? item.anio_hechos[0].anio : "???");
+      //console.log("data",  (item.getfichas.length > 0 )? obtenerPalabrasFromArrayObject(item.getfichas[0].problemas_juridicos, "hechos", null, true) : "???");
       return {
           id: item.id,
           fecha: item.fecha_providencia,
           asunto: item.asuntocaso,
           salaOSeccion: item.despacho.nombre,
           nombreDecision: item.nombre,
-          procedimiento: (item.getfichas.length > 0 )? item.getfichas[0].actuacion : "???",
-          expediente: (item.getfichas.length > 0 )? item.getfichas[0].nombre : "???",
-          departamento: (item.departamento_ext.length > 0 )? item.departamento_ext[0].nombre_dpto : "???",
-          magistrado: (item.magistrado.length > 0 )? item.magistrado[0].nombre_magistrado.nombre : "???", 
-          municipio: (item.municipio_ext.length > 0 )? item.municipio_ext[0].nombre_muni : "???", /// array de objetos municipio
-          delito: (item.delitos.length > 0 )? item.delitos[0].delito : "???", /// array de objetos delitos.delito
-          anioHechos: (item.anio_hechos.length > 0 )? item.anio_hechos[0].anio : "???", // array de objetos anio_hechos.anio
-          tipo: "???", /// item.detalle_caso
-          radicado: item.radicado,
-          compareciente: "???", // array de objetos getfichas.compareciente
-          tipoSujeto: "???", //tipopeti.tipo
-          accionadoVinculado: "???", // array de objetosaccionado.accionado 
-          palabrasClaves: "???", /// getfichas.palabras_clave_problemas_juridicos, es un array de objetos
-          hechos: "???", //getfichas.probemas_juridicos.hechos
-          problemasJuridicos: "???", //getfichas.problemas_juridicos.nombre array
-          reglas: "???", //getfichas.probemas_juridicos.reglas
-          aplicacionCasoConcreto: "???", //getfichas.probemas_juridicos.tesis_jurisprudencial
-          conclusion: "???", // quitar uno de los dos, conclusion o resuelve getfichas.resuelve tipo array de objetos
-          resuelve: "???", // quitar uno de los dos, conclusion o resuelve getfichas.resuelve tipo de array de objetos
-          documentosAsociados: "???", // item.providencia_votos es un array de objetos
-          enfoquesDiferenciales: "???", // getfichas.enfoques_diferenciales arreglo de objetos
-          notasRelatoria: "???", // getfichas.notas
-          hipervinculo: item.hipervinculo 
+          procedimiento: (item.getfichas.length > 0 )? obtenerPalabrasFromArrayObject(item.getfichas, "actuacion") : "???",
+          expediente: (item.getfichas.length > 0 )? obtenerPalabrasFromArrayObject(item.getfichas, "nombre") : "???",
+          departamento: (item.departamento_ext.length > 0 )? obtenerPalabrasFromArrayObject(item.departamento_ext, "nombre_dpto") : "???",
+          magistrado: (item.magistrado.length > 0 )? obtenerPalabrasFromArrayObject(item.magistrado, "nombre_magistrado", "nombre", false) : "???", 
+          municipio: (item.municipio_ext.length > 0 )? obtenerPalabrasFromArrayObject(item.municipio_ext, "nombre_muni", null, false) : "???", 
+          delito: (item.delitos.length > 0 )?  obtenerPalabrasFromArrayObject(item.delitos, "delito") : "???", 
+          anioHechos: (item.anio_hechos.length > 0 )? obtenerPalabrasFromArrayObject(item.anio_hechos, "anio") : "???", 
+          tipo: (item.detalle_caso !== null ) ? item.detalle_caso : "???",
+          radicado: (item.radicado.length !== null ) ? item.radicado : "???",
+          compareciente: (item.getfichas.length > 0 )? obtenerPalabrasFromArrayObject(item.getfichas, "compareciente", null, false) : "???", 
+          tipoSujeto: (item.tipopeti.length > 0 )? obtenerPalabrasFromArrayObject(item.tipopeti, "tipo", null, false) : "???",
+          accionadoVinculado: (item.accionado.length > 0 )? obtenerPalabrasFromArrayObject(item.accionado, "accionado", null, false): "???",  
+          palabrasClaves:  (item.getfichas.length > 0 )? obtenerPalabrasFromArrayObject(item.getfichas[0].palabras_clave_problemas_juridicos, "palabras", null, false) : "???",
+          hechos: (item.getfichas.length > 0 )? obtenerPalabrasFromArrayObject(item.getfichas[0].problemas_juridicos, "hechos", null, false) : "???",
+          problemasJuridicos: (item.getfichas.length > 0 )? obtenerPalabrasFromArrayObject(item.getfichas[0].problemas_juridicos, "nombre", null, false) : "???", 
+          reglas: (item.getfichas.length > 0 )? obtenerPalabrasFromArrayObject(item.getfichas[0].problemas_juridicos, "reglas", null, false) : "???",
+          aplicacionCasoConcreto: (item.getfichas.length > 0 )? obtenerPalabrasFromArrayObject(item.getfichas[0].problemas_juridicos, "tesisjurisprudencial", null, false) : "???",
+          resuelve: (item.getfichas.length > 0 )? obtenerPalabrasFromArrayObject(item.getfichas[0].resuelve, "descripcion", null, false) : "???",
+          documentosAsociados:  (item.providencia_votos.length > 0 )? obtenerPalabrasFromArrayObject(item.providencia_votos, "nombre", null, false): "???", 
+          enfoquesDiferenciales: (item.getfichas.length > 0 )? obtenerPalabrasFromArrayObject(item.getfichas[0].enfoques_diferenciales, "nombre_enfoque", null, false): "???", 
+          notasRelatoria: ((item.getfichas.length > 0 ) && (item.getfichas[0].hasOwnProperty("notas"))) ? item.getfichas[0].notas : "???", 
+          hipervinculo: item.hipervinculo,
+          hipervinculoFichaJuris: item.hipervinculo 
       }
     });
     return newArray;
