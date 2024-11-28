@@ -93,6 +93,7 @@ export default function Caso() {
 
   const setArrayDatosCasos = (arrData) => {
     const newArray = arrData.map(item => {
+      console.log("data",  (item.anio_hechos.length > 0 )? item.anio_hechos[0].anio : "???");
       return {
           id: item.id,
           fecha: item.fecha_providencia,
@@ -102,25 +103,26 @@ export default function Caso() {
           procedimiento: (item.getfichas.length > 0 )? item.getfichas[0].actuacion : "???",
           expediente: (item.getfichas.length > 0 )? item.getfichas[0].nombre : "???",
           departamento: (item.departamento_ext.length > 0 )? item.departamento_ext[0].nombre_dpto : "???",
-          magistrado: "???",
-          municipio: "???",
-          delito: "???",
-          anioHechos: "???",
-          tipo: "???",
-          radicado: "???",
-          compareciente: "???",
-          tipoSujeto: "???",
-          accionadoVinculado: "???",
-          palabrasClaves: "???",
-          hechos: "???",
-          problemasJuridicos: "???",
-          reglas: "???",
-          aplicacionCasoConcreto: "???",
-          conclusion: "???", 
-          resuelve: "???", 
-          documentosAsociados: "???", 
-          enfoquesDiferenciales: "???", 
-          notasRelatoria: "???", 
+          magistrado: (item.magistrado.length > 0 )? item.magistrado[0].nombre_magistrado.nombre : "???", 
+          municipio: (item.municipio_ext.length > 0 )? item.municipio_ext[0].nombre_muni : "???", /// array de objetos municipio
+          delito: (item.delitos.length > 0 )? item.delitos[0].delito : "???", /// array de objetos delitos.delito
+          anioHechos: (item.anio_hechos.length > 0 )? item.anio_hechos[0].anio : "???", // array de objetos anio_hechos.anio
+          tipo: "???", /// item.detalle_caso
+          radicado: item.radicado,
+          compareciente: "???", // array de objetos getfichas.compareciente
+          tipoSujeto: "???", //tipopeti.tipo
+          accionadoVinculado: "???", // array de objetosaccionado.accionado 
+          palabrasClaves: "???", /// getfichas.palabras_clave_problemas_juridicos, es un array de objetos
+          hechos: "???", //getfichas.probemas_juridicos.hechos
+          problemasJuridicos: "???", //getfichas.problemas_juridicos.nombre array
+          reglas: "???", //getfichas.probemas_juridicos.reglas
+          aplicacionCasoConcreto: "???", //getfichas.probemas_juridicos.tesis_jurisprudencial
+          conclusion: "???", // quitar uno de los dos, conclusion o resuelve getfichas.resuelve tipo array de objetos
+          resuelve: "???", // quitar uno de los dos, conclusion o resuelve getfichas.resuelve tipo de array de objetos
+          documentosAsociados: "???", // item.providencia_votos es un array de objetos
+          enfoquesDiferenciales: "???", // getfichas.enfoques_diferenciales arreglo de objetos
+          notasRelatoria: "???", // getfichas.notas
+          hipervinculo: item.hipervinculo 
       }
     });
     return newArray;
