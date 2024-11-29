@@ -135,7 +135,7 @@ export default function Caso() {
           documentosAsociados:  (item.providencia_votos.length > 0 )? obtenerPalabrasFromArrayObject(item.providencia_votos, "nombre", null, false): "???", 
           enfoquesDiferenciales: (item.getfichas.length > 0 )? obtenerPalabrasFromArrayObject(item.getfichas[0].enfoques_diferenciales, "nombre_enfoque", null, false): "???", 
           notasRelatoria: ((item.getfichas.length > 0 ) && (item.getfichas[0].hasOwnProperty("notas"))) ? item.getfichas[0].notas : "???", 
-          hipervinculo: item.hipervinculo,
+          hipervinculo:  `https://relatoria.jep.gov.co${item.hipervinculo}`,
           hipervinculoFichaJuris: ((item.getfichas.length > 0 ) && (item.getfichas[0].estado_id === 14)) ? `https://relatoria.jep.gov.co/downloadfichaext/${item.getfichas[0].id}` : "",
           estadoFichaJuris: ((item.getfichas.length > 0 ) && (item.getfichas[0].estado_id !== null))  ?  item.getfichas[0].estado_id : "???",
       }
