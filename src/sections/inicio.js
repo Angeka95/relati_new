@@ -15,9 +15,34 @@ import { Link } from 'react-router-dom';
 import ModalInfo from '../components/modal'
 import ExpandLessOutlinedIcon from '@mui/icons-material/ExpandLessOutlined';
 import ExpandMoreOutlinedIcon from '@mui/icons-material/ExpandMoreOutlined';
-import { macrocasos_home as macrocasos } from '../data/datos_macrocaso.js';
+import macrocasoService from '../services/macrocaso.js';
 
 export default function Home() {
+
+    const [macrocasos, setMacrocasos] = useState([]);
+    const [message, setMessage] = useState("");
+
+    const getMacrocasos = () => {
+        macrocasoService
+        .getDetailedMacrocasos()
+        .then(response => {
+            if((response.status_info.status === 200) && (response.data.length > 0)) {
+                let arrMacrocasos = response.data.map(item => Object.values(item)[0]);
+                setMacrocasos(arrMacrocasos);
+                setMessage(`Success: ${response.status_info.status}. ${response.status_info.reason}`);
+            } else {
+                setMessage(`Error: ${response.status_info.status}. ${response.status_info.reason}`);
+            }
+        }
+        )
+        .catch(error => console.log(error));
+    };
+
+    useEffect(() => {
+        if(macrocasos.length === 0){
+            getMacrocasos();
+        } 
+    }, [macrocasos]);
 
     // Layout Masonry Decisiones Recientes
     const masonryGridRef = useRef(null);

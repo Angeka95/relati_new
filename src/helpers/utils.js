@@ -109,10 +109,43 @@ const generarArrayDeObjetosNombreCampoValor = (valores, propiedad_1, propiedad_2
     }));
 };
 
+/**
+ * getParametroDeUrl()
+ * Funcionalidad que obtiene el ID de una URL de Spreaker
+ * -  Busca la primera URL en la cadena usando una expresión regular
+ * -  Devuelve null si no se encuentra una URL
+ * -  Crea un objeto URL con la primera URL encontrada
+ * -  Obtiene el valor del parámetro especificado
+ * Parametros de entrada:
+ * - cadena: Direccion URL con parametros 
+ * - parametro: string, nombre del parametro a extraer datos
+ * Salida:
+ * - Retorna un string
+ * Aplicación:
+ * - getParametroDeUrl() en caso.js para obtener ID de Spreaker
+*/
+const getParametroDeUrl = (cadena, parametro) => {
+    const urlMatch = cadena.match(/https?:\/\/[^\s]+/);
+    if (!urlMatch) return null; 
+    const url = new URL(urlMatch[0]); 
+    return url.searchParams.get(parametro); 
+};
+
+function extraerSpreakerID(url) {
+    // Busca el patrón "--" seguido de cualquier grupo de caracteres al final de la URL
+    const match = url.match(/--([a-zA-Z0-9]+)$/);
+
+    // Si encuentra coincidencias, devuelve el grupo capturado
+    return match ? match[1] : null;
+}
+
+
 export { filtroMapaByDefault, 
          truncateWithEllipsis, 
          obtenerAnio, 
          obtenerPalabrasFromArrayObject, 
          validarfiltroMapaJurisprudencial, 
-         generarArrayDeObjetosNombreCampoValor 
+         generarArrayDeObjetosNombreCampoValor,
+         getParametroDeUrl,
+         extraerSpreakerID
         };
