@@ -13,6 +13,7 @@ import LinearWithValueLabel from '../components/linearProgress.js';
 import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import { obtenerPalabrasFromArrayObject, extraerSpreakerID  } from '../helpers/utils.js';
+import { datos_links_toar } from '../data/datos_macrocaso.js';
 
 export default function Caso() {
   
@@ -293,9 +294,10 @@ export default function Caso() {
             <Container >
               <div className="cta_container">
                 <h6 className="text_bolder cta_text">Conozca los lineamientos en materia de sanción propia y Trabajos, Obras y Actividades con contenido Reparador (TOAR)</h6>
-                <Link to="/suscripcion">
-                  <Button className="button_primary button_container">Ver TOAR</Button>
-                </Link>
+                {( datos_links_toar[0] !== "") && 
+                 <Button className="button_primary button_container" href={datos_links_toar[0]} target='_blank' >Ver TOAR</Button>
+                }
+
               </div>
             </Container>
           </div>

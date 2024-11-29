@@ -335,4 +335,9 @@ const datos_macrocaso = [
     }
 ];
 
-export { datos_macrocaso, boletinesMacrocaso_, macrocasos, timeLine, macrocasos_home };
+const datos_links_toar = [
+  "https://relatoria.jep.gov.co/documentos/providencias/4/10/LineamientosComplementarios_Sanciones-propias-y-TOAR_SeRVR_09-noviembre-2023.pdf",
+  "https://relatoria.jep.gov.co/documentos/providencias/4/10/Lineamientos_Sanciones-propias-y-TOAR_SCRVR_14-abril-2020.pdf"
+];
+
+export { datos_macrocaso, boletinesMacrocaso_, macrocasos, timeLine, macrocasos_home, datos_links_toar };
