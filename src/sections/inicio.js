@@ -759,7 +759,7 @@ export default function Home() {
 
                 <div className="search_home">
 
-                    <div classname="search_size ">
+                    <div className="search_size_ ">
                         <Container>
                             <div className="justify_center">
                                 <div className="autocomplete_home_container ">
@@ -784,9 +784,9 @@ export default function Home() {
                                     </Link> 
 
 
-                                    <Link to="busqueda-avanzada"> 
+                                    {/*<Link to="busqueda-avanzada"> 
                                     <Button className="autocomplete_button_advance primary_blue text_white button_secondary_border">Búsqueda Avanzada</Button>
-                                    </Link> 
+                                    </Link> */}
                                 </div>
                             </div>
                         </Container>
