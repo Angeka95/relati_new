@@ -131,6 +131,16 @@ const getParametroDeUrl = (cadena, parametro) => {
     return url.searchParams.get(parametro); 
 };
 
+/**
+ * extraerSpreakerID()
+ * Funcionalidad que obtiene el ID de una playlist de Spreaker a partir de una URL dada
+ * Parametros de entrada:
+ * - cadena: Cadena que contiene la URL de Spreaker
+ * Salida:
+ * - Retorna un string con el ID del playlist de Spreaker
+ * Aplicación:
+ * - extraerSpreakerID() en caso.js para obtener el ID que va contenido en el iframe de Spreaker
+*/
 function extraerSpreakerID(url) {
     // Busca el patrón "--" seguido de cualquier grupo de caracteres al final de la URL
     const match = url.match(/--([a-zA-Z0-9]+)$/);
@@ -139,6 +149,45 @@ function extraerSpreakerID(url) {
     return match ? match[1] : null;
 }
 
+/**
+ * obtenerMesEnEspanol()
+ * Funcionalidad que obtiene el mes en español a partir de una cadena
+ * Parametros de entrada:
+ * - cadena: Cadena que contiene una fecha "13 de noviembre de 2022"
+ * Salida:
+ * - Retorna un string con el nombre del mes, ej. Noviembre
+ * Aplicación:
+ * - obtenerMesEnEspanol() en caso.js para obtener el mes de una fecha de un hito
+*/
+function obtenerMesEnEspanol(cadena) {
+    const meses = [
+        "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
+        "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
+    ];
+    const cadenaMinuscula = cadena.toLowerCase();
+    for (let mes of meses) {
+        if (cadenaMinuscula.includes(mes.toLowerCase())) {
+            return mes; 
+        }
+    }
+    return null; 
+}
+
+/**
+ * obtenerAnioDeText()
+ * Funcionalidad que obtiene el año tipo YYYY a partir de una cadena
+ * Parametros de entrada:
+ * - cadena: Cadena que contiene una fecha "13 de noviembre de 2022"
+ * Salida:
+ * - Retorna un string con el año tipo YYYY, ejemplo 2022
+ * Aplicación:
+ * - obtenerMesEnEspanol() en caso.js para obtener el año de una fecha de un hito
+*/
+function obtenerAnioDeTexto(cadena) {
+    const regexAnio = /\b(19|20)\d{2}\b/;
+    const coincidencia = cadena.match(regexAnio);
+    return coincidencia ? coincidencia[0] : null;
+}
 
 export { filtroMapaByDefault, 
          truncateWithEllipsis, 
@@ -147,5 +196,7 @@ export { filtroMapaByDefault,
          validarfiltroMapaJurisprudencial, 
          generarArrayDeObjetosNombreCampoValor,
          getParametroDeUrl,
-         extraerSpreakerID
+         extraerSpreakerID,
+         obtenerMesEnEspanol,
+         obtenerAnioDeTexto
         };

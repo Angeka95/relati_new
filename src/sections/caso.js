@@ -8,11 +8,10 @@ import ListVideos from '../components/listVideos.js';
 import Carousel from '../components/carousel.js';
 import ListCardSearch from '../components/listCardSearchMacrocasoResults.js';
 import macrocasoService from '../services/macrocaso.js';
-import { timeLine } from '../data/datos_macrocaso.js';
 import LinearWithValueLabel from '../components/linearProgress.js';
 import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
-import { obtenerPalabrasFromArrayObject, extraerSpreakerID  } from '../helpers/utils.js';
+import { obtenerPalabrasFromArrayObject, extraerSpreakerID, obtenerMesEnEspanol, obtenerAnioDeTexto } from '../helpers/utils.js';
 import { datos_links_toar } from '../data/datos_macrocaso.js';
 
 export default function Caso() {
@@ -30,6 +29,8 @@ export default function Caso() {
   const [message, setMessage] = useState("");
   const [boletinesMacrocaso, setBoletinesMacrocaso] = useState([]);
   const [macrocasos, setMacrocasos] = useState([]);
+  const [hitosMacrocasos, setHitosMacrocasos] = useState([]);
+  const [timeLine, setTimeLine] = useState([]);
 
   const { casoId } = useParams();
 
@@ -47,7 +48,7 @@ export default function Caso() {
     }
     )
     .catch(error => console.log(error));
-};
+  };
 
   useEffect(() => {
       if(macrocasos.length === 0){
@@ -62,6 +63,40 @@ export default function Caso() {
           }
       }
   }, [macrocasos, casoId]);
+
+  const getHitosMacrocasos = () => {
+    macrocasoService
+    .getHitosMacrocasos()
+    .then(response => {
+        if((response.status_info.status === 200) && (response.data.length > 0)) {
+            setHitosMacrocasos(response.data);
+            setMessage(`Success: ${response.status_info.status}. ${response.status_info.reason}`);
+        } else {
+            setMessage(`Error: ${response.status_info.status}. ${response.status_info.reason}`);
+        }
+    }
+    )
+    .catch(error => console.log(error));
+  };
+
+  useEffect(() => {
+    if(hitosMacrocasos.length === 0){
+        getHitosMacrocasos();
+    } else {
+        if(caso !== null) {
+          let hitosMacrocasoSeleccionado = hitosMacrocasos.find(item => Object.keys(item)[0] === `caso_${casoId}`);
+          hitosMacrocasoSeleccionado = hitosMacrocasoSeleccionado[`caso_${casoId}`].map(item => { return {
+              mes: obtenerMesEnEspanol(item.fecha),
+              año: obtenerAnioDeTexto(item.fecha),
+              hecho: item.asunto,
+              actor: '',
+              enlace: item.enlace
+            }
+          });
+          setTimeLine(hitosMacrocasoSeleccionado);
+        }
+    }
+}, [hitosMacrocasos, caso]);
   
   const getBoletinesMacrocaso = (macrocaso) => {
     macrocasoService
@@ -108,7 +143,6 @@ export default function Caso() {
 
   const setArrayDatosCasos = (arrData) => {
     const newArray = arrData.map(item => {
-      //console.log("data",  (item.getfichas.length > 0 )? obtenerPalabrasFromArrayObject(item.getfichas[0].problemas_juridicos, "hechos", null, true) : "???");
       return {
           id: item.id,
           fecha: item.fecha_providencia,
