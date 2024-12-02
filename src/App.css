@@ -95,6 +95,10 @@ h6 {
   letter-spacing: 1px;
 }
 
+.text_spacing_max {
+  letter-spacing: 10px;
+}
+
 
 .text_capitalize{
   text-transform: capitalize !important;
@@ -575,8 +579,8 @@ h6 {
 
 .vertical_align {
   display: flex;
-  align-items: center;
-  align-content: center;
+  align-items: center !important;
+  align-content: center !important;
 }
 
 .position_float{
@@ -2449,6 +2453,58 @@ padding: 0px 0% 0% 3%;
 
 /* FIN ANALISIS TEMATICO  */
 
+
+/*LIBROS*/ 
+
+.libro_container{ 
+  display: flex;
+  max-width: 300px;
+}
+
+.coleccion_title{
+  background-color: #fff;
+  padding: 10px 0px;
+}
+
+.coleccion_container{
+  min-height: 800px;
+}
+
+.qr_container{
+  width: 230px;
+}
+
+.cover_container{
+  max-width: 380px;
+  max-height: 500px;
+  transition: transform 0.3s ease;
+  box-shadow: 0px 8px 16px rgba(57, 129, 195, 0.2) !important;
+
+}
+
+.cover_container:hover{
+  transform: scale(1.1);
+  box-shadow: rgba(3, 103, 196, 0.311) 0px 4px 24px !important;
+}
+
+.qr_position{
+  bottom: -20%;
+  right: -5% !important;
+}
+
+.qr_size{
+  width: 300px;
+  margin: 300px 0px 0px 0px;
+}
+
+.qr_text{
+  width: 200px;
+  margin-left: 30px;
+}
+
+
+/*FIN LIBROS*/ 
+ 
 
 /* BREADCRUMB  */
 
