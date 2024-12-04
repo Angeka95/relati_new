@@ -10,7 +10,7 @@ export default function Libros() {
     const libros = [
         {
             id : 1,
-            pdf: 'https://relatoria.jep.gov.co/documentos/providencias/17/23/boletin_01_enero-2024.pdf', 
+            pdf: 'https://relatoria.jep.gov.co/documentos/libros/TOMO_1_Las-SENIT-1-2-3.pdf', 
             fecha: "2024-01", 
             qr: 'https://relatoria.jep.gov.co/img/libros/qr-tomo-1.png', 
             title: ` Tomo I: 
@@ -43,20 +43,23 @@ export default function Libros() {
             <Container className="margin_bottom_xl">
             <h1 className="text_center margin_top_l">Libros</h1>
             <h5 className="text_center ">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis</h5>
-            <div className="display_flex  margin_top_xl  vertical_align"> 
-                <div className="width_50 padding_l"> 
-                    <h2 className="text_bolder margin_top_s ">Código de la Jurisdicción Especial para la paz</h2>
-                    <p>
+
+            <div className="display_flex  book_margin_top  vertical_align query_wrap"> 
+                <div className="book_container "> 
+                    <h2 className="text_bolder margin_top_s text_center_mobile">Código de la Jurisdicción Especial para la paz</h2>
+                    <p className="text_center_mobile ">
                     Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis.  <br/> Lorem ipsum dolor, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque.
                     </p>
                 </div> 
-                <div className="width_50 justify_center" > 
-
+                <div className="book_container justify_center" > 
+                    <a href="https://xperta.legis.co/intermedia/intermedia_jep.html" target="_blank" className="justify_center">
                     <img className="cover_container" src="https://relatoria.jep.gov.co/img/libros/portada_codigo_JEP_c.png"/> 
+
+                    </a>
                     
                 </div> 
             </div> 
-            <h2 className="text_bolder text_center margin_top_xxl">Colecciones Editoriales</h2> 
+            <h2 className="text_bolder text_center book_margin_top ">Colecciones Editoriales</h2> 
             <h5 className="text_center">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis na.</h5>
             </Container>
             <Box className="secondary_blue  ">
@@ -72,12 +75,12 @@ export default function Libros() {
                 <div className="align_center coleccion_container " >
                     <div> 
                         {libros.map(libro => (
-                            <div key={libro.id} className="display_flex flex_wrap width_100 margin_bottom_xl">
-                                <div className="width_50 display_flex  flex_nowrap position_relative"> 
-                                    <a href={libro.pdf} >
+                            <div key={libro.id} className="display_flex flex_wrap width_100 book_margin_bottom query_wrap">
+                                <div className="book_container display_flex justify_center_mobile flex_nowrap position_relative"> 
+                                    <a href={libro.pdf} target="_blank"  className='justify_center_mobile'>
                                         <img className="cover_container" src={libro.cover}></img>
                                     </a>
-                                    <div className="position_float qr_position"> 
+                                    <div className="position_float qr_position query_none"> 
                                         <div className="qr_size  "> 
                                         <h4 className="text_white qr_text text_bolder text_right">Escanee el QR para ver el libro en su celular </h4>
                                          <img src={libro.qr} className="qr_container margin_top_s" />
@@ -85,9 +88,9 @@ export default function Libros() {
                                     </div> 
                                 </div>
 
-                                <div className="width_50">
-                                    <h3 className="text_bolder text_white text_center margin_bottom_l" >{libro.title}</h3>
-                                    <div className="text_white padding_m" dangerouslySetInnerHTML={{__html: libro.text}}></div>
+                                <div className="book_container">
+                                    <h3 className="text_bolder text_white text_center margin_bottom_l  book_margin_mobile " >{libro.title}</h3>
+                                    <div className="text_white padding_m text_center_mobile" dangerouslySetInnerHTML={{__html: libro.text}}></div>
                                   
                                 </div>
 
