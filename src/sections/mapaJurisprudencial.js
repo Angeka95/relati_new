@@ -13,7 +13,7 @@ import { MapContainer, TileLayer, Tooltip, CircleMarker } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import { truncateWithEllipsis, obtenerAnio, obtenerPalabrasFromArrayObject } from '../helpers/utils.js';
 import Context from '../context/context.js';
-import { filtroMapaByDefault } from '../helpers/utils.js';
+import { filtroMapaByDefault, removeFragmentoInString } from '../helpers/utils.js';
 
 export default function Mapa() {
 
@@ -86,7 +86,7 @@ export default function Mapa() {
                             asuntoCaso: item.asuntocaso,
                             departamentoId: item.departamento_ext[0].id,
                             providencia: item.departamento_ext[0].providencia_id,
-                            departamentoNombre: item.departamento_ext[0].nombre_dpto,
+                            departamentoNombre: removeFragmentoInString("DEPARTAMENTO", item.departamento_ext[0].nombre_dpto),
                             hipervinculo: item.hipervinculo,
                             comparecientes: obtenerPalabrasFromArrayObject(item.tipopeti, "tipo"),
                             delitos: obtenerPalabrasFromArrayObject(item.delitos, "delito"),
@@ -113,16 +113,26 @@ export default function Mapa() {
         return [ { "title": "*" } ].concat(arrLinted.map( item => { return { "title": item.nombre } }));
     };
 
+    // Funcion que genera la lista de departamentos removiendo el fragmento "DEPARTAMENTO"
+    const getNewListDptos = (dptosList) => {
+        return dptosList.map( departamento => {
+            return {
+                ...departamento, dpto: removeFragmentoInString("DEPARTAMENTO", departamento.dpto)
+            }
+        });
+    };
+
     //funcion que hace el llamado para traer la data de los dpto del mapa
     const getMapaDptos = () => {
         mapaJurisprudencialService
             .getMapaDptos()
             .then(response => {
                 if((response.status_info.status === 200) && (response.data.length > 0)) {
-                    setListdpto(response.data[0].dpto);
                     setGraf(response.data[0].datagraf);
                     setMessage(`Success: ${response.status_info.status}. ${response.status_info.reason}`);
-                    setListaDptosMapaJurisprudencial(setDatosDepartamentos(response.data[0].dpto));
+                    const newDptos = getNewListDptos(response.data[0]["dpto"]); 
+                    setListdpto(newDptos);
+                    setListaDptosMapaJurisprudencial(setDatosDepartamentos(newDptos));
                 } else {
                     setMessage(`Error: ${response.status_info.status}. ${response.status_info.reason}`);
                 }

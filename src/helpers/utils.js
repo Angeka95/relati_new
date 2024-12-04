@@ -189,6 +189,23 @@ function obtenerAnioDeTexto(cadena) {
     return coincidencia ? coincidencia[0] : null;
 }
 
+/**
+ * removeFragmentoInString()
+ * Funcionalidad que elimina la palabra "DEPARTAMENTO" partir de una cadena
+ * Parametros de entrada:
+ * - palabra: Cadena que tiene la palabra a remover. Ej, "DEPARTAMENTO"
+ * - cadena: Cadena que contiene DEPARTAMENTO antecedido del nombre del departamento. Ej. "DEPARTAMENTO CÓRDOBA"
+ * Salida:
+ * - Retorna un string con el nombre del departamento Ej. "CÓRDOBA"
+ * Aplicación:
+ * - removeString() en filtro de Departamento en mapa_jurisprudencial.js para obtener el departamento
+*/
+function removeFragmentoInString(palabra, cadena) {
+    const regex = new RegExp(`\\b${palabra}\\b`, 'gi');
+    return cadena.replace(regex, '').replace(/\s{2,}/g, ' ').trim(); 
+}
+
+
 export { filtroMapaByDefault, 
          truncateWithEllipsis, 
          obtenerAnio, 
@@ -198,5 +215,6 @@ export { filtroMapaByDefault,
          getParametroDeUrl,
          extraerSpreakerID,
          obtenerMesEnEspanol,
-         obtenerAnioDeTexto
+         obtenerAnioDeTexto,
+         removeFragmentoInString
         };
