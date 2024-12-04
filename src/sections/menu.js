@@ -1,6 +1,6 @@
 import '../App.css';
 import React, { useState } from 'react';
-import { AppBar, Toolbar, Typography, Button, Drawer, List, ListItem, ListItemText, IconButton, Divider, Menu, MenuItem } from '@mui/material';
+import { AppBar,  Collapse, Toolbar, Typography, Button, Drawer, List, ListItem, ListItemText, IconButton, Divider, Menu, MenuItem } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';  
 import { useTheme } from '@mui/material/styles';
 import { useMediaQuery } from '@mui/material';
@@ -71,6 +71,22 @@ export default function MenuBar() {
       section.scrollIntoView({ behavior: 'smooth' });
     }
   };
+
+  const [openSubMenu, setOpenSubMenu] = useState({
+    sobreRelatoria: false,
+    publicaciones: false,
+    analisis: false,
+    concurso: false
+  });
+
+
+  const toggleSubMenu = (menu) => {
+    setOpenSubMenu((prevState) => ({
+      ...prevState,
+      [menu]: !prevState[menu]
+    }));
+  };
+
 
   
 
@@ -184,34 +200,77 @@ export default function MenuBar() {
       </AppBar>
 
       {/* Drawer (Menú lateral para mobile) */}
-      <Drawer
+<Drawer
         anchor="right"
         open={openDrawer}
         onClose={handleCloseDrawer}
       >
         <div style={{ width: 250 }}>
           <List>
-            <ListItem button onClick={handleCloseDrawer}>
+            {/* ListItem principal: "Sobre la Relatoría" */}
+            <ListItem button onClick={() => toggleSubMenu('sobreRelatoria')}>
               <ListItemText primary="Sobre la Relatoría" />
             </ListItem>
-            <ListItem button onClick={handleCloseDrawer}>
+            <Collapse in={openSubMenu.sobreRelatoria} timeout="auto" unmountOnExit>
+              <List component="div" disablePadding>
+                <ListItem button component={Link} to="/acerca-de-nosotros">
+                  <ListItemText primary="Acerca de Nosotros" />
+                </ListItem>
+                <ListItem button component={Link} to="/glosario">
+                  <ListItemText primary="Glosario" />
+                </ListItem>
+                <ListItem button component={Link} to="/preguntas-frecuentes">
+                  <ListItemText primary="Preguntas frecuentes" />
+                </ListItem>
+              </List>
+            </Collapse>
+
+            {/* ListItem principal: "Nuestras Publicaciones" */}
+            <ListItem button onClick={() => toggleSubMenu('publicaciones')}>
               <ListItemText primary="Nuestras Publicaciones" />
             </ListItem>
-            <ListItem button onClick={handleCloseDrawer}>
+            <Collapse in={openSubMenu.publicaciones} timeout="auto" unmountOnExit>
+              <List component="div" disablePadding>
+                <ListItem button component={Link} to="/boletines">
+                  <ListItemText primary="Boletines" />
+                </ListItem>
+                <ListItem button component={Link} to="https://www.spreaker.com/podcast/relatos-de-la-jep--5701029">
+                  <ListItemText primary="Podcast" />
+                </ListItem>
+              </List>
+            </Collapse>
+
+            {/* ListItem principal: "Análisis Jurisprudencial" */}
+            <ListItem button onClick={() => toggleSubMenu('analisis')}>
               <ListItemText primary="Análisis Jurisprudencial" />
             </ListItem>
-            <ListItem button onClick={handleCloseDrawer}>
+            <Collapse in={openSubMenu.analisis} timeout="auto" unmountOnExit>
+              <List component="div" disablePadding>
+                <ListItem button component={Link} to="/tesauro">
+                  <ListItemText primary="Tesauro" />
+                </ListItem>
+                <ListItem button component={Link} to="/mapa-jurisprudencial">
+                  <ListItemText primary="Mapa Jurisprudencial" />
+                </ListItem>
+                <ListItem button component={Link} to="/macrocasos">
+                  <ListItemText primary="Macrocasos" />
+                </ListItem>
+                <ListItem button component={Link} to="/analisis-tematico">
+                  <ListItemText primary="Análisis Temático" />
+                </ListItem>
+              </List>
+            </Collapse>
+
+            {/* ListItem principal: "Concurso Universitario" */}
+            <ListItem  button component={Link} to="https://relatoria.jep.gov.co/concurso">
               <ListItemText primary="Concurso Universitario" />
             </ListItem>
+            
           </List>
           <Divider />
-          <List>
-            <ListItem button onClick={handleCloseDrawer}>
-              <ListItemText primary="Cerrar sesión" />
-            </ListItem>
-          </List>
         </div>
       </Drawer>
+
     </>
 
         </div>

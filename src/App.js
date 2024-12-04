@@ -15,6 +15,7 @@ import PreguntasFrecuentes from './sections/preguntasFrecuentes'
 import Acerca from './sections/acercaDeNosotros'
 import Menu from './sections/menu'
 import Footer from './sections/footer'
+import Libros from './sections/libros'
 import Breadcrumb from './components/breadcrumbs';
 import BreadcrumbWrapper from './components/breadcrumbWrapper';
 
@@ -45,6 +46,7 @@ function App() {
           <Route path="/glosario" element={<Glosario />} />
           <Route path="/preguntas-frecuentes" element={<PreguntasFrecuentes />} />
           <Route path="/acerca-de-nosotros" element={<Acerca />} />
+          <Route path="/libros" element={<Libros/>} />
 
 
           {/* Pagina no encontrada  */}

@@ -95,6 +95,10 @@ h6 {
   letter-spacing: 1px;
 }
 
+.text_spacing_max {
+  letter-spacing: 10px;
+}
+
 
 .text_capitalize{
   text-transform: capitalize !important;
@@ -575,8 +579,8 @@ h6 {
 
 .vertical_align {
   display: flex;
-  align-items: center;
-  align-content: center;
+  align-items: center !important;
+  align-content: center !important;
 }
 
 .position_float{
@@ -2450,6 +2454,69 @@ padding: 0px 0% 0% 3%;
 /* FIN ANALISIS TEMATICO  */
 
 
+/*LIBROS*/ 
+
+.libro_container{ 
+  display: flex;
+  max-width: 300px;
+}
+
+.coleccion_title{
+  background-color: #fff;
+  padding: 10px 0px;
+}
+
+.coleccion_container{
+  min-height: 800px;
+}
+
+.qr_container{
+  width: 230px;
+}
+
+.cover_container{
+  max-width: 380px;
+  max-height: 500px;
+  transition: transform 0.3s ease;
+  box-shadow: 0px 8px 16px rgba(57, 129, 195, 0.2) !important;
+
+}
+
+.cover_container:hover{
+  transform: scale(1.1);
+  box-shadow: rgba(3, 103, 196, 0.311) 0px 4px 24px !important;
+}
+
+.qr_position{
+  bottom: -20%;
+  right: -5% !important;
+}
+
+.qr_size{
+  width: 300px;
+  margin: 300px 0px 0px 0px;
+}
+
+.qr_text{
+  width: 200px;
+  margin-left: 30px;
+}
+
+.book_container{
+  width: 50% !important;
+}
+
+.book_margin_top{
+  margin-top: 180px !important;
+}
+
+.book_margin_bottom{
+  margin-bottom: 180px !important;
+}
+
+/*FIN LIBROS*/ 
+ 
+
 /* BREADCRUMB  */
 
 .breadcrumb {
@@ -2861,8 +2928,37 @@ a, .breadcrumb-item:hover {
   flex-wrap: wrap;
 }
 
+.book_container {
+  width: 100% !important;
+}
+
+.query_wrap {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.cover_container{
+  max-width: 85%;
+  margin-bottom: 20px;
+}
+
+.book_margin_top{
+  margin: 80px 0px 0px 0px !important;
+}
+
+.book_margin_bottom{
+  margin: 0px 0px 10px 0px !important;
+}
 
 
+.text_center_mobile{
+  text-align: center;
+}
+
+.justify_center_mobile{
+  display: flex;
+  justify-content: center;
+}
 
 }
 
