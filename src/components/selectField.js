@@ -6,7 +6,7 @@ import Button from '@mui/material/Button';
 import '../App.css';
 import React, { useState, useEffect, useContext } from 'react';
 import Context from '../context/context';
-import { FormControl, InputLabel, Select, MenuItem, OutlinedInput, Chip, Checkbox, ListItemText } from '@mui/material';
+import { FormControl, InputLabel, Select, MenuItem, OutlinedInput, Chip, Checkbox, ListItemText, Tooltip } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import { validarfiltroMapaJurisprudencial } from '../helpers/utils.js';
 
@@ -47,8 +47,9 @@ export default function Select_field({ datos_filtros, label, id, setSelectedData
   return (
 
     <FormControl fullWidth variant="outlined" className="select_filter" sx={{ minWidth: 120 }}>
-      <InputLabel disabled={isDisabled} id="select-multiple-chip-label">{label}</InputLabel>
+      <InputLabel disabled={isDisabled} className="size_filter" id="select-multiple-chip-label">{label}</InputLabel>
       <Select
+      
         labelId="select-multiple-chip-label"
         id={"d_" + id}
         multiple
@@ -56,14 +57,24 @@ export default function Select_field({ datos_filtros, label, id, setSelectedData
         onChange={handleChange}
         disabled={isDisabled}
         label="Opciones"
-
+        MenuProps={{
+          PaperProps: {
+            style: {
+              maxHeight: 400,
+              maxWidth: 200,
+              overflowY: 'auto',
+              boxShadow: '0px 8px 24px rgba(57, 129, 195, 0.2)'
+            },
+          },
+        }}
         renderValue={(selected) => (
-          <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+          <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 , maxWidth: 200}}>
             {selected.map((value) => (
               <Chip
                 onMouseDown={e => {
                   e.stopPropagation()
                 }}
+                title={value} 
                 onDelete={() => handleDelete(value)}
                 className="chip_select" key={value} label={value}
                 deleteIcon={
@@ -76,19 +87,14 @@ export default function Select_field({ datos_filtros, label, id, setSelectedData
             ))}
           </Box>
         )}
-
-        MenuProps={{
-          PaperProps: {
-            sx: {
-              boxShadow: '0px 8px 24px rgba(57, 129, 195, 0.2) ',
-            },
-          },
-        }}
       >
 
 
         {datos_filtros.map(dato => (
-          <MenuItem key={dato.nombre_campo} value={dato.nombre_campo}
+          // <Tooltip key={dato.nombre_campo} title={dato.nombre_campo} placement='right'>
+           <MenuItem
+            key={dato.nombre_campo}
+            value={dato.nombre_campo}
             sx={{
               backgroundColor: 'white',
               '&.Mui-selected': {
@@ -97,19 +103,30 @@ export default function Select_field({ datos_filtros, label, id, setSelectedData
               '&:hover': {
                 backgroundColor: '#F2F8FB',
               },
-
               '&.Mui-selected:hover': {
                 backgroundColor: '#F2F8FB',
-              }
-            }}>
-            <Checkbox sx={{
-              color: '#98C438',
-              '&.Mui-checked': {
-                color: '#98C438',
               },
-            }} checked={selectedValues.indexOf(dato.nombre_campo) > -1} />
+             
+              whiteSpace: 'nowrap',
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              maxWidth: 280, 
+            }}
+            title={dato.nombre_campo} 
+          >
+            <Checkbox
+              sx={{
+                color: '#98C438',
+                '&.Mui-checked': {
+                  color: '#98C438',
+                  
+                },
+              }}
+              checked={selectedValues.indexOf(dato.nombre_campo) > -1}
+            />
             <ListItemText primary={dato.nombre_campo} />
-          </MenuItem>
+          </MenuItem> 
+          // </Tooltip>
         ))}
 
       </Select>
