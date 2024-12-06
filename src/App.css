@@ -956,6 +956,11 @@ h6 {
 
 .select_filter {
   margin: 8px 0px !important;
+
+}
+
+.size_filter{
+  max-width: 200px;
 }
 
 .chip_select {
