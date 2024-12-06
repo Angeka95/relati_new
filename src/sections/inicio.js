@@ -17,6 +17,7 @@ import ExpandLessOutlinedIcon from '@mui/icons-material/ExpandLessOutlined';
 import ExpandMoreOutlinedIcon from '@mui/icons-material/ExpandMoreOutlined';
 import macrocasoService from '../services/macrocaso.js';
 import inithomeService from '../services/inithome.js';
+import buscadorService from '../services/buscador.js';
 import { documentosSentencias } from '../data/data_inicio.js';
 import LinearWithValueLabel from '../components/linearProgress.js';
 import { obtenerPalabrasFromArrayObject } from '../helpers/utils.js';
@@ -27,6 +28,28 @@ export default function Home() {
     const [decisionesRecientes, setDecisionesRecientes] = useState([]);
     const [boletines, setBoletines] = useState([]);
     const [message, setMessage] = useState("");
+
+    /*const getResultadosBuscadorAI = () => {
+        buscadorService
+        .getSearchQData()
+        .then(response => {
+            if((response.status_info.status === 200) && (response.data.length > 0)) {
+                let arrMacrocasos = response.data.map(item => Object.values(item)[0]);
+                setMacrocasos(arrMacrocasos);
+                setMessage(`Success: ${response.status_info.status}. ${response.status_info.reason}`);
+            } else {
+                setMessage(`Error: ${response.status_info.status}. ${response.status_info.reason}`);
+            }
+        }
+        )
+        .catch(error => console.log(error));
+    };
+
+    useEffect(() => {
+        if(macrocasos.length === 0){
+            getMacrocasos();
+        } 
+    }, [macrocasos]);*/
 
     const setArrayDatosDecisiones = (arrData) => {
         const newArray = arrData.map(item => {
