@@ -4,11 +4,26 @@ import ListCardSearch from '../components/listCardSearchResults.js';
 import '../App.css';
 import { Container, Grid } from '@mui/material';
 import React, { useState, useEffect } from 'react';
-
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 export default function SearchResults() {
+
+  const navigate = useNavigate();
+
   const [selectedFilters, setSelectedFilters] = useState([]);
-  
+  const [stringQuery, setStringQuery] = useState("");
+
+  const [searchParams] = useSearchParams();
+
+  const stringParam = decodeURIComponent(searchParams.get('string'));
+
+  useEffect(() => {
+    if(stringQuery !== ""){
+      console.log("String query es...", stringQuery); 
+    } else {
+      setStringQuery(stringParam);
+    }
+  }, [stringQuery]);
 
   return (
     <Container>
