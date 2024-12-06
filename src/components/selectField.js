@@ -74,6 +74,7 @@ export default function Select_field({ datos_filtros, label, id, setSelectedData
                 onMouseDown={e => {
                   e.stopPropagation()
                 }}
+                title={value} 
                 onDelete={() => handleDelete(value)}
                 className="chip_select" key={value} label={value}
                 deleteIcon={
@@ -90,30 +91,42 @@ export default function Select_field({ datos_filtros, label, id, setSelectedData
 
 
         {datos_filtros.map(dato => (
-          <Tooltip key={dato.nombre_campo} title={dato.nombre_campo} placement='right'>
-            <MenuItem key={dato.nombre_campo} value={dato.nombre_campo}
+          // <Tooltip key={dato.nombre_campo} title={dato.nombre_campo} placement='right'>
+           <MenuItem
+            key={dato.nombre_campo}
+            value={dato.nombre_campo}
+            sx={{
+              backgroundColor: 'white',
+              '&.Mui-selected': {
+                backgroundColor: '#F2F8FB',
+              },
+              '&:hover': {
+                backgroundColor: '#F2F8FB',
+              },
+              '&.Mui-selected:hover': {
+                backgroundColor: '#F2F8FB',
+              },
+             
+              whiteSpace: 'nowrap',
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              maxWidth: 280, 
+            }}
+            title={dato.nombre_campo} 
+          >
+            <Checkbox
               sx={{
-                backgroundColor: 'white',
-                '&.Mui-selected': {
-                  backgroundColor: '#F2F8FB',
-                },
-                '&:hover': {
-                  backgroundColor: '#F2F8FB',
-                },
-
-                '&.Mui-selected:hover': {
-                  backgroundColor: '#F2F8FB',
-                },
-              }}>
-              <Checkbox sx={{
                 color: '#98C438',
                 '&.Mui-checked': {
                   color: '#98C438',
+                  
                 },
-              }} checked={selectedValues.indexOf(dato.nombre_campo) > -1} />
-              <ListItemText primary={dato.nombre_campo} />
-            </MenuItem>
-          </Tooltip>
+              }}
+              checked={selectedValues.indexOf(dato.nombre_campo) > -1}
+            />
+            <ListItemText primary={dato.nombre_campo} />
+          </MenuItem> 
+          // </Tooltip>
         ))}
 
       </Select>
