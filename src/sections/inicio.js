@@ -157,7 +157,7 @@ export default function Home() {
         navigate('/boletines');
     };
 
-    const options = [
+    /*const options = [
         { title: 'Competencia de la JEP' },
         { title: 'Competencia y Jurisdicción' },
         { title: 'Competencia de la Jurisdicción Ordinaria' },
@@ -165,7 +165,8 @@ export default function Home() {
         { title: 'Requisitos de la competencia' },
         { title: 'Competencia de las Salas de Justicia' },
 
-    ];
+    ];*/
+    const options = [];
 
     const inputRef = useRef(null);
 
@@ -193,9 +194,14 @@ export default function Home() {
     const casesToDisplay = showAll ? macrocasos : macrocasos.slice(0, 6);
 
     const handleSearch = () => {
+
         let searchValue = inputRef.current.querySelector('input').value;
         setBusqueda(searchValue);
-        setVerTodasDecisiones(false)
+        setVerTodasDecisiones(false);
+
+        const params = new URLSearchParams({ string: encodeURIComponent(searchValue) });
+        navigate(`/resultados-busqueda?${params.toString()}`);
+
     };
 
 
@@ -260,17 +266,17 @@ export default function Home() {
                                         options={options.map((option) => option.title)}
                                         renderInput={(params) => <TextField ref={inputRef} {...params} placeholder="Busque por palabra clave, número de decisión, radicado...  " inputProps={{
                                             ...params.inputProps,
-                                            maxLength: 80
+                                            maxLength: 400
                                         }} />}
 
                                     />
                                     <Button className="light_white text_blue autocomplete_button_help button_terciary query_none" onClick={handleOpenModal}>?</Button>
                                     <ModalInfo openModal={openModal} handleCloseModal={handleCloseModal}> </ModalInfo> 
-                                    <Link to="resultados-busqueda"> 
+                                    {/*<Link to="resultados-busqueda?string=caso"> */}
                                         <Button onClick={handleSearch} className="autocomplete_button_home button_primary z-index_front" startIcon={<SearchIcon />}>
                                             Buscar
                                         </Button>
-                                    </Link> 
+                                    {/*</Link>*/} 
 
 
                                     {/*<Link to="busqueda-avanzada"> 
