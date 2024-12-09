@@ -65,7 +65,7 @@ export default function SearchResults() {
     <div>
     <Container maxWidth="lg" disableGutters>
           <h1 className="width_100 text_center margin_top_l">Boletines Jurisprudenciales</h1>
-          <p className="text_center title_description margin_bottom_l">Destacamos aquí las decisiones judiciales más importantes de las Salas y Secciones de la JEP. Este producto editorial plasma la síntesis de los casos, las reglas y argumentos de derecho, así como el sentido de la decisión</p>
+          <h5 className="text_center title_description margin_bottom_l">Destacamos aquí las decisiones judiciales más importantes de las Salas y Secciones de la JEP. Este producto editorial plasma la síntesis de los casos, las reglas y argumentos de derecho, así como el sentido de la decisión</h5>
           {( boletines.length === 0 ) ? 
                     <LinearWithValueLabel></LinearWithValueLabel>
                 :
