@@ -50,7 +50,7 @@ export default function Carrusel({ boletines }) {
                           alt="Boletines Jurisprudenciales"
                         />
                         <div className="carousel_image_placeholder_text">
-                          <p style={{color: "#ffffff"}}>{boletin.nombreWithExt}</p>
+                          <p className="text_black padding_s">{boletin.nombreWithExt}</p>
                         </div>
                       </div>
                     }

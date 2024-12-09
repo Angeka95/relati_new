@@ -3,7 +3,7 @@ import '../App.css';
 import { Box, Container, Grid, Button } from '@mui/material';
 import SearchBar from '../components/searchBar';
 import Carousel from '../components/carousel';
-import foto from "../assets/images/foto.jpg";
+import foto from "../assets/images/funcionarios_relatoria.jpg";
 
 export default function Acerca() {
 

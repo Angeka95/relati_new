@@ -1,17 +1,19 @@
 
 
-import { AppBar, Tabs, Tab, Box, Container } from '@mui/material';
+import { AppBar, Tabs, Tab, Box, Container, Button } from '@mui/material';
 import React, { useState, useEffect, useContext } from 'react';
 import IconFacebook from '../assets/images/icons/facebook.png';
 import IconTwitter from '../assets/images/icons/twitter.png';
 import IconMail from '../assets/images/icons/gmail.png';
 import IconEnglish from '../assets/images/icons/english.png';
 import ShareOptions from '../components/shareOptions.js';
+import ExpandLessOutlinedIcon from '@mui/icons-material/ExpandLessOutlined';
+import ExpandMoreOutlinedIcon from '@mui/icons-material/ExpandMoreOutlined';
 
 
 
 export default function CustomTab({ boletines}) {
-    const [value, setValue] = React.useState(0);
+    const [value, setValue] = React.useState(2);
     
     const handleChangeTab = (event, newValue) => {
         setValue(newValue);
@@ -30,6 +32,17 @@ export default function CustomTab({ boletines}) {
     // if (!Array.isArray(boletines)) {
     //     return <p className="justify_center text_bolder">No hay boletines disponibles.</p>;
     //   }
+
+    const [isMoreInfoOpen, setIsMoreInfoOpen] = useState([]);
+
+    const toggleDetailsBoletin = (boletin_id) => {
+        if(isMoreInfoOpen.includes(boletin_id)) {
+            setIsMoreInfoOpen(isMoreInfoOpen.filter(id => id !== boletin_id));
+        }
+        else {
+            setIsMoreInfoOpen([...isMoreInfoOpen, boletin_id]);
+        }
+    }
 
 
     return (
@@ -63,17 +76,43 @@ export default function CustomTab({ boletines}) {
                                             <div key={boletin.id}>
                                                
 
-                                                <div>
+                                                <div className="item_boletin_size">
                                                     <a href={boletin.pdf} target='_blank' rel="noreferrer">
                                                         {(boletin.imagenPortada ) ?
                                                         <img className="item_boletin" src={boletin.imagenPortada} alt={boletin.nombreWithExt}>
                                                         </img>
                                                         : 
-                                                        <div className="item_boletin" style={{backgroundColor: "#808080"}}>
-                                                            <p style={{color: "#ffffff"}}>{boletin.nombreWithExt}</p>
+                                                        <div className="item_boletin light_grey">
+                                                            <p className="text_black padding_s">{boletin.nombreWithExt}</p>
                                                         </div>
                                                         }
                                                     </a>
+
+                                                 {/* Informacion tecnica boletines */}
+
+                                                    <a className="justify_center cursor_pointer"  onClick={() => toggleDetailsBoletin(boletin.id)}>
+                                                    {isMoreInfoOpen.includes(boletin.id) ?   
+                                                    <div>
+                                                        <ExpandLessOutlinedIcon />
+                                                        <span>Ocultar información</span>
+                                                     </div> 
+                                                     :  
+                                                     <div>
+                                                     <ExpandMoreOutlinedIcon />
+                                                     <span>Saber más del boletín</span>
+                                                  </div> 
+                                              
+                                                
+                                                }
+
+                                                    </a>
+                                                    {isMoreInfoOpen.includes(boletin.id) && (
+                                                        <div className="margin_top_s">
+                                                        <p><strong>Temas:</strong> {boletin.tema || 'No disponible'}</p>
+                                                        <p><strong>Palabras clave:</strong> {boletin.palabrasClave || 'No disponible'}</p>
+                                                        <p><strong>Rango Temporal:</strong> {boletin.rango || 'No disponible'}</p>
+                                                        </div>
+                                                    )}
                                                     <ShareOptions boletines={boletines} currentBoletinId={boletin.id} > </ShareOptions>
                                                 </div>
                                             </div>
