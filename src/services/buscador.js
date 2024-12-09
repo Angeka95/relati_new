@@ -23,7 +23,7 @@ const getSearchData = (string) => {
 }
 
 const getSearchQData = (string) => {
-
+  console.log("Este sapo entra", string)
   const config = {
     headers: {
       'Authorization': `Bearer ${process.env.REACT_APP_API_ACCESS_TOKEN}`,
@@ -32,18 +32,20 @@ const getSearchQData = (string) => {
     },
     params: { 'string': string }
   };
-  const request =  axios.get('https://relatoria.jep.gov.co/getsearchQData', config);
+  const request =  axios.get('https://relatoria.jep.gov.co/getsearchqdata', config);
+  console.log(request);
   return request.then(response => { 
+    console.log("response service", response.data);
     if((response.data.status !== undefined) || (response.data.status === 401) || (response.data.status === 403)) {
       return { "data": [], "status_info": { "status": response.data.status, "reason": response.data.reason }};
     } else {
       let data = (response.data.hasOwn('hits')) ? response.data.hits.hits : [] ;
-      return { "data": data, "status_info": { "status": 200, "reason": "OK" } };
+      return { "data": response.data , "status_info": { "status": 200, "reason": "OK" } };
     }
-  }).catch(error => { 
-    return { "data": [], "status_info": { "status": error.response.data.status, "reason": error.response.data.reason } };
+  }).catch(error => {
+    return { "data": [], "status_info": { "status": 500, "reason": error.code } };
   });
 }
 
 
-export default { getSearchData }
+export default { getSearchData, getSearchQData };
