@@ -42,13 +42,13 @@ export default function Libros() {
         <div>
             <Container className="margin_bottom_xl">
             <h1 className="text_center margin_top_l">Libros</h1>
-            <h5 className="text_center ">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis</h5>
+            <h5 className="text_center ">Explora nuestros libros que cuentan con la colaboración de magistradas, magistrados y profesionales de la JEP, para reflexionar y dar a conocer aspectos jurídicos relevantes a público jurídico y académico. </h5>
 
             <div className="display_flex  book_margin_top  vertical_align query_wrap"> 
                 <div className="book_container "> 
                     <h2 className="text_bolder margin_top_s text_center_mobile">Código de la Jurisdicción Especial para la paz</h2>
                     <p className="text_center_mobile ">
-                    Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis.  <br/> Lorem ipsum dolor, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque.
+                    Esta publicación electrónica, de acceso libre, es una guía práctica con la que se espera facilitar el estudio y/o conocimiento, por parte de un público amplio, sobre el desarrollo normativo, procesal y jurisprudencial de la Jurisdicción Especial para la Paz.
                     </p>
                 </div> 
                 <div className="book_container justify_center" > 
@@ -59,13 +59,13 @@ export default function Libros() {
                     
                 </div> 
             </div> 
-            <h2 className="text_bolder text_center book_margin_top ">Colecciones Editoriales</h2> 
-            <h5 className="text_center">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis na.</h5>
+            
             </Container>
             <Box className="secondary_blue  ">
+            
                 <div className=" ">.
-                    
-                <h2 className="coleccion_title text_center text_bolder  margin_top_xl">"Decisiones de la JEP: Aportes a la justicia transicional y restaurativa"</h2> 
+                <h2 className="text_bolder text_center book_margin_top text_white ">Colecciones Editoriales</h2> 
+                <h2 className="coleccion_title text_center text_bolder  margin_top_l">"Decisiones de la JEP: Aportes a la justicia transicional y restaurativa"</h2> 
                 
                 <p className="text_white text_center text_uppercase text_spacing_max  ">Colección </p>
                 </div>
