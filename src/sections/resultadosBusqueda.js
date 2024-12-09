@@ -5,6 +5,7 @@ import '../App.css';
 import { Container, Grid } from '@mui/material';
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
+import buscadorService from '../services/buscador.js';
 
 export default function SearchResults() {
 
@@ -12,18 +13,47 @@ export default function SearchResults() {
 
   const [selectedFilters, setSelectedFilters] = useState([]);
   const [stringQuery, setStringQuery] = useState("");
+  const [message, setMessage] = useState({ message: "", classname: "" });
 
   const [searchParams] = useSearchParams();
 
   const stringParam = decodeURIComponent(searchParams.get('string'));
 
+
+  const getResultadosBuscadorAI = (string) => {
+        buscadorService
+          .getSearchQData(string)
+          .then(response => {
+              console.log("Respuesta", response.data);
+              if((response.status_info.status === 200) && (response.data.length > 0)) {
+                  setMessage(`Success: ${response.status_info.status}. ${response.status_info.reason}`);
+              } else {
+                  setMessage(`Error: ${response.status_info.status}. ${response.status_info.reason}`);
+              }
+          }
+        )
+        .catch(error => { 
+          setMessage(`Error: ${error}`);
+        });
+  };
+
   useEffect(() => {
     if(stringQuery !== ""){
       console.log("String query es...", stringQuery); 
+      getResultadosBuscadorAI(stringQuery);
     } else {
       setStringQuery(stringParam);
     }
   }, [stringQuery]);
+
+  useEffect(() => {
+    if(message !== ""){
+      console.log("Message...", message);
+      setTimeout(() => {
+        setMessage("");
+      }, 10000);
+    } 
+  }, [message]);
 
   return (
     <Container>
