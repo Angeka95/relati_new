@@ -93,7 +93,7 @@ export default function Home() {
                             }
                         });
                         const dataDecisiones = setArrayDatosDecisiones(response.data[0].providencias);
-                        console.log("decisiones", dataDecisiones);
+                        //console.log("decisiones", dataDecisiones);
                         setDecisionesRecientes(dataDecisiones);
                         setBoletines(arrBoletines);
                         setMessage(`Success: ${response.status_info.status}. ${response.status_info.reason}`);
@@ -107,8 +107,6 @@ export default function Home() {
 
     useEffect(() => {
             getHomeData();
-            console.log("decisiones", decisionesRecientes);
-            console.log("boletines", boletines);
     }, []);
 
     // Layout Masonry Decisiones Recientes
