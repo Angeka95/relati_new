@@ -3,10 +3,7 @@ import { Container, TextField, Button, Snackbar, Alert, Box, Grid } from '@mui/m
 
 import React, { useState, useEffect } from 'react';
 import DOMPurify from 'dompurify';
-import Carousel from '../components/carousel.js';
-import TabCustom from '../components/tab.js';
 import boletinesService from '../services/boletines.js';
-import processingDataModal from '../components/processingDataModal.js';
 import ProcessingDataModal from '../components/processingDataModal.js';
 import { Captcha } from "navid-react-captcha-generator";
 

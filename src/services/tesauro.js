@@ -8,7 +8,7 @@ const getTermsByLetter = (letter) => {
       'user': process.env.REACT_APP_API_USER,
       'password': process.env.REACT_APP_API_PASS
     },
-    params: { 'letter': letter }
+    params: { letter: letter }
   };
   const request =  axios.get('https://relatoria.jep.gov.co/geterms', config);
   return request.then(response => {
@@ -38,7 +38,7 @@ const getDocsByTerm = (term) => {
       'user': process.env.REACT_APP_API_USER,
       'password': process.env.REACT_APP_API_PASS
     },
-    params: { 'search': term }
+    params: { search: term }
   };
   const request =  axios.get('https://relatoria.jep.gov.co/getdocbytesauro', config);
   return request.then(response => { 
