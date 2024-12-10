@@ -6,8 +6,8 @@ import { Link } from 'react-router-dom';
 
 
 export default function ModalInfo({ openModal, handleCloseModal }) {
-    console.log('openModal:', openModal);
-    console.log('handleCloseModal:', handleCloseModal);
+    //console.log('openModal:', openModal);
+    //console.log('handleCloseModal:', handleCloseModal);
 
     return (
         <div>

@@ -28,7 +28,7 @@ const getBoletinDetail = (id) => {
       'user': process.env.REACT_APP_API_USER,
       'password': process.env.REACT_APP_API_PASS
     },
-    params: { 'id': id }
+    params: { id: id }
   };
   const request =  axios.get('https://relatoria.jep.gov.co/searchdata', config);
   return request.then(response => { 

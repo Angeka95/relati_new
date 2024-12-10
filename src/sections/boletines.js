@@ -40,7 +40,7 @@ export default function SearchResults() {
                         facebook: `https://www.facebook.com/sharer.php?u=https://relatoria.jep.gov.co/${item.providencias.hipervinculo}`,
                         twitter: `https://twitter.com/intent/tweet?text=${item.providencias.nombre}&url=${item.providencias.hipervinculo}`,
                         mail: true,  
-                        versionIngles: `https://relatoria.jep.gov.co/documentos/providencias/17/23/en/boletin_eng_diciembre_2022.pdf`,
+                        versionIngles: (item.idioma !== "Español") ? `https://relatoria.jep.gov.co/${item.providencias.hipervinculo}` : '',
                         esEspecial: true, 
                         imagenPortada: (item.imagen !== null) ? `https://relatoria.jep.gov.co/${item.imagen}` : ``
                         }
