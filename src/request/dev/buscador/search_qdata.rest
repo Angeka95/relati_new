@@ -7,3 +7,9 @@ Content-Type: application/json
 {
     "string": "Necesito encontrar una providencia en la que se hable de la responsabilidad penal del señor Pastor Alape"
 }
+
+//{
+//    "string": "Decisiones de la Sala de Definición en donde se haya aceptado el sometimiento de paramilitares"
+//}
+
+//Decisiones de la Sala de Definición en donde se haya aceptado el sometimiento de paramilitares
