@@ -125,11 +125,11 @@ export default function Search({ isSearchAdvance, isSearchMain }) {
               <Button className="light_white text_blue autocomplete_button_help button_terciary">?</Button>
             </NoneGrid>
           )}
-          {!isSearchAdvance && (
+          {/*!isSearchAdvance && (
             <Link to="/busqueda-avanzada"> 
             <Button className="autocomplete_button_advance primary_blue text_white button_secondary_border">Búsqueda Avanzada</Button>
             </Link> 
-          )}
+          )*/}
         </SpaceBottom>
       </Stack>
     </div>
@@ -139,6 +139,10 @@ export default function Search({ isSearchAdvance, isSearchMain }) {
 
 
 const searchOptions = [
+
+];
+
+/*const searchOptions = [
   { title: 'Competencia de la JEP' },
   { title: 'Competencia y Jurisdicción' },
   { title: 'Competencia de la Jurisdicción Ordinaria' },
@@ -146,4 +150,4 @@ const searchOptions = [
   { title: 'Requisitos de la competencia' },
   { title: 'Competencia de las Salas de Justicia' },
 
-];
+];*/

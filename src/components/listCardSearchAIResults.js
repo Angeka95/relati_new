@@ -18,7 +18,6 @@ import ExpandLessOutlinedIcon from '@mui/icons-material/ExpandLessOutlined';
 import ExpandMoreOutlinedIcon from '@mui/icons-material/ExpandMoreOutlined';
 import FilterShort from './filterShort.js';
 import FilterListIcon from '@mui/icons-material/FilterList';
-import LinearWithValueLabel from './linearProgress.js';
 
 export default function Card({ datosBusqueda, selectedFilters, isListSmall, selectedTerm, isLargeResult, isExternalFilters }) {
 
@@ -216,9 +215,7 @@ export default function Card({ datosBusqueda, selectedFilters, isListSmall, sele
         }
     }));
 
-     if(datos.length === 0) {
-        return (<LinearWithValueLabel></LinearWithValueLabel>)
-     } else {
+     if(datos.length > 0) {
         return (
             <Stack>
                 <div className=  {isListSmall ? ('text_results_search', 'no-spacing') :  ('text_results_search','margin_search') } >

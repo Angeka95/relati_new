@@ -7,6 +7,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import buscadorService from '../services/buscador.js';
 import ProcessingDataModal from '../components/processingDataModal.js';
+import LinearWithValueLabel from '../components/linearProgress.js';  
 
 export default function SearchResults() {
 
@@ -24,12 +25,22 @@ export default function SearchResults() {
 
   const stringParam = decodeURIComponent(searchParams.get('string'));
 
+  const handleMessage = (newMessage) => {
+      handleOpenModal();
+      setTimeout(function(){ 
+          handleCloseModal();
+          setMessage(newMessage);
+      }, 3000);
+      /*setTimeout(() => {
+          setMessage({ message: "", classname: "" }); 
+      }, 6000);*/
+  }
+
   const getResultadosBuscadorAI = (string) => {
         let newMessage = {}; 
         buscadorService
           .getSearchQData(string)
           .then(response => {
-              console.log("Respuesta", response.data);
               if((response.status_info.status === 200) && (response.data.length > 0)) {
                     console.log("Total datos:", response.data.length);
                     const newDatos = response.data.map(i => { 
@@ -62,8 +73,7 @@ export default function SearchResults() {
                             hipervinculoFichaJuris: (item.ficha_id !== null) ? `https://relatoria.jep.gov.co/downloadfichaext/${item.ficha_id}` : "",
                             estadoFichaJuris: false,
                             extractoBusqueda: ""
-                        }
-                       return false;
+                        };
                   });
                   setDatos(newDatos);
                   newMessage["message"] = `Success: ${response.status_info.status}. ${response.status_info.reason}`;
@@ -72,50 +82,48 @@ export default function SearchResults() {
                   newMessage["message"] = `Error: ${response.status_info.status}. ${response.status_info.reason}`;
                   newMessage["classname"] = 'error';
               }
-              handleOpenModal();
-              setTimeout(function(){ 
-                  handleCloseModal();
-                  setMessage(newMessage);
-              }, 3000);
-              setTimeout(() => {
-                  setMessage({ message: "", classname: "" }); 
-              }, 6000);
+              handleMessage(newMessage);
           }
         )
         .catch(error => { 
             newMessage["message"] = `Error: ${error}`;
             newMessage["classname"] = 'error';
-            setMessage(newMessage);
+            handleMessage(newMessage);
         });
   };
 
   useEffect(() => {
+    if (!stringParam) {
+      let newMessage = {};
+      newMessage["message"] = `Error: 500. No se puede realizar la solicitud.`;
+      newMessage["classname"] = 'error';
+      handleMessage(newMessage);
+      setTimeout(() => {
+        navigate('/');
+      }, 7000);
+      return;
+    } 
     if(stringQuery !== ""){
       getResultadosBuscadorAI(stringQuery);
     } else {
       setStringQuery(stringParam);
     }
-  }, [stringQuery]);
+  }, [stringQuery, stringParam]);
 
-  useEffect(() => {
+  /*useEffect(() => {
     if(message.message !== "" ){
       console.log("Message...", message);
       setTimeout(() => {
         setMessage({ message: "", classname: "" });
       }, 10000);
     } 
-  }, [message]);
+  }, [message]);*/
 
   return (
     <Container>
       <Grid container spacing={2}>
         <Grid item xs={12} sm={12} md={4} lg={4} xl={4} >
           <p></p>
-          {(message.message !== "") ? (
-                <Alert variant="outlined" severity={message.classname}>
-                    {message.message}
-                </Alert>
-          ): '' }
         </Grid>
         <Grid item xs={12} sm={12} md={8} lg={8} xl={8} >
           <SearchBar></SearchBar>
@@ -127,7 +135,22 @@ export default function SearchResults() {
           <Filter setSelectedFilters={setSelectedFilters}></Filter>
         </Grid>
         <Grid item xs={12} sm={12} md={8} lg={8} xl={8}>
-          <ListCardSearch datosBusqueda={datos} selectedFilters={selectedFilters}></ListCardSearch>
+          {(datos.length === 0) ?
+              <>
+              <p>Buscando por: <strong>"{stringParam}"</strong></p>
+              { (message.message === "") ?
+                <>
+                <LinearWithValueLabel processingMessages={["Procesando solicitud...", "Preparando respuesta..."]}></LinearWithValueLabel> 
+                </> 
+                :
+                <Alert variant="outlined" severity={message.classname}>
+                {message.message}
+                </Alert> 
+              } 
+              </>
+             :  
+              <ListCardSearch datosBusqueda={datos} selectedFilters={selectedFilters}></ListCardSearch>
+          }
         </Grid>
       </Grid>
       {/*<ProcessingDataModal openModal={openModal} handleOpenModal={handleOpenModal} handleCloseModal={handleCloseModal}/>*/}
