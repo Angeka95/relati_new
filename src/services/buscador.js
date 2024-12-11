@@ -37,9 +37,15 @@ const getSearchQData = (string) => {
     if((response.data.status !== undefined) || (response.data.status === 401) || (response.data.status === 403)) {
       return { "data": [], "status_info": { "status": response.data.status, "reason": response.data.reason }};
     } else {
-      //console.log("entra a hits", response.data.hasOwn('hits'));
-      let data = (response.data.hasOwnProperty('hits')) ? response.data.hits.hits : [] ;
-      return { "data": data , "status_info": { "status": 200, "reason": "OK" } };
+      let data = [];
+      let status_info = {};
+      if(response.data.hasOwnProperty('hits')) {
+        data = response.data.hits.hits;
+        status_info = { "status": 200, "reason": "La consulta se ha realizado satisfactoriamente." };
+      } else {
+        status_info = { "status": 204, "reason": "La consulta no esta disponible por el momento.(Elastic Search)." } 
+      }
+      return { "data": data , "status_info": status_info };
     }
   }).catch(error => {
     //console.log("entra a error");
