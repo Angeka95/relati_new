@@ -69,24 +69,27 @@ export default function SearchResults() {
                             documentosAsociados:  (item.anexos.length > 0) ? item.anexos[0].nombre : "", 
                             enfoquesDiferenciales: (item.enfoque.length > 0) ? item.enfoque[0].tipo : "",
                             notasRelatoria: "", //No mostrar  
-                            hipervinculo:  "", //"https://relatoria.jep.gov.co" + ${item.hipervinculo},
-                            hipervinculoFichaJuris: (item.ficha_id !== null) ? `https://relatoria.jep.gov.co/downloadfichaext/${item.ficha_id}` : "",
+                            hipervinculo:   (item.hipervinculo !== null ) ? `https://relatoria.jep.gov.co${item.hipervinculo}` : "", 
+                            hipervinculoFichaJuris:  `https://relatoria.jep.gov.co/downloadfichaext/${item.ficha_id}`,
                             estadoFichaJuris: false,
                             extractoBusqueda: ""
                         };
                   });
                   setDatos(newDatos);
-                  newMessage["message"] = `Success: ${response.status_info.status}. ${response.status_info.reason}`;
+                  newMessage["message"] = `${response.status_info.reason}`;
                   newMessage["classname"] = 'success';
-              } else {
-                  newMessage["message"] = `Error: ${response.status_info.status}. ${response.status_info.reason}`;
+              } else if(response.status_info.status === 500) {
+                  newMessage["message"] = `${response.status_info.reason}`;
                   newMessage["classname"] = 'error';
+              } else {
+                newMessage["message"] = `${response.status_info.reason}`;
+                newMessage["classname"] = 'warning';
               }
               handleMessage(newMessage);
           }
         )
         .catch(error => { 
-            newMessage["message"] = `Error: ${error}`;
+            newMessage["message"] = `${error}`;
             newMessage["classname"] = 'error';
             handleMessage(newMessage);
         });
@@ -95,7 +98,7 @@ export default function SearchResults() {
   useEffect(() => {
     if (!stringParam) {
       let newMessage = {};
-      newMessage["message"] = `Error: 500. No se puede realizar la solicitud.`;
+      newMessage["message"] = `No se puede realizar la solicitud.`;
       newMessage["classname"] = 'error';
       handleMessage(newMessage);
       setTimeout(() => {

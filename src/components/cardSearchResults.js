@@ -123,7 +123,7 @@ export default function CardSearch({ datos }) {
         </Tabs>
         {((typeof datos.hipervinculoFichaJuris === 'string' ) && (datos.hipervinculoFichaJuris.trim() !== '')) && (
               <a href={datos.hipervinculoFichaJuris} target='_blank' rel="noreferrer">
-                <Button className="button_secondary margin_xs card_size_small"  startIcon={<FileDownloadOutlinedIcon/>}>Descargar datos</Button>
+                <Button className="button_secondary margin_xs card_size_small"  startIcon={<FileDownloadOutlinedIcon/>}>Descargar ficha</Button>
               </a> 
         )}
         

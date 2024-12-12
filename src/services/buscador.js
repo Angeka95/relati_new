@@ -42,14 +42,17 @@ const getSearchQData = (string) => {
       if(response.data.hasOwnProperty('hits')) {
         data = response.data.hits.hits;
         status_info = { "status": 200, "reason": "La consulta se ha realizado satisfactoriamente." };
+        if(data.length === 0){
+          status_info = { "status": 200, "reason": "No se encontraron resultados." };
+        } 
       } else {
         status_info = { "status": 204, "reason": "La consulta no esta disponible por el momento.(Elastic Search)." } 
       }
       return { "data": data , "status_info": status_info };
     }
   }).catch(error => {
-    //console.log("entra a error");
-    return { "data": [], "status_info": { "status": 500, "reason": error.code } };
+    console.log("entra a error", error.code);
+    return { "data": [], "status_info": { "status": 500, "reason": "Lo sentimos, algo salió mal. Parece que hubo un problema en nuestro servidor. Estamos trabajando para solucionarlo. Por favor, inténtalo de nuevo más tarde." } };
   });
   
 }
