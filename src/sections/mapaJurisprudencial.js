@@ -70,7 +70,7 @@ export default function Mapa() {
             .then(response => {
                 if((response.status_info.status === 200) && (response.data.length > 0)) {
                     const cardsArr = response.data.map(item => {
-                        return {
+                        let itemProvidencia = {
                             id: item.id,
                             fecha: item.fecha_providencia,
                             anio: obtenerAnio(item.fecha_providencia),
@@ -91,7 +91,13 @@ export default function Mapa() {
                             comparecientes: obtenerPalabrasFromArrayObject(item.tipopeti, "tipo"),
                             delitos: obtenerPalabrasFromArrayObject(item.delitos, "delito"),
                             procedimientos: obtenerPalabrasFromArrayObject(item.actuacion, "actuacion"),
-                        }
+                            palabrasClave: "",
+                            municipio: "",
+                            palabrasClaveBuscador: "",
+                            palabrasClaveFichaJuridica: (item.getfichas.length > 0) ? "Obtener palabras claves ficha juridica": ""
+                        };
+                        itemProvidencia["palabrasClave"] = `${itemProvidencia["delitos"]}, ${itemProvidencia["comparecientes"]}, ${itemProvidencia["procedimientos"]}`;
+                        return itemProvidencia;
                     });
                     setMessage(`Success: ${response.status_info.status}. ${response.status_info.reason}`)
                     setDatos(cardsArr);
