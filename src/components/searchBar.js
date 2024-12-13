@@ -10,6 +10,7 @@ import { styled } from '@mui/material/styles';
 import Context from '../context/context';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import useSearchAIEnterKey from '../hooks/useSearchAIEnterKey.js';
 
 export default function Search({ isSearchAdvance, isSearchMain }) {
 
@@ -62,6 +63,7 @@ export default function Search({ isSearchAdvance, isSearchMain }) {
   // Busqueda por palabra
 
   const search = () => {
+ 
     // Se trae el valor escrito en el buscador
     let searchValue = inputRef.current.querySelector('input').value;
     
@@ -72,6 +74,16 @@ export default function Search({ isSearchAdvance, isSearchMain }) {
     const params = new URLSearchParams({ string: encodeURIComponent(searchValue) });
     navigate(`/resultados-busqueda?${params.toString()}`);
   };
+
+  useSearchAIEnterKey(() => {
+    
+    const searchButtons = document.querySelectorAll('.searchButton');
+
+    searchButtons.forEach(searchButton => {
+        if (searchButton) searchButton.click();
+    });
+
+  });
 
   // Encender y apagar switch ver todas las decisiones 
 
@@ -116,12 +128,12 @@ export default function Search({ isSearchAdvance, isSearchMain }) {
           <ClearIcon />
         </div> */}
           <NoneGrid>
-            <Button onClick={search} className="autocomplete_button button_primary z-index100" startIcon={<SearchIcon />}>
+            <Button onClick={search} className="searchButton autocomplete_button button_primary z-index100" startIcon={<SearchIcon />}>
               Buscar
             </Button>
           </NoneGrid>
           <ShowGrid>
-            <Button onClick={search} className="autocomplete_button_responsive button_primary"><SearchIcon /></Button>
+            <Button onClick={search} className="searchButton autocomplete_button_responsive button_primary"><SearchIcon /></Button>
 
           </ShowGrid>
 

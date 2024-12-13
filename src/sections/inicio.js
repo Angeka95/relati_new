@@ -20,6 +20,7 @@ import inithomeService from '../services/inithome.js';
 import { documentosSentencias } from '../data/data_inicio.js';
 import LinearWithValueLabel from '../components/linearProgress.js';
 import { obtenerPalabrasFromArrayObject } from '../helpers/utils.js';
+import useSearchAIEnterKey from '../hooks/useSearchAIEnterKey.js';
 
 export default function Home() {
 
@@ -168,7 +169,7 @@ export default function Home() {
     // Mostrar solo los primeros 6 casos, si `showAll` es false
     const casesToDisplay = showAll ? macrocasos : macrocasos.slice(0, 6);
 
-    const handleSearch = () => {
+    const handleSearch = (e) => {
 
         let searchValue = inputRef.current.querySelector('input').value;
         setBusqueda(searchValue);
@@ -179,6 +180,17 @@ export default function Home() {
 
     };
 
+    useSearchAIEnterKey(() => {
+        //const searchButton = document.getElementsById('searchButton');
+        //if (searchButton) searchButton.click();
+
+        const searchButtons = document.querySelectorAll('.searchButton');
+
+        searchButtons.forEach(searchButton => {
+            if (searchButton) searchButton.click();
+        });
+
+    });
 
     // Modal 
     const [openModal, setOpenModal] = useState(false);
@@ -248,7 +260,7 @@ export default function Home() {
                                     <Button className="light_white text_blue autocomplete_button_help button_terciary query_none" onClick={handleOpenModal}>?</Button>
                                     <ModalInfo openModal={openModal} handleCloseModal={handleCloseModal}> </ModalInfo> 
                                     {/*<Link to="resultados-busqueda?string=caso"> */}
-                                        <Button onClick={handleSearch} className="autocomplete_button_home button_primary z-index_front" startIcon={<SearchIcon />}>
+                                        <Button onClick={handleSearch} className="searchButton autocomplete_button_home button_primary z-index_front" startIcon={<SearchIcon />}>
                                             Buscar
                                         </Button>
                                     {/*</Link>*/} 
