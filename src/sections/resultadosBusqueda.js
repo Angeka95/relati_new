@@ -69,7 +69,7 @@ export default function SearchResults() {
                             documentosAsociados:  (item.anexos.length > 0) ? item.anexos[0].nombre : "", 
                             enfoquesDiferenciales: (item.enfoque.length > 0) ? item.enfoque[0].tipo : "",
                             notasRelatoria: "", //No mostrar  
-                            hipervinculo:   (item.hipervinculo !== null ) ? `https://relatoria.jep.gov.co${item.hipervinculo}` : "", 
+                            hipervinculo:   (item.hipervinculo !== null ) ? `https://relatoria.jep.gov.co/${item.hipervinculo}` : "", 
                             hipervinculoFichaJuris:   (item.ficha_id !== null ) ? `https://relatoria.jep.gov.co/downloadfichaext/${item.ficha_id}` : "",
                             estadoFichaJuris: false,
                             extractoBusqueda: ""
