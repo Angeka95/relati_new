@@ -43,7 +43,7 @@ export default function ShareOptions({ boletines, currentBoletinId }) {
 
                                 <div className="icons_group2 vertical_align wrap">
                                     <div className="justify_center align_center ">
-                                        <a href={currentBoletin.versionIngles} target='_blank' >
+                                        <a href={currentBoletin.versionIngles} target='_blank' rel="noreferrer">
                                             <img src={IconEnglish} className=" icon_bigger icon_round icon_english vertical_align">
 
                                             </img>
@@ -66,7 +66,7 @@ export default function ShareOptions({ boletines, currentBoletinId }) {
                             <div className="icons_group1 vertical_align wrap">
                                 <div className="justify_around icons_group_position width_100">
                                     {currentBoletin.twitter && (
-                                        <a href={currentBoletin.twitter} target='_blank' >
+                                        <a href={currentBoletin.twitter} target='_blank'rel="noreferrer">
                                             <img src={IconTwitter} className="icon_round icon_bigger">
 
                                             </img>
@@ -74,7 +74,7 @@ export default function ShareOptions({ boletines, currentBoletinId }) {
                                     )}
 
                                     {currentBoletin.facebook && (
-                                        <a href={currentBoletin.facebook} target='_blank'  >
+                                        <a href={currentBoletin.facebook} target='_blank' rel="noreferrer">
                                             <img src={IconFacebook} className="icon_round icon_bigger">
 
                                             </img>

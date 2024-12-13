@@ -52,7 +52,7 @@ export default function Libros() {
                     </p>
                 </div> 
                 <div className="book_container justify_center" > 
-                    <a href="https://xperta.legis.co/intermedia/intermedia_jep.html" target="_blank" className="justify_center">
+                    <a href="https://xperta.legis.co/intermedia/intermedia_jep.html" target="_blank" rel="noreferrer" className="justify_center">
                     <img className="cover_container" src="https://relatoria.jep.gov.co/img/libros/portada_codigo_JEP_c.png"/> 
 
                     </a>
@@ -77,7 +77,7 @@ export default function Libros() {
                         {libros.map(libro => (
                             <div key={libro.id} className="display_flex flex_wrap width_100 book_margin_bottom query_wrap">
                                 <div className="book_container display_flex justify_center_mobile flex_nowrap position_relative"> 
-                                    <a href={libro.pdf} target="_blank"  className='justify_center_mobile'>
+                                    <a href={libro.pdf} target="_blank" rel="noreferrer" className='justify_center_mobile'>
                                         <img className="cover_container" src={libro.cover}></img>
                                     </a>
                                     <div className="position_float qr_position query_none"> 

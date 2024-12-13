@@ -9,8 +9,11 @@ import ClearIcon from '@mui/icons-material/Clear';
 import { styled } from '@mui/material/styles';
 import Context from '../context/context';
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 export default function Search({ isSearchAdvance, isSearchMain }) {
+
+  const navigate = useNavigate();
 
   // Grids personalizadas
 
@@ -64,9 +67,11 @@ export default function Search({ isSearchAdvance, isSearchMain }) {
     
     setValueBar(searchValue);
     setBusqueda(searchValue);
-    setVerTodasDecisiones(false)
-  };
+    setVerTodasDecisiones(false);
 
+    const params = new URLSearchParams({ string: encodeURIComponent(searchValue) });
+    navigate(`/resultados-busqueda?${params.toString()}`);
+  };
 
   // Encender y apagar switch ver todas las decisiones 
 
@@ -120,11 +125,11 @@ export default function Search({ isSearchAdvance, isSearchMain }) {
 
           </ShowGrid>
 
-          {!isSearchAdvance && (
+          {/*!isSearchAdvance && (
             <NoneGrid>
               <Button className="light_white text_blue autocomplete_button_help button_terciary">?</Button>
             </NoneGrid>
-          )}
+          )*/}
           {/*!isSearchAdvance && (
             <Link to="/busqueda-avanzada"> 
             <Button className="autocomplete_button_advance primary_blue text_white button_secondary_border">Búsqueda Avanzada</Button>

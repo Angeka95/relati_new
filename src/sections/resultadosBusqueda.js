@@ -70,7 +70,7 @@ export default function SearchResults() {
                             enfoquesDiferenciales: (item.enfoque.length > 0) ? item.enfoque[0].tipo : "",
                             notasRelatoria: "", //No mostrar  
                             hipervinculo:   (item.hipervinculo !== null ) ? `https://relatoria.jep.gov.co${item.hipervinculo}` : "", 
-                            hipervinculoFichaJuris:  `https://relatoria.jep.gov.co/downloadfichaext/${item.ficha_id}`,
+                            hipervinculoFichaJuris:   (item.ficha_id !== null ) ? `https://relatoria.jep.gov.co/downloadfichaext/${item.ficha_id}` : "",
                             estadoFichaJuris: false,
                             extractoBusqueda: ""
                         };

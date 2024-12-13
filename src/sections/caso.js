@@ -270,9 +270,9 @@ export default function Caso() {
             <div className="actualizacion_caso">
               <p>{caso.actualizacion}</p>
               {((caso.hasOwnProperty("infografia")) && (caso.infografia.length > 0)  && (caso.infografia[0] !== "")) ?
-                <Button target="_blank" href={caso.infografia[0]} className="button_terciary shadow_smooth text_transform_none margin_bottom_m" >Saber más del Caso</Button>
+                <Button target="_blank" rel="noreferrer" href={caso.infografia[0]} className="button_terciary shadow_smooth text_transform_none margin_bottom_m" >Saber más del Caso</Button>
               :
-                <Button target="_blank" href="#" className="button_terciary shadow_smooth text_transform_none margin_bottom_m" >Saber más del Caso</Button>
+                <Button target="_blank" rel="noreferrer" href="#" className="button_terciary shadow_smooth text_transform_none margin_bottom_m" >Saber más del Caso</Button>
               }
               
             </div>
@@ -290,7 +290,7 @@ export default function Caso() {
                 <div className="timeline_dot" />
                 <div className="timeline_content">
                   {event.enlace.length > 0 ? (
-                    <a href={event.enlace} target="_blank" className="link_primary link_nounderline ">
+                    <a href={event.enlace} target="_blank" rel="noreferrer" className="link_primary link_nounderline ">
                       <h6>{event.hecho}</h6>
                       <p className="margin_bottom_l">{event.actor}</p>
                     </a>
@@ -330,7 +330,7 @@ export default function Caso() {
               <div className="cta_container">
                 <h6 className="text_bolder cta_text">Conozca los lineamientos en materia de sanción propia y Trabajos, Obras y Actividades con contenido Reparador (TOAR)</h6>
                 {( datos_links_toar[0] !== "") && 
-                 <Button className="button_primary button_container" href={datos_links_toar[0]} target='_blank' >Ver TOAR</Button>
+                 <Button className="button_primary button_container" href={datos_links_toar[0]} target='_blank' rel="noreferrer">Ver TOAR</Button>
                 }
 
               </div>

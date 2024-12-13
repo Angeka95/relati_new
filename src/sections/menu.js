@@ -62,7 +62,11 @@ export default function MenuBar() {
   };
 
   const podcastURL = () => {
-    window.location.href = 'https://www.spreaker.com/podcast/relatos-de-la-jep--5701029';
+    var anchor = document.createElement('a');
+    anchor.href = 'https://www.spreaker.com/podcast/relatos-de-la-jep--5701029';
+    anchor.target="_blank";
+    anchor.rel="noreferrer";
+    anchor.click();
   };
 
   const scrollToSection = () => {
@@ -144,7 +148,7 @@ export default function MenuBar() {
                         <MenuItem className="text_decoration_none text_black menu_text " >Boletines</MenuItem>
                     </Link>
                   
-                    <MenuItem className="text_decoration_none text_black menu_text" onClick={podcastURL} >Podcast</MenuItem>
+                    <MenuItem className="text_decoration_none text_black menu_text" onClick={podcastURL} target="_blank" rel="noreferrer">Podcast</MenuItem>
                     
                     {/* <Link to="/mapa-jurisprudencial">
                         <MenuItem className="text_decoration_none text_black menu_text" >Libros</MenuItem>
@@ -176,7 +180,7 @@ export default function MenuBar() {
                     </Link>
                 </Menu>
 
-              <Button component="a"  className=" text_blue menu_text margin_left_xs text_center"  href="https://relatoria.jep.gov.co/concurso" target="_blank">Concurso Universitario</Button>
+              <Button component="a"  className=" text_blue menu_text margin_left_xs text_center"  href="https://relatoria.jep.gov.co/concurso" target="_blank" rel="noreferrer">Concurso Universitario</Button>
               </div>
 
               <img src={Escudo} className="logo_escudo_min margin_left_s" >

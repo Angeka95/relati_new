@@ -1,4 +1,3 @@
-import SearchBar from '../components/searchBar.js';
 import Filter from '../components/filter.js';
 import ListCardSearch from '../components/listCardSearchResults.js';
 import '../App.css';
