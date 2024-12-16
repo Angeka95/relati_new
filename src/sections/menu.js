@@ -147,6 +147,9 @@ export default function MenuBar() {
                     <Link to="/boletines">
                         <MenuItem className="text_decoration_none text_black menu_text " >Boletines</MenuItem>
                     </Link>
+                    <Link to="/libros">
+                        <MenuItem className="text_decoration_none text_black menu_text " >Libros</MenuItem>
+                    </Link>
                   
                     <MenuItem className="text_decoration_none text_black menu_text" onClick={podcastURL} target="_blank" rel="noreferrer">Podcast</MenuItem>
                     
@@ -237,6 +240,9 @@ export default function MenuBar() {
               <List component="div" disablePadding>
                 <ListItem button component={Link} to="/boletines">
                   <ListItemText primary="Boletines" />
+                </ListItem>
+                <ListItem button component={Link} to="/libros">
+                  <ListItemText primary="Libros" />
                 </ListItem>
                 <ListItem button component={Link} to="https://www.spreaker.com/podcast/relatos-de-la-jep--5701029">
                   <ListItemText primary="Podcast" />
