@@ -9,6 +9,7 @@ import { Link } from 'react-router-dom';
 import boletinesService from '../services/boletines.js';
 import datos_boletines_anios from '../data/data_boletines_anios.js';
 import LinearWithValueLabel from '../components/linearProgress.js';
+import { obtenerPalabrasFromArrayObject, extraerSpreakerID, obtenerMesEnEspanol, obtenerAnioDeTexto } from '../helpers/utils.js';
 
 const boletines_ = datos_boletines_anios;
 
@@ -28,7 +29,8 @@ export default function SearchResults() {
             .getBoletinesAnios()
             .then(response => {
                 if((response.status_info.status === 200) && (response.data.length > 0)) {
-                    let arrBoletines = response.data.map(item => { return {
+                    let arrBoletines = response.data.map(item => { 
+                      return {
                         id : item.id,
                         titulo : item.titulo,
                         idioma : item.idioma,
@@ -41,7 +43,10 @@ export default function SearchResults() {
                         mail: true,  
                         versionIngles: (item.idioma !== "Español") ? `https://relatoria.jep.gov.co/${item.providencias.hipervinculo}` : '',
                         esEspecial: true, 
-                        imagenPortada: (item.imagen !== null) ? `https://relatoria.jep.gov.co/${item.imagen}` : ``
+                        imagenPortada: (item.imagen !== null) ? `https://relatoria.jep.gov.co/${item.imagen}` : ``,
+                        palabrasClave: (item.palabras.length > 0 )? obtenerPalabrasFromArrayObject(item.palabras, "palabra") : "",
+                        tema: (item.temas.length > 0 )? obtenerPalabrasFromArrayObject(item.temas, "tema") : "",
+                        rango: "0000-00-00"
                         }
                     });
                     setBoletines(arrBoletines);
