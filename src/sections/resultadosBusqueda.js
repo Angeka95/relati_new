@@ -112,12 +112,14 @@ useEffect(() => {
                             aplicacionCasoConcreto: (item.analisis_caso_concreto !== null) ? item.analisis_caso_concreto : "", 
                             resuelve: (item.resuelve.length > 0) ? item.resuelve[0].nombre : "", 
                             documentosAsociados:  (item.anexos.length > 0) ? item.anexos[0].nombre : "", 
+                            documentosAsociadosLink:  (item.anexos.length > 0) ? item.anexos[0].hipervinculo : "", 
                             enfoquesDiferenciales: (item.enfoque.length > 0) ? item.enfoque[0].tipo : "",
                             notasRelatoria: "", //No mostrar  
                             hipervinculo:   (item.hipervinculo !== null ) ? `https://relatoria.jep.gov.co/${item.hipervinculo}` : "", 
                             hipervinculoFichaJuris:   (item.ficha_id !== null ) ? `https://relatoria.jep.gov.co/downloadfichaext/${item.ficha_id}` : "",
                             estadoFichaJuris: false,
-                            extractoBusqueda: ""
+                            extractoBusqueda: "",
+                            caso: "2021"
                         };
                   });
                   console.log("nuevo datos", newDatos);

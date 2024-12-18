@@ -42,10 +42,9 @@ export default function Card({ datosBusqueda, selectedFilters, isListSmall, sele
             if(filtroMapaJurisprudencial.salas.length > 0){
                 datosFiltrados = datosFiltrados.filter( item => filtroMapaJurisprudencial.salas.includes(item.sala));
             }
-            /*
             if(filtroMapaJurisprudencial.macrocasos.length > 0){
                 datosFiltrados = datosFiltrados.filter( item => filtroMapaJurisprudencial.macrocasos.includes(item.caso));
-            }*/
+            }
             if(filtroMapaJurisprudencial.comparecientes.length > 0){
                 datosFiltrados = datosFiltrados.filter( item => {
                     if(item.comparecientes.length > 0 ){

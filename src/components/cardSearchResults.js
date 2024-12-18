@@ -144,6 +144,7 @@ export default function CardSearch({ datos }) {
         {value === 1 && 
         
         <div className="margin_top_m ">
+          {((typeof datos.magistrado === 'string' ) && (datos.magistrado.trim() !== '')) && (
           <div className="width_100">
             <Button onClick={toggleMagistrados} className=" link_secondary text_capitalize"  startIcon={isMagistradosExpanded ? <ExpandLessOutlinedIcon /> : <ExpandMoreOutlinedIcon />}>
               Magistrados 
@@ -157,6 +158,7 @@ export default function CardSearch({ datos }) {
               )}
 
           </div>
+          )}
           <div className="width_100">
             <Button onClick={toggleSujetosProcesales} className=" link_secondary text_capitalize"  startIcon={isSujetosProcesalesExpanded ?<ExpandLessOutlinedIcon /> :  <ExpandMoreOutlinedIcon />}>
             Sujetos Procesales
@@ -165,17 +167,18 @@ export default function CardSearch({ datos }) {
             {isSujetosProcesalesExpanded && (
                 <div className="margin_top_s">
                   {((typeof datos.compareciente === 'string' ) && (datos.compareciente.trim() !== '')) && (
-                    <p className="text_space_min">{/*• Accionante/Solicitante/Compareciente:  */}<span className="text_bolder"> {datos.compareciente}</span> </p>
+                    <p className="text_space_min">• Accionante/Solicitante/Compareciente: <span className="text_bolder"> {datos.compareciente}</span> </p>
                   )}
                   {((typeof datos.tipoSujeto === 'string' ) && (datos.tipoSujeto.trim() !== '')) && (
-                    <p className="text_space_min">{/* Tipo de sujeto:  */}<span className="text_bolder"> {datos.tipoSujeto}</span> </p>
+                    <p className="text_space_min">• Tipo de sujeto: <span className="text_bolder"> {datos.tipoSujeto}</span> </p>
                   )}
                   {((typeof datos.accionadoVinculado === 'string' ) && (datos.accionadoVinculado.trim() !== '')) && (
-                    <p className="text_space_min">{/* Accionado/Vinculado:  */}<span className="text_bolder"> {datos.accionadoVinculado}</span> </p>
+                    <p className="text_space_min">• Accionado/Vinculado: <span className="text_bolder"> {datos.accionadoVinculado}</span> </p>
                   )}
                 </div>
               )}
            </div>
+           {((typeof datos.palabrasClaves === 'string' ) && (datos.palabrasClaves.trim() !== '')) && (
            <div className="width_100">
             <Button onClick={togglePalabrasClave} className=" link_secondary text_capitalize"  startIcon={isSujetosProcesalesExpanded ?<ExpandLessOutlinedIcon /> :  <ExpandMoreOutlinedIcon />}>
             Palabras Clave
@@ -189,7 +192,7 @@ export default function CardSearch({ datos }) {
                 </div>
               )}
            </div>
-
+           )}
 
         </div>
           }
@@ -268,7 +271,7 @@ export default function CardSearch({ datos }) {
               )}
            </div>
 
-    
+          {((typeof datos.resuelve === 'string' ) && (datos.resuelve.trim() !== '')) && (
           <div className="width_100">
             <Button onClick={toggleResuelve} className=" link_secondary text_capitalize"  startIcon={isSujetosProcesalesExpanded ?<ExpandLessOutlinedIcon /> :  <ExpandMoreOutlinedIcon />}>
             Resuelve
@@ -276,10 +279,14 @@ export default function CardSearch({ datos }) {
 
             {isResuelveExpanded && (
                 <div className="margin_top_s">
+                  {((typeof datos.resuelve === 'string' ) && (datos.resuelve.trim() !== '')) && (
                   <p className="text_space_min">{/*• Resuelve: */}<span className="text_bolder"> {datos.resuelve}</span> </p>
+                  )}
                 </div>
               )}
            </div>
+           )}
+           {((typeof datos.documentosAsociados === 'string' ) && (datos.documentosAsociados.trim() !== '')) && (
            <div className="width_100">
             <Button onClick={toggleDocumentosAsociados} className=" link_secondary text_capitalize"  startIcon={isSujetosProcesalesExpanded ?<ExpandLessOutlinedIcon /> :  <ExpandMoreOutlinedIcon />}>
             Documentos Asociados
@@ -287,10 +294,14 @@ export default function CardSearch({ datos }) {
 
             {isDocumentosAsociadosExpanded && (
                 <div className="margin_top_s">
-                  <p className="text_space_min">{/*• Documentos asociados: */} <span className="text_bolder"><a href={`https://relatoria.jep.gov.co/${datos.documentosAsociados}`} target="_blank" rel="noreferrer">{datos.documentosAsociados}</a></span> </p>
+                  {((typeof datos.documentosAsociados === 'string' ) && (datos.documentosAsociados.trim() !== '')) && (
+                  <p className="text_space_min">{/*• Documentos asociados: */} <span className="text_bolder"><a href={`https://relatoria.jep.gov.co/${datos.documentosAsociadosLink}`} target="_blank" rel="noreferrer">{datos.documentosAsociados}</a></span> </p>
+                  )}
                 </div>
               )}
            </div>
+          )}
+           {((typeof datos.enfoquesDiferenciales === 'string' ) && (datos.enfoquesDiferenciales.trim() !== '')) && (
            <div className="width_100">
             <Button onClick={toggleEnfoquesDiferenciales} className=" link_secondary text_capitalize"  startIcon={isSujetosProcesalesExpanded ?<ExpandLessOutlinedIcon /> :  <ExpandMoreOutlinedIcon />}>
            Enfoques diferenciales
@@ -298,10 +309,14 @@ export default function CardSearch({ datos }) {
 
             {isEnfoquesDiferencialesExpanded && (
                 <div className="margin_top_s">
+                  {((typeof datos.enfoquesDiferenciales === 'string' ) && (datos.enfoquesDiferenciales.trim() !== '')) && (
                   <p className="text_space_min">{/*• Enfoques diferenciales: */} <span className="text_bolder"> {datos.enfoquesDiferenciales}</span> </p>
+                  )}
                 </div>
               )}
            </div>
+           )}
+           {((typeof datos.notasRelatoria === 'string' ) && (datos.notasRelatoria.trim() !== '')) && (
            <div className="width_100">
             <Button onClick={toggleNotas} className=" link_secondary text_capitalize"  startIcon={isSujetosProcesalesExpanded ?<ExpandLessOutlinedIcon /> :  <ExpandMoreOutlinedIcon />}>
            Notas de la Relatoría
@@ -309,12 +324,13 @@ export default function CardSearch({ datos }) {
 
             {isNotasExpanded && (
                 <div className="margin_top_s">
+                  {((typeof datos.notasRelatoria === 'string' ) && (datos.notasRelatoria.trim() !== '')) && (
                   <p className="text_space_min">{/*• Notas de la Relatoría: */}  <span className="text_bolder"> {datos.notasRelatoria}</span> </p>
-    
+                  )}
                 </div>
               )}
            </div>
-         
+           )}
             <Button
               className="link_primary text_lowercase"
               onClick={toggleButtonInfoSpecific}>
