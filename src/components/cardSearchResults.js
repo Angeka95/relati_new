@@ -151,7 +151,7 @@ export default function CardSearch({ datos }) {
               {isMagistradosExpanded && (
                 <div className="margin_top_s">
                   {((typeof datos.magistrado === 'string' ) && (datos.magistrado.trim() !== '')) && (
-                   <p className="text_space_min">• Magistrado/a:  <span className="text_bolder"> {datos.magistrado}</span> </p>
+                   <p className="text_space_min">{/* Magistrado/a: */}  <span className="text_bolder"> {datos.magistrado}</span> </p>
                   )}
                 </div>
               )}
@@ -165,13 +165,13 @@ export default function CardSearch({ datos }) {
             {isSujetosProcesalesExpanded && (
                 <div className="margin_top_s">
                   {((typeof datos.compareciente === 'string' ) && (datos.compareciente.trim() !== '')) && (
-                    <p className="text_space_min">• Accionante/Solicitante/Compareciente:  <span className="text_bolder"> {datos.compareciente}</span> </p>
+                    <p className="text_space_min">{/*• Accionante/Solicitante/Compareciente:  */}<span className="text_bolder"> {datos.compareciente}</span> </p>
                   )}
                   {((typeof datos.tipoSujeto === 'string' ) && (datos.tipoSujeto.trim() !== '')) && (
-                    <p className="text_space_min">• Tipo de sujeto:  <span className="text_bolder"> {datos.tipoSujeto}</span> </p>
+                    <p className="text_space_min">{/* Tipo de sujeto:  */}<span className="text_bolder"> {datos.tipoSujeto}</span> </p>
                   )}
                   {((typeof datos.accionadoVinculado === 'string' ) && (datos.accionadoVinculado.trim() !== '')) && (
-                    <p className="text_space_min">• Accionado/Vinculado:  <span className="text_bolder"> {datos.accionadoVinculado}</span> </p>
+                    <p className="text_space_min">{/* Accionado/Vinculado:  */}<span className="text_bolder"> {datos.accionadoVinculado}</span> </p>
                   )}
                 </div>
               )}
@@ -184,7 +184,7 @@ export default function CardSearch({ datos }) {
             {isPalabrasClaveExpanded && (
                 <div className="margin_top_s">
                   {((typeof datos.palabrasClaves === 'string' ) && (datos.palabrasClaves.trim() !== '')) && (
-                    <p className="text_space_min">• Palabras clave del documento:  <span className="text_bolder"> {datos.palabrasClaves}</span> </p>
+                    <p className="text_space_min">{/* Palabras clave del documento: */} <span className="text_bolder"> {datos.palabrasClaves}</span> </p>
                   )}
                 </div>
               )}
@@ -276,7 +276,7 @@ export default function CardSearch({ datos }) {
 
             {isResuelveExpanded && (
                 <div className="margin_top_s">
-                  <p className="text_space_min">• Resuelve:  <span className="text_bolder"> {datos.resuelve}</span> </p>
+                  <p className="text_space_min">{/*• Resuelve: */}<span className="text_bolder"> {datos.resuelve}</span> </p>
                 </div>
               )}
            </div>
@@ -287,7 +287,7 @@ export default function CardSearch({ datos }) {
 
             {isDocumentosAsociadosExpanded && (
                 <div className="margin_top_s">
-                  <p className="text_space_min">• Documentos asociados: <span className="text_bolder"> {datos.documentosAsociados}</span> </p>
+                  <p className="text_space_min">{/*• Documentos asociados: */} <span className="text_bolder"><a href={`https://relatoria.jep.gov.co/${datos.documentosAsociados}`} target="_blank" rel="noreferrer">{datos.documentosAsociados}</a></span> </p>
                 </div>
               )}
            </div>
@@ -298,7 +298,7 @@ export default function CardSearch({ datos }) {
 
             {isEnfoquesDiferencialesExpanded && (
                 <div className="margin_top_s">
-                  <p className="text_space_min">• Enfoques diferenciales:  <span className="text_bolder"> {datos.enfoquesDiferenciales}</span> </p>
+                  <p className="text_space_min">{/*• Enfoques diferenciales: */} <span className="text_bolder"> {datos.enfoquesDiferenciales}</span> </p>
                 </div>
               )}
            </div>
@@ -309,7 +309,7 @@ export default function CardSearch({ datos }) {
 
             {isNotasExpanded && (
                 <div className="margin_top_s">
-                  <p className="text_space_min">• Notas de la Relatoría:  <span className="text_bolder"> {datos.notasRelatoria}</span> </p>
+                  <p className="text_space_min">{/*• Notas de la Relatoría: */}  <span className="text_bolder"> {datos.notasRelatoria}</span> </p>
     
                 </div>
               )}
