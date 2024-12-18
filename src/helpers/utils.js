@@ -220,6 +220,18 @@ function removeFragmentoInString(palabra, cadena) {
     return cadena.replace(regex, '').replace(/\s{2,}/g, ' ').trim(); 
 }
 
+/* Convierte de formato YYYY-MM-DD a Month Year */
+function formatDateToMonthYear(dateString) {
+    const date = new Date(dateString);
+    const options = { month: 'long', year: 'numeric' };
+    let dateFormatted = date.toLocaleString('es-ES', options);
+    return capitalizeFirstLetter(dateFormatted); // Cambia 'es-ES' al idioma que necesites
+}
+/* Capitalize first letter */
+function capitalizeFirstLetter(string) {
+    if (!string) return ''; // Manejar cadenas vacías
+    return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+}
 
 export { filtroMapaByDefault, 
          filtroBuscadorAIByDefault,
@@ -232,5 +244,6 @@ export { filtroMapaByDefault,
          extraerSpreakerID,
          obtenerMesEnEspanol,
          obtenerAnioDeTexto,
-         removeFragmentoInString
+         removeFragmentoInString,
+         formatDateToMonthYear
         };

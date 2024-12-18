@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom';
 import boletinesService from '../services/boletines.js';
 import datos_boletines_anios from '../data/data_boletines_anios.js';
 import LinearWithValueLabel from '../components/linearProgress.js';
-import { obtenerPalabrasFromArrayObject, extraerSpreakerID, obtenerMesEnEspanol, obtenerAnioDeTexto } from '../helpers/utils.js';
+import { obtenerPalabrasFromArrayObject, formatDateToMonthYear } from '../helpers/utils.js';
 
 const boletines_ = datos_boletines_anios;
 
@@ -46,7 +46,7 @@ export default function SearchResults() {
                         imagenPortada: (item.imagen !== null) ? `https://relatoria.jep.gov.co/${item.imagen}` : ``,
                         palabrasClave: (item.palabras.length > 0 )? obtenerPalabrasFromArrayObject(item.palabras, "palabra") : "",
                         tema: (item.temas.length > 0 )? obtenerPalabrasFromArrayObject(item.temas, "tema") : "",
-                        rango: "0000-00-00"
+                        rango: (item.providencias_asociadas.length > 0 )? formatDateToMonthYear(item.providencias_asociadas[0].fecha_providencia) : "",
                         }
                     });
                     setBoletines(arrBoletines);
