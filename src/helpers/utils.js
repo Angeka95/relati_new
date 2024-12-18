@@ -12,6 +12,20 @@ const filtroMapaByDefault = {
     procedimientos: []
 }; 
 
+/** 
+ * filtroBuscadorAIByDefault
+ * Objeto inicial que almacena las opciones seleccionadas por el usuario en el filtro
+*/
+const filtroBuscadorAIByDefault = {
+    departamentos: [],
+    anios: [],
+    salas: [],
+    delitos: [],
+    macrocasos: [],
+    comparecientes: [],
+    procedimientos: []
+}; 
+
 /**
  * truncateWithEllipsis()
  * Funcionalidad para truncar con Ellipsis
@@ -76,6 +90,7 @@ const obtenerPalabrasFromArrayObject = (arrObj, property, subproperty = null, se
  * - Retorna false si alguna de las propiedades del objeto filtroMapaJurisprudencial tiene alguna propiedad con datos
  * Aplicación:
  * - useEffect en listCardSearchMapaResults.js
+ * - useEffect en listCardSearchAIResults.js
 */
 const validarfiltroMapaJurisprudencial = (obj) => {
     for (let propiedad in obj) {
@@ -207,6 +222,7 @@ function removeFragmentoInString(palabra, cadena) {
 
 
 export { filtroMapaByDefault, 
+         filtroBuscadorAIByDefault,
          truncateWithEllipsis, 
          obtenerAnio, 
          obtenerPalabrasFromArrayObject, 

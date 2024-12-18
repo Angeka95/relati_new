@@ -1,7 +1,7 @@
 // ContextProvider.js
 import React, { useState } from 'react';
 import Context from './context';
-import { filtroMapaByDefault } from '../helpers/utils.js';
+import { filtroMapaByDefault, filtroBuscadorAIByDefault } from '../helpers/utils.js';
 
 
 const ContextProvider = ({ children }) => {
@@ -14,10 +14,11 @@ const ContextProvider = ({ children }) => {
   const [dptoSelMapaJurisprudencial, setDptoSelMapaJurisprudencial] = useState(null);
   const [filtroMapaJurisprudencial, setFiltroMapaJurisprudencial] = useState(filtroMapaByDefault);
   const [listaDptosMapaJurisprudencial, setListaDptosMapaJurisprudencial] = useState([]);
+  const [filtroBuscadorAI, setFiltroBuscadorAI] = useState(filtroBuscadorAIByDefault);
 
   return (
     <Context.Provider value={{ verTodasDecisiones, setVerTodasDecisiones, busqueda, setBusqueda, verMasDecisionesRecientes, setVerMasDecisionesRecientes, isDatosMapaJurisprudencial, setIsDatosMapaJurisprudencial, dptoSelMapaJurisprudencial, setDptoSelMapaJurisprudencial, filtroMapaJurisprudencial, setFiltroMapaJurisprudencial,
-    listaDptosMapaJurisprudencial, setListaDptosMapaJurisprudencial }}>
+    listaDptosMapaJurisprudencial, setListaDptosMapaJurisprudencial, filtroBuscadorAI, setFiltroBuscadorAI }}>
       {children}
     </Context.Provider>
   );

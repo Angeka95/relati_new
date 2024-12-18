@@ -72,15 +72,19 @@ export default function Search({ isSearchAdvance, isSearchMain }) {
     setVerTodasDecisiones(false);
 
     const params = new URLSearchParams({ string: encodeURIComponent(searchValue) });
+    console.log(`/resultados-busqueda?${params.toString()}`);
     navigate(`/resultados-busqueda?${params.toString()}`);
   };
 
   useSearchAIEnterKey(() => {
     
-    const searchButtons = document.querySelectorAll('.searchButton');
+    const searchAIButtons = document.querySelectorAll('.searchAIButton');
 
-    searchButtons.forEach(searchButton => {
-        if (searchButton) searchButton.click();
+    searchAIButtons.forEach(searchAIButton => {
+        if (searchAIButton) { 
+          console.log("Darle click aqui");
+          searchAIButton.click();
+        }
     });
 
   });
@@ -118,7 +122,7 @@ export default function Search({ isSearchAdvance, isSearchMain }) {
             value={valueBar}
             onChange={updateSelectedValue}
             options={searchOptions.map((option) => option.title)}
-            renderInput={(params) => <TextField ref={inputRef} {...params} label={isSearchAdvance ? "" : "Ingrese su búsqueda"} placeholder={isSearchAdvance ? "" : "Busque por palabra clave, número de decisión, radicado...  "} inputProps={{
+            renderInput={(params) => <TextField ref={inputRef} {...params} placeholder="Busque por palabra clave, número de decisión, radicado...  " inputProps={{
               ...params.inputProps,
               maxLength: 80
             }} />}
@@ -128,12 +132,12 @@ export default function Search({ isSearchAdvance, isSearchMain }) {
           <ClearIcon />
         </div> */}
           <NoneGrid>
-            <Button onClick={search} className="searchButton autocomplete_button button_primary z-index100" startIcon={<SearchIcon />}>
+            <Button onClick={search} className="searchAIButton autocomplete_button button_primary z-index100" startIcon={<SearchIcon />}>
               Buscar
             </Button>
           </NoneGrid>
           <ShowGrid>
-            <Button onClick={search} className="searchButton autocomplete_button_responsive button_primary"><SearchIcon /></Button>
+            <Button onClick={search} className="searchAIButton autocomplete_button_responsive button_primary"><SearchIcon /></Button>
 
           </ShowGrid>
 

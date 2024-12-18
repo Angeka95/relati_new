@@ -184,10 +184,10 @@ export default function Home() {
         //const searchButton = document.getElementsById('searchButton');
         //if (searchButton) searchButton.click();
 
-        const searchButtons = document.querySelectorAll('.searchButton');
+        const searchAIButtons = document.querySelectorAll('.searchAIButton');
 
-        searchButtons.forEach(searchButton => {
-            if (searchButton) searchButton.click();
+        searchAIButtons.forEach(searchAIButton => {
+            if (searchAIButton) searchAIButton.click();
         });
 
     });
@@ -260,7 +260,7 @@ export default function Home() {
                                     <Button className="light_white text_blue autocomplete_button_help button_terciary query_none" onClick={handleOpenModal}>?</Button>
                                     <ModalInfo openModal={openModal} handleCloseModal={handleCloseModal}> </ModalInfo> 
                                     {/*<Link to="resultados-busqueda?string=caso"> */}
-                                        <Button onClick={handleSearch} className="searchButton autocomplete_button_home button_primary z-index_front" startIcon={<SearchIcon />}>
+                                        <Button onClick={handleSearch} className="searchAIButton autocomplete_button_home button_primary z-index_front" startIcon={<SearchIcon />}>
                                             Buscar
                                         </Button>
                                     {/*</Link>*/} 
