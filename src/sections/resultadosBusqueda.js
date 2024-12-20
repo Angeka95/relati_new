@@ -10,7 +10,8 @@ import mapaJurisprudencialService from '../services/mapa_jurisprudencial.js';
 import ProcessingDataModal from '../components/processingDataModal.js';
 import LinearWithValueLabel from '../components/linearProgress.js';  
 import Context from '../context/context.js';
-import { filtroBuscadorAIByDefault, removeFragmentoInString } from '../helpers/utils.js';
+import { removeFragmentoInString, getOpcionesAutocompletar } from '../helpers/utils.js';
+import { obtenerPalabrasFromArrayObject } from '../helpers/utils.js';
 
 export default function SearchResults() {
 
@@ -21,6 +22,7 @@ export default function SearchResults() {
   const [stringQuery, setStringQuery] = useState("");
   const [message, setMessage] = useState({ message: "", classname: "" });
   const [datos, setDatos] = useState([]);
+  const [searchOptions, setSearchOptions] = useState([]);
 
   const { filtroMapaJurisprudencial, setFiltroMapaJurisprudencial } = useContext(Context);
 
@@ -82,28 +84,30 @@ useEffect(() => {
           .then(response => {
               if((response.status_info.status === 200) && (response.data.length > 0)) {
                     console.log("Total datos:", response.data.length);
-                    const newDatos = response.data.map(i => { 
+                    const newDatos = response.data.map((i, k) => { 
                         let item = i._source;
-                        return {
+                        let newItem = {
+                            id: k + 1,
+                            ficha_id: item.ficha_id,
                             salaOSeccion: (item.sala_seccion !== null) ? item.sala_seccion : "",
                             sala: (item.sala_seccion !== null) ? item.sala_seccion : "",
                             nombreDecision: (item.nombre_providencia !== null) ? item.nombre_providencia : "",
                             procedimiento: (item.procedimiento.length > 0) ? item.procedimiento[0].nombre : "", 
                             procedimientos: (item.procedimiento.length > 0) ? item.procedimiento[0].nombre : "", 
                             expediente: "", 
-                            departamento: (item.departamento.length > 0) ? item.departamento[0].nombre : "", 
-                            departamentoNombre: (item.departamento.length > 0) ? item.departamento[0].nombre : "", 
+                            departamento: (item.departamento.length > 0) ? obtenerPalabrasFromArrayObject(item.departamento, "nombre", null, false) : "",
+                            departamentoNombre: (item.departamento.length > 0) ? removeFragmentoInString("DEPARTAMENTO", item.departamento[0].nombre) : "",
                             magistrado: (item.autor !== null) ? item.autor : "", 
                             municipio: "", 
-                            delito: (item.delito.length > 0) ? item.delito[0].nombre : "", 
-                            delitos: (item.delito.length > 0) ? item.delito[0].nombre : "", 
+                            delito: (item.delito.length > 0) ? obtenerPalabrasFromArrayObject(item.delito, "nombre", null, false) : "", 
+                            delitos: (item.delito.length > 0) ? obtenerPalabrasFromArrayObject(item.delito, "nombre", null, false) : "", 
                             anioHechos: (item.anio_hechos.length > 0) ? item.anio_hechos[0].anio : "",
                             anio: (item.anio_hechos.length > 0) ? item.anio_hechos[0].anio : "",
                             tipo: (item.tipo_documento !== null) ? item.tipo_documento : "", 
                             radicado: (item.radicado_documento !== null) ? item.radicado_documento : "",
                             compareciente:  (item.compareciente !== null) ? item.compareciente : "",
-                            comparecientes:  (item.compareciente !== null) ? item.compareciente : "",
-                            tipoSujeto: (item.tipo_compareciente.length > 0) ? item.tipo_compareciente[0].tipo : "", 
+                            comparecientes:  (item.tipo_compareciente.length > 0) ? obtenerPalabrasFromArrayObject(item.tipo_compareciente, "tipo", null, false) : "", 
+                            tipoSujeto: (item.tipo_compareciente.length > 0) ? obtenerPalabrasFromArrayObject(item.tipo_compareciente, "tipo", null, false) : "", 
                             accionadoVinculado: "", 
                             palabrasClaves:  (item.palabras_clave.length > 0) ? item.palabras_clave[0].palabra : "", 
                             hechos: (item.hechos_antecedentes !== null) ? item.hechos_antecedentes : "", 
@@ -119,11 +123,13 @@ useEffect(() => {
                             hipervinculoFichaJuris:   (item.ficha_id !== null ) ? `https://relatoria.jep.gov.co/downloadfichaext/${item.ficha_id}` : "",
                             estadoFichaJuris: false,
                             extractoBusqueda: "",
-                            caso: "2021"
+                            caso: (item.macrocaso.length > 0) ? item.macrocaso[0].nombre : "",
                         };
+                        newItem["autocompletarBuscador"] = { id: newItem.id, title: `${newItem.salaOSeccion} ${newItem.delitos} ${newItem.procedimientos} ${newItem.compareciente} ${newItem.tipoSujeto} ${newItem.departamentoNombre} ${newItem.nombreDecision} ${newItem.magistrado}`}; 
+                        return newItem;
                   });
-                  console.log("nuevo datos", newDatos);
                   setDatos(newDatos);
+                  setSearchOptions(getOpcionesAutocompletar(newDatos));
                   newMessage["message"] = `${response.status_info.reason}`;
                   newMessage["classname"] = 'success';
               } else if(response.status_info.status === 500) {
@@ -204,7 +210,7 @@ useEffect(() => {
               } 
               </>
              :  
-              <ListCardSearch datosBusqueda={datos} selectedFilters={selectedFilters}></ListCardSearch>
+              <ListCardSearch datosBusqueda={datos} selectedTerm={stringQuery} searchOptions={searchOptions} selectedFilters={selectedFilters}></ListCardSearch>
           }
         </Grid>
       </Grid>

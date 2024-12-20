@@ -131,7 +131,10 @@ export default function Card({ datosMapa, datosOriginalesMapa, searchDocsOptions
             if(filtroMapaJurisprudencial.comparecientes.length > 0){
                 datosFiltrados = datosFiltrados.filter( item => {
                     if(item.comparecientes.length > 0 ){
-                        return filtroMapaJurisprudencial.comparecientes.some(compareciente => item.comparecientes.toLowerCase().includes(compareciente.toLowerCase()));
+                        return filtroMapaJurisprudencial.comparecientes.some(compareciente => { 
+                            return item.comparecientes.toLowerCase().includes(compareciente.toLowerCase());
+                            
+                        });
                     }
                     return false;
                 });

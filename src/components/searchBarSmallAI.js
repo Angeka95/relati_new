@@ -8,13 +8,19 @@ import SearchIcon from '@mui/icons-material/Search';
 import ClearIcon from '@mui/icons-material/Clear';
 
 export default function search({searchOptions, handlerSetSelectedOption}) {
+  
+  const defaultProps = {
+    options: searchOptions,
+    getOptionLabel: (option) => option.title,
+  };
+
   return (
 
     <Stack className='autocomplete_bar_search_small this_is_a_test'>
       <Autocomplete
         id="free-solo-demo"
         freeSolo
-        options={searchOptions.map((option) => option.title)}
+        {...defaultProps}
         renderInput={(params) => <TextField {...params} label="Buscar en los resultados" inputProps={{
           ...params.inputProps,
           maxLength: 80
@@ -25,11 +31,8 @@ export default function search({searchOptions, handlerSetSelectedOption}) {
           }
         }
       />
-      {<div className="autocomplete_delete_small">
-          <ClearIcon />
-        </div>}
 
-      <Button className="autocomplete_button_small button_primary"><SearchIcon /></Button>
+      <Button className="autocomplete_button_small button_primary" disabled><SearchIcon /></Button>
 
     </Stack>
 

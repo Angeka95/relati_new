@@ -8,7 +8,7 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import CardSearch from './cardSearchResults.js';
-import SearchBarSmall from './searchBarSmall.js';
+import SearchBarSmall from './searchBarSmallAI.js';
 import SortIcon from '@mui/icons-material/Sort';
 import { Container, Grid } from '@mui/material';
 import { styled } from '@mui/material/styles';
@@ -19,36 +19,46 @@ import ExpandMoreOutlinedIcon from '@mui/icons-material/ExpandMoreOutlined';
 import FilterShort from './filterShort.js';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import { validarfiltroMapaJurisprudencial } from '../helpers/utils.js';
+import { macrocasos } from '../data/datos_macrocaso.js';
 
-export default function Card({ datosBusqueda, selectedFilters, isListSmall, selectedTerm, isLargeResult, isExternalFilters }) {
+export default function Card({ datosBusqueda, searchOptions, selectedFilters, isListSmall, selectedTerm, isLargeResult, isExternalFilters }) {
 
-    const [datos, setDatos] = useState([]);
+    const [datos, setDatos] = useState(datosBusqueda);
     const [datosOriginales, setDatosOriginales] = useState(datosBusqueda);
-    const [message, setMessage] = useState("");
     const [selectedDoc, setSelectedDoc] = useState("");
-    const [searchDocsOptions, setSearchDocsOptions] = useState([]);
+    const [searchDocsOptions, setSearchDocsOptions] = useState(searchOptions);
 
     const { filtroMapaJurisprudencial } = useContext(Context);
 
     useEffect(() => {
         if(!validarfiltroMapaJurisprudencial(filtroMapaJurisprudencial)) { 
-            let datosFiltrados = datos;
+            let datosFiltrados = datosOriginales;
             if(filtroMapaJurisprudencial.departamentos.length > 0){
-                datosFiltrados = datosFiltrados.filter( item => filtroMapaJurisprudencial.departamentos.includes(item.departamentoNombre) );
+                datosFiltrados = datosFiltrados.filter( item => { 
+                    return filtroMapaJurisprudencial.departamentos.includes(item.departamentoNombre); 
+                });
             }
             if(filtroMapaJurisprudencial.anios.length > 0){
-                datosFiltrados = datosFiltrados.filter( item => filtroMapaJurisprudencial.anios.includes(item.anio));
+                datosFiltrados = datosFiltrados.filter( item => { 
+                    return filtroMapaJurisprudencial.anios.includes(String(item.anio)) 
+                });
             }
             if(filtroMapaJurisprudencial.salas.length > 0){
-                datosFiltrados = datosFiltrados.filter( item => filtroMapaJurisprudencial.salas.includes(item.sala));
+                datosFiltrados = datosFiltrados.filter( item => { 
+                    return filtroMapaJurisprudencial.salas.includes(item.sala) 
+                });
             }
             if(filtroMapaJurisprudencial.macrocasos.length > 0){
-                datosFiltrados = datosFiltrados.filter( item => filtroMapaJurisprudencial.macrocasos.includes(item.caso));
+                datosFiltrados = datosFiltrados.filter( item => { 
+                    return filtroMapaJurisprudencial.macrocasos.includes(item.caso); 
+                });
             }
             if(filtroMapaJurisprudencial.comparecientes.length > 0){
                 datosFiltrados = datosFiltrados.filter( item => {
                     if(item.comparecientes.length > 0 ){
-                        return filtroMapaJurisprudencial.comparecientes.some(compareciente => item.comparecientes.toLowerCase().includes(compareciente.toLowerCase()));
+                        return filtroMapaJurisprudencial.comparecientes.some(compareciente => { 
+                            return item.comparecientes.toLowerCase().includes(compareciente.toLowerCase());
+                        });
                     }
                     return false;
                 });
@@ -56,7 +66,9 @@ export default function Card({ datosBusqueda, selectedFilters, isListSmall, sele
             if(filtroMapaJurisprudencial.delitos.length > 0){
                 datosFiltrados = datosFiltrados.filter( item =>  {
                     if(item.delitos.length > 0 ){
-                        return filtroMapaJurisprudencial.delitos.some(delito => item.delitos.toLowerCase().includes(delito.toLowerCase()));
+                        return filtroMapaJurisprudencial.delitos.some(delito => { 
+                            return item.delitos.toLowerCase().includes(delito.toLowerCase());
+                        });
                     }
                     return false;
                 });
@@ -65,7 +77,6 @@ export default function Card({ datosBusqueda, selectedFilters, isListSmall, sele
                 datosFiltrados = datosFiltrados.filter( item =>  {
                     if(item.procedimientos.length > 0 ){
                         return filtroMapaJurisprudencial.procedimientos.some(procedimiento => {
-                                //console.log("item", item);
                                 return item.procedimientos.toLowerCase().includes(procedimiento.toLowerCase());
                             }
                         );
@@ -73,10 +84,8 @@ export default function Card({ datosBusqueda, selectedFilters, isListSmall, sele
                     return false;
                 });
             } 
-            console.log("Datos Filtrados", datosFiltrados);
             setDatos(datosFiltrados);
         } else {
-            console.log("Datos originales", datosOriginales);
             setDatos(datosOriginales);
         }
     }, [filtroMapaJurisprudencial]);
@@ -89,9 +98,10 @@ export default function Card({ datosBusqueda, selectedFilters, isListSmall, sele
         return [ { "title": "*" } ].concat(arrLinted.map( item => { return { "title": item.asunto } }));
     };
 
+    // Funcion que permite mostrar la lista de providencias en el autocompletar
     const handlerSetSelectedDoc = (newSelectedOption) => {
         if(newSelectedOption !== "*"){
-            const newArrDatos = datos.filter(item => item.asunto === newSelectedOption);
+            const newArrDatos = datos.filter(item => item.id === newSelectedOption.id);
             setSelectedDoc(newSelectedOption);
             setDatos(newArrDatos);
         } else {
@@ -153,12 +163,10 @@ export default function Card({ datosBusqueda, selectedFilters, isListSmall, sele
     const startIndexPage = Math.ceil(page * itemsPerPage + 1 - itemsPerPage);
 
     useEffect(() => {
-        if(datos.length === 0){
-            setDatos(datosBusqueda);
-        } else {
+        if(datos.length > 0){
             getCurrentData();
         }
-    }, [page, itemsPerPage, datos, datosBusqueda]);
+    }, [page, itemsPerPage, datos]);
 
     const getCurrentData = (items = 0) => {
         if (items === 0) {
@@ -269,7 +277,7 @@ export default function Card({ datosBusqueda, selectedFilters, isListSmall, sele
         }
     }));
 
-     if(datos.length > 0) {
+     if(datosBusqueda.length > 0) {
         return (
             <Stack>
                 <div className=  {isListSmall ? ('text_results_search', 'no-spacing') :  ('text_results_search','margin_search') } >
@@ -289,14 +297,13 @@ export default function Card({ datosBusqueda, selectedFilters, isListSmall, sele
                         )}
     
                         {selectedTerm && (
-                            <h4 >Está buscando por <span className="text_bolder">{selectedTerm}</span> </h4>
+                            <h4 >Está buscando por <span className="text_bolder">"{selectedTerm}"</span> </h4>
             
                         )}
     
-    
-                        {busqueda && (
+                        {/*busqueda && (
                             <h4 >Está buscando por <span className="text_bolder">{busqueda}</span> </h4>
-                        )}
+                        )*/}
     
                         {!selectedTerm && !isExternalFilters && selectedFilters.length === 0 && (
                             <h4 className="text_diabled">(Aún no ha agregado ningún filtro a su búsqueda)</h4>
@@ -435,47 +442,49 @@ export default function Card({ datosBusqueda, selectedFilters, isListSmall, sele
                         </WrapGrid>
     
                         <div className="separator width_100"></div>
-    
-                        <SpaceGrid className="justify_end">
-    
-                            <Pagination className="margin_top_s"
-                                count={totalPages}
-                                page={page}
-                                onChange={handleChange}
-                                renderItem={(item, id) => (
-                                    <PaginationItem key={id}
-                                        slots={{ previous: ArrowBackIcon, next: ArrowForwardIcon }}
-                                        {...item}
-                                    />
-                                )}
-                            />
-                        </SpaceGrid>
-    
-                        <List className="width_100">
-                            {currentData.map((item, k) => (
-                                <SpaceGrid key={k}>
-                                    <ListItem className="padding_none" key={item.id}>
-                                        <CardSearch className="padding_none" datos={item}></CardSearch>
-                                    </ListItem>
-                                </SpaceGrid>
-                            ))}
-    
-                        </List>
-    
-                        <SpaceGrid className="justify_end">
-                            <Pagination className="pagination_container margin_bottom_s"
-                                count={totalPages}
-                                page={page}
-                                onChange={handleChange}
-                                renderItem={(item) => (
-                                    <PaginationItem
-                                        slots={{ previous: ArrowBackIcon, next: ArrowForwardIcon }}
-                                        {...item}
-                                    />
-                                )}
-                            />
-    
-                        </SpaceGrid>
+                        {(datos.length > 0) && (
+                            <> 
+                            <SpaceGrid className="justify_end">
+        
+                                <Pagination className="margin_top_s"
+                                    count={totalPages}
+                                    page={page}
+                                    onChange={handleChange}
+                                    renderItem={(item, id) => (
+                                        <PaginationItem key={id}
+                                            slots={{ previous: ArrowBackIcon, next: ArrowForwardIcon }}
+                                            {...item}
+                                        />
+                                    )}
+                                />
+                            </SpaceGrid>
+                            <List className="width_100">
+                                {currentData.map((item, k) => (
+                                    <SpaceGrid key={k}>
+                                        <ListItem className="padding_none" key={item.id}>
+                                            <CardSearch className="padding_none" datos={item}></CardSearch>
+                                        </ListItem>
+                                    </SpaceGrid>
+                                ))}
+        
+                            </List>
+        
+                            <SpaceGrid className="justify_end">
+                                <Pagination className="pagination_container margin_bottom_s"
+                                    count={totalPages}
+                                    page={page}
+                                    onChange={handleChange}
+                                    renderItem={(item) => (
+                                        <PaginationItem
+                                            slots={{ previous: ArrowBackIcon, next: ArrowForwardIcon }}
+                                            {...item}
+                                        />
+                                    )}
+                                />
+        
+                            </SpaceGrid>
+                            </>
+                        )}  
                     </>
                 )
     

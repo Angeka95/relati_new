@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 
 const useSearchAIEnterKey = (callback) => {
-    useEffect(() => {
+    /*useEffect(() => {
         const handleKeyDown = (event) => {
             if (event.key === 'Enter') {
                 callback();
@@ -12,7 +12,7 @@ const useSearchAIEnterKey = (callback) => {
         return () => {
             document.removeEventListener('keydown', handleKeyDown);
         };
-    }, [callback]);
+    }, [callback]);*/
 };
 
 export default useSearchAIEnterKey;

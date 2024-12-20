@@ -233,6 +233,12 @@ function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
 }
 
+// Genera el listado de opciones de documentos para el autocompletar
+const getOpcionesAutocompletar = (arrDatos) => {
+    const arrLinted = arrDatos.map(item => item.autocompletarBuscador);
+    return [ { "title": "*", "id": 0 } ].concat(arrLinted);
+};
+
 export { filtroMapaByDefault, 
          filtroBuscadorAIByDefault,
          truncateWithEllipsis, 
@@ -245,5 +251,6 @@ export { filtroMapaByDefault,
          obtenerMesEnEspanol,
          obtenerAnioDeTexto,
          removeFragmentoInString,
-         formatDateToMonthYear
+         formatDateToMonthYear,
+         getOpcionesAutocompletar
         };
