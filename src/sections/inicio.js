@@ -35,13 +35,13 @@ export default function Home() {
               id: item.id,
               fecha: item.fecha_providencia,
               asunto: item.asuntocaso,
-              salaOSeccion: (item.hasOwnProperty("despacho")) ? item.despacho.nombre : "???",
+              salaOSeccion: (item.hasOwnProperty("despacho")) ? item.despacho.nombre : "",
               nombreDecision: item.nombre,
-              tipoSujeto: (item.hasOwnProperty("tipopeti")) && (item.tipopeti.length > 0 )? obtenerPalabrasFromArrayObject(item.tipopeti, "tipo", null, false) : "???",
-              lugarHechos: "???",
-              magistrado: ((item.hasOwnProperty("magistrado")) && (item.magistrado.length > 0 )) ? obtenerPalabrasFromArrayObject(item.magistrado, "nombre_magistrado", "nombre", false) : "???", 
-              caso: ((item.hasOwnProperty("caso")) && (item.caso !== null )) ? item.caso : "???", 
-              resuelve: ((item.hasOwnProperty("getfichas")) && (item.getfichas.length > 0 ))? obtenerPalabrasFromArrayObject(item.getfichas[0].resuelve, "descripcion", null, false) : "???",
+              tipoSujeto: (item.hasOwnProperty("tipopeti")) && (item.tipopeti.length > 0 )? obtenerPalabrasFromArrayObject(item.tipopeti, "tipo", null, false) : "",
+              lugarHechos: "",
+              magistrado: ((item.hasOwnProperty("magistrado")) && (item.magistrado.length > 0 )) ? obtenerPalabrasFromArrayObject(item.magistrado, "nombre_magistrado", "nombre", false) : "", 
+              caso: ((item.hasOwnProperty("caso")) && (item.caso !== null )) ? item.caso : "", 
+              resuelve: ((item.hasOwnProperty("getfichas")) && (item.getfichas.length > 0 ))? obtenerPalabrasFromArrayObject(item.getfichas[0].resuelve, "descripcion", null, false) : "",
               hipervinculo:  `https://relatoria.jep.gov.co/${item.hipervinculo}`,
               hipervinculoFichaJuris: ((item.hasOwnProperty("getfichas")) && (item.getfichas.length > 0 ) && (item.getfichas[0].estado_id === 14)) ? `https://relatoria.jep.gov.co/downloadfichaext/${item.getfichas[0].id}` : "",
               estadoFichaJuris: ((item.hasOwnProperty("getfichas")) && (item.getfichas.length > 0 ) && (item.getfichas[0].estado_id !== null))  ?  item.getfichas[0].estado_id : "",
@@ -257,8 +257,8 @@ export default function Home() {
                                         }} />}
 
                                     />
-                                    <Button className="light_white text_blue autocomplete_button_help button_terciary query_none" onClick={handleOpenModal}>?</Button>
-                                    <ModalInfo openModal={openModal} handleCloseModal={handleCloseModal}> </ModalInfo> 
+                                    {/*<Button className="light_white text_blue autocomplete_button_help button_terciary query_none" onClick={handleOpenModal}>?</Button>*}
+                                    {/*<ModalInfo openModal={openModal} handleCloseModal={handleCloseModal}> </ModalInfo>*/} 
                                     {/*<Link to="resultados-busqueda?string=caso"> */}
                                         <Button onClick={handleSearch} className="searchAIButton autocomplete_button_home button_primary z-index_front" startIcon={<SearchIcon />}>
                                             Buscar
