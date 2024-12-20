@@ -31,7 +31,7 @@ export default function CardDecision({ decisiones }) {
                     <p className="text_bolder text_space_min">{decisiones.nombreDecision}</p>
                 )}
                 {((typeof decisiones.salaOSeccion === 'string' ) && (decisiones.salaOSeccion.trim() !== '')) && (
-                    <p className="text_space_min">{decisiones.salaOSeccion}</p>
+                    <p className="text_space_min">• Sala/Sesión:  <span className="text_bolder">{decisiones.salaOSeccion}</span></p>
                 )}
                 {isButtonInfoEnabled && (
                     <Button className="link_primary text_lowercase" onClick={toggleButtonInfo}>ver más</Button>)}
@@ -48,10 +48,13 @@ export default function CardDecision({ decisiones }) {
                             <p className="text_space_min">• Magistrado: <span className="text_bolder">{decisiones.magistrado}</span></p>
                         )}
                         {((typeof decisiones.caso === 'string' ) && (decisiones.caso.trim() !== '')) && (
-                            <p className="text_space_min">• Macrocaso: <span className="text_bolder">{decisiones.caso}</span></p>
+                            <p className="text_space_min">• Macrocasos: <span className="text_bolder">{decisiones.caso}</span></p>
                         )}
-                        {((typeof decisiones.resuelve === 'string' ) && (decisiones.resuelve.trim() !== '')) && (
+                        {/*((typeof decisiones.resuelve === 'string' ) && (decisiones.resuelve.trim() !== '')) && (
                             <p className="text_space_min">• Conclusión de la decisión: <span className="text_bolder">{decisiones.resuelve}</span></p>
+                        )*/}
+                        {((typeof decisiones.delitos === 'string' ) && (decisiones.delitos.trim() !== '')) && (
+                            <p className="text_space_min">• Delitos: <span className="text_bolder">{decisiones.delitos}</span></p>
                         )}
                         
                         <div className="width_100 justify_end margin_top_m margin_bottom_m">
