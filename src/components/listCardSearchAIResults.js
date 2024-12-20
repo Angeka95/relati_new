@@ -18,7 +18,7 @@ import ExpandLessOutlinedIcon from '@mui/icons-material/ExpandLessOutlined';
 import ExpandMoreOutlinedIcon from '@mui/icons-material/ExpandMoreOutlined';
 import FilterShort from './filterShort.js';
 import FilterListIcon from '@mui/icons-material/FilterList';
-import { validarfiltroMapaJurisprudencial } from '../helpers/utils.js';
+import { validarfiltroMapaJurisprudencial, getOpcionesAutocompletar } from '../helpers/utils.js';
 import { macrocasos } from '../data/datos_macrocaso.js';
 
 export default function Card({ datosBusqueda, searchOptions, selectedFilters, isListSmall, selectedTerm, isLargeResult, isExternalFilters }) {
@@ -85,8 +85,10 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
                 });
             } 
             setDatos(datosFiltrados);
+            setSearchDocsOptions(getOpcionesAutocompletar(datosFiltrados));
         } else {
             setDatos(datosOriginales);
+            setSearchDocsOptions(searchOptions);
         }
     }, [filtroMapaJurisprudencial]);
 
