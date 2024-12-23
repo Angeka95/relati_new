@@ -8,7 +8,7 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import CardSearch from '../components/cardSearchResults.js';
-import SearchBarSmall from '../components/searchBarSmall.js';
+import SearchBarSmall from '../components/searchBarSmallAI.js';
 import SortIcon from '@mui/icons-material/Sort';
 import { Container, Grid } from '@mui/material';
 import { styled } from '@mui/material/styles';
@@ -20,7 +20,7 @@ import FilterShort from './filterShort';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import LinearWithValueLabel from '../components/linearProgress.js';
 import tesauroService from './../services/tesauro.js';
-import { obtenerPalabrasFromArrayObject } from '../helpers/utils.js';
+import { obtenerPalabrasFromArrayObject, getOpcionesAutocompletar } from '../helpers/utils.js';
 
 export default function Card({ selectedFilters, isListSmall, selectedTerm, isLargeResult, isExternalFilters }) {
 
@@ -69,13 +69,15 @@ export default function Card({ selectedFilters, isListSmall, selectedTerm, isLar
                             estadoFichaJuris: "",
                             extractoBusqueda: ""
                         };
+                        newItem["autocompletarBuscador"] = { id: newItem.id, title: `${newItem.salaOSeccion} ${newItem.delito} ${newItem.procedimiento} ${newItem.compareciente} ${newItem.tipoSujeto} ${newItem.departamento} ${newItem.nombreDecision} ${newItem.magistrado}  ${newItem.palabrasClaves}`}; 
+                        //newItem["autocompletarBuscador"] = "";
                         return newItem;
                     });
-                    setMessage(`Success: ${response.status_info.status}. ${response.status_info.reason}`)
+                    setMessage(`Success: ${response.status_info.status}. ${response.status_info.reason}`);
+                    console.log("cardsArr", cardsArr);
                     setDatos(cardsArr);
                     setDatosOriginales(cardsArr);
-                    const newOpcionesDocs = getOpcionesDocs(cardsArr);
-                    setSearchDocsOptions(newOpcionesDocs);
+                    setSearchDocsOptions(getOpcionesAutocompletar(cardsArr));
                 } else {
                 setMessage(`Error: ${response.status_info.status}. ${response.status_info.reason}`)
                 }
