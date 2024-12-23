@@ -20,352 +20,56 @@ import FilterShort from './filterShort';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import LinearWithValueLabel from '../components/linearProgress.js';
 import tesauroService from './../services/tesauro.js';
+import { obtenerPalabrasFromArrayObject } from '../helpers/utils.js';
 
 export default function Card({ selectedFilters, isListSmall, selectedTerm, isLargeResult, isExternalFilters }) {
 
-    const [datos, setDatos] = useState([
-            {
-                id: 1,
-                "fecha": "2023-06-15",
-                "asunto": "En el asunto de héctor orlando bastidas bravo",
-                "salaOSeccion": "Sala de Reconocimiento",
-                "nombreDecision": "Sentencia SRT-ST-117-2024",
-                "delito": "Desaparición Forzada",
-                "departamento": "Meta",
-                "municipio": "Acacias",
-                "anioHechos": "2016",
-                "organo": "Lorem ipsum",
-                "tipo": "Lorem ipsum",
-                "radicado": "Lorem ipsum",
-                "procedimiento": "Lorem ipsum dolor sit amet",
-                "expediente": "Lorem ipsum dolor",
-                "extractoBusqueda": "Et has minim elitr intellegat. Mea aeterno eleifend antiopam ad, nam no suscipit quaerendum. At nam ite minimum secuestro. Est audiam animal molestiae te. Ex duo eripuit mentitum. As min...Et has minim elitr intellegat. Mea aeterno eleifend antiopam ad, nam no suscipit quaerendum. At nam ite minimum secuestro. Est audiam animal molestiae te. Ex duo eripuit mentitum. As min...",
-                "magistrado": "Lily Andrea Rueda Guzmán",
-                "actor": "Lorem ipsum dolor sit amet",
-                "tipoSujeto": "Lorem ipsum dolor sit amet",
-                "accionadoVinculado": "Lorem ipsum dolor sit amet",
-            },
-            {
-                id: 2,
-                "fecha": "2022-03-18",
-                "asunto": "En el asunto de martin gonzales leal",
-                "salaOSeccion": "Sala de Amnistía",
-                "nombreDecision": "Sentencia SRT-ST-120-2024",
-                "grupoPertence": "Grupo armado no firmante",
-                "lugarHechos": "Acacías, Meta",
-                "magistrado": "Augusto Rodriguez",
-                "macrocaso": "08 ",
-                "conclusionDecision": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes,",
-                "extractoBusqueda": "Et has minim elitr intellegat. Mea aeterno eleifend antiopam ad, nam no suscipit quaerendum. At nam ite minimum secuestro. Est audiam animal molestiae te. Ex duo eripuit mentitum. As min...Et has minim elitr intellegat. Mea aeterno eleifend antiopam ad, nam no suscipit quaerendum. At nam ite minimum secuestro. Est audiam animal molestiae te. Ex duo eripuit mentitum. As min..."
-        
-            },
-            {
-                id: 3,
-                "fecha": "2021-06-22",
-                "asunto": "En el asunto de juana castellanos rodriguez",
-                "salaOSeccion": "Sección de Apelacion",
-                "nombreDecision": "Sentencia SRT-ST-104-2024",
-                "grupoPertence": "Grupo armado no firmante",
-                "lugarHechos": "Acacías, Meta",
-                "magistrado": "Augusto Rodriguez",
-                "macrocaso": "08 ",
-                "conclusionDecision": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes,",
-                "extractoBusqueda": "Et has minim elitr intellegat. Mea aeterno eleifend antiopam ad, nam no suscipit quaerendum. At nam ite minimum secuestro. Est audiam animal molestiae te. Ex duo eripuit mentitum. As min..."
-        
-            },
-            {
-                id: 4,
-                "fecha": "2023-08-11",
-                "asunto": "En el asunto de mario leal prado",
-                "salaOSeccion": "Sección de Revisión",
-                "nombreDecision": "Sentencia SRT-ST-104-2024",
-                "grupoPertence": "Grupo armado no firmante",
-                "lugarHechos": "Acacías, Meta",
-                "magistrado": "Augusto Rodriguez",
-                "macrocaso": "08 ",
-                "conclusionDecision": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes,",
-                "extractoBusqueda": "Et has minim elitr intellegat. Mea aeterno eleifend antiopam ad, nam no suscipit quaerendum. At nam ite minimum secuestro. Est audiam animal molestiae te. Ex duo eripuit mentitum. As min..."
-        
-            },
-            {
-                id: 5,
-                "fecha": "2021-03-15",
-                "asunto": "En el asunto de juan camilo molano pedraza",
-                "salaOSeccion": "Sección de Apelacion",
-                "nombreDecision": "Sentencia SRT-ST-104-2024",
-                "grupoPertence": "Grupo armado no firmante",
-                "lugarHechos": "Acacías, Meta",
-                "magistrado": "Augusto Rodriguez",
-                "macrocaso": "08 ",
-                "conclusionDecision": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes,",
-                "extractoBusqueda": "Et has minim elitr intellegat. Mea aeterno eleifend antiopam ad, nam no suscipit quaerendum. At nam ite minimum secuestro. Est audiam animal molestiae te. Ex duo eripuit mentitum. As min..."
-        
-            },
-            {
-                id: 6,
-                "fecha": "2022-03-08",
-                "asunto": "En el asunto de camila moreno daza",
-                "salaOSeccion": "Sección de Apelacion",
-                "nombreDecision": "Sentencia SRT-ST-104-2024",
-                "grupoPertence": "Grupo armado no firmante",
-                "lugarHechos": "Acacías, Meta",
-                "magistrado": "Augusto Rodriguez",
-                "macrocaso": "08 ",
-                "conclusionDecision": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes,",
-                "extractoBusqueda": "Et has minim elitr intellegat. Mea aeterno eleifend antiopam ad, nam no suscipit quaerendum. At nam ite minimum secuestro. Est audiam animal molestiae te. Ex duo eripuit mentitum. As min..."
-        
-            },
-            {
-                id: 7,
-                "fecha": "2024-02-01",
-                "asunto": "En el asunto de guillermo fernandez moreno",
-                "salaOSeccion": "Sección de Revisión",
-                "nombreDecision": "Sentencia SRT-ST-104-2024",
-                "grupoPertence": "Grupo armado no firmante",
-                "lugarHechos": "Acacías, Meta",
-                "magistrado": "Augusto Rodriguez",
-                "macrocaso": "08 ",
-                "conclusionDecision": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes,",
-                "extractoBusqueda": "Et has minim elitr intellegat. Mea aeterno eleifend antiopam ad, nam no suscipit quaerendum. At nam ite minimum secuestro. Est audiam animal molestiae te. Ex duo eripuit mentitum. As min..."
-        
-            },
-            {
-                id: 8,
-                "fecha": "2021-02-14",
-                "asunto": "En el asunto de valentina lozano paz",
-                "salaOSeccion": "Sección de Revisión",
-                "nombreDecision": "Sentencia SRT-ST-104-2024",
-                "grupoPertence": "Grupo armado no firmante",
-                "lugarHechos": "Acacías, Meta",
-                "magistrado": "Augusto Rodriguez",
-                "macrocaso": "08 ",
-                "conclusionDecision": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes,",
-                "extractoBusqueda": "Et has minim elitr intellegat. Mea aeterno eleifend antiopam ad, nam no suscipit quaerendum. At nam ite minimum secuestro. Est audiam animal molestiae te. Ex duo eripuit mentitum. As min..."
-        
-            },
-            {
-                id: 9,
-                "fecha": "2021-02-14",
-                "asunto": "En el asunto de alejandra arias vasquez",
-                "salaOSeccion": "Sección de Revisión",
-                "nombreDecision": "Sentencia SRT-ST-104-2024",
-                "grupoPertence": "Grupo armado no firmante",
-                "lugarHechos": "Acacías, Meta",
-                "magistrado": "Augusto Rodriguez",
-                "macrocaso": "08 ",
-                "conclusionDecision": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes,",
-                "extractoBusqueda": "Et has minim elitr intellegat. Mea aeterno eleifend antiopam ad, nam no suscipit quaerendum. At nam ite minimum secuestro. Est audiam animal molestiae te. Ex duo eripuit mentitum. As min..."
-        
-            },
-            {
-                id: 10,
-                "fecha": "2021-02-14",
-                "asunto": "En el asunto de camilo puentes alvarado",
-                "salaOSeccion": "Sección de Revisión",
-                "nombreDecision": "Sentencia SRT-ST-104-2024",
-                "grupoPertence": "Grupo armado no firmante",
-                "lugarHechos": "Acacías, Meta",
-                "magistrado": "Augusto Rodriguez",
-                "macrocaso": "08 ",
-                "conclusionDecision": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes,",
-                "extractoBusqueda": "Et has minim elitr intellegat. Mea aeterno eleifend antiopam ad, nam no suscipit quaerendum. At nam ite minimum secuestro. Est audiam animal molestiae te. Ex duo eripuit mentitum. As min..."
-        
-            },
-            {
-                id: 11,
-                "fecha": "2021-08-22",
-                "asunto": "En el asunto de mario ramirez duarte",
-                "salaOSeccion": "Sección de Revisión",
-                "nombreDecision": "Sentencia SRT-ST-104-2024",
-                "grupoPertence": "Grupo armado no firmante",
-                "lugarHechos": "Acacías, Meta",
-                "magistrado": "Augusto Rodriguez",
-                "macrocaso": "08 ",
-                "conclusionDecision": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes,",
-                "extractoBusqueda": "Et has minim elitr intellegat. Mea aeterno eleifend antiopam ad, nam no suscipit quaerendum. At nam ite minimum secuestro. Est audiam animal molestiae te. Ex duo eripuit mentitum. As min..."
-        
-            },
-            {
-                id: 12,
-                "fecha": "2021-05-11",
-                "asunto": "En el asunto de viviana suarez mondragon",
-                "salaOSeccion": "Sección de Revisión",
-                "nombreDecision": "Sentencia SRT-ST-104-2024",
-                "grupoPertence": "Grupo armado no firmante",
-                "lugarHechos": "Acacías, Meta",
-                "magistrado": "Augusto Rodriguez",
-                "macrocaso": "08 ",
-                "conclusionDecision": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes,",
-                "extractoBusqueda": "Et has minim elitr intellegat. Mea aeterno eleifend antiopam ad, nam no suscipit quaerendum. At nam ite minimum secuestro. Est audiam animal molestiae te. Ex duo eripuit mentitum. As min..."
-        
-            },
-            {
-                id: 13,
-                "fecha": "2020-02-14",
-                "asunto": "En el asunto de diego gomez valencia",
-                "salaOSeccion": "Sección de Revisión",
-                "nombreDecision": "Sentencia SRT-ST-104-2024",
-                "grupoPertence": "Grupo armado no firmante",
-                "lugarHechos": "Acacías, Meta",
-                "magistrado": "Augusto Rodriguez",
-                "macrocaso": "08 ",
-                "conclusionDecision": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes,",
-                "extractoBusqueda": "Et has minim elitr intellegat. Mea aeterno eleifend antiopam ad, nam no suscipit quaerendum. At nam ite minimum secuestro. Est audiam animal molestiae te. Ex duo eripuit mentitum. As min..."
-        
-            },
-            {
-                id: 14,
-                "fecha": "2020-02-01",
-                "asunto": "En el asunto de pablo bohórquez garzón",
-                "salaOSeccion": "Sección de Revisión",
-                "nombreDecision": "Sentencia SRT-ST-104-2024",
-                "grupoPertence": "Grupo armado no firmante",
-                "lugarHechos": "Acacías, Meta",
-                "magistrado": "Augusto Rodriguez",
-                "macrocaso": "08 ",
-                "conclusionDecision": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes,",
-                "extractoBusqueda": "Et has minim elitr intellegat. Mea aeterno eleifend antiopam ad, nam no suscipit quaerendum. At nam ite minimum secuestro. Est audiam animal molestiae te. Ex duo eripuit mentitum. As min..."
-        
-            },
-            {
-                id: 15,
-                "fecha": "2019-02-14",
-                "asunto": "En el asunto de luis benavides romero",
-                "salaOSeccion": "Sección de Revisión",
-                "nombreDecision": "Sentencia SRT-ST-104-2024",
-                "grupoPertence": "Grupo armado no firmante",
-                "lugarHechos": "Acacías, Meta",
-                "magistrado": "Augusto Rodriguez",
-                "macrocaso": "08 ",
-                "conclusionDecision": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes,",
-                "extractoBusqueda": "Et has minim elitr intellegat. Mea aeterno eleifend antiopam ad, nam no suscipit quaerendum. At nam ite minimum secuestro. Est audiam animal molestiae te. Ex duo eripuit mentitum. As min..."
-        
-            },
-            {
-                id: 16,
-                "fecha": "2016-02-14",
-                "asunto": "En el asunto de andrea castillo diaz",
-                "salaOSeccion": "Sección de Apelacion",
-                "nombreDecision": "Sentencia SRT-ST-104-2024",
-                "grupoPertence": "Grupo armado no firmante",
-                "lugarHechos": "Acacías, Meta",
-                "magistrado": "Augusto Rodriguez",
-                "macrocaso": "08 ",
-                "conclusionDecision": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes,",
-                "extractoBusqueda": "Et has minim elitr intellegat. Mea aeterno eleifend antiopam ad, nam no suscipit quaerendum. At nam ite minimum secuestro. Est audiam animal molestiae te. Ex duo eripuit mentitum. As min..."
-        
-            },
-            {
-                id: 17,
-                "fecha": "2021-02-09",
-                "asunto": "En el asunto de esteban vargas jaramillo",
-                "salaOSeccion": "Sección de Apelacion",
-                "nombreDecision": "Sentencia SRT-ST-104-2024",
-                "grupoPertence": "Grupo armado no firmante",
-                "lugarHechos": "Acacías, Meta",
-                "magistrado": "Augusto Rodriguez",
-                "macrocaso": "08 ",
-                "conclusionDecision": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes,",
-                "extractoBusqueda": "Et has minim elitr intellegat. Mea aeterno eleifend antiopam ad, nam no suscipit quaerendum. At nam ite minimum secuestro. Est audiam animal molestiae te. Ex duo eripuit mentitum. As min..."
-        
-            },
-            {
-                id: 18,
-                "fecha": "2021-08-07",
-                "asunto": "En el asunto de ricardo castro salazar",
-                "salaOSeccion": "Sección de Apelacion",
-                "nombreDecision": "Sentencia SRT-ST-104-2024",
-                "grupoPertence": "Grupo armado no firmante",
-                "lugarHechos": "Acacías, Meta",
-                "magistrado": "Augusto Rodriguez",
-                "macrocaso": "08 ",
-                "conclusionDecision": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes,",
-                "extractoBusqueda": "Et has minim elitr intellegat. Mea aeterno eleifend antiopam ad, nam no suscipit quaerendum. At nam ite minimum secuestro. Est audiam animal molestiae te. Ex duo eripuit mentitum. As min..."
-        
-            },
-            {
-                id: 19,
-                "fecha": "2019-02-14",
-                "asunto": "En el asunto de sergio ramirez torres",
-                "salaOSeccion": "Sección de Revisión",
-                "nombreDecision": "Sentencia SRT-ST-104-2024",
-                "grupoPertence": "Grupo armado no firmante",
-                "lugarHechos": "Acacías, Meta",
-                "magistrado": "Augusto Rodriguez",
-                "macrocaso": "08 ",
-                "conclusionDecision": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes,",
-                "extractoBusqueda": "Et has minim elitr intellegat. Mea aeterno eleifend antiopam ad, nam no suscipit quaerendum. At nam ite minimum secuestro. Est audiam animal molestiae te. Ex duo eripuit mentitum. As min..."
-        
-            },
-            {
-                id: 20,
-                "fecha": "2018-02-14",
-                "asunto": "En el asunto de catalina moreno vargas",
-                "salaOSeccion": "Sección de Revisión",
-                "nombreDecision": "Sentencia SRT-ST-104-2024",
-                "grupoPertence": "Grupo armado no firmante",
-                "lugarHechos": "Acacías, Meta",
-                "magistrado": "Augusto Rodriguez",
-                "macrocaso": "08 ",
-                "conclusionDecision": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes,",
-                "extractoBusqueda": "Et has minim elitr intellegat. Mea aeterno eleifend antiopam ad, nam no suscipit quaerendum. At nam ite minimum secuestro. Est audiam animal molestiae te. Ex duo eripuit mentitum. As min..."
-        
-            },
-            {
-                id: 21,
-                "fecha": "2016-06-14",
-                "asunto": "En el asunto de alejandro torres castro",
-                "salaOSeccion": "Sección de Apelacion",
-                "nombreDecision": "Sentencia SRT-ST-104-2024",
-                "grupoPertence": "Grupo armado no firmante",
-                "lugarHechos": "Acacías, Meta",
-                "magistrado": "Augusto Rodriguez",
-                "macrocaso": "08 ",
-                "conclusionDecision": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes,",
-                "extractoBusqueda": "Et has minim elitr intellegat. Mea aeterno eleifend antiopam ad, nam no suscipit quaerendum. At nam ite minimum secuestro. Est audiam animal molestiae te. Ex duo eripuit mentitum. As min..."
-        
-            },
-            {
-                id: 22,
-                "fecha": "2017-01-15",
-                "asunto": "En el asunto de isabel castillo vargas",
-                "salaOSeccion": "Sección de Apelacion",
-                "nombreDecision": "Sentencia SRT-ST-104-2024",
-                "grupoPertence": "Grupo armado no firmante",
-                "lugarHechos": "Acacías, Meta",
-                "magistrado": "Augusto Rodriguez",
-                "macrocaso": "08 ",
-                "conclusionDecision": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes,",
-                "extractoBusqueda": "Et has minim elitr intellegat. Mea aeterno eleifend antiopam ad, nam no suscipit quaerendum. At nam ite minimum secuestro. Est audiam animal molestiae te. Ex duo eripuit mentitum. As min..."
-        
-            },
-        ]
-    );
+    const [datos, setDatos] = useState([]);
     const [datosOriginales, setDatosOriginales] = useState([]);
     const [message, setMessage] = useState("");
     const [selectedDoc, setSelectedDoc] = useState("");
     const [searchDocsOptions, setSearchDocsOptions] = useState([]);
 
     const getDocsTerm = () => {
-        console.log('aaaaaa')
         tesauroService
-            .getDocsByTerm(selectedTerm)
+            .getDocsByTermAI(selectedTerm)
             .then(response => {
                 if((response.status_info.status === 200) && (response.data.length > 0)) {
-                    const cardsArr = response.data.map(item => {
-                        return {
-                            id: item._source.id,
-                            fecha: item._source.fecha_documento,
-                            asunto: item._source.asunto,
-                            salaOSeccion: item._source.despacho,
-                            nombreDecision: "Sentencia SRT-ST-117-2024",
-                            grupoPertence: "Grupo armado no firmante",
-                            lugarHechos: "Acacías, Meta",
-                            magistrado: "Augusto Rodriguez",
-                            macrocaso: "08 ",
-                            conclusionDecision: "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes,",
-                            extractoBusqueda: "extracto busqueda"
-                        }
+                    const cardsArr = response.data.map((i, k) => {
+                        let item = i._source;
+                        let newItem = { 
+                            id: item.id,
+                            fecha: item.fecha_providencia,
+                            asunto: item.asuntocaso,
+                            salaOSeccion: item.sala_seccion,
+                            nombreDecision: item.nombre_providencia,
+                            procedimiento: (item.procedimiento.length > 0 )? obtenerPalabrasFromArrayObject(item.procedimiento, "actuacion") : "",
+                            expediente: (item.expediente !== null )? item.expediente : "",
+                            departamento: (item.departamento.length > 0 )? obtenerPalabrasFromArrayObject(item.departamento, "nombre", null, false) : "",
+                            magistrado: (item.autor !== null) ? item.autor : "",  
+                            municipio: (item.municipio.length > 0 )? obtenerPalabrasFromArrayObject(item.municipio, "nombre", null, false) : "", 
+                            delito: (item.delito.length > 0 )?  obtenerPalabrasFromArrayObject(item.delito, "nombre", null, false) : "", 
+                            anioHechos: (item.anio_hechos.length > 0 )? obtenerPalabrasFromArrayObject(item.anio_hechos, "anio") : "", 
+                            tipo: (item.tipo_documento !== null ) ? item.tipo_documento : "",
+                            radicado: (item.radicado_documento.length !== null ) ? item.radicado_documento : "",
+                            compareciente: (item.compareciente == null )? item.compareciente : "", 
+                            tipoSujeto: (item.tipo_compareciente.length > 0) ? obtenerPalabrasFromArrayObject(item.tipo_compareciente, "tipo", null, false) : "",
+                            accionadoVinculado: (item.accionado_vinculado.length > 0 )? obtenerPalabrasFromArrayObject(item.accionado_vinculado, "nombre", null, false): "",  
+                            palabrasClaves:  (item.palabras_clave.length > 0 )? obtenerPalabrasFromArrayObject(item.palabras_clave, "palabra", null, false) : "",
+                            hechos: (item.hechos_antecedentes !== null ) ? item.hechos_antecedentes : "",
+                            problemasJuridicos: (item.problema_juridico !== null ) ? item.problema_juridico : "", 
+                            reglas: (item.reglas_juridicas !== null ) ? item.reglas_juridicas : "",
+                            aplicacionCasoConcreto: (item.analisis_caso_concreto !== null ) ? item.analisis_caso_concreto : "",
+                            resuelve: (item.conclusion_resuelve !== null ) ? item.conclusion_resuelve : "",
+                            documentosAsociados:  (item.anexos.length > 0 )? obtenerPalabrasFromArrayObject(item.anexos, "nombre", null, false): "", 
+                            enfoquesDiferenciales: (item.enfoque.length > 0 )? obtenerPalabrasFromArrayObject(item.enfoque, "tipo", null, false): "", 
+                            notasRelatoria: (item.notas.length > 0 )? "" : "", 
+                            hipervinculo:  `https://relatoria.jep.gov.co/${item.hipervinculo}`,
+                            hipervinculoFichaJuris: "",
+                            estadoFichaJuris: "",
+                            extractoBusqueda: ""
+                        };
+                        return newItem;
                     });
                     setMessage(`Success: ${response.status_info.status}. ${response.status_info.reason}`)
                     setDatos(cardsArr);
