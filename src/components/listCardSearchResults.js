@@ -34,6 +34,7 @@ export default function Card({ selectedFilters, isListSmall, selectedTerm, isLar
         tesauroService
             .getDocsByTermAI(selectedTerm)
             .then(response => {
+                console.log("response", response.data);
                 if((response.status_info.status === 200) && (response.data.length > 0)) {
                     const cardsArr = response.data.map((i, k) => {
                         let item = i._source;
@@ -96,7 +97,7 @@ export default function Card({ selectedFilters, isListSmall, selectedTerm, isLar
 
     const handlerSetSelectedDoc = (newSelectedOption) => {
         if(newSelectedOption !== "*"){
-            const newArrDatos = datos.filter(item => item.asunto === newSelectedOption);
+            const newArrDatos = datos.filter(item => item.asunto === newSelectedOption); 
             setSelectedDoc(newSelectedOption);
             setDatos(newArrDatos);
         } else {

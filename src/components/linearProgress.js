@@ -63,7 +63,7 @@ const LinearWithValueLabel = ({ processingMessages = [], showPercentaje = false}
   }, []);
 
   return (
-    <Box sx={{ width: '100%' }}>
+    <Box sx={{ width: '100%', pb: '2rem' }}>
       {(processingMessages.length > 0) ?
         <ProcessingMessageLabel messages={processingMessages}/>
         :
