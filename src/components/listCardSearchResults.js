@@ -27,21 +27,20 @@ export default function Card({ selectedFilters, isListSmall, selectedTerm, isLar
     const [datos, setDatos] = useState([]);
     const [datosOriginales, setDatosOriginales] = useState([]);
     const [message, setMessage] = useState("");
-    const [selectedDoc, setSelectedDoc] = useState("");
+    const [selectedDoc, setSelectedDoc] = useState({ "title": "*", "id": 0 });
     const [searchDocsOptions, setSearchDocsOptions] = useState([]);
 
     const getDocsTerm = () => {
         tesauroService
             .getDocsByTermAI(selectedTerm)
             .then(response => {
-                console.log("response", response.data);
                 if((response.status_info.status === 200) && (response.data.length > 0)) {
                     const cardsArr = response.data.map((i, k) => {
                         let item = i._source;
                         let newItem = { 
-                            id: item.id,
-                            fecha: item.fecha_providencia,
-                            asunto: item.asuntocaso,
+                            id: k + 1,
+                            fecha:  (item.fecha_documento !== null ) ? item.fecha_documento : "",
+                            asunto: "",
                             salaOSeccion: item.sala_seccion,
                             nombreDecision: item.nombre_providencia,
                             procedimiento: (item.procedimiento.length > 0 )? obtenerPalabrasFromArrayObject(item.procedimiento, "actuacion") : "",
@@ -71,7 +70,6 @@ export default function Card({ selectedFilters, isListSmall, selectedTerm, isLar
                             extractoBusqueda: ""
                         };
                         newItem["autocompletarBuscador"] = { id: newItem.id, title: `${newItem.salaOSeccion} ${newItem.delito} ${newItem.procedimiento} ${newItem.compareciente} ${newItem.tipoSujeto} ${newItem.departamento} ${newItem.nombreDecision} ${newItem.magistrado}  ${newItem.palabrasClaves}`}; 
-                        //newItem["autocompletarBuscador"] = "";
                         return newItem;
                     });
                     setMessage(`Success: ${response.status_info.status}. ${response.status_info.reason}`);
@@ -95,13 +93,13 @@ export default function Card({ selectedFilters, isListSmall, selectedTerm, isLar
         return [ { "title": "*" } ].concat(arrLinted.map( item => { return { "title": item.asunto } }));
     };
 
-    const handlerSetSelectedDoc = (newSelectedOption) => {
-        if(newSelectedOption !== "*"){
-            const newArrDatos = datos.filter(item => item.asunto === newSelectedOption); 
+    // Funcion que permite mostrar la lista de providencias en el autocompletar
+    const handlerSetSelectedDoc = (newSelectedOption) => { 
+        if(newSelectedOption.title !== "*"){
+            const newArrDatos = datos.filter(item => item.id === newSelectedOption.id);
             setSelectedDoc(newSelectedOption);
             setDatos(newArrDatos);
         } else {
-            setSelectedDoc("");
             setDatos(datosOriginales);
         }
     }
@@ -159,7 +157,7 @@ export default function Card({ selectedFilters, isListSmall, selectedTerm, isLar
     const startIndexPage = Math.ceil(page * itemsPerPage + 1 - itemsPerPage);
 
     useEffect(() => {
-        if(datos.length === 0){
+        if((datos.length === 0)){
             getDocsTerm();
         } else {
             getCurrentData();
