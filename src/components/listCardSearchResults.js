@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import '../App.css';
-import { Stack, Pagination, PaginationItem, List, ListItem, Button, Box, Chip } from '@mui/material';
+import { Stack, Pagination, PaginationItem, List, ListItem, Button, Box, Chip, Alert } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import InputLabel from '@mui/material/InputLabel';
@@ -26,7 +26,7 @@ export default function Card({ selectedFilters, isListSmall, selectedTerm, isLar
 
     const [datos, setDatos] = useState([]);
     const [datosOriginales, setDatosOriginales] = useState([]);
-    const [message, setMessage] = useState("");
+    const [message, setMessage] = useState({ message: "", classname: "" });
     const [selectedDoc, setSelectedDoc] = useState({ "title": "*", "id": 0 });
     const [searchDocsOptions, setSearchDocsOptions] = useState([]);
 
@@ -34,6 +34,7 @@ export default function Card({ selectedFilters, isListSmall, selectedTerm, isLar
         tesauroService
             .getDocsByTermAI(selectedTerm)
             .then(response => {
+                let newMessage = {}; 
                 if((response.status_info.status === 200) && (response.data.length > 0)) {
                     const cardsArr = response.data.map((i, k) => {
                         let item = i._source;
@@ -73,16 +74,23 @@ export default function Card({ selectedFilters, isListSmall, selectedTerm, isLar
                         return newItem;
                     });
                     setMessage(`Success: ${response.status_info.status}. ${response.status_info.reason}`);
-                    console.log("cardsArr", cardsArr);
                     setDatos(cardsArr);
                     setDatosOriginales(cardsArr);
                     setSearchDocsOptions(getOpcionesAutocompletar(cardsArr));
                 } else {
-                setMessage(`Error: ${response.status_info.status}. ${response.status_info.reason}`)
+                    newMessage["message"] = `No se encontraron resultados relacionados con el término "${selectedTerm}".`;
+                    newMessage["classname"] = 'warning';
+                    handleMessage(newMessage);
                 }
             }
             )
             .catch(error => console.log(error));
+    }
+
+    const handleMessage = (newMessage) => {
+        setTimeout(function(){ 
+            setMessage(newMessage);
+        }, 3000);
     }
 
     // Genera el listado de opciones de documentos para el autocompletar
@@ -274,10 +282,23 @@ export default function Card({ selectedFilters, isListSmall, selectedTerm, isLar
     }));
 
      if(datos.length === 0) {
-        return (<LinearWithValueLabel></LinearWithValueLabel>)
+        return(<>
+                { (message.message === "") ?
+                    <>
+                    <LinearWithValueLabel processingMessages={["Procesando solicitud...", "Preparando respuesta..."]}></LinearWithValueLabel> 
+                    </> 
+                    :
+                        <div style={{ paddingBottom: '2rem' }}>
+                        <Alert variant="outlined" severity={message.classname} >
+                            {message.message}
+                        </Alert>
+                        </div> 
+                } 
+                </>
+            )
      } else {
         return (
-            <Stack>
+            <Stack sx={{ marginBottom: '2rem' }}>
                 <div className=  {isListSmall ? ('text_results_search', 'no-spacing') :  ('text_results_search','margin_search') } >
                     <SpaceGrid>
                         <JustMapNoneGrid>
