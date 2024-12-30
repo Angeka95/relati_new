@@ -11,7 +11,7 @@ import macrocasoService from '../services/macrocaso.js';
 import LinearWithValueLabel from '../components/linearProgress.js';
 import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
-import { obtenerPalabrasFromArrayObject, extraerSpreakerID, obtenerMesEnEspanol, obtenerAnioDeTexto } from '../helpers/utils.js';
+import { obtenerPalabrasFromArrayObject, extraerSpreakerID, obtenerMesEnEspanol, obtenerAnioDeTexto, obtenerAnioMes, ordenarArrayPorFechaHitos } from '../helpers/utils.js';
 import { datos_links_toar } from '../data/datos_macrocaso.js';
 
 export default function Caso() {
@@ -85,15 +85,19 @@ export default function Caso() {
     } else {
         if(caso !== null) {
           let hitosMacrocasoSeleccionado = hitosMacrocasos.find(item => Object.keys(item)[0] === `caso_${casoId}`);
-          hitosMacrocasoSeleccionado = hitosMacrocasoSeleccionado[`caso_${casoId}`].map(item => { return {
+          hitosMacrocasoSeleccionado = hitosMacrocasoSeleccionado[`caso_${casoId}`].map(item => { 
+            let hitoMacrocaso = {
               mes: obtenerMesEnEspanol(item.fecha),
-              año: obtenerAnioDeTexto(item.fecha),
+              anio: obtenerAnioDeTexto(item.fecha),
               hecho: item.asunto,
               actor: '',
-              enlace: item.enlace
+              enlace: item.enlace,
+              fecha: ""
             }
+            hitoMacrocaso["fecha"] = obtenerAnioMes(hitoMacrocaso["anio"], hitoMacrocaso["mes"]);
+            return hitoMacrocaso;
           });
-          setTimeLine(hitosMacrocasoSeleccionado);
+          setTimeLine(ordenarArrayPorFechaHitos(hitosMacrocasoSeleccionado));
         }
     }
 }, [hitosMacrocasos, caso]);
@@ -285,7 +289,7 @@ export default function Caso() {
   
               <div className="timeline_item" key={index}>
                 <h6 className="timeline_month">{event.mes}</h6>
-                <h6 className="timeline_date text_bolder">{event.año}</h6>
+                <h6 className="timeline_date text_bolder">{event.anio}</h6>
                 <div className="timeline_line" />
                 <div className="timeline_dot" />
                 <div className="timeline_content">

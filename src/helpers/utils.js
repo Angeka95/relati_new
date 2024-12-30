@@ -189,6 +189,22 @@ function obtenerMesEnEspanol(cadena) {
 }
 
 /**
+ * 
+ * Funcion que convierte a fecha en formato cadena a formato YYYY/MM
+ */
+function obtenerAnioMes(anio, nombreMes) {
+    const meses = [
+        "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
+        "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
+    ];
+    const indice = meses.findIndex(mes => mes.toLowerCase() === nombreMes.toLowerCase()) + 1;
+
+    let yyyym = `${anio}/${indice}`;
+
+    return yyyym;
+}
+
+/**
  * obtenerAnioDeText()
  * Funcionalidad que obtiene el año tipo YYYY a partir de una cadena
  * Parametros de entrada:
@@ -202,6 +218,23 @@ function obtenerAnioDeTexto(cadena) {
     const regexAnio = /\b(19|20)\d{2}\b/;
     const coincidencia = cadena.match(regexAnio);
     return coincidencia ? coincidencia[0] : null;
+}
+
+function ordenarArrayPorFechaHitos(arr){
+    let newArr = arr.slice().sort((a, b) => {
+        // Divide cada fecha en año y mes
+        const [anioA, mesA] = a["fecha"].split("/").map(Number);
+        const [anioB, mesB] = b["fecha"].split("/").map(Number);
+    
+        // Primero compara los años
+        if (anioA !== anioB) {
+            return anioA - anioB;
+        }
+    
+        // Si los años son iguales, compara los meses
+        return mesA - mesB;
+    });
+    return newArr;
 }
 
 /**
@@ -252,5 +285,7 @@ export { filtroMapaByDefault,
          obtenerAnioDeTexto,
          removeFragmentoInString,
          formatDateToMonthYear,
-         getOpcionesAutocompletar
+         getOpcionesAutocompletar,
+         obtenerAnioMes,
+         ordenarArrayPorFechaHitos
         };
