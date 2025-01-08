@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import '../App.css';
-import { Stack, Pagination, PaginationItem, List, ListItem, Button, Box, Chip } from '@mui/material';
+import { Stack, Pagination, PaginationItem, List, ListItem, Button, Box, Chip, Alert } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import InputLabel from '@mui/material/InputLabel';
@@ -23,9 +23,9 @@ import tesauroService from '../services/tesauro.js';
 import { truncateWithEllipsis } from '../helpers/utils.js';
 
 export default function Card({ datosTramite, selectedFilters, isListSmall, selectedTerm, isLargeResult, isExternalFilters }) {
-
+;
     const [datos, setDatos] = useState([]);
-    const [datosOriginales, setDatosOriginales] = useState([]);
+    const [datosOriginales, setDatosOriginales] = useState(datosTramite);
     const [message, setMessage] = useState("");
     const [selectedDoc, setSelectedDoc] = useState("");
     const [searchDocsOptions, setSearchDocsOptions] = useState([]);
@@ -102,11 +102,10 @@ export default function Card({ datosTramite, selectedFilters, isListSmall, selec
     const startIndexPage = Math.ceil(page * itemsPerPage + 1 - itemsPerPage);
 
     useEffect(() => {
-        if(datos.length === 0) {
-            setDatos(datosTramite);
-        } else {
+        setDatos(datosTramite);
+        if(datos.length > 0) {
             getCurrentData();
-        }
+        } 
     }, [page, itemsPerPage, datos, datosTramite]);
     
 
@@ -221,7 +220,11 @@ export default function Card({ datosTramite, selectedFilters, isListSmall, selec
     }));
 
      if(datos.length === 0) {
-        return (<LinearWithValueLabel></LinearWithValueLabel>)
+        return (<div style={{ "marginTop": "3rem" }}>
+                        <Alert variant="outlined" severity="info">
+                            No se encontraron resultados.
+                        </Alert>
+        </div>)
      } else {
         return (
             <Stack>
