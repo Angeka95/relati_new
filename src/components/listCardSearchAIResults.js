@@ -97,7 +97,7 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
         const arrLinted = Array.from(
             new Map(arrDatos.map(item => [item.asunto, item])).values()
         );
-        return [ { "title": "*" } ].concat(arrLinted.map( item => { return { "title": item.asunto } }));
+        return [ { "title": "*_" } ].concat(arrLinted.map( item => { return { "title": item.asunto } }));
     };
 
     // Funcion que permite mostrar la lista de providencias en el autocompletar

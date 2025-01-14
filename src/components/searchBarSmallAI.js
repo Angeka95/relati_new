@@ -16,7 +16,7 @@ export default function search({searchOptions, handlerSetSelectedOption}) {
 
   return (
 
-    <Stack className='autocomplete_bar_search_small this_is_a_test'>
+    <Stack className='autocomplete_bar_search_small'>
       <Autocomplete
         id="free-solo-demo"
         freeSolo
@@ -32,7 +32,7 @@ export default function search({searchOptions, handlerSetSelectedOption}) {
         }
       />
 
-      <Button className="autocomplete_button_small button_primary" disabled><SearchIcon /></Button>
+      <Button className="autocomplete_button_small button_primary"><SearchIcon /></Button>
 
     </Stack>
 

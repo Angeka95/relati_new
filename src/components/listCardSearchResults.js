@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import '../App.css';
-import { Stack, Pagination, PaginationItem, List, ListItem, Button, Box, Chip, Alert } from '@mui/material';
+import { Grid, Stack, Pagination, PaginationItem, List, ListItem, Button, Box, Chip, Alert } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import InputLabel from '@mui/material/InputLabel';
@@ -10,7 +10,6 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 import CardSearch from '../components/cardSearchResults.js';
 import SearchBarSmall from '../components/searchBarSmallAI.js';
 import SortIcon from '@mui/icons-material/Sort';
-import { Container, Grid } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { EditCalendar } from '@mui/icons-material';
 import Context from '../context/context';

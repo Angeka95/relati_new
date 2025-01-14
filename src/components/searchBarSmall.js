@@ -10,7 +10,7 @@ import ClearIcon from '@mui/icons-material/Clear';
 export default function search({searchOptions, handlerSetSelectedOption}) {
   return (
 
-    <Stack className='autocomplete_bar_search_small this_is_a_test'>
+    <Stack className='autocomplete_bar_search_small'>
       <Autocomplete
         id="free-solo-demo"
         freeSolo

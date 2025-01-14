@@ -58,6 +58,7 @@ export default function DecisionesSalaTribunal({caso}) {
               caso: (item.caso !== null ) ? item.caso : "",
               subcaso: (item.casopro.length > 0 ) ? obtenerPalabrasFromArrayObject(item.casopro, "caso", null, false) : "",
           }
+          newItem["autocompletarBuscador"] = { id: newItem.id, title: `${newItem.salaOSeccion} ${newItem.delito} ${newItem.procedimiento} ${newItem.compareciente} ${newItem.tipoSujeto} ${newItem.departamento} ${newItem.nombreDecision} ${newItem.magistrado}  ${newItem.palabrasClaves}`}; 
           return newItem;
         });
         return newArray;
@@ -230,7 +231,7 @@ export default function DecisionesSalaTribunal({caso}) {
                                 </FormControl>
                                 {(selectedtipoDecision.length > 0 || selectedSubcasos.length > 0) && (
                                 <div className='width_100'>
-                                    <ListCardSearch datosTramite={datos} isExternalFilters={false} />
+                                    <ListCardSearch datosTramite={datos} isExternalFilters={false} selectedTerm={`"${(selectedtipoDecision.concat(selectedSubcasos)).join(", ")}"`} />
                                 </div>
                                 )}
 
@@ -296,7 +297,7 @@ export default function DecisionesSalaTribunal({caso}) {
                                 </FormControl>
                                 {(selectedtipoDecision.length > 0 || selectedSubcasos.length > 0) && (
                                 <div className='width_100'>
-                                    <ListCardSearch datosTramite={datos} isExternalFilters={true} />
+                                    <ListCardSearch datosTramite={datos} isExternalFilters={false} selectedTerm={`"${(selectedtipoDecision.concat(selectedSubcasos)).join(", ")}"`} />
                                 </div>
                                 )}
                             </div>

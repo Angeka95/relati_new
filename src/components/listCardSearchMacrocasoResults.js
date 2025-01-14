@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import '../App.css';
-import { Stack, Pagination, PaginationItem, List, ListItem, Button, Box, Chip, Alert } from '@mui/material';
+import { Grid, Stack, Pagination, PaginationItem, List, ListItem, Button, Box, Chip, Alert } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import InputLabel from '@mui/material/InputLabel';
@@ -8,9 +8,8 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import CardSearch from './cardSearchResults.js';
-import SearchBarSmall from './searchBarSmall.js';
+import SearchBarSmall from './searchBarSmallAI.js';
 import SortIcon from '@mui/icons-material/Sort';
-import { Container, Grid } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { EditCalendar } from '@mui/icons-material';
 import Context from '../context/context.js';
@@ -18,34 +17,24 @@ import ExpandLessOutlinedIcon from '@mui/icons-material/ExpandLessOutlined';
 import ExpandMoreOutlinedIcon from '@mui/icons-material/ExpandMoreOutlined';
 import FilterShort from './filterShort.js';
 import FilterListIcon from '@mui/icons-material/FilterList';
-import LinearWithValueLabel from './linearProgress.js';
-import tesauroService from '../services/tesauro.js';
-import { truncateWithEllipsis } from '../helpers/utils.js';
+import { getOpcionesAutocompletar } from '../helpers/utils.js';
 
 export default function Card({ datosTramite, selectedFilters, isListSmall, selectedTerm, isLargeResult, isExternalFilters }) {
-;
+    
     const [datos, setDatos] = useState([]);
-    const [datosOriginales, setDatosOriginales] = useState(datosTramite);
+    const [datosOriginales, setDatosOriginales] = useState([]);
     const [message, setMessage] = useState("");
-    const [selectedDoc, setSelectedDoc] = useState("");
+    const [selectedDoc, setSelectedDoc] = useState([]);
     const [searchDocsOptions, setSearchDocsOptions] = useState([]);
 
-    // Genera el listado de opciones de documentos para el autocompletar
-    const getOpcionesDocs = (arrDatos) => {
-        const arrLinted = Array.from(
-            new Map(arrDatos.map(item => [item.asunto, item])).values()
-        );
-        return [ { "title": "*" } ].concat(arrLinted.map( item => { return { "title": item.asunto } }));
-    };
-
-    const handlerSetSelectedDoc = (newSelectedOption) => {
-        if(newSelectedOption !== "*"){
-            const newArrDatos = datos.filter(item => item.asunto === newSelectedOption);
+     // Funcion que permite mostrar la lista de providencias en el autocompletar
+     const handlerSetSelectedDoc = (newSelectedOption) => { 
+        if(newSelectedOption.title !== "*"){
+            const newArrDatos = datos.filter(item => item.id === newSelectedOption.id);
             setSelectedDoc(newSelectedOption);
             setDatos(newArrDatos);
         } else {
-            setSelectedDoc("");
-            setDatos(datosOriginales);
+            setSelectedDoc([]);
         }
     }
 
@@ -102,11 +91,19 @@ export default function Card({ datosTramite, selectedFilters, isListSmall, selec
     const startIndexPage = Math.ceil(page * itemsPerPage + 1 - itemsPerPage);
 
     useEffect(() => {
-        setDatos(datosTramite);
         if(datos.length > 0) {
             getCurrentData();
-        } 
-    }, [page, itemsPerPage, datos, datosTramite]);
+        } else {
+            setDatos(datosTramite);
+            setDatosOriginales(datosTramite);
+            setSearchDocsOptions(getOpcionesAutocompletar(datosTramite));
+        }
+        if(selectedDoc.length === 0) {
+            setDatos(datosTramite);
+            setDatosOriginales(datosTramite);
+            setSearchDocsOptions(getOpcionesAutocompletar(datosTramite));
+        }
+    }, [page, itemsPerPage, datos, datosTramite, selectedDoc]);
     
 
 
