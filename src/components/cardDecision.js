@@ -24,23 +24,24 @@ export default function CardDecision({ decisiones }) {
 
             <div key={decisiones.id} className=" width_100 card-content">
 
-                {((typeof decisiones.asunto === 'string' ) && (decisiones.asunto.trim() !== '')) && (
-                    <p className="text_bolder text_uppercase text_space_min">{decisiones.asunto}</p>
-                )}
+
                 {((typeof decisiones.nombreDecision === 'string' ) && (decisiones.nombreDecision.trim() !== '')) && (
+                    <div className="justify_center margin_bottom_s"> 
                     <p className="text_bolder text_space_min">{decisiones.nombreDecision}</p>
+                    </div> 
                 )}
                 {((typeof decisiones.salaOSeccion === 'string' ) && (decisiones.salaOSeccion.trim() !== '')) && (
                     <p className="text_space_min">• Sala/Sesión:  <span className="text_bolder">{decisiones.salaOSeccion}</span></p>
+                )}
+                {((typeof decisiones.tipoSujeto === 'string' ) && (decisiones.tipoSujeto.trim() !== '')) && (
+                            <p className="text_space_min">• Pertenece a:  <span className="text_bolder"> {decisiones.tipoSujeto}</span> </p>
                 )}
                 {isButtonInfoEnabled && (
                     <Button className="link_primary text_lowercase" onClick={toggleButtonInfo}>ver más</Button>)}
 
                 {!isButtonInfoEnabled && (
                     <div className={`collapsible-content ${!isButtonInfoEnabled ? 'expanded' : ''}`}>
-                        {((typeof decisiones.tipoSujeto === 'string' ) && (decisiones.tipoSujeto.trim() !== '')) && (
-                            <p className="text_space_min">• Pertenece a:  <span className="text_bolder"> {decisiones.tipoSujeto}</span> </p>
-                        )}
+
                         {((typeof decisiones.hechos === 'string' ) && (decisiones.hechos.trim() !== '')) && (
                             <p className="text_space_min">• Lugar de los hechos: <span className="text_bolder"> {decisiones.lugarHechos}</span></p>
                         )}

@@ -13,7 +13,7 @@ import Context from '../context/context.js';
 import { removeFragmentoInString, getOpcionesAutocompletar } from '../helpers/utils.js';
 import { obtenerPalabrasFromArrayObject } from '../helpers/utils.js';
 
-export default function SearchResults() {
+export default function EnfoqueGenero() {
 
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
@@ -181,21 +181,16 @@ useEffect(() => {
   }, [message]);*/
 
   return (
-    <Container className="margin_bottom_m">
+    <Container>
       <Grid container spacing={2}>
         <Grid item xs={12} sm={12} md={4} lg={4} xl={4} >
           <p></p>
         </Grid>
-        <Grid item xs={12} sm={12} md={8} lg={8} xl={8} >
-          <SearchBar></SearchBar>
-        </Grid>
       </Grid>
 
       <Grid container spacing={2}>
-        <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
-          <Filter setSelectedFilters={setSelectedFilters}></Filter>
-        </Grid>
-        <Grid item xs={12} sm={12} md={8} lg={8} xl={8}>
+
+        <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
           {(datos.length === 0) ?
               <>
               <p>Buscando por: <strong>"{stringParam}"</strong></p>
