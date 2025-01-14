@@ -18,6 +18,7 @@ import Footer from './sections/footer'
 import Libros from './sections/libros'
 import Breadcrumb from './components/breadcrumbs';
 import BreadcrumbWrapper from './components/breadcrumbWrapper';
+import EnfoqueGenero from './sections/enfoqueGenero'
 
 import { BrowserRouter as Router, Route, Routes,  useLocation } from 'react-router-dom';
 
@@ -47,6 +48,10 @@ function App() {
           <Route path="/preguntas-frecuentes" element={<PreguntasFrecuentes />} />
           <Route path="/acerca-de-nosotros" element={<Acerca />} />
           <Route path="/libros" element={<Libros/>} />
+          <Route path="/enfoqueGenero" element={<EnfoqueGenero/>} />
+
+
+          
 
 
           {/* Pagina no encontrada  */}
