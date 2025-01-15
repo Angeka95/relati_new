@@ -49,7 +49,7 @@ export default function FilterLarge() {
       <div className={selectedFilters.length > 0 ? ("margin_bottom_s padding_none card_filter_large_active ") : ("margin_bottom_s padding_none card_filter_large")} >
 
         <div className="filter_justify_between vertical_align  ">
-          <Box items xs={12} sm={12} md={8} lg={8} xl={8}>
+          <Box xs={12} sm={12} md={8} lg={8} xl={8}>
             {selectedFilters.length === 0 && (
               <h4 className="text_bolder text_center">Seleccione un filtro para mostrarle decisiones y datos limitados a su interés</h4>
             )}
@@ -73,7 +73,7 @@ export default function FilterLarge() {
             )}
           </Box>
 
-          <Box items xs={12} sm={12} md={4} lg={4} xl={4}>
+          <Box xs={12} sm={12} md={4} lg={4} xl={4}>
             <div className="position_relative ">
               <Button className={showFilter ? ("button_function_noradius button_filter_size") : ("button_function button_filter_size")}
                 endIcon={showFilter ? <ExpandMoreOutlinedIcon /> : <ExpandLessOutlinedIcon />}

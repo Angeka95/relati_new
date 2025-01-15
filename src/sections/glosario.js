@@ -78,10 +78,10 @@ export default function Glosario() {
                                                 {termino.termino}:
                                             </span>
                                             {termino.descripcion}
-                                            {index !== terminos.length - 1 && (
-                                                <div className="separator_green box_separator_margin"></div>
-                                            )}
                                         </p>
+                                        {index !== terminos.length - 1 && (
+                                                <div className="separator_green box_separator_margin"></div>
+                                        )}
                                     </div>
                                 ))}
 
