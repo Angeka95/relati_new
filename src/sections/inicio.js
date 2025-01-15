@@ -277,7 +277,7 @@ export default function Home() {
                 </div>
             </div>
 
-            <Container item xs={12} sm={12} md={12} lg={12} xl={12} className="margin_top_xl " >
+            <Container xs={12} sm={12} md={12} lg={12} xl={12} className="margin_top_xl " >
                 <h2 className="text_bolder text_left padding_x">Decisiones recientes </h2>
 
                 <Masonry ref={masonryGridRef} breakpointCols={breakpointColumnsObj}
@@ -392,7 +392,7 @@ export default function Home() {
 
             </Box>
 
-            <Container item xs={12} sm={12} md={8} lg={8} xl={8} className="margin_top_xl " >
+            <Container xs={12} sm={12} md={8} lg={8} xl={8} className="margin_top_xl " >
                 <div className="wrap margin_bottom_xl">
                     <div className="container_40 ">
                         <h2 className="text_bolder text_left">Documentos</h2>

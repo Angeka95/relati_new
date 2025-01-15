@@ -378,7 +378,7 @@ export default function BusquedaAvanzada() {
 
         </Grid>
 
-        <Grid items xs={12} sm={12} md={8} lg={8} xl={8}>
+        <Grid xs={12} sm={12} md={8} lg={8} xl={8}>
           {(selectedFilters.length === 0 && busquedaAvanzada.length === 0) && (
             <h5 className="text_diabled text_center margin_top_m">(Aún no ha agregado ningún parámetro a su búsqueda)</h5>
           )}

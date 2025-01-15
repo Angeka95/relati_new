@@ -1,5 +1,5 @@
 import '../App.css';
-import { Container, TextField, Button, Snackbar } from '@mui/material';
+import { Container, Box, TextField, Button, Snackbar } from '@mui/material';
 
 import React, { useState, useEffect } from 'react';
 import Carousel from '../components/carousel.js';
@@ -99,8 +99,7 @@ export default function PreguntasFrecuentes() {
                                             </div>
 
                                         </div>
-
-                                        <p>
+                                        <div style={{marginTop: "1rem", marginBottom: "1rem" }}>
                                             {expandedQuestionId === preguntaFrecuente.id && (
                                                 <p>
                                                     {preguntaFrecuente.descripcion}
@@ -110,7 +109,7 @@ export default function PreguntasFrecuentes() {
                                             {index !== preguntasFrecuentes.length - 1 && (
                                                 <div className="separator_green box_separator_margin"></div>
                                             )}
-                                        </p>
+                                        </div>
                                     </div>
                                 ))}
 
