@@ -15,13 +15,13 @@ import datos_anios from '../data/data_anios.js';
 import { datos_macrocaso } from '../data/datos_macrocaso.js';
 import datos_sala_seccion from '../data/datos_sala_seccion.js';
 import Context from '../context/context';
-import { validarfiltroMapaJurisprudencial, generarArrayDeObjetosNombreCampoValor } from '../helpers/utils.js';
+import { validarfiltroJurisprudencial, generarArrayDeObjetosNombreCampoValor } from '../helpers/utils.js';
 
 export default function Filter({ setSelectedFilters, isFilterFloat, isShowingFilter, selectedData, isSearchAdvance }) {
   // Estado para controlar si el botón está habilitado o deshabilitado
   const { verTodasDecisiones, busqueda } = useContext(Context);
-  const { filtroMapaJurisprudencial, setFiltroMapaJurisprudencial } = useContext(Context);
-  const { listaDptosMapaJurisprudencial, setListaDptosMapaJurisprudencial } = useContext(Context);
+  const { filtroJurisprudencial, setFiltroJurisprudencial } = useContext(Context);
+  const { listaDptosJurisprudencial, setListaDptosJurisprudencial } = useContext(Context);
   const [isButtonEnabled, setIsButtonEnabled] = useState(true);
   const [selectedDataFilter1, setSelectedDataFilter1] = useState([]);
   const [selectedDataFilter2, setSelectedDataFilter2] = useState([]);
@@ -66,11 +66,11 @@ export default function Filter({ setSelectedFilters, isFilterFloat, isShowingFil
   };
 
   const applyFilters = () => {
-    //console.log("Filtro mapa juris", filtroMapaJurisprudencial);
+    //console.log("Filtro mapa juris", filtroJurisprudencial);
     //console.log("Deptos ", selectedDataFilter3);
 
-    if(filtroMapaJurisprudencial.departamentos.length === 1){
-      setSelectedDataFilter3([...filtroMapaJurisprudencial.departamentos]);
+    if(filtroJurisprudencial.departamentos.length === 1){
+      setSelectedDataFilter3([...filtroJurisprudencial.departamentos]);
     }
 
     setSelectedFilters(
@@ -85,7 +85,7 @@ export default function Filter({ setSelectedFilters, isFilterFloat, isShowingFil
       ]
     );
 
-    setFiltroMapaJurisprudencial({
+    setFiltroJurisprudencial({
       departamentos: [...selectedDataFilter3],
       anios: [...selectedDataFilter2],
       salas: [...selectedDataFilter1],
@@ -108,7 +108,7 @@ export default function Filter({ setSelectedFilters, isFilterFloat, isShowingFil
   }, [verTodasDecisiones, busqueda]);
 
   useEffect(() => {
-    if(!validarfiltroMapaJurisprudencial(filtroMapaJurisprudencial)) { 
+    if(!validarfiltroJurisprudencial(filtroJurisprudencial)) { 
       //console.log("datos en filter 3", selectedDataFilter3);
       let updateSelectedFilters = [...new Set([
           ...selectedDataFilter1,
@@ -118,8 +118,8 @@ export default function Filter({ setSelectedFilters, isFilterFloat, isShowingFil
           ...selectedDataFilter5,
           ...selectedDataFilter6,
           ...selectedDataFilter7,
-        ].concat([...filtroMapaJurisprudencial.departamentos]))];
-      if(filtroMapaJurisprudencial.departamentos.length === 1){
+        ].concat([...filtroJurisprudencial.departamentos]))];
+      if(filtroJurisprudencial.departamentos.length === 1){
         updateSelectedFilters = [...new Set([
           ...selectedDataFilter1,
           ...selectedDataFilter2,
@@ -127,12 +127,12 @@ export default function Filter({ setSelectedFilters, isFilterFloat, isShowingFil
           ...selectedDataFilter5,
           ...selectedDataFilter6,
           ...selectedDataFilter7,
-        ].concat([...filtroMapaJurisprudencial.departamentos]))];
+        ].concat([...filtroJurisprudencial.departamentos]))];
       } 
       //console.log("updateselectedfilters", updateSelectedFilters);
       setSelectedFilters(updateSelectedFilters);
     }
-  }, [filtroMapaJurisprudencial]);
+  }, [filtroJurisprudencial]);
 
 
   const JustFilterFloatNoneGrid = styled(Grid)(({ theme }) => ({
@@ -156,7 +156,7 @@ export default function Filter({ setSelectedFilters, isFilterFloat, isShowingFil
           label='Sala o Sección' id='sala'></SelectField>
         <SelectField isDisabled={isFilterDisabled} datos_filtros={datos_anios} setSelectedData={setSelectedDataFilter2}
           label='Año de los hechos' id='anio'></SelectField>
-        <SelectField isDisabled={isFilterDisabled} datos_filtros={listaDptosMapaJurisprudencial} setSelectedData={setSelectedDataFilter3}
+        <SelectField isDisabled={isFilterDisabled} datos_filtros={listaDptosJurisprudencial} setSelectedData={setSelectedDataFilter3}
           label='Departamento' id='departamento'></SelectField>
         <SelectField isDisabled={isFilterDisabled} datos_filtros={datos_delito} setSelectedData={setSelectedDataFilter4}
           label='Delito' id='delito'></SelectField>

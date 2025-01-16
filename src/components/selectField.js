@@ -8,23 +8,23 @@ import React, { useState, useEffect, useContext } from 'react';
 import Context from '../context/context';
 import { FormControl, InputLabel, Select, MenuItem, OutlinedInput, Chip, Checkbox, ListItemText, Tooltip } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
-import { validarfiltroMapaJurisprudencial } from '../helpers/utils.js';
+import { validarfiltroJurisprudencial } from '../helpers/utils.js';
 
 
 export default function Select_field({ datos_filtros, label, id, setSelectedData, isDisabled }) {
   const [selectedValues, setSelectedValues] = useState([]);
   
-  const { filtroMapaJurisprudencial, setFiltroMapaJurisprudencial } = useContext(Context);
+  const { filtroJurisprudencial, setFiltroJurisprudencial } = useContext(Context);
 
   useEffect(() => {
     if(label === 'Departamento') { 
-      let newValues = selectedValues.concat(filtroMapaJurisprudencial.departamentos);
-      if(filtroMapaJurisprudencial.departamentos.length === 1){
-        newValues = [].concat(filtroMapaJurisprudencial.departamentos);
+      let newValues = selectedValues.concat(filtroJurisprudencial.departamentos);
+      if(filtroJurisprudencial.departamentos.length === 1){
+        newValues = [].concat(filtroJurisprudencial.departamentos);
       } 
       setSelectedValues([...new Set(newValues)]);
     }
-  }, [filtroMapaJurisprudencial]);
+  }, [filtroJurisprudencial]);
 
   // Filtros
 

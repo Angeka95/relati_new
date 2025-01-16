@@ -1,22 +1,8 @@
 /** 
- * filtroMapaByDefault
+ * filtroByDefault
  * Objeto inicial que almacena las opciones seleccionadas por el usuario en el filtro
 */
-const filtroMapaByDefault = {
-    departamentos: [],
-    anios: [],
-    salas: [],
-    delitos: [],
-    macrocasos: [],
-    comparecientes: [],
-    procedimientos: []
-}; 
-
-/** 
- * filtroBuscadorAIByDefault
- * Objeto inicial que almacena las opciones seleccionadas por el usuario en el filtro
-*/
-const filtroBuscadorAIByDefault = {
+const filtroByDefault = {
     departamentos: [],
     anios: [],
     salas: [],
@@ -81,18 +67,18 @@ const obtenerPalabrasFromArrayObject = (arrObj, property, subproperty = null, se
 }
 
 /**
- * validarfiltroMapaJurisprudencial()
+ * validarfiltroJurisprudencial()
  * Funcionalidad que verificar si el array del filtro de mapa tiene sus propiedades de tipo array vacias
  * Parametros de entrada:
- * - obj: el objeto que hace referencia a filtroMapaJurisprudencial en el contextProvider
+ * - obj: el objeto que hace referencia a filtroJurisprudencial en el contextProvider
  * Salida:
- * - Retorna true si el objeto filtroMapaJurisprudencial tiene propiedades vacias
- * - Retorna false si alguna de las propiedades del objeto filtroMapaJurisprudencial tiene alguna propiedad con datos
+ * - Retorna true si el objeto filtroJurisprudencial tiene propiedades vacias
+ * - Retorna false si alguna de las propiedades del objeto filtroJurisprudencial tiene alguna propiedad con datos
  * Aplicación:
  * - useEffect en listCardSearchMapaResults.js
  * - useEffect en listCardSearchAIResults.js
 */
-const validarfiltroMapaJurisprudencial = (obj) => {
+const validarfiltroJurisprudencial = (obj) => {
     for (let propiedad in obj) {
         if (Array.isArray(obj[propiedad]) && obj[propiedad].length > 0) {
             return false;
@@ -272,12 +258,11 @@ const getOpcionesAutocompletar = (arrDatos) => {
     return [ { "title": "*", "id": 0 } ].concat(arrLinted);
 };
 
-export { filtroMapaByDefault, 
-         filtroBuscadorAIByDefault,
+export { filtroByDefault, 
          truncateWithEllipsis, 
          obtenerAnio, 
          obtenerPalabrasFromArrayObject, 
-         validarfiltroMapaJurisprudencial, 
+         validarfiltroJurisprudencial, 
          generarArrayDeObjetosNombreCampoValor,
          getParametroDeUrl,
          extraerSpreakerID,

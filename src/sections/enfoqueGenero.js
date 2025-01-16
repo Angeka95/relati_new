@@ -24,9 +24,9 @@ export default function EnfoqueGenero() {
   const [datos, setDatos] = useState([]);
   const [searchOptions, setSearchOptions] = useState([]);
 
-  const { filtroMapaJurisprudencial, setFiltroMapaJurisprudencial } = useContext(Context);
+  const { filtroJurisprudencial, setFiltroJurisprudencial } = useContext(Context);
 
-  const { setListaDptosMapaJurisprudencial } = useContext(Context);
+  const { setListaDptosJurisprudencial } = useContext(Context);
 
   const [openModal, setOpenModal] = useState(false);
   const handleOpenModal = () => setOpenModal(true);
@@ -64,7 +64,7 @@ export default function EnfoqueGenero() {
         .then(response => {
             if((response.status_info.status === 200) && (response.data.length > 0)) {
                 const newDptos = getNewListDptos(response.data[0]["dpto"]); 
-                setListaDptosMapaJurisprudencial(setDatosDepartamentos(newDptos));
+                setListaDptosJurisprudencial(setDatosDepartamentos(newDptos));
             } else {
                 setMessage(`Error: ${response.status_info.status}. ${response.status_info.reason}`);
             }
