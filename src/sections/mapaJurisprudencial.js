@@ -1,11 +1,10 @@
+import React, { useState, useEffect, useContext } from 'react';
 import SearchBarSmall from '../components/searchBarSmall.js';
-import Filter from '../components/filter.js';
 import FilterLarge from '../components/filterLarge.js';
 import ListCardMapaSearch from '../components/listCardSearchMapaResults.js';
 import '../App.css';
 import { Container, Grid, Box } from '@mui/material';
 import LinearWithValueLabel from '../components/linearProgress.js';
-import React, { useState, useEffect, PureComponent, useContext } from 'react';
 import { styled } from '@mui/material/styles';
 import mapaJurisprudencialService from '../services/mapa_jurisprudencial.js';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Legend, ResponsiveContainer } from 'recharts';
@@ -13,7 +12,7 @@ import { MapContainer, TileLayer, Tooltip, CircleMarker } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import { truncateWithEllipsis, obtenerAnio, obtenerPalabrasFromArrayObject } from '../helpers/utils.js';
 import Context from '../context/context.js';
-import { filtroMapaByDefault, removeFragmentoInString } from '../helpers/utils.js';
+import { filtroByDefault, removeFragmentoInString } from '../helpers/utils.js';
 
 export default function Mapa() {
 
@@ -53,7 +52,7 @@ export default function Mapa() {
 
     }));
  
-    const { isDatosMapaJurisprudencial, setIsDatosMapaJurisprudencial, dptoSelMapaJurisprudencial, setDptoSelMapaJurisprudencial, setListaDptosMapaJurisprudencial,  filtroMapaJurisprudencial, setFiltroMapaJurisprudencial } = useContext(Context);
+    const { isDatosMapaJurisprudencial, setIsDatosMapaJurisprudencial, dptoSelMapaJurisprudencial, setDptoSelMapaJurisprudencial, setListaDptosJurisprudencial,  filtroJurisprudencial, setFiltroJurisprudencial } = useContext(Context);
     
     const [listdpto, setListdpto] = useState([]);
     const [graf, setGraf] = useState([]);
@@ -139,7 +138,7 @@ export default function Mapa() {
                     setMessage(`Success: ${response.status_info.status}. ${response.status_info.reason}`);
                     const newDptos = getNewListDptos(response.data[0]["dpto"]); 
                     setListdpto(newDptos);
-                    setListaDptosMapaJurisprudencial(setDatosDepartamentos(newDptos));
+                    setListaDptosJurisprudencial(setDatosDepartamentos(newDptos));
                 } else {
                     setMessage(`Error: ${response.status_info.status}. ${response.status_info.reason}`);
                 }
@@ -150,7 +149,7 @@ export default function Mapa() {
 
     useEffect(() => {
         if(datos.length === 0){
-            setFiltroMapaJurisprudencial(filtroMapaByDefault);
+            setFiltroJurisprudencial(filtroByDefault);
             setIsDatosMapaJurisprudencial(false);
             getDocsByProvidencias();
         } else {
@@ -162,7 +161,7 @@ export default function Mapa() {
     //funcion que realiza el filtro de las providencias cuando se da clic en un dpto
     const searchprodpto = (data) => {
         setDptoSelMapaJurisprudencial(data);
-        setFiltroMapaJurisprudencial({...filtroMapaJurisprudencial, departamentos: [ data.dpto ]});
+        setFiltroJurisprudencial({...filtroJurisprudencial, departamentos: [ data.dpto ]});
     }
 
     //funcion que crea un array de objetos enviado a la lista de filtros corrspondiente a dptos

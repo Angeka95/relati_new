@@ -19,11 +19,11 @@ import ExpandMoreOutlinedIcon from '@mui/icons-material/ExpandMoreOutlined';
 import FilterShort from './filterShort';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import LinearWithValueLabel from '../components/linearProgress.js';
-import { validarfiltroMapaJurisprudencial } from '../helpers/utils.js';
+import { validarfiltroJurisprudencial } from '../helpers/utils.js';
 
 export default function Card({ datosMapa, datosOriginalesMapa, searchDocsOptionsMapa, selectedFilters, isListSmall, selectedTerm, isLargeResult, isExternalFilters }) {
 
-    const { isDatosMapaJurisprudencial, dptoSelMapaJurisprudencial, setDptoSelMapaJurisprudencial, filtroMapaJurisprudencial } = useContext(Context);
+    const { isDatosMapaJurisprudencial, dptoSelMapaJurisprudencial, setDptoSelMapaJurisprudencial, filtroJurisprudencial } = useContext(Context);
 
     const [datos, setDatos] = useState(datosMapa);
     const [datosOriginales, setDatosOriginales] = useState(datosOriginalesMapa);
@@ -114,24 +114,24 @@ export default function Card({ datosMapa, datosOriginalesMapa, searchDocsOptions
     }, [page, itemsPerPage, datos]);
 
     useEffect(() => {
-        if(!validarfiltroMapaJurisprudencial(filtroMapaJurisprudencial)) { 
+        if(!validarfiltroJurisprudencial(filtroJurisprudencial)) { 
             let datosFiltrados = datos;
-            if(filtroMapaJurisprudencial.departamentos.length > 0){
-                datosFiltrados = datosFiltrados.filter( item => filtroMapaJurisprudencial.departamentos.includes(item.departamentoNombre));
+            if(filtroJurisprudencial.departamentos.length > 0){
+                datosFiltrados = datosFiltrados.filter( item => filtroJurisprudencial.departamentos.includes(item.departamentoNombre));
             }
-            if(filtroMapaJurisprudencial.anios.length > 0){
-                datosFiltrados = datosFiltrados.filter( item => filtroMapaJurisprudencial.anios.includes(item.anio));
+            if(filtroJurisprudencial.anios.length > 0){
+                datosFiltrados = datosFiltrados.filter( item => filtroJurisprudencial.anios.includes(item.anio));
             }
-            if(filtroMapaJurisprudencial.salas.length > 0){
-                datosFiltrados = datosFiltrados.filter( item => filtroMapaJurisprudencial.salas.includes(item.sala));
+            if(filtroJurisprudencial.salas.length > 0){
+                datosFiltrados = datosFiltrados.filter( item => filtroJurisprudencial.salas.includes(item.sala));
             }
-            if(filtroMapaJurisprudencial.macrocasos.length > 0){
-                datosFiltrados = datosFiltrados.filter( item => filtroMapaJurisprudencial.macrocasos.includes(item.caso));
+            if(filtroJurisprudencial.macrocasos.length > 0){
+                datosFiltrados = datosFiltrados.filter( item => filtroJurisprudencial.macrocasos.includes(item.caso));
             }
-            if(filtroMapaJurisprudencial.comparecientes.length > 0){
+            if(filtroJurisprudencial.comparecientes.length > 0){
                 datosFiltrados = datosFiltrados.filter( item => {
                     if(item.comparecientes.length > 0 ){
-                        return filtroMapaJurisprudencial.comparecientes.some(compareciente => { 
+                        return filtroJurisprudencial.comparecientes.some(compareciente => { 
                             return item.comparecientes.toLowerCase().includes(compareciente.toLowerCase());
                             
                         });
@@ -139,18 +139,18 @@ export default function Card({ datosMapa, datosOriginalesMapa, searchDocsOptions
                     return false;
                 });
             }
-            if(filtroMapaJurisprudencial.delitos.length > 0){
+            if(filtroJurisprudencial.delitos.length > 0){
                 datosFiltrados = datosFiltrados.filter( item =>  {
                     if(item.delitos.length > 0 ){
-                        return filtroMapaJurisprudencial.delitos.some(delito => item.delitos.toLowerCase().includes(delito.toLowerCase()));
+                        return filtroJurisprudencial.delitos.some(delito => item.delitos.toLowerCase().includes(delito.toLowerCase()));
                     }
                     return false;
                 });
             } 
-            if(filtroMapaJurisprudencial.procedimientos.length > 0){
+            if(filtroJurisprudencial.procedimientos.length > 0){
                 datosFiltrados = datosFiltrados.filter( item =>  {
                     if(item.procedimientos.length > 0 ){
-                        return filtroMapaJurisprudencial.procedimientos.some(procedimiento => item.procedimientos.toLowerCase().includes(procedimiento.toLowerCase()));
+                        return filtroJurisprudencial.procedimientos.some(procedimiento => item.procedimientos.toLowerCase().includes(procedimiento.toLowerCase()));
                     }
                     return false;
                 });
@@ -159,7 +159,7 @@ export default function Card({ datosMapa, datosOriginalesMapa, searchDocsOptions
         } else {
             setDatos(datosOriginales);
         }
-    }, [filtroMapaJurisprudencial]);
+    }, [filtroJurisprudencial]);
 
     const getCurrentData = (items = 0) => {
 
