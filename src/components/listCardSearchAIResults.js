@@ -18,7 +18,7 @@ import ExpandLessOutlinedIcon from '@mui/icons-material/ExpandLessOutlined';
 import ExpandMoreOutlinedIcon from '@mui/icons-material/ExpandMoreOutlined';
 import FilterShort from './filterShort.js';
 import FilterListIcon from '@mui/icons-material/FilterList';
-import { validarfiltroJurisprudencial, getOpcionesAutocompletar } from '../helpers/utils.js';
+import { validarfiltroJurisprudencial, getOpcionesAutocompletar, getDecisionesIDsToExport } from '../helpers/utils.js';
 import { macrocasos } from '../data/datos_macrocaso.js';
 
 export default function Card({ datosBusqueda, searchOptions, selectedFilters, isListSmall, selectedTerm, isLargeResult, isExternalFilters }) {
@@ -27,6 +27,7 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
     const [datosOriginales, setDatosOriginales] = useState(datosBusqueda);
     const [selectedDoc, setSelectedDoc] = useState({ "title": "*", "id": 0 });
     const [searchDocsOptions, setSearchDocsOptions] = useState(searchOptions);
+    const [datosToExport, setDatosToExport] = useState("");
 
     const { filtroJurisprudencial } = useContext(Context);
 
@@ -164,8 +165,11 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
     const startIndexPage = Math.ceil(page * itemsPerPage + 1 - itemsPerPage);
 
     useEffect(() => {
+        console.log("datos to export", datosToExport);
+        console.log("datos")
         if(datos.length > 0){
             getCurrentData();
+            setDatosToExport(getDecisionesIDsToExport(datos, "providencia_id"));
         }
     }, [page, itemsPerPage, datos]);
 

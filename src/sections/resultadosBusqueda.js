@@ -68,6 +68,7 @@ export default function SearchResults() {
                         let newItem = {
                             id: k + 1,
                             ficha_id: item.ficha_id,
+                            providencia_id: item.providencia_id,
                             salaOSeccion: (item.sala_seccion !== null) ? item.sala_seccion : "",
                             sala: (item.sala_seccion !== null) ? item.sala_seccion : "",
                             nombreDecision: (item.nombre_providencia !== null) ? item.nombre_providencia : "",
