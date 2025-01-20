@@ -20,6 +20,7 @@ import FilterShort from './filterShort.js';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import { validarfiltroJurisprudencial, getOpcionesAutocompletar } from '../helpers/utils.js';
 import { macrocasos } from '../data/datos_macrocaso.js';
+import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
 
 export default function Card({ datosBusqueda, searchOptions, selectedFilters, isListSmall, selectedTerm, isLargeResult, isExternalFilters }) {
 
@@ -152,7 +153,7 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
 
     // Paginado
     const [page, setPage] = useState(1);
-    const [itemsPerPage, setitemsPerPage] = React.useState(5);
+    const [itemsPerPage, setitemsPerPage] = React.useState(10);
     const handleChange = (event, value) => {
         setPage(value);
     };
@@ -415,7 +416,7 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
                             <div >
                                 <Width100Grid className='width_100 flex '>
                                 <p className="margin_results_page">Resultados por página  </p>
-                                    <Box sx={{ minWidth: 120 }}>
+                                    <Box sx={{ minWidth: 270 }}>
                                         <FormControl fullWidth>
                                             {/* <InputLabel id="demo-simple-select-label"></InputLabel> */}
                                             <Select className= {isListSmall ? "select_items_results_small" : ("select_items_results justify_center")} 
@@ -425,22 +426,29 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
                                                     PaperProps: {
                                                         sx: {
                                                             boxShadow: '0px 8px 24px rgba(57, 129, 195, 0.2) ', // Sombra 
+                                                            
                                                         },
                                                     },
                                                 }}
                                             >
-                                                <MenuItem value={2}>2</MenuItem>
-                                                <MenuItem value={3}>3</MenuItem>
-                                                <MenuItem value={5}>5</MenuItem>
+                                                <MenuItem value={10}>10</MenuItem>
+                                                <MenuItem value={20}>20</MenuItem>
+                                                <MenuItem value={30}>30</MenuItem>
                                                 <MenuItem value={datos.length}>Todas</MenuItem>
                                             </Select>
                                         </FormControl>
                                     </Box>
                                     
                                 </Width100Grid>
+                                
                             </div>
-    
+                            
                         </WrapGrid>
+                        <div className="justify_end">
+                            <a className="link_primary vertical_align" href="">
+                            <FileDownloadOutlinedIcon/> 
+                            Descargar reporte en excel</a>
+                        </div>
     
                         <div className="separator width_100"></div>
                         {(datos.length > 0) && (

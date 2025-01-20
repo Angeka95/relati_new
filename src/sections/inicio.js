@@ -13,6 +13,7 @@ import Masonry from 'react-masonry-css';
 import Context from '../context/context';
 import { Link } from 'react-router-dom';
 import ModalInfo from '../components/modal'
+import ModalFloat from '../components/modalFloat'
 import ExpandLessOutlinedIcon from '@mui/icons-material/ExpandLessOutlined';
 import ExpandMoreOutlinedIcon from '@mui/icons-material/ExpandMoreOutlined';
 import macrocasoService from '../services/macrocaso.js';
@@ -200,6 +201,7 @@ export default function Home() {
     const handleCloseModal = () => setOpenModal(false);
 
 
+
      // Docs Comision de Genero
    
         const [isOpen, setIsOpen] = useState(false);
@@ -225,6 +227,28 @@ export default function Home() {
 
     return (
         <div className="nowrap">
+            <div className="modal_floating">
+                <div className="width_100">
+                    <div className="modal_float_date versalitas">
+                        12 enero 2024
+                    </div>
+
+                </div>
+                <div className='display_flex flex_wrap'> 
+                        <div className="modal_float_img">
+                         </div>
+                         <div className="modal_float_text">
+                            <p >
+                            <span className="text_bolder">Jep Lanza el libro </span>    
+                            <span className="display_block">‘Código de la Jurisdicción Especial para la Paz’ </span>
+                            </p>
+                         </div>
+
+                </div>
+                <div className="modal_separator"> </div>
+                <p className="versalitas margin_top_xs text_bold">lo más destacado</p>
+
+             </div> 
             <div className="header_container justify_center ">
                 <Box className="header flex width_100">
                     <div className="margin_bottom_l width_100 justify_center align_center wrap margin_header">
@@ -234,10 +258,15 @@ export default function Home() {
                         </div>
 
                         <h5 className="text_white width_100 text_center">Plataforma de búsqueda simple y especializada <br></br>
-                            de las decisiones de la JEP </h5>
+                            de las decisiones de la JEP</h5>
 
                     </div>
+
                 </Box>
+
+            
+
+             
 
 
                 <div className="search_home">

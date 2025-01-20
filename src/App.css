@@ -380,6 +380,10 @@ h6 {
   margin-top: 30px !important;
 }
 
+.margin_top_xs {
+  margin-top: 5px !important;
+}
+
 .margin_top_s {
   margin-top: 10px !important;
 }
@@ -591,6 +595,10 @@ h6 {
 
 .position_relative{
   position: relative;
+}
+
+.position_sticky{
+  position: sticky !important;
 }
 
 .display_block{
@@ -867,6 +875,8 @@ h6 {
   margin-top: 16px;
 }
 
+
+
 .separator {
   border: 1px solid #bfc0c042;
   margin: 20px 0px 10px 0px
@@ -908,7 +918,7 @@ h6 {
 
 
 .select_items_results {
-  width: 60px;
+  width: 68px;
   height: 40px;
   min-width: 60px;
   margin: 0px 10px !important;
@@ -2280,6 +2290,7 @@ padding: 0px 0% 0% 3%;
 .autocomplete_home_container {
   position: relative;
   width: 90%;
+  z-index: 10;
 }
 
 .autocomplete_button_home {
@@ -2553,6 +2564,69 @@ a, .breadcrumb-item:hover {
 }
 
 /* FIN BREADCRUMB  */
+
+/* NOVEDADES */
+
+.modal_floating{
+  position: fixed;
+  top: 40%;
+  right: 0%;
+  width: 320px;
+  min-height: 140px;
+  max-height: 140px;
+  border-top-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+  background-color: rgba(255, 255, 255, 0.9); 
+  color: rgb(66, 66, 66);
+  padding: 15px;
+  text-align: left;
+  z-index: 2;
+  box-shadow: rgba(57, 129, 195, 0.2) 0px 8px 24px !important;
+}
+
+
+.modal_float_img{
+  min-width:80px;
+  max-width: 80px;
+  min-height:80px; 
+  max-height: 80px;
+  background-color: #06223b;
+}
+
+.modal_float_text{
+  margin-left: 10px;
+}
+
+.modal_separator{
+    border: 1px solid #bfc0c042;
+    margin: -2px 0px 0px 0px;
+}
+
+.versalitas{
+  font-variant: small-caps
+}
+
+.modal_float_date{
+  z-index: 3;
+  background-color: #FF9500;
+  color: #Fff;
+  position: absolute;
+  top: -24px;
+  min-width: 180px;
+  width: 180px;
+  height: 24px;
+  text-align: center;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.8em;
+  letter-spacing: 0.2em;
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10px;
+  padding-top: 2px;
+  
+}
+
+/* FIN NOVEDADES */
 
 /*\ FOOTER  */
 
@@ -2846,6 +2920,10 @@ a, .breadcrumb-item:hover {
 
 .card_size_small{
   margin-top: 10px !important;
+}
+
+.modal_floating{
+  display: none;
 }
 }
 
