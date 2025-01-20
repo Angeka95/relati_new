@@ -9,8 +9,8 @@ export default function TestServices() {
     
     const getTestService = () => {
         mapaJurisprudencialService
-            //.getMapaDptos()
-            .getDetailsGraph("anio_hecho=2019,2020&dpto=DEPARTAMENTO+CAUCA,DEPARTAMENTO+TOLIMA")
+            .getDepartamentos()
+            //.getDetailsGraph("anio_hecho=2019,2020&dpto=DEPARTAMENTO+CAUCA,DEPARTAMENTO+TOLIMA")
             .then(response => {
                 setDatos(JSON.stringify(response.data, null, 2));
              }

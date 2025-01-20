@@ -105,8 +105,8 @@ const validarfiltroJurisprudencial = (obj) => {
 */
 const generarArrayDeObjetosNombreCampoValor = (valores, propiedad_1, propiedad_2) => {
     return valores.map(valor => ({
-      nombre_campo: valor[propiedad_1],
-      valor: valor[propiedad_2]
+      nombre_campo: valor[propiedad_1].trim(),
+      valor: valor[propiedad_2].trim()
     }));
 };
 

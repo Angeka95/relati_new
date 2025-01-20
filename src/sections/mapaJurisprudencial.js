@@ -52,7 +52,7 @@ export default function Mapa() {
 
     }));
  
-    const { isDatosMapaJurisprudencial, setIsDatosMapaJurisprudencial, dptoSelMapaJurisprudencial, setDptoSelMapaJurisprudencial, setListaDptosJurisprudencial,  filtroJurisprudencial, setFiltroJurisprudencial } = useContext(Context);
+    const { isDatosMapaJurisprudencial, setIsDatosMapaJurisprudencial, setDptoSelMapaJurisprudencial, filtroJurisprudencial, setFiltroJurisprudencial } = useContext(Context);
     
     const [listdpto, setListdpto] = useState([]);
     const [graf, setGraf] = useState([]);
@@ -128,7 +128,7 @@ export default function Mapa() {
         });
     };
 
-    //funcion que hace el llamado para traer la data de los dpto del mapa
+    //Funcion que hace el llamado para traer la data solo de la grafica decisiones/tiempo
     const getMapaDptos = () => {
         mapaJurisprudencialService
             .getMapaDptos()
@@ -136,9 +136,8 @@ export default function Mapa() {
                 if((response.status_info.status === 200) && (response.data.length > 0)) {
                     setGraf(response.data[0].datagraf);
                     setMessage(`Success: ${response.status_info.status}. ${response.status_info.reason}`);
-                    const newDptos = getNewListDptos(response.data[0]["dpto"]); 
+                    const newDptos = getNewListDptos(response.data[0]["dpto"]); ;
                     setListdpto(newDptos);
-                    setListaDptosJurisprudencial(setDatosDepartamentos(newDptos));
                 } else {
                     setMessage(`Error: ${response.status_info.status}. ${response.status_info.reason}`);
                 }
@@ -146,7 +145,7 @@ export default function Mapa() {
             )
             .catch(error => console.log(error));
     }
-
+    
     useEffect(() => {
         if(datos.length === 0){
             setFiltroJurisprudencial(filtroByDefault);

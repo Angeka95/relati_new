@@ -26,8 +26,6 @@ export default function EnfoqueGenero() {
 
   const { filtroJurisprudencial, setFiltroJurisprudencial } = useContext(Context);
 
-  const { setListaDptosJurisprudencial } = useContext(Context);
-
   const [openModal, setOpenModal] = useState(false);
   const handleOpenModal = () => setOpenModal(true);
   const handleCloseModal = () => setOpenModal(false);
@@ -57,25 +55,6 @@ export default function EnfoqueGenero() {
     const listaDptos = dptos.map( item => { return { "nombre_campo": item.dpto, "valor": item.dpto } });
     return listaDptos;
   }
-
-  const getMapaDptos = () => {
-    mapaJurisprudencialService
-        .getMapaDptos()
-        .then(response => {
-            if((response.status_info.status === 200) && (response.data.length > 0)) {
-                const newDptos = getNewListDptos(response.data[0]["dpto"]); 
-                setListaDptosJurisprudencial(setDatosDepartamentos(newDptos));
-            } else {
-                setMessage(`Error: ${response.status_info.status}. ${response.status_info.reason}`);
-            }
-        }
-        )
-        .catch(error => console.log(error));
-}
-
-useEffect(() => {
-        getMapaDptos();
-}, []);
 
   const getResultadosBuscadorAI = (string) => {
         let newMessage = {}; 
