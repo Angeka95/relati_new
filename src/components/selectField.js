@@ -8,20 +8,12 @@ import React, { useState, useEffect, useContext } from 'react';
 import Context from '../context/context';
 import { FormControl, InputLabel, Select, MenuItem, OutlinedInput, Chip, Checkbox, ListItemText, Tooltip } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
-import { validarfiltroJurisprudencial } from '../helpers/utils.js';
-
 
 export default function Select_field({ datos_filtros, label, id, setSelectedData, isDisabled }) {
+
+  console.log("Departamentos:", setSelectedData);
   const [selectedValues, setSelectedValues] = useState([]);
   
-  // Filtros
-
-  // useEffect(() => {
-  //   if (isDisabled) {
-  //     setSelectedValues([])
-  //   }
-  // }, [isDisabled]);
-
   const handleChange = (event) => {
     setSelectedValues(event.target.value);
     setSelectedData(event.target.value);

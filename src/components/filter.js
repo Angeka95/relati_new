@@ -54,11 +54,20 @@ export default function Filter({ setSelectedFilters, isFilterFloat, isShowingFil
   };
   
   useEffect(() => {
-  console.log("lista deptos:", listaDptosJurisprudencial);
     if(listaDptosJurisprudencial.length === 0){
         getDepartamentos();
     } 
   }, [listaDptosJurisprudencial]);
+  
+  useEffect(() => {
+    console.log("Filtro juris desde filtro:", filtroJurisprudencial);
+    console.log("Deptos seleccionados:", selectedDataFilter3);
+    if(selectedDataFilter3.length === 0){
+        setSelectedDataFilter3([...filtroJurisprudencial.departamentos]);
+    } else {
+      setSelectedDataFilter3([]);
+    }
+  }, [filtroJurisprudencial]);
 
   const getDataFromDocumento = () => {
     documentoService
@@ -92,9 +101,9 @@ export default function Filter({ setSelectedFilters, isFilterFloat, isShowingFil
     //console.log("Filtro mapa juris", filtroJurisprudencial);
     //console.log("Deptos ", selectedDataFilter3);
 
-    if(filtroJurisprudencial.departamentos.length === 1){
+    /*if(filtroJurisprudencial.departamentos.length === 1){
       setSelectedDataFilter3([...filtroJurisprudencial.departamentos]);
-    }
+    }*/
 
     setSelectedFilters(
       [

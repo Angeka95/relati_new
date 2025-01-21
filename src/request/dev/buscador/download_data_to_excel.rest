@@ -1,0 +1,10 @@
+GET https://relatoria.jep.gov.co/downloadresult?idpro="23954,23954,10313,10313,2058,9039,9039,6756,6756,6746,6746,17304,17304,18225,18225,14080,14080,6755,8094,8094,6755,18390,18390,17813,17813,17646,17646,22083,22083" HTTP/1.1
+user: {{$dotenv REACT_APP_API_USER}}
+password: {{$dotenv REACT_APP_API_PASS}}
+Authorization: Bearer {{$dotenv REACT_APP_API_ACCESS_TOKEN}}
+Content-Type: application/json
+
+{
+
+}
+
