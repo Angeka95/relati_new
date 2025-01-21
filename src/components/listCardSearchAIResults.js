@@ -20,7 +20,7 @@ import FilterShort from './filterShort.js';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import { validarfiltroJurisprudencial, getOpcionesAutocompletar, getDecisionesIDsToExport } from '../helpers/utils.js';
 import { macrocasos } from '../data/datos_macrocaso.js';
-import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
+import ButtonDownloadXLS from './buttonDownloadXLS.js';
 
 export default function Card({ datosBusqueda, searchOptions, selectedFilters, isListSmall, selectedTerm, isLargeResult, isExternalFilters }) {
 
@@ -166,13 +166,11 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
     const startIndexPage = Math.ceil(page * itemsPerPage + 1 - itemsPerPage);
 
     useEffect(() => {
-        console.log("datos to export", datosToExport);
-        console.log("datos")
         if(datos.length > 0){
             getCurrentData();
             setDatosToExport(getDecisionesIDsToExport(datos, "providencia_id"));
         }
-    }, [page, itemsPerPage, datos]);
+    }, [datos]);
 
     const getCurrentData = (items = 0) => {
         if (items === 0) {
@@ -449,9 +447,14 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
                             
                         </WrapGrid>
                         <div className="justify_end">
-                            <a className="link_primary vertical_align" href="">
-                            <FileDownloadOutlinedIcon/> 
-                            Descargar reporte en excel</a>
+                            { (datosToExport !== null) && 
+                                <ButtonDownloadXLS 
+                                    stringURL={`https://relatoria.jep.gov.co/downloadresult`}
+                                    stringParams={`idpro=${datosToExport}`}
+                                    datosToExport={datosToExport}
+                                    filename="resultados.xls"
+                                />
+                            }
                         </div>
     
                         <div className="separator width_100"></div>

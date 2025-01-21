@@ -2,22 +2,10 @@ import React, { useState, useEffect, useContext } from 'react';
 import { Container, Box } from '@mui/material';
 import '../App.css';
 import mapaJurisprudencialService from '../services/mapa_jurisprudencial.js';
-import enfoqueGeneroService from '../services/enfoque_genero.js';
 
 export default function TestServices() {
     
     const [datos, setDatos] = useState([]);
-    
-    const getTestServiceEnfoqueGenero = () => {
-        enfoqueGeneroService
-            .getEnfoqueGeneroData()
-            .then(response => {
-                console.log(response.status_info);
-                setDatos(JSON.stringify(response.data, null, 2));
-             }
-            )
-            .catch(error => console.log(error));
-    }
     
     const getTestService = () => {
         mapaJurisprudencialService
@@ -32,8 +20,7 @@ export default function TestServices() {
        
     useEffect(() => {
         if(datos.length === 0){
-            //getTestService();
-            getTestServiceEnfoqueGenero();
+            getTestService();
         } 
     }, [datos])
     
