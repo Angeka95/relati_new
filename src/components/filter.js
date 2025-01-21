@@ -16,12 +16,13 @@ import { datos_macrocaso } from '../data/datos_macrocaso.js';
 import datos_sala_seccion from '../data/datos_sala_seccion.js';
 import Context from '../context/context';
 import { validarfiltroJurisprudencial, generarArrayDeObjetosNombreCampoValor } from '../helpers/utils.js';
+import mapaJurisprudencialService from '../services/mapa_jurisprudencial.js';
 
 export default function Filter({ setSelectedFilters, isFilterFloat, isShowingFilter, selectedData, isSearchAdvance }) {
   // Estado para controlar si el botón está habilitado o deshabilitado
   const { verTodasDecisiones, busqueda } = useContext(Context);
   const { filtroJurisprudencial, setFiltroJurisprudencial } = useContext(Context);
-  const { listaDptosJurisprudencial, setListaDptosJurisprudencial } = useContext(Context);
+  const [ listaDptosJurisprudencial, setListaDptosJurisprudencial ] = useState([]);
   const [isButtonEnabled, setIsButtonEnabled] = useState(true);
   const [selectedDataFilter1, setSelectedDataFilter1] = useState([]);
   const [selectedDataFilter2, setSelectedDataFilter2] = useState([]);
@@ -36,6 +37,37 @@ export default function Filter({ setSelectedFilters, isFilterFloat, isShowingFil
   const [datos_delito, setDatosDelito] = useState([]);
   const [datos_compareciente, setDatosCompareciente] = useState([]);
   const [datos_procedimiento, setDatosProcedimiento] = useState([]);
+  
+  
+  //Funcion que hace el llamado para traer la data de departamentos
+  const getDepartamentos = () => {
+    mapaJurisprudencialService
+        .getDepartamentos()
+        .then(response => {
+            if((response.status_info.status === 200) && (response.data.length > 0)) {
+                let newArrayListaDptos = generarArrayDeObjetosNombreCampoValor(response.data, "departamento", "departamento");
+                setListaDptosJurisprudencial(newArrayListaDptos);
+            } 
+        }
+        )
+        .catch(error => console.log(error));
+  };
+  
+  useEffect(() => {
+    if(listaDptosJurisprudencial.length === 0){
+        getDepartamentos();
+    } 
+  }, [listaDptosJurisprudencial]);
+  
+  useEffect(() => {
+    console.log("Filtro juris desde filtro:", filtroJurisprudencial);
+    console.log("Deptos seleccionados:", selectedDataFilter3);
+    if(selectedDataFilter3.length === 0){
+        setSelectedDataFilter3([...filtroJurisprudencial.departamentos]);
+    } else {
+      setSelectedDataFilter3([]);
+    }
+  }, [filtroJurisprudencial]);
 
   const getDataFromDocumento = () => {
     documentoService
@@ -69,9 +101,9 @@ export default function Filter({ setSelectedFilters, isFilterFloat, isShowingFil
     //console.log("Filtro mapa juris", filtroJurisprudencial);
     //console.log("Deptos ", selectedDataFilter3);
 
-    if(filtroJurisprudencial.departamentos.length === 1){
+    /*if(filtroJurisprudencial.departamentos.length === 1){
       setSelectedDataFilter3([...filtroJurisprudencial.departamentos]);
-    }
+    }*/
 
     setSelectedFilters(
       [

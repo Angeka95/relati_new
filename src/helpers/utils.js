@@ -105,8 +105,8 @@ const validarfiltroJurisprudencial = (obj) => {
 */
 const generarArrayDeObjetosNombreCampoValor = (valores, propiedad_1, propiedad_2) => {
     return valores.map(valor => ({
-      nombre_campo: valor[propiedad_1],
-      valor: valor[propiedad_2]
+      nombre_campo: valor[propiedad_1].trim(),
+      valor: valor[propiedad_2].trim()
     }));
 };
 
@@ -258,6 +258,22 @@ const getOpcionesAutocompletar = (arrDatos) => {
     return [ { "title": "*", "id": 0 } ].concat(arrLinted);
 };
 
+/**
+ * getDecisionesIdsToExport()
+ * Funcionalidad que obtiene la lista de IDs de decisiones a exportar en Excel
+ * Parametros de entrada:
+ * - arrDatos: los datos generados a partir del servicio
+ * - nombre_campo: el campo que hace referencia al id, Ej. providencia_id
+ * Salida:
+ * - Retorna una cadena de IDs. Ejemplo: 1001,1002,1004
+ * Aplicación:
+ * listCardSearchAIResults() 
+*/
+const getDecisionesIDsToExport = (arrDatos, nombre_campo) => {
+    const arrIds = arrDatos.filter(item => item[nombre_campo] !== null).map(item => item[nombre_campo]);
+    return arrIds.toString();
+};
+
 export { filtroByDefault, 
          truncateWithEllipsis, 
          obtenerAnio, 
@@ -272,5 +288,6 @@ export { filtroByDefault,
          formatDateToMonthYear,
          getOpcionesAutocompletar,
          obtenerAnioMes,
-         ordenarArrayPorFechaHitos
+         ordenarArrayPorFechaHitos,
+         getDecisionesIDsToExport
         };

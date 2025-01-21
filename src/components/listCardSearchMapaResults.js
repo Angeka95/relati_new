@@ -114,10 +114,12 @@ export default function Card({ datosMapa, datosOriginalesMapa, searchDocsOptions
     }, [page, itemsPerPage, datos]);
 
     useEffect(() => {
-        if(!validarfiltroJurisprudencial(filtroJurisprudencial)) { 
+        if(!validarfiltroJurisprudencial(filtroJurisprudencial)) {
             let datosFiltrados = datos;
             if(filtroJurisprudencial.departamentos.length > 0){
-                datosFiltrados = datosFiltrados.filter( item => filtroJurisprudencial.departamentos.includes(item.departamentoNombre));
+                datosFiltrados = datosFiltrados.filter( item => {
+                    return filtroJurisprudencial.departamentos.includes(item.departamentoNombre);
+                });
             }
             if(filtroJurisprudencial.anios.length > 0){
                 datosFiltrados = datosFiltrados.filter( item => filtroJurisprudencial.anios.includes(item.anio));

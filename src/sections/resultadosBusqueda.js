@@ -26,8 +26,6 @@ export default function SearchResults() {
 
   const { filtroJurisprudencial, setFiltroJurisprudencial } = useContext(Context);
 
-  const { setListaDptosJurisprudencial } = useContext(Context);
-
   const [openModal, setOpenModal] = useState(false);
   const handleOpenModal = () => setOpenModal(true);
   const handleCloseModal = () => setOpenModal(false);
@@ -58,25 +56,6 @@ export default function SearchResults() {
     return listaDptos;
   }
 
-  const getMapaDptos = () => {
-    mapaJurisprudencialService
-        .getMapaDptos()
-        .then(response => {
-            if((response.status_info.status === 200) && (response.data.length > 0)) {
-                const newDptos = getNewListDptos(response.data[0]["dpto"]); 
-                setListaDptosJurisprudencial(setDatosDepartamentos(newDptos));
-            } else {
-                setMessage(`Error: ${response.status_info.status}. ${response.status_info.reason}`);
-            }
-        }
-        )
-        .catch(error => console.log(error));
-}
-
-useEffect(() => {
-        getMapaDptos();
-}, []);
-
   const getResultadosBuscadorAI = (string) => {
         let newMessage = {}; 
         buscadorService
@@ -89,6 +68,7 @@ useEffect(() => {
                         let newItem = {
                             id: k + 1,
                             ficha_id: item.ficha_id,
+                            providencia_id: item.providencia_id,
                             salaOSeccion: (item.sala_seccion !== null) ? item.sala_seccion : "",
                             sala: (item.sala_seccion !== null) ? item.sala_seccion : "",
                             nombreDecision: (item.nombre_providencia !== null) ? item.nombre_providencia : "",
