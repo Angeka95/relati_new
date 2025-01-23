@@ -9,10 +9,13 @@ import Context from '../context/context';
 import { FormControl, InputLabel, Select, MenuItem, OutlinedInput, Chip, Checkbox, ListItemText, Tooltip } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 
-export default function Select_field({ datos_filtros, label, id, setSelectedData, isDisabled }) {
+export default function Select_field({ datos_filtros, label, id, selectedData, setSelectedData, isDisabled }) {
 
-  console.log("Departamentos:", setSelectedData);
   const [selectedValues, setSelectedValues] = useState([]);
+  
+  useEffect(()=>{
+    setSelectedValues([...selectedData]);
+  },[selectedData]);
   
   const handleChange = (event) => {
     setSelectedValues(event.target.value);

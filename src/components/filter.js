@@ -60,14 +60,12 @@ export default function Filter({ setSelectedFilters, isFilterFloat, isShowingFil
   }, [listaDptosJurisprudencial]);
   
   useEffect(() => {
-    console.log("Filtro juris desde filtro:", filtroJurisprudencial);
-    console.log("Deptos seleccionados:", selectedDataFilter3);
-    if(selectedDataFilter3.length === 0){
+    //if(selectedDataFilter3.length === 0){
         setSelectedDataFilter3([...filtroJurisprudencial.departamentos]);
-    } else {
+    /*} else {
       setSelectedDataFilter3([]);
-    }
-  }, [filtroJurisprudencial]);
+    }*/
+  }, [filtroJurisprudencial, setSelectedDataFilter3]);
 
   const getDataFromDocumento = () => {
     documentoService
@@ -184,13 +182,13 @@ export default function Filter({ setSelectedFilters, isFilterFloat, isShowingFil
           </div>
         </JustFilterFloatNoneGrid>
 
-        <SelectField isDisabled={isFilterDisabled} datos_filtros={datos_sala_seccion} setSelectedData={setSelectedDataFilter1}
+        <SelectField isDisabled={isFilterDisabled} datos_filtros={datos_sala_seccion} selectedData={selectedDataFilter1} setSelectedData={setSelectedDataFilter1}
           label='Sala o Sección' id='sala'></SelectField>
-        <SelectField isDisabled={isFilterDisabled} datos_filtros={datos_anios} setSelectedData={setSelectedDataFilter2}
+        <SelectField isDisabled={isFilterDisabled} datos_filtros={datos_anios} selectedData={selectedDataFilter2} setSelectedData={setSelectedDataFilter2}
           label='Año de los hechos' id='anio'></SelectField>
-        <SelectField isDisabled={isFilterDisabled} datos_filtros={listaDptosJurisprudencial} setSelectedData={setSelectedDataFilter3}
+        <SelectField isDisabled={isFilterDisabled} datos_filtros={listaDptosJurisprudencial} selectedData={selectedDataFilter3} setSelectedData={setSelectedDataFilter3}
           label='Departamento' id='departamento'></SelectField>
-        <SelectField isDisabled={isFilterDisabled} datos_filtros={datos_delito} setSelectedData={setSelectedDataFilter4}
+        <SelectField isDisabled={isFilterDisabled} datos_filtros={datos_delito} selectedData={selectedDataFilter4} setSelectedData={setSelectedDataFilter4}
           label='Delito' id='delito'></SelectField>
         <div className='justify_center'>
           {isButtonEnabled && (
@@ -201,11 +199,11 @@ export default function Filter({ setSelectedFilters, isFilterFloat, isShowingFil
           {!isButtonEnabled && (
             <div className="width_100 text_center">
 
-              <SelectField isDisabled={isFilterDisabled} datos_filtros={datos_macrocaso} setSelectedData={setSelectedDataFilter5}
+              <SelectField isDisabled={isFilterDisabled} datos_filtros={datos_macrocaso} selectedData={selectedDataFilter5} setSelectedData={setSelectedDataFilter5}
                 label='Macrocasos' id='macrocasos'></SelectField>
-              <SelectField isDisabled={isFilterDisabled} datos_filtros={datos_compareciente} setSelectedData={setSelectedDataFilter6}
+              <SelectField isDisabled={isFilterDisabled} datos_filtros={datos_compareciente} selectedData={selectedDataFilter6} setSelectedData={setSelectedDataFilter6}
                 label='Compareciente' id='compareciente'></SelectField>
-              <SelectField isDisabled={isFilterDisabled} datos_filtros={datos_procedimiento} setSelectedData={setSelectedDataFilter7}
+              <SelectField isDisabled={isFilterDisabled} datos_filtros={datos_procedimiento} selectedData={selectedDataFilter7} setSelectedData={setSelectedDataFilter7}
                 label='Procedimiento' id='procedimiento'></SelectField>
 
               <Button

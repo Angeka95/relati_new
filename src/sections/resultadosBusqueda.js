@@ -51,11 +51,6 @@ export default function SearchResults() {
     });
   };
   
-  const setDatosDepartamentos = (dptos) => {
-    const listaDptos = dptos.map( item => { return { "nombre_campo": item.dpto, "valor": item.dpto } });
-    return listaDptos;
-  }
-
   const getResultadosBuscadorAI = (string) => {
         let newMessage = {}; 
         buscadorService
