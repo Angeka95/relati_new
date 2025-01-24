@@ -80,7 +80,7 @@ export default function Mapa() {
         const arrLinted = Array.from(
             new Map(arrDatos.map(item => [item.nombre, item])).values()
         );
-        return [ { "title": "*" } ].concat(arrLinted.map( item => { return { "title": item.nombre } }));
+        return [ { "title": "* Todos los resultados" } ].concat(arrLinted.map( item => { return { "title": item.nombre } }));
     };
 
     // Funcion que genera la lista de departamentos removiendo el fragmento "DEPARTAMENTO"

@@ -26,7 +26,7 @@ export default function Card({ selectedFilters, isListSmall, selectedTerm, isLar
     const [datos, setDatos] = useState([]);
     const [datosOriginales, setDatosOriginales] = useState([]);
     const [message, setMessage] = useState({ message: "", classname: "" });
-    const [selectedDoc, setSelectedDoc] = useState({ "title": "*", "id": 0 });
+    const [selectedDoc, setSelectedDoc] = useState({ "title": "* Todos los resultados", "id": 0 });
     const [searchDocsOptions, setSearchDocsOptions] = useState([]);
 
     const getDocsTerm = () => {
@@ -97,12 +97,12 @@ export default function Card({ selectedFilters, isListSmall, selectedTerm, isLar
         const arrLinted = Array.from(
             new Map(arrDatos.map(item => [item.asunto, item])).values()
         );
-        return [ { "title": "*" } ].concat(arrLinted.map( item => { return { "title": item.asunto } }));
+        return [ { "title": "* Todos los resultados" } ].concat(arrLinted.map( item => { return { "title": item.asunto } }));
     };
 
     // Funcion que permite mostrar la lista de providencias en el autocompletar
     const handlerSetSelectedDoc = (newSelectedOption) => { 
-        if(newSelectedOption.title !== "*"){
+        if(newSelectedOption.title !== "* Todos los resultados"){
             const newArrDatos = datos.filter(item => item.id === newSelectedOption.id);
             setSelectedDoc(newSelectedOption);
             setDatos(newArrDatos);

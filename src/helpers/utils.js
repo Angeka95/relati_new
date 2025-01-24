@@ -256,7 +256,7 @@ function capitalizeFirstLetter(string) {
 // Genera el listado de opciones de documentos para el autocompletar
 const getOpcionesAutocompletar = (arrDatos) => {
     const arrLinted = arrDatos.map(item => item.autocompletarBuscador);
-    return [ { "title": "*", "id": 0 } ].concat(arrLinted);
+    return [ { "title": "* Todos los resultados", "id": 0 } ].concat(arrLinted);
 };
 
 /**

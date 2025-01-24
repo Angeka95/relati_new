@@ -59,8 +59,8 @@ export default function TestServices() {
        
     useEffect(() => {
         if(datos.length === 0){
-            getTestService();
-            testUtilsFunction();
+            //getTestService();
+            //testUtilsFunction();
         } 
     }, [datos]);
     

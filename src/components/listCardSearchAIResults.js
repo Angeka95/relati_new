@@ -26,7 +26,7 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
 
     const [datos, setDatos] = useState(datosBusqueda);
     const [datosOriginales, setDatosOriginales] = useState(datosBusqueda);
-    const [selectedDoc, setSelectedDoc] = useState({ "title": "*", "id": 0 });
+    const [selectedDoc, setSelectedDoc] = useState({ "title": "* Todos los resultados", "id": 0 });
     const [searchDocsOptions, setSearchDocsOptions] = useState(searchOptions);
     const [datosToExport, setDatosToExport] = useState("");
 
@@ -94,17 +94,9 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
         }
     }, [filtroJurisprudencial]);
 
-    // Genera el listado de opciones de documentos para el autocompletar
-    const getOpcionesDocs = (arrDatos) => {
-        const arrLinted = Array.from(
-            new Map(arrDatos.map(item => [item.asunto, item])).values()
-        );
-        return [ { "title": "*_" } ].concat(arrLinted.map( item => { return { "title": item.asunto } }));
-    };
-
     // Funcion que permite mostrar la lista de providencias en el autocompletar
     const handlerSetSelectedDoc = (newSelectedOption) => { 
-        if(newSelectedOption.title !== "*"){
+        if(newSelectedOption.title !== "* Todos los resultados"){
             const newArrDatos = datos.filter(item => item.id === newSelectedOption.id);
             setSelectedDoc(newSelectedOption);
             setDatos(newArrDatos);

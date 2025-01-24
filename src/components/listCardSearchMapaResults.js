@@ -33,7 +33,7 @@ export default function Card({ datosMapa, datosOriginalesMapa, searchDocsOptions
 
     // Funcion que permite mostrar la lista de providencias en el autocompletar
     const handlerSetSelectedDoc = (newSelectedOption) => {
-        if(newSelectedOption !== "*"){
+        if(newSelectedOption !== "* Todos los resultados"){
             const newArrDatos = datos.filter(item => item.nombre === newSelectedOption);
             setSelectedDoc(newSelectedOption);
             setDatos(newArrDatos);
