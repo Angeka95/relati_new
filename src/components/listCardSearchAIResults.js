@@ -444,7 +444,8 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
                                     stringURL={`https://relatoria.jep.gov.co/downloadresult`}
                                     stringParams={`idpro=${datosToExport}`}
                                     datosToExport={datosToExport}
-                                    filename="resultados.xls"
+                                    filename="resultados.xlsx"
+                                    requireService="no"
                                 />
                             }
                         </div>
