@@ -57,35 +57,34 @@ export default function EnfoqueGenero() {
                             ficha_id: item.id,
                             providencia_id: item.id,
                             fecha: item.fecha_providencia,
-                            anio: /*(item.anio_hechos.length > 0) ? item.anio_hechos[0].anio :*/"",
+                            anio: (item.anio_hechos.length > 0) ? item.anio_hechos[0].anio : "",
                             asuntoNombreCaso: "",
                             asuntoCasoEllipsed: ((item.nombre !== null)) ? truncateWithEllipsis(item.nombre) : "", 
                             asuntoNombre: ((item.nombre !== null)) ? item.nombre : "",
                             nombre: ((item.nombre !== null)) ? item.nombre : "",
-                            actuacion: /*(item.hasOwnProperty("actuacion")) && (item.actuacion.length > 0 )? obtenerPalabrasFromArrayObject(item.actuacion, "actuacion", null, false) : */"",
-                            caso: /*(item.casopro.length > 0 ) ? obtenerPalabrasFromArrayObject(item.casopro, "caso", null, false) :*/ "",
-                            sala: /*(item.despacho.length > 0) ? obtenerPalabrasFromArrayObject(item.despacho, "nombre", null, false) : */"",
-                            salaDescripcion:  /*(item.despacho.length > 0) ? obtenerPalabrasFromArrayObject(item.despacho, "nombre", null, false) : */"",
-                            salaId: /* (item.despacho.length > 0) ? obtenerPalabrasFromArrayObject(item.despacho, "id", null, false) :*/ "",
+                            actuacion: (item.hasOwnProperty("actuacion")) && (item.actuacion.length > 0 )? obtenerPalabrasFromArrayObject(item.actuacion, "actuacion", null, false) : "",
+                            caso:  (item.casopro.length > 0 ) ? obtenerPalabrasFromArrayObject(item.casopro, "caso", null, false) : "",
+                            sala: (item.despacho.length > 0) ? obtenerPalabrasFromArrayObject(item.despacho, "nombre", null, false) : "",
+                            salaDescripcion:  (item.despacho.length > 0) ? obtenerPalabrasFromArrayObject(item.despacho, "nombre", null, false) : "",
+                            salaId: (item.despacho.length > 0) ? obtenerPalabrasFromArrayObject(item.despacho, "id", null, false) : "",
                             asuntoCaso: ((item.nombre !== null)) ? truncateWithEllipsis(item.nombre) : "", 
                             departamentoId: "",
                             providencia: "",
-                            departamentoNombre:/* (item.departamento_ext.length > 0) ? removeFragmentoInString("DEPARTAMENTO", item.departamento_ext[0].nombre_dpto) :*/ "",
-                            hipervinculo:   /*(item.hipervinculo !== null ) ? `https://relatoria.jep.gov.co/${item.hipervinculo}` : */"", 
-                            comparecientes:  /*(item.tipopeti.length > 0) ? obtenerPalabrasFromArrayObject(item.tipopeti, "tipo", null, false) : */"", 
-                            delitos: /*(item.delitos.length > 0) ? obtenerPalabrasFromArrayObject(item.delitos, "delito", null, false) : */"", 
-                            procedimientos: /*(item.hasOwnProperty("actuacion")) && (item.actuacion.length > 0 )? obtenerPalabrasFromArrayObject(item.actuacion, "actuacion", null, false) :*/ "", 
+                            departamentoNombre: (item.departamento_ext.length > 0) ? removeFragmentoInString("DEPARTAMENTO", item.departamento_ext[0].nombre_dpto) : "",
+                            hipervinculo:   (item.hipervinculo !== null ) ? `https://relatoria.jep.gov.co/${item.hipervinculo}` : "", 
+                            comparecientes:  (item.tipopeti.length > 0) ? obtenerPalabrasFromArrayObject(item.tipopeti, "tipo", null, false) : "", 
+                            delitos: (item.delitos.length > 0) ? obtenerPalabrasFromArrayObject(item.delitos, "delito", null, false) : "", 
+                            procedimientos: (item.hasOwnProperty("actuacion")) && (item.actuacion.length > 0 )? obtenerPalabrasFromArrayObject(item.actuacion, "actuacion", null, false) : "", 
                             palabrasClave: "",
                             municipio: "",
                             palabrasClaveBuscador: "",
                             palabrasClaveFichaJuridica: "",
                         };
-                        newItem["asuntoNombreCaso"] = `${item.asuntocaso} ${item.nombre}`;
-                        newItem["palabrasClave"] = `${item["delitos"]}, ${item["comparecientes"]}, ${item["procedimientos"]}`;
+                        newItem["asuntoNombreCaso"] = `${newItem["asuntoNombre"]}`;
+                        newItem["palabrasClave"] = `${newItem["delitos"]}, ${newItem["comparecientes"]}, ${newItem["procedimientos"]}`;
                         newItem["autocompletarBuscador"] = { 
                               id: newItem.id, 
-                              title: `${item.providencia_id} - ${item.asuntoNombre} ${item.sala} ${item.delitos} ${item.procedimientos} ${item.compareciente} ${item.departamentoNombre}`}; 
-                        console.log("item", newItem);
+                              title: `${newItem["providencia_id"]} - ${newItem["asuntoNombreCaso"]} ${newItem["sala"]} ${newItem["departamentoNombre"]} ${newItem["delitos"]}, ${newItem["comparecientes"]}, ${newItem["procedimientos"]}`}; 
                         return newItem;
                   });
                   setDatos(newDatos);
