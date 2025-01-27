@@ -358,7 +358,7 @@ export default function Home() {
             }
             </Container>
 
-            <Container className="space_top "   id="seccion_caso">
+            <Container className="space_top " id="seccion_caso">
                 <h2 className="justify_center text_bolder">Macrocasos</h2>
                 <h5 className="justify_center  align_center margin_top_s margin_bottom_m">Conozca las últimas decisiones de cada macrocaso</h5>
 
