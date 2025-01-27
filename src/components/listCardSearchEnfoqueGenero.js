@@ -162,7 +162,7 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
             getCurrentData();
             setDatosToExport(getDecisionesIDsToExport(datos, "providencia_id"));
         }
-    }, [datos]);
+    }, [page, itemsPerPage, datos]);
 
     const getCurrentData = (items = 0) => {
         if (items === 0) {
