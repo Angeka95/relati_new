@@ -6,12 +6,9 @@ import { Container, Grid, Alert } from '@mui/material';
 import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import buscadorService from '../services/buscador.js';
-import mapaJurisprudencialService from '../services/mapa_jurisprudencial.js';
-import ProcessingDataModal from '../components/processingDataModal.js';
 import LinearWithValueLabel from '../components/linearProgress.js';  
 import Context from '../context/context.js';
-import { removeFragmentoInString, getOpcionesAutocompletar } from '../helpers/utils.js';
-import { obtenerPalabrasFromArrayObject } from '../helpers/utils.js';
+import { filtroByDefault, removeFragmentoInString, getOpcionesAutocompletar, obtenerPalabrasFromArrayObject, validarfiltroJurisprudencial } from '../helpers/utils.js';
 
 export default function SearchResults() {
 
@@ -25,7 +22,7 @@ export default function SearchResults() {
   const [searchOptions, setSearchOptions] = useState([]);
 
   const { filtroJurisprudencial, setFiltroJurisprudencial } = useContext(Context);
-
+  
   const [openModal, setOpenModal] = useState(false);
   const handleOpenModal = () => setOpenModal(true);
   const handleCloseModal = () => setOpenModal(false);
@@ -145,6 +142,12 @@ export default function SearchResults() {
       }
     }
   }, [stringQuery, stringParam ]);
+  
+  useEffect(() => {
+    if(datos.length === 0){
+        setFiltroJurisprudencial(filtroByDefault);
+    } 
+  }, []);
 
   /*useEffect(() => {
     if(message.message !== "" ){

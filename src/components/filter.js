@@ -38,7 +38,6 @@ export default function Filter({ setSelectedFilters, isFilterFloat, isShowingFil
   const [datos_compareciente, setDatosCompareciente] = useState([]);
   const [datos_procedimiento, setDatosProcedimiento] = useState([]);
   
-  
   //Funcion que hace el llamado para traer la data de departamentos
   const getDepartamentos = () => {
     mapaJurisprudencialService
