@@ -59,6 +59,7 @@ export default function SearchResults() {
                         let item = i._source;
                         let newItem = {
                             id: k + 1,
+                            fecha: item.fecha_documento,
                             ficha_id: item.ficha_id,
                             providencia_id: item.providencia_id,
                             salaOSeccion: (item.sala_seccion !== null) ? item.sala_seccion : "",
