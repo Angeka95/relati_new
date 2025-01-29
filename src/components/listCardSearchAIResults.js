@@ -133,6 +133,7 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
         setDatos(sortedDatos);
         getCurrentData();
         setIsButtonSorterEnabled(false);
+        setDatosToExport(getDecisionesIDsToExport(sortedDatos, "providencia_id"));
     };
 
     // Función para ordenar en orden descendente por fecha
@@ -141,6 +142,7 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
         setDatos(sortedDatos);
         getCurrentData();
         setIsButtonSorterEnabled(false);
+        setDatosToExport(getDecisionesIDsToExport(sortedDatos, "providencia_id"));
     };
 
 
