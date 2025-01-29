@@ -3,19 +3,39 @@ import { Container, Box } from '@mui/material';
 import '../App.css';
 import { convertObjFiltroJurisToQuery } from '../helpers/utils.js';
 import mapaJurisprudencialService from '../services/mapa_jurisprudencial.js';
+import boletinesService from '../services/boletines.js';
+import { responsivePropType } from 'react-bootstrap/esm/createUtilityClasses.js';
 
 
 export default function TestServices() {
     
     const [datos, setDatos] = useState([]);
+    const [message, setMessage] = useState({ message: "", classname: "" });
     const [resultFunction, setResultFunction] = useState(null);
     
-    const getTestService = () => {
+    /*const getTestService = () => {
         mapaJurisprudencialService
             //.getDepartamentos()
             .getDetailsGraph("anio_hecho=2019,2020&dpto=DEPARTAMENTO+CAUCA,DEPARTAMENTO+TOLIMA")
             .then(response => {
                 setDatos(JSON.stringify(response.data, null, 2));
+             }
+            )
+            .catch(error => console.log(error));
+    }*/
+    
+    const sendBoletinService = () => {
+        const objToSend = {
+            "boletin_id": "100",
+            "email": "juanadiaz0001@gmail.com"
+        };
+        const newMessage = { message: "", classname: "" };
+        boletinesService
+            .sendBoletin(objToSend)
+            .then(response => {
+                newMessage["message"] =  `${response.data} ${response.status_info.status}`;
+                newMessage["classname"] = "error";
+                setMessage(newMessage);
              }
             )
             .catch(error => console.log(error));
@@ -64,6 +84,12 @@ export default function TestServices() {
         } 
     }, [datos]);
     
+    useEffect(() => {
+        if(message.message.length === 0){
+            sendBoletinService();
+        } 
+    }, [message]);
+    
     return (
         <Container>
             <Box sx={{ flexGrow: 1, marginTop: "1rem", marginBottom: "1rem", paddingLeft: "1rem", paddingRight: "1rem" }}>
@@ -74,6 +100,13 @@ export default function TestServices() {
                     </div>
                     :
                     <p>Cargando datos...</p>
+                }
+                {(message.message.length > 0) ?
+                    <div>
+                        <pre>{message.message}</pre>
+                    </div>
+                    :
+                    <p>Esperando mensaje...</p>
                 }
             </Box>
         </Container>

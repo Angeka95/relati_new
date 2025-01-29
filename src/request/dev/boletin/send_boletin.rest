@@ -1,0 +1,15 @@
+POST https://relatoria.jep.gov.co/sendmailboletin HTTP/1.1
+user: {{$dotenv REACT_APP_API_USER}}
+password: {{$dotenv REACT_APP_API_PASS}}
+Authorization: Bearer {{$dotenv REACT_APP_API_ACCESS_TOKEN}}
+Content-Type: application/json
+
+{
+    "boletin_id": "10",
+    "email": "juanadiaz0001"
+}
+
+//{  HTTP/1.1 202 Accepted
+//  "status": 202,
+//  "reason": "Bolet\u00edn enviado correctamente"
+//}
