@@ -43,8 +43,8 @@ export default function SearchResults() {
   const getResultadosBuscadorAI = (string) => {
         let newMessage = {}; 
         buscadorService
-          //.getSearchQData(string)
-          .getSearchQDataTest(string)
+          .getSearchQData(string)
+          //.getSearchQDataTest(string)
           .then(response => {
               if((response.status_info.status === 200) && (response.data.length > 0)) {
                     const newDatos = response.data.map((i, k) => { 
