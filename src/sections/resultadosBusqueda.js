@@ -142,36 +142,14 @@ export default function SearchResults() {
     } 
   }, []);
 
-  /*useEffect(() => {
-    if(message.message !== "" ){
-      console.log("Message...", message);
-      setTimeout(() => {
-        setMessage({ message: "", classname: "" });
-      }, 10000);
-    } 
-  }, [message]);*/
-
   return (
-    <Container className="margin_bottom_m">
-      <Grid container spacing={2}>
-        <Grid item xs={12} sm={12} md={4} lg={4} xl={4} >
-          <p></p>
-        </Grid>
-        <Grid item xs={12} sm={12} md={8} lg={8} xl={8} >
-        {(datos.length > 0) &&
-          <SearchBar/>
-        }  
-        </Grid>
-      </Grid>
-
-      <Grid container spacing={2}>
-        <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
-        {(datos.length > 0) &&
-          <Filter setSelectedFilters={setSelectedFilters}></Filter>
-        }  
-        </Grid>
-        <Grid item xs={12} sm={12} md={8} lg={8} xl={8}>
-          {(datos.length === 0) ?
+    <>
+      {(datos.length === 0) ?
+        <Container className="margin_bottom_m">
+          <h1 className="text_center margin_top_l">Resultados de Búsqueda</h1>  
+          <p className="text_center"></p>
+          <Grid container spacing={2}>
+            <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
               <>
               <p>Buscando por: <strong>"{stringParam}"</strong></p>
               { (message.message === "") ?
@@ -184,12 +162,30 @@ export default function SearchResults() {
                 </Alert> 
               } 
               </>
-             :  
-              <ListCardSearch datosBusqueda={datos} selectedTerm={stringQuery} searchOptions={searchOptions} selectedFilters={selectedFilters}></ListCardSearch>
-          }
-        </Grid>
-      </Grid>
-      {/*<ProcessingDataModal openModal={openModal} handleOpenModal={handleOpenModal} handleCloseModal={handleCloseModal}/>*/}
-    </Container>
+            </Grid>
+          </Grid>
+        </Container>      
+        :  
+        <Container className="margin_bottom_m">
+          <Grid container spacing={2}>
+            <Grid item xs={12} sm={12} md={4} lg={4} xl={4} >
+              <p></p>
+            </Grid>
+            <Grid item xs={12} sm={12} md={8} lg={8} xl={8} >
+              <SearchBar/>
+            </Grid>
+          </Grid>
+          <Grid container spacing={2}>
+            <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
+              <Filter setSelectedFilters={setSelectedFilters}></Filter> 
+            </Grid>
+            <Grid item xs={12} sm={12} md={8} lg={8} xl={8}>
+                <ListCardSearch datosBusqueda={datos} selectedTerm={stringQuery} searchOptions={searchOptions} selectedFilters={selectedFilters}></ListCardSearch>
+            </Grid>
+          </Grid>
+        </Container>
+      }
+    </>
+    
   );
 }
