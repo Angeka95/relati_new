@@ -144,6 +144,24 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
         setIsButtonSorterEnabled(false);
         setDatosToExport(getDecisionesIDsToExport(sortedDatos, "providencia_id"));
     };
+    
+    // Función para ordenar en orden ascendente por score
+    const sortAscByScore = () => {
+        const sortedDatos = [...datos].sort((a, b) => new Date(a.score) - new Date(b.score));
+        setDatos(sortedDatos);
+        getCurrentData();
+        setIsButtonSorterEnabled(false);
+        setDatosToExport(getDecisionesIDsToExport(sortedDatos, "providencia_id"));
+    };
+
+    // Función para ordenar en orden descendente por score
+    const sortDescByScore = () => {
+        const sortedDatos = [...datos].sort((a, b) => new Date(b.score) - new Date(a.score));
+        setDatos(sortedDatos);
+        getCurrentData();
+        setIsButtonSorterEnabled(false);
+        setDatosToExport(getDecisionesIDsToExport(sortedDatos, "providencia_id"));
+    };
 
 
     // Paginado
@@ -374,8 +392,10 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
                                                   </Button>
                                                   {isButtonSorterEnabled && (
                                                       <div className='container_date_sorted'>
-                                                          <Button onClick={sortAscByDate} className='items_sorted'>fecha ascendente </Button>
-                                                          <Button onClick={sortDescByDate} className='items_sorted'>fecha descendente </Button>
+                                                          <Button onClick={sortAscByDate} className='items_sorted'>Más antiguos </Button>
+                                                          <Button onClick={sortDescByDate} className='items_sorted'>Más recientes </Button>
+                                                          <Button onClick={sortAscByScore} className='items_sorted'>Menor puntuación </Button>
+                                                          <Button onClick={sortDescByScore} className='items_sorted'>Mayor puntuación </Button>
                                                       </div>
                                                   )}
                                                 </NoneGrid>  

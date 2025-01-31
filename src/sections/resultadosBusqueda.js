@@ -43,14 +43,15 @@ export default function SearchResults() {
   const getResultadosBuscadorAI = (string) => {
         let newMessage = {}; 
         buscadorService
-          .getSearchQData(string)
-          //.getSearchQDataTest(string)
+          //.getSearchQData(string)
+          .getSearchQDataTest(string)
           .then(response => {
               if((response.status_info.status === 200) && (response.data.length > 0)) {
                     const newDatos = response.data.map((i, k) => { 
                         let item = i._source;
                         let newItem = {
                             id: k + 1,
+                            score: i._score,
                             fecha: item.fecha_documento,
                             ficha_id: item.ficha_id,
                             providencia_id: item.providencia_id,
