@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Box from '@mui/material/Box';
@@ -44,7 +44,7 @@ export default function CardSearch({ datos }) {
   const handleChangeTabCard = (event, newValue) => {
     setValue(newValue);
   };
-
+  
   // Acordiones en card 
 
   const [isMagistradosExpanded, setIsMagistradosExpanded] = useState(false);

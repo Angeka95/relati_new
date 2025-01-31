@@ -1,14 +1,14 @@
+import React, { useState, useEffect, useContext } from 'react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import SearchBar from '../components/searchBar.js';
 import Filter from '../components/filter.js';
 import ListCardSearch from '../components/listCardSearchAIResults.js';
-import '../App.css';
 import { Container, Grid, Alert } from '@mui/material';
-import React, { useState, useEffect, useContext } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
 import buscadorService from '../services/buscador.js';
 import LinearWithValueLabel from '../components/linearProgress.js';  
 import Context from '../context/context.js';
 import { filtroByDefault, removeFragmentoInString, getOpcionesAutocompletar, obtenerPalabrasFromArrayObject, validarfiltroJurisprudencial } from '../helpers/utils.js';
+import '../App.css';
 
 export default function SearchResults() {
 
@@ -39,22 +39,14 @@ export default function SearchResults() {
           setMessage({ message: "", classname: "" }); 
       }, 6000);*/
   }
-
-  const getNewListDptos = (dptosList) => {
-    return dptosList.map( departamento => {
-        return {
-            ...departamento, dpto: removeFragmentoInString("DEPARTAMENTO", departamento.dpto)
-        }
-    });
-  };
   
   const getResultadosBuscadorAI = (string) => {
         let newMessage = {}; 
         buscadorService
-          .getSearchQData(string)
+          //.getSearchQData(string)
+          .getSearchQDataTest(string)
           .then(response => {
               if((response.status_info.status === 200) && (response.data.length > 0)) {
-                    console.log("Total datos:", response.data.length);
                     const newDatos = response.data.map((i, k) => { 
                         let item = i._source;
                         let newItem = {
@@ -166,13 +158,17 @@ export default function SearchResults() {
           <p></p>
         </Grid>
         <Grid item xs={12} sm={12} md={8} lg={8} xl={8} >
-          <SearchBar></SearchBar>
+        {(datos.length > 0) &&
+          <SearchBar/>
+        }  
         </Grid>
       </Grid>
 
       <Grid container spacing={2}>
         <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
+        {(datos.length > 0) &&
           <Filter setSelectedFilters={setSelectedFilters}></Filter>
+        }  
         </Grid>
         <Grid item xs={12} sm={12} md={8} lg={8} xl={8}>
           {(datos.length === 0) ?

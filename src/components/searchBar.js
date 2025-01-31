@@ -1,24 +1,101 @@
 import React, { useState, useEffect, useContext, useRef } from 'react';
-import TextField from '@mui/material/TextField';
-import Stack from '@mui/material/Stack';
-import Autocomplete from '@mui/material/Autocomplete';
-import { Button, Switch, FormControlLabel, Container, Grid } from '@mui/material';
-import '../App.css';
-import SearchIcon from '@mui/icons-material/Search';
-import ClearIcon from '@mui/icons-material/Clear';
-import { styled } from '@mui/material/styles';
 import Context from '../context/context';
-import { Link } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
-import useSearchAIEnterKey from '../hooks/useSearchAIEnterKey.js';
+import { Button, Switch, FormControlLabel, Grid, Alert, TextField, Stack, Autocomplete } from '@mui/material';
+import SearchIcon from '@mui/icons-material/Search';
+import { styled } from '@mui/material/styles';
+import '../App.css'
 
 export default function Search({ isSearchAdvance, isSearchMain }) {
 
-  const navigate = useNavigate();
+  // referencia para poder acceder al valor escrito en el buscador
+  const inputRef = useRef(null);
 
-  // Grids personalizadas
+  // valor en el buscador 
+  const [valueBar, setValueBar] = useState('');
+  const [messageSearch, setMessageSearch] = useState({ message: "", classname: "" });
 
-  const NoneGrid = styled(Grid)(({ theme }) => ({
+  // Trae el valor de la busqueda y del switch desde el contexto 
+
+  const { verTodasDecisiones, setVerTodasDecisiones, setBusqueda } = useContext(Context);
+  
+  const updateSelectedValue = (event, value) => {
+    setValueBar(event.target.value);
+  };
+
+  // Busqueda por palabra
+
+  const search = () => {
+
+    let message_ = { message: "", classname: "" };
+    let searchValue = inputRef.current.querySelector('input').value;
+    
+    if(searchValue.length === 0){
+      message_ = { message: "Busque por palabra clave, número de decisión, radicado...", classname: "warning" };
+      setTimeout(function(){ 
+          setMessageSearch(message_);
+      }, 300);
+      setTimeout(() => {
+          setMessageSearch({ message: "", classname: "" }); 
+      }, 1500);
+    } else {
+      const params = new URLSearchParams({ string: encodeURIComponent(searchValue) });
+      window.location.href = `/resultados-busqueda?${params.toString()}`;
+    }
+
+  };
+
+  useEffect(() => {
+
+          const formAutocomplete = document.querySelector('.autocomplete_search');
+          const inputAutocomplete = formAutocomplete.querySelector('input');
+          const buttonAutocomplete = formAutocomplete.querySelectorAll('button.searchAIButton')[0];
+          
+          if(inputAutocomplete){
+            inputAutocomplete.focus();
+          }
+          
+          if(buttonAutocomplete){
+          
+              document.addEventListener("keydown", function(event) {
+                  if (event.key === "Enter") { 
+                  
+                    let message_ = { message: "", classname: "" };
+                    let searchValue = valueBar;
+                    
+                    if(searchValue.length === 0){
+                      message_ = { message: "Busque por palabra clave, número de decisión, radicado...", classname: "warning" };
+                      setTimeout(function(){ 
+                          setMessageSearch(message_);
+                      }, 300);
+                      setTimeout(() => {
+                          setMessageSearch({ message: "", classname: "" }); 
+                      }, 1500);
+                    } else {
+                      const params = new URLSearchParams({ string: encodeURIComponent(searchValue) });
+                      window.location.href = `/resultados-busqueda?${params.toString()}`;
+                    }
+                    
+                  }  
+              });
+              
+          }  
+          
+  },[valueBar]);
+ 
+
+  // Encender y apagar switch ver todas las decisiones 
+
+  const handleChange = () => {
+    setVerTodasDecisiones(prev => !prev);
+    setValueBar('');
+    if (!verTodasDecisiones) {
+      setBusqueda('');
+    }
+  };
+
+   // Grids personalizadas
+
+   const NoneGrid = styled(Grid)(({ theme }) => ({
 
     [theme.breakpoints.down('sm')]: {
       display: 'none',
@@ -46,129 +123,46 @@ export default function Search({ isSearchAdvance, isSearchMain }) {
     }
   }));
 
-  // referencia para poder acceder al valor escrito en el buscador
-  const inputRef = useRef(null);
-
-  // valor en el buscador 
-  const [valueBar, setValueBar] = useState('');
-  const [inputValue, setInputValue] = useState('');
-
-  // Trae el valor de la busqueda y del switch desde el contexto 
-
-  const { verTodasDecisiones, setVerTodasDecisiones, setBusqueda, busquedaAvanzada } = useContext(Context);
-  const updateSelectedValue = (event, value) => {
-    setValueBar(value);
-  };
-
-  // Busqueda por palabra
-
-  const search = () => {
- 
-    // Se trae el valor escrito en el buscador
-    let searchValue = inputRef.current.querySelector('input').value;
-    
-    setValueBar(searchValue);
-    setBusqueda(searchValue);
-    setVerTodasDecisiones(false);
-
-    const params = new URLSearchParams({ string: encodeURIComponent(searchValue) });
-    console.log(`/resultados-busqueda?${params.toString()}`);
-    navigate(`/resultados-busqueda?${params.toString()}`);
-  };
-
-  useSearchAIEnterKey(() => {
-    
-    const searchAIButtons = document.querySelectorAll('.searchAIButton');
-
-    searchAIButtons.forEach(searchAIButton => {
-        if (searchAIButton) { 
-          console.log("Darle click aqui");
-          searchAIButton.click();
-        }
-    });
-
-  });
-
-  // Encender y apagar switch ver todas las decisiones 
-
-  const handleChange = () => {
-    setVerTodasDecisiones(prev => !prev);
-    setValueBar('');
-    if (!verTodasDecisiones) {
-      setBusqueda('');
-    }
-  };
-
-
   return (
-
-
-
-
+    <>
     <div className="justify_center">
-
       <Stack className={isSearchAdvance ? ('autocomplete_bar_search_nomargin') : 'autocomplete_bar_search'} >
-
         <SpaceBottom>
-
-          {isSearchMain || !isSearchAdvance && (
+          {(isSearchMain || !isSearchAdvance) && (
             <FormControlLabel control={<Switch checked={verTodasDecisiones} onChange={handleChange} />} label="ver todas las decisiones" className="switch_search" />)
           }
-
-
-          <Autocomplete style={{ color: 'black', }} className="margin_top_s z-index_front text_black"
-            id="free-solo-demo"
-            freeSolo
-            value={valueBar}
-            onChange={updateSelectedValue}
-            options={searchOptions.map((option) => option.title)}
-            renderInput={(params) => <TextField ref={inputRef} {...params} placeholder="Busque por palabra clave, número de decisión, radicado...  " inputProps={{
-              ...params.inputProps,
-              maxLength: 80
-            }} />}
-
-          />
-          {/* <div className="autocomplete_delete">
-          <ClearIcon />
-        </div> */}
-          <NoneGrid>
-            <Button onClick={search} className="searchAIButton autocomplete_button button_primary z-index100" startIcon={<SearchIcon />}>
-              Buscar
-            </Button>
-          </NoneGrid>
-          <ShowGrid>
-            <Button onClick={search} className="searchAIButton autocomplete_button_responsive button_primary"><SearchIcon /></Button>
-
-          </ShowGrid>
-
-          {/*!isSearchAdvance && (
+          <div className="autocomplete_search">
+            <Autocomplete style={{ color: 'black' }} className="autocomplete_search_field margin_top_s z-index_front text_black"
+              id="free-solo-demo"
+              freeSolo
+              value={valueBar}
+              onChange={updateSelectedValue}
+              options={searchOptions.map((option) => option.title)}
+              renderInput={(params) => <TextField ref={inputRef} {...params} placeholder="Busque por palabra clave, número de decisión, radicado...  " 
+              inputProps={{
+                ...params.inputProps,
+                maxLength: 80
+              }} />}
+            />
             <NoneGrid>
-              <Button className="light_white text_blue autocomplete_button_help button_terciary">?</Button>
+              <Button onClick={search} className="searchAIButton autocomplete_button button_primary z-index100" startIcon={<SearchIcon />}>
+                Buscar
+              </Button>
             </NoneGrid>
-          )*/}
-          {/*!isSearchAdvance && (
-            <Link to="/busqueda-avanzada"> 
-            <Button className="autocomplete_button_advance primary_blue text_white button_secondary_border">Búsqueda Avanzada</Button>
-            </Link> 
-          )*/}
+            <ShowGrid>
+              <Button onClick={search} className="searchAIButton autocomplete_button_responsive button_primary"><SearchIcon /></Button>
+            </ShowGrid>
+          </div>
         </SpaceBottom>
+        {(messageSearch.message.trim() !== '') && 
+            <Alert variant="outlined" severity={messageSearch.classname} className='margin_top_m'>
+                {messageSearch.message}
+            </Alert>
+        }
       </Stack>
     </div>
-
+    </>
   );
 }
 
-
-const searchOptions = [
-
-];
-
-/*const searchOptions = [
-  { title: 'Competencia de la JEP' },
-  { title: 'Competencia y Jurisdicción' },
-  { title: 'Competencia de la Jurisdicción Ordinaria' },
-  { title: 'Competencia Temporal de la JEP' },
-  { title: 'Requisitos de la competencia' },
-  { title: 'Competencia de las Salas de Justicia' },
-
-];*/
+const searchOptions = [];

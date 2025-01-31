@@ -4,8 +4,6 @@ import '../App.css';
 import { convertObjFiltroJurisToQuery } from '../helpers/utils.js';
 import mapaJurisprudencialService from '../services/mapa_jurisprudencial.js';
 import boletinesService from '../services/boletines.js';
-import { responsivePropType } from 'react-bootstrap/esm/createUtilityClasses.js';
-
 
 export default function TestServices() {
     
@@ -86,7 +84,7 @@ export default function TestServices() {
     
     useEffect(() => {
         if(message.message.length === 0){
-            sendBoletinService();
+            //sendBoletinService();
         } 
     }, [message]);
     

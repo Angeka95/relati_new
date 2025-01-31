@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef, useContext } from 'react';
 import '../App.css';
 import LogoRelati from '../assets/images/logo_Relativ2.png';
-import { Box, Container, Grid, Button, List, ListItem } from '@mui/material';
+import { Box, Container, Grid, Button, List, ListItem, Alert } from '@mui/material';
 import SearchBar from '../components/searchBar';
 import Carousel from '../components/carousel';
 import CardDecision from '../components/cardDecision.js';
@@ -21,13 +21,13 @@ import inithomeService from '../services/inithome.js';
 import { documentosSentencias } from '../data/data_inicio.js';
 import LinearWithValueLabel from '../components/linearProgress.js';
 import { obtenerPalabrasFromArrayObject } from '../helpers/utils.js';
-import useSearchAIEnterKey from '../hooks/useSearchAIEnterKey.js';
 
 export default function Home() {
 
     const [macrocasos, setMacrocasos] = useState([]);
     const [decisionesRecientes, setDecisionesRecientes] = useState([]);
     const [boletines, setBoletines] = useState([]);
+    const [messageSearch, setMessageSearch] = useState({ message: "", classname: "" });
     const [message, setMessage] = useState("");
 
     const setArrayDatosDecisiones = (arrData) => {
@@ -172,27 +172,56 @@ export default function Home() {
     const casesToDisplay = showAll ? macrocasos : macrocasos.slice(0, 6);
 
     const handleSearch = (e) => {
-
+        
+        let message_ = { message: "", classname: "" };
         let searchValue = inputRef.current.querySelector('input').value;
-        setBusqueda(searchValue);
-        setVerTodasDecisiones(false);
+        
+        if(searchValue.length === 0){
+            message_ = { message: "Busque por palabra clave, número de decisión, radicado...", classname: "warning" };
+            setTimeout(function(){ 
+                setMessageSearch(message_);
+            }, 300);
+            setTimeout(() => {
+                setMessageSearch({ message: "", classname: "" }); 
+            }, 6000);
+        
+        } else {
+            setBusqueda(searchValue);
+            setVerTodasDecisiones(false);
 
-        const params = new URLSearchParams({ string: encodeURIComponent(searchValue) });
-        navigate(`/resultados-busqueda?${params.toString()}`);
-
+            const params = new URLSearchParams({ string: encodeURIComponent(searchValue) });
+            navigate(`/resultados-busqueda?${params.toString()}`);
+        }
+        
     };
-
-    useSearchAIEnterKey(() => {
-        //const searchButton = document.getElementsById('searchButton');
-        //if (searchButton) searchButton.click();
-
-        const searchAIButtons = document.querySelectorAll('.searchAIButton');
-
-        searchAIButtons.forEach(searchAIButton => {
-            if (searchAIButton) searchAIButton.click();
-        });
-
-    });
+    
+    useEffect(() => {
+        
+        const formAutocomplete = document.querySelector('.autocomplete_home_container');
+        const inputAutocomplete = formAutocomplete.querySelector('.autocomplete_home input');
+        const buttonAutocomplete = formAutocomplete.querySelector('button.searchAIButton');
+        if(inputAutocomplete){
+            inputAutocomplete.focus();
+        }
+        if(buttonAutocomplete){
+            document.addEventListener("keydown", function(event) {
+                if (event.key === "Enter") { 
+                    let message_ = { message: "", classname: "" };
+                    if (inputAutocomplete.value.trim() !== "") {
+                        buttonAutocomplete.click(); 
+                    } else {
+                        message_ = { message: "Busque por palabra clave, número de decisión, radicado...", classname: "warning" };
+                    }
+                    setTimeout(function(){ 
+                        setMessageSearch(message_);
+                    }, 300);
+                    setTimeout(() => {
+                        setMessageSearch({ message: "", classname: "" }); 
+                    }, 1500);
+                }
+            });
+        }
+    },[]);
 
     // Modal 
     const [openModal, setOpenModal] = useState(false);
@@ -270,21 +299,23 @@ export default function Home() {
 
 
                 <div className="search_home">
-
-                    <div className="search_size_ ">
+                    <div className="search_size_">
                         <Container>
                             <div className="justify_center">
-                                <div className="autocomplete_home_container ">
+                                <div className="autocomplete_home_container">
                                     <Autocomplete className="margin_top_s autocomplete_home"
                                         id="free-solo-demo"
                                         value={valueBar}
                                         freeSolo
                                         onChange={updateSelectedValue}
                                         options={options.map((option) => option.title)}
-                                        renderInput={(params) => <TextField ref={inputRef} {...params} placeholder="Busque por palabra clave, número de decisión, radicado...  " inputProps={{
+                                        renderInput={(params) => 
+                                            <TextField ref={inputRef} {...params} placeholder="Busque por palabra clave, número de decisión, radicado...  " inputProps={{
                                             ...params.inputProps,
                                             maxLength: 400
-                                        }} />}
+                                            }} 
+                                            />
+                                        }
 
                                     />
                                     {/*<Button className="light_white text_blue autocomplete_button_help button_terciary query_none" onClick={handleOpenModal}>?</Button>*}
@@ -305,8 +336,17 @@ export default function Home() {
                     </div>
                 </div>
             </div>
-
-            <Container xs={12} sm={12} md={12} lg={12} xl={12} className="margin_top_xl " >
+            <Container xs={12} sm={12} md={12} lg={12} xl={12} className='margin_top_l'>
+                <div className="justify_start padding_x">
+                {(messageSearch.message.trim() !== '') && 
+                                <Alert variant="outlined" severity={messageSearch.classname}>
+                                    {messageSearch.message}
+                                </Alert>
+                }
+                </div>
+            </Container>
+            <Container xs={12} sm={12} md={12} lg={12} xl={12} className="margin_top_m">
+            
                 <h2 className="text_bolder text_left padding_x">Decisiones recientes </h2>
 
                 <Masonry ref={masonryGridRef} breakpointCols={breakpointColumnsObj}
