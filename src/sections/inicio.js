@@ -1,7 +1,8 @@
 import React, { useEffect, useState, useRef, useContext } from 'react';
 import '../App.css';
 import LogoRelati from '../assets/images/logo_Relativ2.png';
-import { Box, Container, Grid, Button, List, ListItem, Alert } from '@mui/material';
+import { Box, Container, Grid, Button, List, ListItem, Tooltip, Alert } from '@mui/material';
+
 import SearchBar from '../components/searchBar';
 import Carousel from '../components/carousel';
 import CardDecision from '../components/cardDecision.js';
@@ -21,6 +22,12 @@ import inithomeService from '../services/inithome.js';
 import { documentosSentencias } from '../data/data_inicio.js';
 import LinearWithValueLabel from '../components/linearProgress.js';
 import { obtenerPalabrasFromArrayObject } from '../helpers/utils.js';
+
+import useSearchAIEnterKey from '../hooks/useSearchAIEnterKey.js';
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
+import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
+
 
 export default function Home() {
 
@@ -254,8 +261,91 @@ export default function Home() {
         }
     }, [verMasDecisionesRecientes]);
 
+    // Modal flotante
+    const [isModalVisible, setIsModalVisible] = useState(true);
+
+    const handleToggleModalVisibility = (e) => {
+        e.preventDefault(); 
+        setIsModalVisible(!isModalVisible); 
+
+        //  if (!isModalVisible) {
+        //     setTimeout(() => {
+        //       setIsModalVisible(false); 
+        //      }, 15000); 
+        //    }
+        };
+
+        //  useEffect(() => {
+        //      if (isModalVisible) {
+            
+        //       const timer = setTimeout(() => {
+        //         setIsModalVisible(false);
+        //       }, 15000);
+        
+        //        return () => clearTimeout(timer);
+        //      }
+        //    }, [isModalVisible]);
+
+
+          const dataModal = [
+            {
+              titulo: "JEP lanza el libro: ",
+              descripcion: "‘Código de la Jurisdicción Especial para la Paz’",
+              urlImagen: "https://pbs.twimg.com/media/FsUUOfdXoAAxiKZ.jpg",
+              link: "https://relatoria.jep.gov.co/"
+            },
+            {
+              titulo: " título 2",
+              descripcion: "descripción 2",
+              urlImagen: "https://upload.wikimedia.org/wikipedia/commons/9/9c/LogoJEP.jpg",
+              link: "https://relatoria.jep.gov.co/"
+            },
+            {
+                titulo: " título 3",
+                descripcion: "descripción 3",
+                urlImagen: "https://pbs.twimg.com/media/FsUUOfdXoAAxiKZ.jpg",
+                link: "https://relatoria.jep.gov.co/"
+              },
+            {
+                titulo: " título 4",
+                descripcion: "descripción 4",
+                urlImagen: "https://upload.wikimedia.org/wikipedia/commons/9/9c/LogoJEP.jpg",
+                link: "https://relatoria.jep.gov.co/"
+            },
+     
+          ];
+
+          const [currentIndex, setCurrentIndex] = useState(0);
+
+          const handleNext = () => {
+            if (currentIndex < dataModal.length - 1) {
+              setCurrentIndex(currentIndex + 1); // 
+            } else {
+                setCurrentIndex(0);
+              }
+          };
+          
+          const handlePrevious = () => {
+            if (currentIndex > 0) {
+              setCurrentIndex(currentIndex - 1); // 
+            }
+            else {
+                setCurrentIndex(dataModal.length - 1);
+              }
+          };
+
+          useEffect(() => {
+            const timer = setTimeout(() => {
+              handleNext(); 
+            }, 3000); 
+        
+            return () => clearTimeout(timer);
+          }, [currentIndex]); 
+
+
     return (
         <div className="nowrap">
+            {isModalVisible && (
             <div className="modal_floating">
                 <div className="width_100">
                     <div className="modal_float_date versalitas">
@@ -263,21 +353,63 @@ export default function Home() {
                     </div>
 
                 </div>
+                <div className="width_100">
+                <Tooltip title="Ocultar">
+                        <a className="modal_float_accordion versalitas" href="" onClick={handleToggleModalVisibility}>
+                         <KeyboardArrowRightIcon/>
+                        </a>
+                </Tooltip>
+                  
+
+                </div>
+    
                 <div className='display_flex flex_wrap'> 
-                        <div className="modal_float_img">
+                    
+                        <div className="modal_float_img ">
+                            <img src={dataModal[currentIndex].urlImagen} alt="novedades en Relati" className="modal_float_img_content" />
                          </div>
                          <div className="modal_float_text">
-                            <p >
-                            <span className="text_bolder">Jep Lanza el libro </span>    
-                            <span className="display_block">‘Código de la Jurisdicción Especial para la Paz’ </span>
-                            </p>
+                            <a className="link_terciary" href={dataModal[currentIndex].link}> 
+                                <p className="text_bolder modal_single-line_text">{dataModal[currentIndex].titulo} </p> 
+                                <p className="display_block modal_two-line_text"> {dataModal[currentIndex].descripcion}</p>
+                            </a>
                          </div>
 
                 </div>
-                <div className="modal_separator"> </div>
-                <p className="versalitas margin_top_xs text_bold">lo más destacado</p>
+            
+
+               <div className="modal_separator"></div>
+
+                
+                <div className="display_flex justify_between">
+                    <div className="width_50">
+                    <p className="versalitas margin_top_xs text_bold">lo más destacado</p>
+
+                    </div>
+                    <div className="width_50 display_flex justify_end"> 
+                        <a className="modal_float_button" onClick={handlePrevious}><KeyboardArrowLeftIcon/> </a> 
+                        <a className="modal_float_button" onClick={handleNext}><KeyboardArrowRightIcon/> </a>
+                    </div>
+
+                </div>
+                 
 
              </div> 
+             )}
+              {!isModalVisible && (
+            <div className="modal_floating_expand">
+                <div className="width_100">
+                    <Tooltip title="Expandir">
+                            <a className="modal_float_accordion versalitas" href="" onClick={handleToggleModalVisibility}>
+                            <KeyboardArrowLeftIcon/>
+                            </a>
+                    </Tooltip>
+                    
+                </div>
+            </div>
+              )}
+
+
             <div className="header_container justify_center ">
                 <Box className="header flex width_100">
                     <div className="margin_bottom_l width_100 justify_center align_center wrap margin_header">
