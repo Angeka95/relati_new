@@ -3208,3 +3208,14 @@ a, .breadcrumb-item:hover {
   padding: 10px;
   text-align: center;
 }
+
+.texto_ver_todas_las_decisiones {
+  position: absolute !important;
+  left: 0px;
+  top: 67px;
+  padding: 10px 1rem !important;
+}
+
+.texto_ver_todas_las_decisiones p {
+
+}
