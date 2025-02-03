@@ -69,12 +69,12 @@ export default function CardSearch({ datos, tipo }) {
             {((typeof datos.procedimientos === 'string' ) && (datos.procedimientos.trim() !== '')) && (
                 <p className="text_space_min"><span className="text_bolder">• Procedimientos:</span> {datos.procedimientos}</p>
             )}
-            {((typeof datos.palabrasClaveFichaJuridica === 'string') && (datos.palabrasClaveFichaJuridica.trim() !== '')) && (
+            {/*((typeof datos.palabrasClaveFichaJuridica === 'string') && (datos.palabrasClaveFichaJuridica.trim() !== '')) && (
               <p className="text_space_min"><span className="text_bolder">• Palabras clave:</span> {datos.palabrasClaveFichaJuridica}</p>
-            )}
-            {/*((typeof datos.palabrasClave === 'string') && (datos.palabrasClave.trim() !== '')) && (
-              <p className="text_space_min"><span className="text_bolder">• Palabras clave:</span> {datos.palabrasClave}</p>
             )*/}
+            {((typeof datos.palabrasClave === 'string') && (datos.palabrasClave.trim() !== '')) && (
+              <p className="text_space_min"><span className="text_bolder">• Palabras clave:</span> {datos.palabrasClave}</p>
+            )}
             {/*{((typeof datos.actuacion === 'string' ) && datos.actuacion.trim() !== '') && (
             <p className="text_space_min"><span className="text_bolder">• Actuación:</span> <span className="text_capitalize"></span>{datos.actuacion}</p>
             )*/}

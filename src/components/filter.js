@@ -16,12 +16,13 @@ import { datos_macrocaso } from '../data/datos_macrocaso.js';
 import datos_sala_seccion from '../data/datos_sala_seccion.js';
 import Context from '../context/context';
 import { validarfiltroJurisprudencial, generarArrayDeObjetosNombreCampoValor } from '../helpers/utils.js';
+import mapaJurisprudencialService from '../services/mapa_jurisprudencial.js';
 
 export default function Filter({ setSelectedFilters, isFilterFloat, isShowingFilter, selectedData, isSearchAdvance }) {
   // Estado para controlar si el botón está habilitado o deshabilitado
   const { verTodasDecisiones, busqueda } = useContext(Context);
   const { filtroJurisprudencial, setFiltroJurisprudencial } = useContext(Context);
-  const { listaDptosJurisprudencial, setListaDptosJurisprudencial } = useContext(Context);
+  const [ listaDptosJurisprudencial, setListaDptosJurisprudencial ] = useState([]);
   const [isButtonEnabled, setIsButtonEnabled] = useState(true);
   const [selectedDataFilter1, setSelectedDataFilter1] = useState([]);
   const [selectedDataFilter2, setSelectedDataFilter2] = useState([]);
@@ -36,6 +37,34 @@ export default function Filter({ setSelectedFilters, isFilterFloat, isShowingFil
   const [datos_delito, setDatosDelito] = useState([]);
   const [datos_compareciente, setDatosCompareciente] = useState([]);
   const [datos_procedimiento, setDatosProcedimiento] = useState([]);
+  
+  //Funcion que hace el llamado para traer la data de departamentos
+  const getDepartamentos = () => {
+    mapaJurisprudencialService
+        .getDepartamentos()
+        .then(response => {
+            if((response.status_info.status === 200) && (response.data.length > 0)) {
+                let newArrayListaDptos = generarArrayDeObjetosNombreCampoValor(response.data, "departamento", "departamento");
+                setListaDptosJurisprudencial(newArrayListaDptos);
+            } 
+        }
+        )
+        .catch(error => console.log(error));
+  };
+  
+  useEffect(() => {
+    if(listaDptosJurisprudencial.length === 0){
+        getDepartamentos();
+    } 
+  }, [listaDptosJurisprudencial]);
+  
+  useEffect(() => {
+    //if(selectedDataFilter3.length === 0){
+        setSelectedDataFilter3([...filtroJurisprudencial.departamentos]);
+    /*} else {
+      setSelectedDataFilter3([]);
+    }*/
+  }, [filtroJurisprudencial, setSelectedDataFilter3]);
 
   const getDataFromDocumento = () => {
     documentoService
@@ -69,9 +98,9 @@ export default function Filter({ setSelectedFilters, isFilterFloat, isShowingFil
     //console.log("Filtro mapa juris", filtroJurisprudencial);
     //console.log("Deptos ", selectedDataFilter3);
 
-    if(filtroJurisprudencial.departamentos.length === 1){
+    /*if(filtroJurisprudencial.departamentos.length === 1){
       setSelectedDataFilter3([...filtroJurisprudencial.departamentos]);
-    }
+    }*/
 
     setSelectedFilters(
       [
@@ -152,13 +181,13 @@ export default function Filter({ setSelectedFilters, isFilterFloat, isShowingFil
           </div>
         </JustFilterFloatNoneGrid>
 
-        <SelectField isDisabled={isFilterDisabled} datos_filtros={datos_sala_seccion} setSelectedData={setSelectedDataFilter1}
+        <SelectField isDisabled={isFilterDisabled} datos_filtros={datos_sala_seccion} selectedData={selectedDataFilter1} setSelectedData={setSelectedDataFilter1}
           label='Sala o Sección' id='sala'></SelectField>
-        <SelectField isDisabled={isFilterDisabled} datos_filtros={datos_anios} setSelectedData={setSelectedDataFilter2}
+        <SelectField isDisabled={isFilterDisabled} datos_filtros={datos_anios} selectedData={selectedDataFilter2} setSelectedData={setSelectedDataFilter2}
           label='Año de los hechos' id='anio'></SelectField>
-        <SelectField isDisabled={isFilterDisabled} datos_filtros={listaDptosJurisprudencial} setSelectedData={setSelectedDataFilter3}
+        <SelectField isDisabled={isFilterDisabled} datos_filtros={listaDptosJurisprudencial} selectedData={selectedDataFilter3} setSelectedData={setSelectedDataFilter3}
           label='Departamento' id='departamento'></SelectField>
-        <SelectField isDisabled={isFilterDisabled} datos_filtros={datos_delito} setSelectedData={setSelectedDataFilter4}
+        <SelectField isDisabled={isFilterDisabled} datos_filtros={datos_delito} selectedData={selectedDataFilter4} setSelectedData={setSelectedDataFilter4}
           label='Delito' id='delito'></SelectField>
         <div className='justify_center'>
           {isButtonEnabled && (
@@ -169,11 +198,11 @@ export default function Filter({ setSelectedFilters, isFilterFloat, isShowingFil
           {!isButtonEnabled && (
             <div className="width_100 text_center">
 
-              <SelectField isDisabled={isFilterDisabled} datos_filtros={datos_macrocaso} setSelectedData={setSelectedDataFilter5}
+              <SelectField isDisabled={isFilterDisabled} datos_filtros={datos_macrocaso} selectedData={selectedDataFilter5} setSelectedData={setSelectedDataFilter5}
                 label='Macrocasos' id='macrocasos'></SelectField>
-              <SelectField isDisabled={isFilterDisabled} datos_filtros={datos_compareciente} setSelectedData={setSelectedDataFilter6}
+              <SelectField isDisabled={isFilterDisabled} datos_filtros={datos_compareciente} selectedData={selectedDataFilter6} setSelectedData={setSelectedDataFilter6}
                 label='Compareciente' id='compareciente'></SelectField>
-              <SelectField isDisabled={isFilterDisabled} datos_filtros={datos_procedimiento} setSelectedData={setSelectedDataFilter7}
+              <SelectField isDisabled={isFilterDisabled} datos_filtros={datos_procedimiento} selectedData={selectedDataFilter7} setSelectedData={setSelectedDataFilter7}
                 label='Procedimiento' id='procedimiento'></SelectField>
 
               <Button

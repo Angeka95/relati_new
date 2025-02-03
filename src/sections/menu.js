@@ -1,5 +1,5 @@
 import '../App.css';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { AppBar,  Collapse, Toolbar, Typography, Button, Drawer, List, ListItem, ListItemText, IconButton, Divider, Menu, MenuItem } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';  
 import { useTheme } from '@mui/material/styles';
@@ -70,11 +70,24 @@ export default function MenuBar() {
   };
 
   const scrollToSection = () => {
-    const section = document.getElementById('seccion_caso');
-    if (section) {
-      section.scrollIntoView({ behavior: 'smooth' });
+    if(window.location.pathname === "/"){
+      const section = document.getElementById('seccion_caso');
+      if (section) {
+        section.scrollIntoView({ behavior: 'smooth' });
+      }
+    } else {
+      window.location.href = "/#seccion_caso";
     }
   };
+  
+  useEffect(() => {
+    if((window.location.pathname === "/") && (window.location.hash === "#seccion_caso")){
+      const section = document.getElementById('seccion_caso');
+      if (section) {
+        section.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+  },[]);
 
   const [openSubMenu, setOpenSubMenu] = useState({
     sobreRelatoria: false,

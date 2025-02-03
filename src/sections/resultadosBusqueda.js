@@ -1,17 +1,14 @@
+import React, { useState, useEffect, useContext } from 'react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import SearchBar from '../components/searchBar.js';
 import Filter from '../components/filter.js';
 import ListCardSearch from '../components/listCardSearchAIResults.js';
-import '../App.css';
 import { Container, Grid, Alert } from '@mui/material';
-import React, { useState, useEffect, useContext } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
 import buscadorService from '../services/buscador.js';
-import mapaJurisprudencialService from '../services/mapa_jurisprudencial.js';
-import ProcessingDataModal from '../components/processingDataModal.js';
 import LinearWithValueLabel from '../components/linearProgress.js';  
 import Context from '../context/context.js';
-import { removeFragmentoInString, getOpcionesAutocompletar } from '../helpers/utils.js';
-import { obtenerPalabrasFromArrayObject } from '../helpers/utils.js';
+import { filtroByDefault, removeFragmentoInString, getOpcionesAutocompletar, obtenerPalabrasFromArrayObject, validarfiltroJurisprudencial } from '../helpers/utils.js';
+import '../App.css';
 
 export default function SearchResults() {
 
@@ -25,9 +22,7 @@ export default function SearchResults() {
   const [searchOptions, setSearchOptions] = useState([]);
 
   const { filtroJurisprudencial, setFiltroJurisprudencial } = useContext(Context);
-
-  const { setListaDptosJurisprudencial } = useContext(Context);
-
+  
   const [openModal, setOpenModal] = useState(false);
   const handleOpenModal = () => setOpenModal(true);
   const handleCloseModal = () => setOpenModal(false);
@@ -44,51 +39,22 @@ export default function SearchResults() {
           setMessage({ message: "", classname: "" }); 
       }, 6000);*/
   }
-
-  const getNewListDptos = (dptosList) => {
-    return dptosList.map( departamento => {
-        return {
-            ...departamento, dpto: removeFragmentoInString("DEPARTAMENTO", departamento.dpto)
-        }
-    });
-  };
   
-  const setDatosDepartamentos = (dptos) => {
-    const listaDptos = dptos.map( item => { return { "nombre_campo": item.dpto, "valor": item.dpto } });
-    return listaDptos;
-  }
-
-  const getMapaDptos = () => {
-    mapaJurisprudencialService
-        .getMapaDptos()
-        .then(response => {
-            if((response.status_info.status === 200) && (response.data.length > 0)) {
-                const newDptos = getNewListDptos(response.data[0]["dpto"]); 
-                setListaDptosJurisprudencial(setDatosDepartamentos(newDptos));
-            } else {
-                setMessage(`Error: ${response.status_info.status}. ${response.status_info.reason}`);
-            }
-        }
-        )
-        .catch(error => console.log(error));
-}
-
-useEffect(() => {
-        getMapaDptos();
-}, []);
-
   const getResultadosBuscadorAI = (string) => {
         let newMessage = {}; 
         buscadorService
           .getSearchQData(string)
+          //.getSearchQDataTest(string)
           .then(response => {
               if((response.status_info.status === 200) && (response.data.length > 0)) {
-                    console.log("Total datos:", response.data.length);
                     const newDatos = response.data.map((i, k) => { 
                         let item = i._source;
                         let newItem = {
                             id: k + 1,
+                            score: i._score,
+                            fecha: item.fecha_documento,
                             ficha_id: item.ficha_id,
+                            providencia_id: item.providencia_id,
                             salaOSeccion: (item.sala_seccion !== null) ? item.sala_seccion : "",
                             sala: (item.sala_seccion !== null) ? item.sala_seccion : "",
                             nombreDecision: (item.nombre_providencia !== null) ? item.nombre_providencia : "",
@@ -170,33 +136,21 @@ useEffect(() => {
       }
     }
   }, [stringQuery, stringParam ]);
-
-  /*useEffect(() => {
-    if(message.message !== "" ){
-      console.log("Message...", message);
-      setTimeout(() => {
-        setMessage({ message: "", classname: "" });
-      }, 10000);
+  
+  useEffect(() => {
+    if(datos.length === 0){
+        setFiltroJurisprudencial(filtroByDefault);
     } 
-  }, [message]);*/
+  }, []);
 
   return (
-    <Container className="margin_bottom_m">
-      <Grid container spacing={2}>
-        <Grid item xs={12} sm={12} md={4} lg={4} xl={4} >
-          <p></p>
-        </Grid>
-        <Grid item xs={12} sm={12} md={8} lg={8} xl={8} >
-          <SearchBar></SearchBar>
-        </Grid>
-      </Grid>
-
-      <Grid container spacing={2}>
-        <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
-          <Filter setSelectedFilters={setSelectedFilters}></Filter>
-        </Grid>
-        <Grid item xs={12} sm={12} md={8} lg={8} xl={8}>
-          {(datos.length === 0) ?
+    <>
+      {(datos.length === 0) ?
+        <Container className="margin_bottom_m">
+          <h1 className="text_center margin_top_l">Resultados de Búsqueda</h1>  
+          <p className="text_center"></p>
+          <Grid container spacing={2}>
+            <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
               <>
               <p>Buscando por: <strong>"{stringParam}"</strong></p>
               { (message.message === "") ?
@@ -209,12 +163,30 @@ useEffect(() => {
                 </Alert> 
               } 
               </>
-             :  
-              <ListCardSearch datosBusqueda={datos} selectedTerm={stringQuery} searchOptions={searchOptions} selectedFilters={selectedFilters}></ListCardSearch>
-          }
-        </Grid>
-      </Grid>
-      {/*<ProcessingDataModal openModal={openModal} handleOpenModal={handleOpenModal} handleCloseModal={handleCloseModal}/>*/}
-    </Container>
+            </Grid>
+          </Grid>
+        </Container>      
+        :  
+        <Container className="margin_bottom_m">
+          <Grid container spacing={2}>
+            <Grid item xs={12} sm={12} md={4} lg={4} xl={4} >
+              <p></p>
+            </Grid>
+            <Grid item xs={12} sm={12} md={8} lg={8} xl={8} >
+              <SearchBar/>
+            </Grid>
+          </Grid>
+          <Grid container spacing={2}>
+            <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
+              <Filter setSelectedFilters={setSelectedFilters}></Filter> 
+            </Grid>
+            <Grid item xs={12} sm={12} md={8} lg={8} xl={8}>
+                <ListCardSearch datosBusqueda={datos} selectedTerm={stringQuery} searchOptions={searchOptions} selectedFilters={selectedFilters}></ListCardSearch>
+            </Grid>
+          </Grid>
+        </Container>
+      }
+    </>
+    
   );
 }

@@ -1,61 +1,24 @@
 import React, { useState, useEffect, useContext } from 'react';
-import SearchBarSmall from '../components/searchBarSmall.js';
-import FilterLarge from '../components/filterLarge.js';
-import ListCardMapaSearch from '../components/listCardSearchMapaResults.js';
-import '../App.css';
-import { Container, Grid, Box } from '@mui/material';
-import LinearWithValueLabel from '../components/linearProgress.js';
-import { styled } from '@mui/material/styles';
+import Context from '../context/context.js';
 import mapaJurisprudencialService from '../services/mapa_jurisprudencial.js';
+import { filtroByDefault, removeFragmentoInString, truncateWithEllipsis, obtenerAnio, obtenerPalabrasFromArrayObject, verificaGuardaEnArray, validarfiltroJurisprudencial, getArrayDataGraph, convertObjFiltroJurisToQuery } from '../helpers/utils.js';
+import { Container, Grid, Box } from '@mui/material';
+import { styled } from '@mui/material/styles';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Legend, ResponsiveContainer } from 'recharts';
 import { MapContainer, TileLayer, Tooltip, CircleMarker } from 'react-leaflet';
+import FilterLarge from '../components/filterLarge.js';
+import ListCardMapaSearch from '../components/listCardSearchMapaResults.js';
+import LinearWithValueLabel from '../components/linearProgress.js';
 import 'leaflet/dist/leaflet.css';
-import { truncateWithEllipsis, obtenerAnio, obtenerPalabrasFromArrayObject } from '../helpers/utils.js';
-import Context from '../context/context.js';
-import { filtroByDefault, removeFragmentoInString } from '../helpers/utils.js';
+import '../App.css';
 
 export default function Mapa() {
-
-    const SmallResultsGrid = styled(Grid)(({ theme }) => ({
-
-        [theme.breakpoints.up('sm')]: {
-            margin: '60px',
-
-        },
-
-        [theme.breakpoints.down('sm')]: {
-            padding: '20px',
-
-        }
-    }));
-    const  WrapMapGrid= styled(Grid)(({ theme }) => ({
-
-        [theme.breakpoints.up('sm')]: {
-            display:  'flex' ,
-            flexWrap: 'nowrap',
-        },
-        [theme.breakpoints.down('sm')]: {
-            display:  'flex' ,
-            flexWrap: 'wrap',
-        },
-
-    }));
-    const MapGrid = styled(Grid)(({ theme }) => ({
-
-        [theme.breakpoints.up('sm')]: {
-            margin: '60px 60px 60px 20px',
-        },
-        [theme.breakpoints.down('sm')]: {
-            margin: '20px 5px 60px 5px',
-        },
-
-
-    }));
  
-    const { isDatosMapaJurisprudencial, setIsDatosMapaJurisprudencial, dptoSelMapaJurisprudencial, setDptoSelMapaJurisprudencial, setListaDptosJurisprudencial,  filtroJurisprudencial, setFiltroJurisprudencial } = useContext(Context);
+    const { isDatosMapaJurisprudencial, setIsDatosMapaJurisprudencial, setDptoSelMapaJurisprudencial, filtroJurisprudencial, setFiltroJurisprudencial } = useContext(Context);
     
     const [listdpto, setListdpto] = useState([]);
     const [graf, setGraf] = useState([]);
+    const [grafOriginal, setGrafOriginal] = useState([]);
     const [message, setMessage] = useState("");
 
     const [datos, setDatos] = useState([]);
@@ -71,6 +34,7 @@ export default function Mapa() {
                     const cardsArr = response.data.map(item => {
                         let itemProvidencia = {
                             id: item.id,
+                            providencia_id: item.id,
                             fecha: item.fecha_providencia,
                             anio: obtenerAnio(item.fecha_providencia),
                             asuntoNombreCaso: "",
@@ -93,7 +57,7 @@ export default function Mapa() {
                             palabrasClave: "",
                             municipio: "",
                             palabrasClaveBuscador: "",
-                            palabrasClaveFichaJuridica: (item.getfichas.length > 0) ? "Obtener palabras claves ficha juridica": ""
+                            palabrasClaveFichaJuridica: (item.getfichas.length > 0) ? obtenerPalabrasFromArrayObject(item.getfichas, "palabras_clave_problemas_juridicos", "palabras", false): ""
                         };
                         itemProvidencia["asuntoNombreCaso"] = `${item.asuntocaso} ${item.nombre}`;
                         itemProvidencia["palabrasClave"] = `${itemProvidencia["delitos"]}, ${itemProvidencia["comparecientes"]}, ${itemProvidencia["procedimientos"]}`;
@@ -116,7 +80,7 @@ export default function Mapa() {
         const arrLinted = Array.from(
             new Map(arrDatos.map(item => [item.nombre, item])).values()
         );
-        return [ { "title": "*" } ].concat(arrLinted.map( item => { return { "title": item.nombre } }));
+        return [ { "title": "* Todos los resultados" } ].concat(arrLinted.map( item => { return { "title": item.nombre } }));
     };
 
     // Funcion que genera la lista de departamentos removiendo el fragmento "DEPARTAMENTO"
@@ -128,17 +92,17 @@ export default function Mapa() {
         });
     };
 
-    //funcion que hace el llamado para traer la data de los dpto del mapa
+    //Funcion que hace el llamado para traer la data solo de la grafica decisiones/tiempo
     const getMapaDptos = () => {
         mapaJurisprudencialService
             .getMapaDptos()
             .then(response => {
                 if((response.status_info.status === 200) && (response.data.length > 0)) {
                     setGraf(response.data[0].datagraf);
+                    setGrafOriginal(response.data[0].datagraf);
                     setMessage(`Success: ${response.status_info.status}. ${response.status_info.reason}`);
-                    const newDptos = getNewListDptos(response.data[0]["dpto"]); 
+                    const newDptos = getNewListDptos(response.data[0]["dpto"]); ;
                     setListdpto(newDptos);
-                    setListaDptosJurisprudencial(setDatosDepartamentos(newDptos));
                 } else {
                     setMessage(`Error: ${response.status_info.status}. ${response.status_info.reason}`);
                 }
@@ -146,29 +110,82 @@ export default function Mapa() {
             )
             .catch(error => console.log(error));
     }
-
+    
     useEffect(() => {
         if(datos.length === 0){
             setFiltroJurisprudencial(filtroByDefault);
             setIsDatosMapaJurisprudencial(false);
             getDocsByProvidencias();
+            getMapaDptos();
         } else {
             setIsDatosMapaJurisprudencial(true);
-            getMapaDptos();
         }
-    }, [datos]);
+    }, [datos, filtroJurisprudencial]);
+    
+    
+    useEffect(() => {
+        if(!validarfiltroJurisprudencial(filtroJurisprudencial)){
+            const stringQuery = convertObjFiltroJurisToQuery(filtroJurisprudencial);
+            mapaJurisprudencialService
+            .getDetailsGraph(stringQuery)
+            .then(response => {
+                if((response.status_info.status === 200) && (response.data !== null)) {
+                    let newArr = getArrayDataGraph(response.data);
+                    setGraf(newArr);
+                    setMessage(`Success: ${response.status_info.status}. ${response.status_info.reason}`);
+                } else {
+                    setMessage(`Error: ${response.status_info.status}. ${response.status_info.reason}`);
+                }
+            })
+            .catch(error => console.log(error));
+        } else {
+            setGraf(grafOriginal);
+        }   
+    }, [filtroJurisprudencial]);
 
     //funcion que realiza el filtro de las providencias cuando se da clic en un dpto
-    const searchprodpto = (data) => {
+    const searchProDpto = (data) => {
         setDptoSelMapaJurisprudencial(data);
-        setFiltroJurisprudencial({...filtroJurisprudencial, departamentos: [ data.dpto ]});
+        const newArr = verificaGuardaEnArray(filtroJurisprudencial.departamentos, data.dpto);
+        setFiltroJurisprudencial({...filtroJurisprudencial, departamentos: newArr });
     }
+    
+    const SmallResultsGrid = styled(Grid)(({ theme }) => ({
 
-    //funcion que crea un array de objetos enviado a la lista de filtros corrspondiente a dptos
-    const setDatosDepartamentos = (dptos) => {
-        const listaDptos = dptos.map( item => { return { "nombre_campo": item.dpto, "valor": item.dpto } });
-        return listaDptos;
-    }
+        [theme.breakpoints.up('sm')]: {
+            margin: '60px',
+    
+        },
+    
+        [theme.breakpoints.down('sm')]: {
+            padding: '20px',
+    
+        }
+    }));
+    
+    const  WrapMapGrid= styled(Grid)(({ theme }) => ({
+    
+        [theme.breakpoints.up('sm')]: {
+            display:  'flex' ,
+            flexWrap: 'nowrap',
+        },
+        [theme.breakpoints.down('sm')]: {
+            display:  'flex' ,
+            flexWrap: 'wrap',
+        },
+    
+    }));
+    const MapGrid = styled(Grid)(({ theme }) => ({
+    
+        [theme.breakpoints.up('sm')]: {
+            margin: '60px 60px 60px 20px',
+        },
+        [theme.breakpoints.down('sm')]: {
+            margin: '20px 5px 60px 5px',
+        },
+    
+    
+    }));
     
   return (
     <div> 
@@ -197,10 +214,11 @@ export default function Mapa() {
             </SmallResultsGrid>
 
             { ( isDatosMapaJurisprudencial === true ) && (
-                    <MapGrid item xs={12} sm={12} md={7} lg={7} xl={7} sx={{ height: '100%', overflow: 'hidden' }}>
+                <MapGrid item xs={12} sm={12} md={7} lg={7} xl={7} sx={{ height: '100%', overflow: 'hidden' }}>
                     <Box component="section" sx={{ p: 5, border: '1px solid grey', mb: 2 }}>
                         {<ResponsiveContainer width="100%" height={300}>
-                            <LineChart data={graf} margin={{ top: 30, right: 30, left: 30, bottom: 30 }}>
+                        
+                                <LineChart data={graf} margin={{ top: 30, right: 30, left: 30, bottom: 30 }}>
                                 <CartesianGrid stroke="#f5f5f5" />
                                 <XAxis dataKey="name" padding={{ left: 30, right: 30 }}
                                     label={{
@@ -224,6 +242,8 @@ export default function Mapa() {
                                 <Legend verticalAlign="top" height={36}/>
                                 <Line type="monotone" dataKey="fecha" stroke="#8884d8" activeDot={{ r: 8 }} label={'fffff'}/>
                             </LineChart>
+                           
+                            
                         </ResponsiveContainer>
                         }
                     </Box>
@@ -244,7 +264,7 @@ export default function Mapa() {
                                 pathOptions={{ color: 'red' }}
                                 eventHandlers={{
                                     click: (e) => {
-                                        searchprodpto(maker)
+                                        searchProDpto(maker)
                                     },
                                 }}
                                 radius={6}>

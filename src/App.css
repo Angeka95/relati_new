@@ -72,7 +72,10 @@ h6 {
   margin-block-end: 0.7em;
 }
 
-
+.text_justify {
+  text-align: justify;
+  text-justify: inter-word;
+}
 
 .text_bolder {
   font-weight: 700 !important;

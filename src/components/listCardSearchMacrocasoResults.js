@@ -24,12 +24,12 @@ export default function Card({ datosTramite, selectedFilters, isListSmall, selec
     const [datos, setDatos] = useState([]);
     const [datosOriginales, setDatosOriginales] = useState([]);
     const [message, setMessage] = useState("");
-    const [selectedDoc, setSelectedDoc] = useState([]);
+    const [selectedDoc, setSelectedDoc] = useState({ "title": "* Todos los resultados", "id": 0 });
     const [searchDocsOptions, setSearchDocsOptions] = useState([]);
 
      // Funcion que permite mostrar la lista de providencias en el autocompletar
      const handlerSetSelectedDoc = (newSelectedOption) => { 
-        if(newSelectedOption.title !== "*"){
+        if(newSelectedOption.title !== "* Todos los resultados"){
             const newArrDatos = datos.filter(item => item.id === newSelectedOption.id);
             setSelectedDoc(newSelectedOption);
             setDatos(newArrDatos);

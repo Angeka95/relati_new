@@ -18,16 +18,17 @@ import ExpandLessOutlinedIcon from '@mui/icons-material/ExpandLessOutlined';
 import ExpandMoreOutlinedIcon from '@mui/icons-material/ExpandMoreOutlined';
 import FilterShort from './filterShort.js';
 import FilterListIcon from '@mui/icons-material/FilterList';
-import { validarfiltroJurisprudencial, getOpcionesAutocompletar } from '../helpers/utils.js';
+import { validarfiltroJurisprudencial, getOpcionesAutocompletar, getDecisionesIDsToExport } from '../helpers/utils.js';
 import { macrocasos } from '../data/datos_macrocaso.js';
-import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
+import ButtonDownloadXLS from './buttonDownloadXLS.js';
 
 export default function Card({ datosBusqueda, searchOptions, selectedFilters, isListSmall, selectedTerm, isLargeResult, isExternalFilters }) {
 
     const [datos, setDatos] = useState(datosBusqueda);
     const [datosOriginales, setDatosOriginales] = useState(datosBusqueda);
-    const [selectedDoc, setSelectedDoc] = useState({ "title": "*", "id": 0 });
+    const [selectedDoc, setSelectedDoc] = useState({ "title": "* Todos los resultados", "id": 0 });
     const [searchDocsOptions, setSearchDocsOptions] = useState(searchOptions);
+    const [datosToExport, setDatosToExport] = useState("");
 
     const { filtroJurisprudencial } = useContext(Context);
 
@@ -93,17 +94,9 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
         }
     }, [filtroJurisprudencial]);
 
-    // Genera el listado de opciones de documentos para el autocompletar
-    const getOpcionesDocs = (arrDatos) => {
-        const arrLinted = Array.from(
-            new Map(arrDatos.map(item => [item.asunto, item])).values()
-        );
-        return [ { "title": "*_" } ].concat(arrLinted.map( item => { return { "title": item.asunto } }));
-    };
-
     // Funcion que permite mostrar la lista de providencias en el autocompletar
     const handlerSetSelectedDoc = (newSelectedOption) => { 
-        if(newSelectedOption.title !== "*"){
+        if(newSelectedOption.title !== "* Todos los resultados"){
             const newArrDatos = datos.filter(item => item.id === newSelectedOption.id);
             setSelectedDoc(newSelectedOption);
             setDatos(newArrDatos);
@@ -140,6 +133,7 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
         setDatos(sortedDatos);
         getCurrentData();
         setIsButtonSorterEnabled(false);
+        setDatosToExport(getDecisionesIDsToExport(sortedDatos, "providencia_id"));
     };
 
     // Función para ordenar en orden descendente por fecha
@@ -148,6 +142,25 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
         setDatos(sortedDatos);
         getCurrentData();
         setIsButtonSorterEnabled(false);
+        setDatosToExport(getDecisionesIDsToExport(sortedDatos, "providencia_id"));
+    };
+    
+    // Función para ordenar en orden ascendente por score
+    const sortAscByScore = () => {
+        const sortedDatos = [...datos].sort((a, b) => new Date(a.score) - new Date(b.score));
+        setDatos(sortedDatos);
+        getCurrentData();
+        setIsButtonSorterEnabled(false);
+        setDatosToExport(getDecisionesIDsToExport(sortedDatos, "providencia_id"));
+    };
+
+    // Función para ordenar en orden descendente por score
+    const sortDescByScore = () => {
+        const sortedDatos = [...datos].sort((a, b) => new Date(b.score) - new Date(a.score));
+        setDatos(sortedDatos);
+        getCurrentData();
+        setIsButtonSorterEnabled(false);
+        setDatosToExport(getDecisionesIDsToExport(sortedDatos, "providencia_id"));
     };
 
 
@@ -167,6 +180,7 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
     useEffect(() => {
         if(datos.length > 0){
             getCurrentData();
+            setDatosToExport(getDecisionesIDsToExport(datos, "providencia_id"));
         }
     }, [page, itemsPerPage, datos]);
 
@@ -378,8 +392,10 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
                                                   </Button>
                                                   {isButtonSorterEnabled && (
                                                       <div className='container_date_sorted'>
-                                                          <Button onClick={sortAscByDate} className='items_sorted'>fecha ascendente </Button>
-                                                          <Button onClick={sortDescByDate} className='items_sorted'>fecha descendente </Button>
+                                                          <Button onClick={sortAscByDate} className='items_sorted'>Más antiguos </Button>
+                                                          <Button onClick={sortDescByDate} className='items_sorted'>Más recientes </Button>
+                                                          <Button onClick={sortAscByScore} className='items_sorted'>Menor puntuación </Button>
+                                                          <Button onClick={sortDescByScore} className='items_sorted'>Mayor puntuación </Button>
                                                       </div>
                                                   )}
                                                 </NoneGrid>  
@@ -445,9 +461,15 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
                             
                         </WrapGrid>
                         <div className="justify_end">
-                            <a className="link_primary vertical_align" href="">
-                            <FileDownloadOutlinedIcon/> 
-                            Descargar reporte en excel</a>
+                            { (datosToExport !== null) && 
+                                <ButtonDownloadXLS 
+                                    stringURL={`https://relatoria.jep.gov.co/downloadresult`}
+                                    stringParams={`idpro=${datosToExport}`}
+                                    datosToExport={datosToExport}
+                                    filename="resultados.xlsx"
+                                    requireService="no"
+                                />
+                            }
                         </div>
     
                         <div className="separator width_100"></div>

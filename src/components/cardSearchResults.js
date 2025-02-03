@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Box from '@mui/material/Box';
@@ -44,7 +44,7 @@ export default function CardSearch({ datos }) {
   const handleChangeTabCard = (event, newValue) => {
     setValue(newValue);
   };
-
+  
   // Acordiones en card 
 
   const [isMagistradosExpanded, setIsMagistradosExpanded] = useState(false);
@@ -256,16 +256,16 @@ export default function CardSearch({ datos }) {
             {isAnalisisJuridicoExpanded && (
                 <div className="margin_top_s">
                   {((typeof datos.hechos === 'string' ) && (datos.hechos.trim() !== '')) && (
-                    <p className="text_space_min">• Hechos:  <span className="text_bolder"> {datos.hechos}</span> </p>
+                    <p className="text_space_min text_justify">• Hechos:  <span className="text_bolder"> {datos.hechos}</span> </p>
                   )}
                   {((typeof datos.problemasJuridicos === 'string' ) && (datos.problemasJuridicos.trim() !== '')) && (
-                    <p className="text_space_min">• Problemas Jurídicos:  <span className="text_bolder"> {datos.problemasJuridicos}</span> </p>
+                    <p className="text_space_min text_justify">• Problemas Jurídicos:  <span className="text_bolder"> {datos.problemasJuridicos}</span> </p>
                   )}
                   {((typeof datos.reglas === 'string' ) && (datos.reglas.trim() !== '')) && (
-                    <p className="text_space_min">• Reglas:  <span className="text_bolder"> {datos.reglas}</span> </p>
+                    <p className="text_space_min text_justify">• Reglas:  <span className="text_bolder"> {datos.reglas}</span> </p>
                   )}
                   {((typeof datos.aplicacionCasoConcreto === 'string' ) && (datos.aplicacionCasoConcreto.trim() !== '')) && (
-                    <p className="text_space_min">• Aplicación al Caso Concreto:  <span className="text_bolder"> {datos.aplicacionCasoConcreto}</span> </p>
+                    <p className="text_space_min text_justify">• Aplicación al Caso Concreto:  <span className="text_bolder"> {datos.aplicacionCasoConcreto}</span> </p>
                   )}
                 </div>
               )}
@@ -280,7 +280,7 @@ export default function CardSearch({ datos }) {
             {isResuelveExpanded && (
                 <div className="margin_top_s">
                   {((typeof datos.resuelve === 'string' ) && (datos.resuelve.trim() !== '')) && (
-                  <p className="text_space_min">{/*• Resuelve: */}<span className="text_bolder"> {datos.resuelve}</span> </p>
+                  <p className="text_space_min text_justify">{/*• Resuelve: */}<span className="text_bolder"> {datos.resuelve}</span> </p>
                   )}
                 </div>
               )}
@@ -295,7 +295,7 @@ export default function CardSearch({ datos }) {
             {isDocumentosAsociadosExpanded && (
                 <div className="margin_top_s">
                   {((typeof datos.documentosAsociados === 'string' ) && (datos.documentosAsociados.trim() !== '')) && (
-                  <p className="text_space_min">{/*• Documentos asociados: */} <span className="text_bolder"><a href={`https://relatoria.jep.gov.co/${datos.documentosAsociadosLink}`} target="_blank" rel="noreferrer">{datos.documentosAsociados}</a></span> </p>
+                  <p className="text_space_min text_justify">{/*• Documentos asociados: */} <span className="text_bolder"><a href={`https://relatoria.jep.gov.co/${datos.documentosAsociadosLink}`} target="_blank" rel="noreferrer">{datos.documentosAsociados}</a></span> </p>
                   )}
                 </div>
               )}
@@ -310,7 +310,7 @@ export default function CardSearch({ datos }) {
             {isEnfoquesDiferencialesExpanded && (
                 <div className="margin_top_s">
                   {((typeof datos.enfoquesDiferenciales === 'string' ) && (datos.enfoquesDiferenciales.trim() !== '')) && (
-                  <p className="text_space_min">{/*• Enfoques diferenciales: */} <span className="text_bolder"> {datos.enfoquesDiferenciales}</span> </p>
+                  <p className="text_space_min text_justify">{/*• Enfoques diferenciales: */} <span className="text_bolder"> {datos.enfoquesDiferenciales}</span> </p>
                   )}
                 </div>
               )}
@@ -325,7 +325,7 @@ export default function CardSearch({ datos }) {
             {isNotasExpanded && (
                 <div className="margin_top_s">
                   {((typeof datos.notasRelatoria === 'string' ) && (datos.notasRelatoria.trim() !== '')) && (
-                  <p className="text_space_min">{/*• Notas de la Relatoría: */}  <span className="text_bolder"> {datos.notasRelatoria}</span> </p>
+                  <p className="text_space_min text_justify">{/*• Notas de la Relatoría: */}  <span className="text_bolder"> {datos.notasRelatoria}</span> </p>
                   )}
                 </div>
               )}

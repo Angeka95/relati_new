@@ -1,3 +1,4 @@
+import datos_sala_seccion from '../data/datos_sala_seccion.js';
 /** 
  * filtroByDefault
  * Objeto inicial que almacena las opciones seleccionadas por el usuario en el filtro
@@ -105,8 +106,8 @@ const validarfiltroJurisprudencial = (obj) => {
 */
 const generarArrayDeObjetosNombreCampoValor = (valores, propiedad_1, propiedad_2) => {
     return valores.map(valor => ({
-      nombre_campo: valor[propiedad_1],
-      valor: valor[propiedad_2]
+      nombre_campo: valor[propiedad_1].trim(),
+      valor: valor[propiedad_2].trim()
     }));
 };
 
@@ -255,8 +256,154 @@ function capitalizeFirstLetter(string) {
 // Genera el listado de opciones de documentos para el autocompletar
 const getOpcionesAutocompletar = (arrDatos) => {
     const arrLinted = arrDatos.map(item => item.autocompletarBuscador);
-    return [ { "title": "*", "id": 0 } ].concat(arrLinted);
+    return [ { "title": "* Todos los resultados", "id": 0 } ].concat(arrLinted);
 };
+
+/**
+ * getDecisionesIdsToExport()
+ * Funcionalidad que obtiene la lista de IDs de decisiones a exportar en Excel
+ * Parametros de entrada:
+ * - arrDatos: los datos generados a partir del servicio
+ * - nombre_campo: el campo que hace referencia al id, Ej. providencia_id
+ * Salida:
+ * - Retorna una cadena de IDs. Ejemplo: 1001,1002,1004
+ * Aplicación:
+ * listCardSearchAIResults() 
+*/
+const getDecisionesIDsToExport = (arrDatos, nombre_campo) => {
+    const arrIds = arrDatos.filter(item => item[nombre_campo] !== null).map(item => item[nombre_campo]);
+    return arrIds.toString();
+};
+
+/**
+ * verificaGuardaEnArray()
+ * Funcionalidad que almacena un elemento tipo string "Meta" si al verificar dentro del array no existe. Si existe, no lo guarda.
+ * Parametros de entrada:
+ * - array: Un array simple de lista de departamentos seleccionados ejemplo ["Arauca","Tolima","Cauca"]
+ * - elemento: Un elemento a verificar y si en caso de que no exista se agrega al array. Ej. "Meta"
+ * Salida:
+ * - Retorna un nuevo array de elementos.
+ * Aplicación:
+ * listCardSearchAIResults() 
+*/
+const verificaGuardaEnArray = (array, elemento) => array.includes(elemento) ? array : [...array, elemento];
+
+/**
+ * getArrayDataGraph()
+ * Funcionalidad recibe un objeto de estructura { "2023": 1, "2024": 7, "2025": 1 } y lo convierte a array de objetos para obtener la grafica.
+ * Parametros de entrada:
+ * - objDataGraph: un objeto de estructura { "2023": 1, "2024": 7, "2025": 1 } Ej. La respuesta dada por el servicio getDetailsGraph() de mapaJurisprudencial
+ * Salida:
+ * - Retorna un nuevo array de objetos con la estructura: 
+   [{
+        "name": "2018",
+        "fecha": 1254
+    },
+    {
+        "name": "2019",
+        "fecha": 3942
+    }]
+ * Aplicación:
+ * Componente section: mapaJurisprudencial()
+*/
+const getArrayDataGraph = (objDataGraph) => { 
+    return Object.entries(objDataGraph).map(([name, fecha]) => ({
+        name,
+        fecha,
+     }));
+};
+
+/**
+ * convertObjFiltroJurisToQuery()
+ * Funcionalidad 
+ * Parametros de entrada:
+ * - objFiltroJuris: el objeto filtroJuris ejemplo
+ {
+    "departamentos": [
+        "ARAUCA",
+        "CAUCA"
+    ],
+    "anios": [
+        "2021",
+        "2020",
+        "2019"
+    ],
+    "salas": [
+        "S - Sala de Reconocimiento de Verdad, de Responsabilidad y de Determinación de los Hechos y Conductas",
+        "T - Sección de Reconocimiento de Verdad y Responsabilidad"
+    ],
+    "delitos": [
+        "CALUMNIA",
+        "COHECHO PROPIO"
+    ],
+    "macrocasos": [
+        "Caso 001",
+        "Caso 002"
+    ],
+    "comparecientes": [
+        "FARC-EP",
+        "TERCERO CIVIL"
+    ],
+    "procedimientos": [
+        "ACCIÓN DE TUTELA",
+        "PRECLUSIÓN"
+    ]
+}
+ * Salida:
+ * - Retorna un string para enviar como parametro de consulta en mapaJurisprudencialService.getDetailsGraph() ejemplo: "anio_hecho=2019,2020&dpto=DEPARTAMENTO+CAUCA,DEPARTAMENTO+TOLIMA"
+ * Aplicación:
+ * Componente section: mapaJurisprudencial()
+*/
+const convertObjFiltroJurisToQuery = (objFiltroJuris) => {
+    let newObjFiltroJuris = {};
+    let strFiltroJuris = "";
+    for (let propiedad in objFiltroJuris) {
+        if (Array.isArray(objFiltroJuris[propiedad]) && objFiltroJuris[propiedad].length > 0) {
+            switch(propiedad){
+                case "departamentos":
+                    let arrDptos = objFiltroJuris[propiedad].map((item)=>{
+                        return `DEPARTAMENTO ${item}`;
+                    });
+                    newObjFiltroJuris["dpto"] = arrDptos.join(",");
+                    strFiltroJuris = strFiltroJuris.concat(`dpto=${newObjFiltroJuris["dpto"]}&`);
+                break;
+                case "anios":
+                    newObjFiltroJuris["anio_hecho"] = objFiltroJuris[propiedad].toString();
+                    strFiltroJuris = strFiltroJuris.concat(`anio_hecho=${newObjFiltroJuris["anio_hecho"]}&`);
+                break;
+                case "salas":
+                    let arrSalas = objFiltroJuris[propiedad].map((sala)=>{
+                         let salaSeccion = datos_sala_seccion.find(item => item["valor"] === sala );
+                         return salaSeccion["id"];
+                    });
+                    newObjFiltroJuris["sala_seccion"] = arrSalas.toString();
+                    strFiltroJuris = strFiltroJuris.concat(`sala_seccion=${newObjFiltroJuris["sala_seccion"]}&`);
+                break;
+                case "delitos":
+                    newObjFiltroJuris["delito"] = objFiltroJuris[propiedad].join(",");
+                    strFiltroJuris = strFiltroJuris.concat(`delito=${newObjFiltroJuris["delito"]}&`);
+                break;
+                case "macrocasos":
+                    newObjFiltroJuris["macrocaso"] = objFiltroJuris[propiedad].join(",");
+                    strFiltroJuris = strFiltroJuris.concat(`macrocaso=${newObjFiltroJuris["macrocaso"]}&`);
+                break;
+                case "comparecientes":
+                    newObjFiltroJuris["tipo_compa"] = objFiltroJuris[propiedad].join(",");
+                    strFiltroJuris = strFiltroJuris.concat(`tipo_compa=${newObjFiltroJuris["tipo_compa"]}&`);
+                break;
+                case "procedimientos":
+                    newObjFiltroJuris["procedimiento"] = objFiltroJuris[propiedad].join(",");
+                    strFiltroJuris = strFiltroJuris.concat(`procedimiento=${newObjFiltroJuris["procedimiento"]}&`);
+                break;
+                default:
+                break;
+            }
+        }
+    }
+    strFiltroJuris = strFiltroJuris.length > 0 ? strFiltroJuris.slice(0, -1) : strFiltroJuris;
+    return strFiltroJuris;
+        
+}
 
 export { filtroByDefault, 
          truncateWithEllipsis, 
@@ -272,5 +419,9 @@ export { filtroByDefault,
          formatDateToMonthYear,
          getOpcionesAutocompletar,
          obtenerAnioMes,
-         ordenarArrayPorFechaHitos
+         ordenarArrayPorFechaHitos,
+         getDecisionesIDsToExport,
+         verificaGuardaEnArray,
+         getArrayDataGraph,
+         convertObjFiltroJurisToQuery
         };

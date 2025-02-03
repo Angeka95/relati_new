@@ -12,8 +12,7 @@ const ContextProvider = ({ children }) => {
   const [isDatosMapaJurisprudencial, setIsDatosMapaJurisprudencial] = useState(false);
   const [dptoSelMapaJurisprudencial, setDptoSelMapaJurisprudencial] = useState(null);
   const [filtroJurisprudencial, setFiltroJurisprudencial] = useState(filtroByDefault);
-  const [listaDptosJurisprudencial, setListaDptosJurisprudencial] = useState([]);
-
+  
   return (
     <Context.Provider 
       value={{ verTodasDecisiones, 
@@ -27,9 +26,7 @@ const ContextProvider = ({ children }) => {
                dptoSelMapaJurisprudencial, 
                setDptoSelMapaJurisprudencial, 
                filtroJurisprudencial, 
-               setFiltroJurisprudencial,
-               listaDptosJurisprudencial, 
-               setListaDptosJurisprudencial
+               setFiltroJurisprudencial
             }}
     >
       {children}

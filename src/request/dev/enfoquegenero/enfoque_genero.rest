@@ -1,0 +1,11 @@
+https://relatoria.jep.gov.co/getdocenfoquegenero HTTP/1.1
+user: {{$dotenv REACT_APP_API_USER}}
+password: {{$dotenv REACT_APP_API_PASS}}
+Authorization: Bearer {{$dotenv REACT_APP_API_ACCESS_TOKEN}}
+Content-Type: application/json
+
+{
+      //"string": "Necesito%20encontrar%20una%20providencia%20en%20la%20que%20se%20hable%20de%20la%20responsabilidad%20penal%20del%20se%C3%B1or%20Pastor%20Alape"
+        "string": ""
+}
+

@@ -1,7 +1,6 @@
 import '../App.css';
 import { Container, TextField, Button, Snackbar, Alert, Box, Grid } from '@mui/material';
-
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import DOMPurify from 'dompurify';
 import boletinesService from '../services/boletines.js';
 import ProcessingDataModal from '../components/processingDataModal.js';
@@ -36,7 +35,6 @@ export default function Suscripcion() {
     const [nombre, setNombre] = useState('');
     const [ocupacion, setOcupacion] = useState('');
     const [email, setEmail] = useState('');
-    const [error, setError] = useState(false);
     const [openSnackbar, setOpenSnackbar] = useState(false);
     const [message, setMessage] = useState({ message: "", classname: "" });
     const [errors, setErrors] = useState(objErrors);
