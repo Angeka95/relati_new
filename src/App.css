@@ -274,6 +274,7 @@ h6 {
 .link_primary:hover {
   background-color: transparent !important;
   color: #111D31 !important;
+  transition: all 0.5s ease;
 }
 
 .link_secondary {
@@ -286,8 +287,24 @@ h6 {
 
 .link_secondary:hover {
   background-color: transparent !important;
+  transition: all 0.5s ease;
   color: #111D31 !important;
 }
+
+
+.link_terciary {
+  background-color: none !important;
+  color: #007CAE !important;
+  padding: 0px !important;
+  text-decoration: none !important;
+}
+
+.link_terciary:hover {
+  background-color: transparent !important;
+  transition: all 0.5s ease;
+  color: #111D31 !important;
+}
+
 
 .link_simple:hover {
   color: #111D31 !important;
@@ -2577,9 +2594,28 @@ a, .breadcrumb-item:hover {
   width: 320px;
   min-height: 140px;
   max-height: 140px;
-  border-top-right-radius: 10px;
-  border-bottom-left-radius: 10px;
-  background-color: rgba(255, 255, 255, 0.9); 
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px; 
+  background-color: #fff; 
+  color: rgb(66, 66, 66);
+  padding: 15px;
+  text-align: left;
+  z-index: 2;
+  box-shadow: rgba(57, 129, 195, 0.2) 0px 8px 24px !important;
+
+
+}
+
+.modal_floating_expand{
+  position: fixed;
+  top: 40%;
+  right: 0%;
+  width: 10px;
+  min-height: 140px;
+  max-height: 140px;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px; 
+  background-color: #fff; 
   color: rgb(66, 66, 66);
   padding: 15px;
   text-align: left;
@@ -2594,6 +2630,13 @@ a, .breadcrumb-item:hover {
   min-height:80px; 
   max-height: 80px;
   background-color: #06223b;
+}
+
+.modal_float_img_content{
+  min-width:80px !important;
+  max-width: 80px !important;
+  min-height:80px; 
+  max-height: 80px;
 }
 
 .modal_float_text{
@@ -2615,6 +2658,7 @@ a, .breadcrumb-item:hover {
   color: #Fff;
   position: absolute;
   top: -24px;
+  left:118px;
   min-width: 180px;
   width: 180px;
   height: 24px;
@@ -2627,6 +2671,77 @@ a, .breadcrumb-item:hover {
   border-top-left-radius: 10px;
   padding-top: 2px;
   
+}
+
+.modal_float_accordion{
+  z-index: 3;
+  background-color: #111D31;
+  color: #FF9500 !important;
+  position: absolute;
+  top: 54px;
+  left: -26px;
+  min-width: 20px;
+  width: 26px;
+  height: 32px;
+  text-align: center;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.8em;
+  letter-spacing: 0.2em;
+  border-bottom-left-radius: 10px;
+  border-top-left-radius: 10px;
+  padding-top: 2px;
+  padding-left: 3px;
+  
+}
+
+.modal_float_accordion:hover{
+  background-color: #fff;
+  color: #FF9500 !important;
+  -webkit-transition: all 1s ease;
+  transition: all 1s ease;
+}
+
+.modal_single-line_text {
+  white-space: nowrap;        
+  overflow: hidden;         
+  text-overflow: ellipsis;  
+  width: 100%;
+  max-width: 200px;
+}
+
+.modal_two-line_text {
+  display: -webkit-box;           
+  -webkit-line-clamp: 2;         
+  -webkit-box-orient: vertical;    
+  overflow: hidden;              
+  text-overflow: ellipsis;       
+  width: 100%;
+  max-width: 200px;
+  margin-top: -16px;
+  min-height: 42px;
+  max-height: 42px;
+}
+
+.modal_float_button{
+  width: 30px;
+  height: 30px;
+  min-width: 30px;
+  min-height: 30px;
+  margin: 5px 5px 0px 5px;
+  padding-top: 2px;
+  border-radius: 50px;
+  background-color: #007CAE;
+  color: #fff !important;
+  display: flex;
+  justify-content: center;
+}
+
+.modal_float_button:hover{
+  background-color: #0E1D33;
+  color: #fff !important;
+  -webkit-transition: all 1s ease;
+  transition: all 1s ease;
 }
 
 /* FIN NOVEDADES */
