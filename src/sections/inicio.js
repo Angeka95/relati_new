@@ -458,9 +458,12 @@ export default function Home() {
                                         </Button>
                                     {/*</Link>*/} 
                                     <div className="texto_ver_todas_las_decisiones">
-                                        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.</p>
+                                        <p>¿No encuentra lo que busca? 
+                                        <Link to="ver-todas-las-decisiones"> 
+                                        Ver todas las decisiones
+                                        </Link>
+                                        </p>
                                     </div>
-
                                     {/*<Link to="busqueda-avanzada"> 
                                     <Button className="autocomplete_button_advance primary_blue text_white button_secondary_border">Búsqueda Avanzada</Button>
                                     </Link>*/}

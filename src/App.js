@@ -19,6 +19,7 @@ import Libros from './sections/libros'
 import Breadcrumb from './components/breadcrumbs';
 import BreadcrumbWrapper from './components/breadcrumbWrapper';
 import EnfoqueGenero from './sections/enfoqueGenero';
+import VerTodasLasDecisiones from './sections/verTodasLasDecisiones';
 import TestServices from './sections/testServices';
 
 import { BrowserRouter as Router, Route, Routes,  useLocation } from 'react-router-dom';
@@ -51,11 +52,9 @@ function App() {
           <Route path="/libros" element={<Libros/>} />
           <Route path="/enfoqueGenero" element={<EnfoqueGenero/>} />
           <Route path="/testServices" element={<TestServices/>} />
-
+          <Route path="/ver-todas-las-decisiones" element={<VerTodasLasDecisiones/>} />
 
           
-
-
           {/* Pagina no encontrada  */}
           {/* <Route path="*" element={<NotFound />} /> */}
         
