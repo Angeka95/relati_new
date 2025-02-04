@@ -7,6 +7,7 @@ import { filtroByDefault } from '../helpers/utils.js';
 const ContextProvider = ({ children }) => {
   // Estado que se va a compartir a través del contexto
   const [verTodasDecisiones, setVerTodasDecisiones] = useState(true);
+  const [estadoVerTodasDecisiones, setEstadoVerTodasDecisiones] = useState(false);
   const [busqueda, setBusqueda] = useState();
   const [verMasDecisionesRecientes, setVerMasDecisionesRecientes] = useState(0);
   const [isDatosMapaJurisprudencial, setIsDatosMapaJurisprudencial] = useState(false);
@@ -26,7 +27,9 @@ const ContextProvider = ({ children }) => {
                dptoSelMapaJurisprudencial, 
                setDptoSelMapaJurisprudencial, 
                filtroJurisprudencial, 
-               setFiltroJurisprudencial
+               setFiltroJurisprudencial,
+               estadoVerTodasDecisiones,
+               setEstadoVerTodasDecisiones
             }}
     >
       {children}

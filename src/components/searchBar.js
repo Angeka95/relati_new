@@ -13,10 +13,11 @@ export default function Search({ isSearchAdvance, isSearchMain }) {
   // valor en el buscador 
   const [valueBar, setValueBar] = useState('');
   const [messageSearch, setMessageSearch] = useState({ message: "", classname: "" });
+  //const [verTodasDecisiones, setVerTodasDecisiones] = useState(false);
 
   // Trae el valor de la busqueda y del switch desde el contexto 
 
-  const { verTodasDecisiones, setVerTodasDecisiones, setBusqueda } = useContext(Context);
+  const { estadoVerTodasDecisiones, setEstadoVerTodasDecisiones, setBusqueda } = useContext(Context);
   
   const updateSelectedValue = (event, value) => {
     setValueBar(event.target.value);
@@ -86,12 +87,23 @@ export default function Search({ isSearchAdvance, isSearchMain }) {
   // Encender y apagar switch ver todas las decisiones 
 
   const handleChange = () => {
-    setVerTodasDecisiones(prev => !prev);
-    setValueBar('');
+    setEstadoVerTodasDecisiones(prev => !prev);
+    /*setValueBar('');
     if (!verTodasDecisiones) {
       setBusqueda('');
-    }
+    }*/
   };
+  
+  useEffect(()=>{
+    console.log("Estado actual de verDecisiones", estadoVerTodasDecisiones);
+    if((estadoVerTodasDecisiones === true) && (window.location.pathname !== "/ver-todas-las-decisiones") ){
+      window.location.href = `/ver-todas-las-decisiones`;
+    } 
+    if((estadoVerTodasDecisiones === false) && (window.location.pathname === "/ver-todas-las-decisiones") ){
+      const params = new URLSearchParams({ string: encodeURIComponent("") });
+      window.location.href = `/resultados-busqueda?${params.toString()}`;
+    }
+  },[estadoVerTodasDecisiones]);
 
    // Grids personalizadas
 
@@ -129,7 +141,7 @@ export default function Search({ isSearchAdvance, isSearchMain }) {
       <Stack className={isSearchAdvance ? ('autocomplete_bar_search_nomargin') : 'autocomplete_bar_search'} >
         <SpaceBottom>
           {(isSearchMain || !isSearchAdvance) && (
-            <FormControlLabel control={<Switch checked={verTodasDecisiones} onChange={handleChange} />} label="ver todas las decisiones" className="switch_search" />)
+            <FormControlLabel control={<Switch checked={estadoVerTodasDecisiones} onChange={handleChange} />} label="ver todas las decisiones" className="switch_search" />)
           }
           <div className="autocomplete_search">
             <Autocomplete style={{ color: 'black' }} className="autocomplete_search_field margin_top_s z-index_front text_black"

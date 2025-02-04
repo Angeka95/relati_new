@@ -385,7 +385,11 @@ h6 {
 .margin_top_xxl {
   margin-top: 180px !important;
 }
-
+  
+.margin_top_xlx {
+  margin-top: 150px !important;
+}  
+  
 .margin_top_xl {
   margin-top: 120px !important;
 }
@@ -1037,21 +1041,36 @@ h6 {
 .container_date_sorted {
   position: absolute;
   margin-left: 8px;
+  width: 185px;
   background-color: #fff;
   z-index: 10 !important;
   width: min-content;
-  ;
   height: auto;
   box-shadow: rgba(57, 129, 195, 0.2) 0px 8px 24px;
   padding: 12px;
+}
 
+@media (min-width: 600px) {
+  .container_date_sorted {
+    margin-left: 0;
+    width: 185px;
+  }
 }
 
 .items_sorted {
   text-transform: capitalize !important;
   color: black !important;
   line-height: 1.2em !important;
+}
 
+@media (min-width: 600px) {
+  .items_sorted {
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    width: 100%;
+  }
 }
 
 
@@ -2327,7 +2346,17 @@ padding: 0px 0% 0% 3%;
   box-shadow: 0px 8px 16px rgba(57, 129, 195, 0.2);
 }
 
+.alert_search_message_container {
+  position: relative;
+  width: auto;
+}
 
+.alert_search_message {
+  position: absolute;
+  width: 100%;
+  height: auto;
+  top: 80px;
+}
 
 /*\END HEADER*/
 
@@ -3392,3 +3421,9 @@ a, .breadcrumb-item:hover {
   background-color: #e8e8e8 !important;
 }
 
+.texto_ver_todas_las_decisiones {
+  position: absolute !important;
+  left: 0px;
+  top: 67px;
+  padding: 10px 1rem !important;
+}
