@@ -1380,7 +1380,7 @@ h6 {
 
 .list_container_tesauro {
   width: 100%;
-  max-width: 850px;
+  max-width: 1000px;
 
 
 }
@@ -1711,7 +1711,7 @@ controlodares carrusel  */
   background-color: #ffffff; 
   color: white;
   flex: 1 1 calc(25% - 10px); 
-  margin: 5px; 
+  margin: 14px 0px; 
   display: flex;
   justify-content: center;
   align-items: center;
@@ -1734,7 +1734,7 @@ controlodares carrusel  */
   min-width:230px;
   max-width: 231px;
   margin: 0px 16px;
-  padding: 0% 2%;
+  padding: 0%;
 
 }
 
@@ -2516,11 +2516,14 @@ padding: 0px 0% 0% 3%;
 
 .qr_container{
   width: 230px;
+  border: 5px solid #98c438;
 }
 
 .cover_container{
-  max-width: 380px;
-  max-height: 500px;
+  /* max-width: 380px;
+  max-height: 500px; */
+  max-width: 320px;
+  max-height: 450px;
   transition: transform 0.3s ease;
   box-shadow: 0px 8px 16px rgba(57, 129, 195, 0.2) !important;
 
@@ -2532,12 +2535,12 @@ padding: 0px 0% 0% 3%;
 }
 
 .qr_position{
-  bottom: -20%;
+  bottom: -2%;
   right: -5% !important;
 }
 
 .qr_size{
-  width: 300px;
+  width: 348px;
   margin: 300px 0px 0px 0px;
 }
 
@@ -2547,16 +2550,53 @@ padding: 0px 0% 0% 3%;
 }
 
 .book_container{
-  width: 50% !important;
+  width: 50% !important;  
+}
+
+.book_container_text{
+  max-width: 400px;
+}
+.collection_container_text{
+  max-height: 500px;
 }
 
 .book_margin_top{
-  margin-top: 180px !important;
+  margin-top: 100px !important;
 }
 
 .book_margin_bottom{
   margin-bottom: 180px !important;
 }
+
+
+.main_carrousel_button{
+  width: 40px;
+  height: 40px;
+  min-width: 50px;
+  font-size: 60em !important;
+  min-height: 50px;
+  margin: 0px 10px;
+  padding-top: 0px;
+  border-radius: 50px;
+  background-color: #98c438;
+  color: #fff !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+}
+
+.main_carrousel_button:hover{
+  background-color: #fff;
+  color: #98c438!important;
+  -webkit-transition: all 1s ease;
+  transition: all 1s ease;
+}
+
+.carrousel_button_container{
+  margin-top: -140px;
+}
+
 
 /*FIN LIBROS*/ 
  
@@ -3043,6 +3083,20 @@ a, .breadcrumb-item:hover {
 .modal_floating{
   display: none;
 }
+
+.carrousel_button_container{
+  margin-top: 120px;
+}
+
+.carrousel_title_mobile{
+  margin-top: 40px;
+}
+
+.book_margin_mobile{
+  margin: 0% 10%;
+}
+
+
 }
 
 @media (max-width: 1000px) {
@@ -3246,6 +3300,10 @@ a, .breadcrumb-item:hover {
   padding: 30px;
 }
 
+.carrousel_button_container{
+  margin-top: 240px;
+}
+
 
 }
 
@@ -3323,3 +3381,14 @@ a, .breadcrumb-item:hover {
   padding: 10px;
   text-align: center;
 }
+
+
+/* progress bar  */
+.css-5xe99f-MuiLinearProgress-bar1{
+  background-color: #98c438 !important;
+}
+
+.css-eglki6-MuiLinearProgress-root{
+  background-color: #e8e8e8 !important;
+}
+
