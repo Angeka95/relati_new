@@ -1037,21 +1037,36 @@ h6 {
 .container_date_sorted {
   position: absolute;
   margin-left: 8px;
+  width: 185px;
   background-color: #fff;
   z-index: 10 !important;
   width: min-content;
-  ;
   height: auto;
   box-shadow: rgba(57, 129, 195, 0.2) 0px 8px 24px;
   padding: 12px;
+}
 
+@media (min-width: 600px) {
+  .container_date_sorted {
+    margin-left: 0;
+    width: 185px;
+  }
 }
 
 .items_sorted {
   text-transform: capitalize !important;
   color: black !important;
   line-height: 1.2em !important;
+}
 
+@media (min-width: 600px) {
+  .items_sorted {
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    width: 100%;
+  }
 }
 
 

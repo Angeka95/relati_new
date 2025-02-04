@@ -10,6 +10,8 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 import CardSearch from './cardSearchResults.js';
 import SearchBarSmall from './searchBarSmallAI.js';
 import SortIcon from '@mui/icons-material/Sort';
+import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
+import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import { Container, Grid } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { EditCalendar } from '@mui/icons-material';
@@ -375,11 +377,13 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
                                                     <FilterShort setSelectedFilters={setExternalFilters}/>
                                                     <NoneGrid className='margin_left_s'>
                                                         <Button className="button_function" startIcon={<SortIcon />} onClick={toggleButton}>Ordenar
-                                                        </Button>
+                                                        </Button>  
                                                         {isButtonSorterEnabled && (
                                                             <div className='container_date_sorted'>
-                                                                <Button onClick={sortAscByDate} className='items_sorted'>fecha ascendente </Button>
-                                                                <Button onClick={sortDescByDate} className='items_sorted'>fecha descendente </Button>
+                                                              <Button onClick={sortDescByDate} className='items_sorted' endIcon={<ArrowUpwardIcon />} >Más recientes </Button>
+                                                              <Button onClick={sortAscByDate} className='items_sorted' endIcon={<ArrowDownwardIcon />} >Más antiguos </Button>
+                                                              <Button onClick={sortDescByScore} className='items_sorted' endIcon={<ArrowUpwardIcon />} >Mayor puntuación </Button>
+                                                              <Button onClick={sortAscByScore} className='items_sorted' endIcon={<ArrowDownwardIcon />} >Menor puntuación </Button>
                                                             </div>
                                                         )}
                                                     </NoneGrid>
@@ -392,10 +396,10 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
                                                   </Button>
                                                   {isButtonSorterEnabled && (
                                                       <div className='container_date_sorted'>
-                                                          <Button onClick={sortAscByDate} className='items_sorted'>Más antiguos </Button>
-                                                          <Button onClick={sortDescByDate} className='items_sorted'>Más recientes </Button>
-                                                          <Button onClick={sortAscByScore} className='items_sorted'>Menor puntuación </Button>
-                                                          <Button onClick={sortDescByScore} className='items_sorted'>Mayor puntuación </Button>
+                                                          <Button onClick={sortDescByDate} className='items_sorted' endIcon={<ArrowUpwardIcon />} >Más recientes </Button>
+                                                          <Button onClick={sortAscByDate} className='items_sorted' endIcon={<ArrowDownwardIcon />} >Más antiguos </Button>
+                                                          <Button onClick={sortDescByScore} className='items_sorted' endIcon={<ArrowUpwardIcon />} >Mayor puntuación </Button>
+                                                          <Button onClick={sortAscByScore} className='items_sorted' endIcon={<ArrowDownwardIcon />} >Menor puntuación </Button>
                                                       </div>
                                                   )}
                                                 </NoneGrid>  
