@@ -22,12 +22,18 @@ export default function SearchResults() {
   const [searchOptions, setSearchOptions] = useState([]);
 
   const { filtroJurisprudencial, setFiltroJurisprudencial } = useContext(Context);
+  const { estadoVerTodasDecisiones, setEstadoVerTodasDecisiones } = useContext(Context);
   
   const [openModal, setOpenModal] = useState(false);
   const handleOpenModal = () => setOpenModal(true);
   const handleCloseModal = () => setOpenModal(false);
 
   const stringParam = decodeURIComponent(searchParams.get('string'));
+  
+  useEffect(()=>{
+      setEstadoVerTodasDecisiones(false);
+  },[]);
+  
 
   const handleMessage = (newMessage) => {
       handleOpenModal();

@@ -22,12 +22,17 @@ export default function VerTodasLasDecisiones() {
   const [searchOptions, setSearchOptions] = useState([]);
 
   const { filtroJurisprudencial, setFiltroJurisprudencial } = useContext(Context);
+  const { estadoVerTodasDecisiones, setEstadoVerTodasDecisiones } = useContext(Context);
   
   const [openModal, setOpenModal] = useState(false);
   const handleOpenModal = () => setOpenModal(true);
   const handleCloseModal = () => setOpenModal(false);
 
   const stringParam = decodeURIComponent(searchParams.get('string'));
+  
+  useEffect(()=>{
+      setEstadoVerTodasDecisiones(true);
+  },[]);
 
   const handleMessage = (newMessage) => {
       handleOpenModal();
@@ -47,7 +52,7 @@ export default function VerTodasLasDecisiones() {
           .then(response => {
               if((response.status_info.status === 200) && (response.data.length > 0)) {
                     const newDatos = response.data.map((i, k) => { 
-                        console.log("item", i);
+                        //console.log("item", i);
                         let item = i;
                         let newItem = {
                             id: k + 1,
@@ -61,38 +66,39 @@ export default function VerTodasLasDecisiones() {
                             procedimiento: /*(item.actuacion.length > 0) ? item.actuacion[0].actuacion :*/ "", 
                             procedimientos: (item.actuacion.length > 0) ? item.actuacion[0].actuacion : "", 
                             expediente: "", 
-                            departamento: (item.departamento.length > 0) ? obtenerPalabrasFromArrayObject(item.departamento, "nombre", null, false) : "",
-                            departamentoNombre: (item.departamento.length > 0) ? removeFragmentoInString("DEPARTAMENTO", item.departamento[0].nombre) : "",
+                            departamento: /*(item.departamento.length > 0) ? obtenerPalabrasFromArrayObject(item.departamento, "nombre", null, false) : */"",
+                            departamentoNombre: /* (item.departamento.length > 0) ? removeFragmentoInString("DEPARTAMENTO", item.departamento[0].nombre) : */"",
                             magistrado: (item.autor !== null) ? item.autor : "", 
                             municipio: "", 
-                            delito: (item.delitos.length > 0) ? obtenerPalabrasFromArrayObject(item.delitos, "nombre", null, false) : "", 
-                            delitos: (item.delitos.length > 0) ? obtenerPalabrasFromArrayObject(item.delitos, "nombre", null, false) : "", 
-                            anioHechos: (item.anio_hechos.length > 0) ? item.anio_hechos[0].anio : "",
-                            anio: (item.anio_hechos.length > 0) ? item.anio_hechos[0].anio : "",
-                            tipo: (item.tipo_documento !== null) ? item.tipo_documento : "", 
-                            radicado: (item.radicado_documento !== null) ? item.radicado_documento : "",
-                            compareciente:  (item.tipopeti.length > 0) ? obtenerPalabrasFromArrayObject(item.tipopeti, "tipo", null, false) : "", 
-                            comparecientes:  (item.tipopeti.length > 0) ? obtenerPalabrasFromArrayObject(item.tipopeti, "tipo", null, false) : "", 
-                            tipoSujeto: (item.tipopeti.length > 0) ? obtenerPalabrasFromArrayObject(item.tipopeti, "tipo", null, false) : "", 
+                            delito: /*(item.delitos.length > 0) ? obtenerPalabrasFromArrayObject(item.delitos, "nombre", null, false) : */"", 
+                            delitos: /*(item.delitos.length > 0) ? obtenerPalabrasFromArrayObject(item.delitos, "nombre", null, false) : */"", 
+                            anioHechos: /*(item.anio_hechos.length > 0) ? item.anio_hechos[0].anio : */"",
+                            anio: /*(item.anio_hechos.length > 0) ? item.anio_hechos[0].anio : */ "",
+                            tipo: /*(item.tipo_documento !== null) ? item.tipo_documento : */ "", 
+                            radicado: /*(item.radicado_documento !== null) ? item.radicado_documento : */ "",
+                            compareciente:  /*(item.tipopeti.length > 0) ? obtenerPalabrasFromArrayObject(item.tipopeti, "tipo", null, false) : */ "", 
+                            comparecientes:  /*(item.tipopeti.length > 0) ? obtenerPalabrasFromArrayObject(item.tipopeti, "tipo", null, false) : */ "", 
+                            tipoSujeto: /*(item.tipopeti.length > 0) ? obtenerPalabrasFromArrayObject(item.tipopeti, "tipo", null, false) : */ "", 
                             accionadoVinculado: "", 
-                            palabrasClaves:  (item.palabras_clave.length > 0) ? item.palabras_clave[0].palabra : "", 
-                            hechos: (item.hechos_antecedentes !== null) ? item.hechos_antecedentes : "", 
-                            problemasJuridicos: (item.problema_juridico !== null) ? item.problema_juridico : "",
-                            reglas: (item.reglas_juridicas !== null) ? item.reglas_juridicas : "",
-                            aplicacionCasoConcreto: (item.analisis_caso_concreto !== null) ? item.analisis_caso_concreto : "", 
-                            resuelve: (item.resuelve.length > 0) ? item.resuelve[0].nombre : "", 
-                            documentosAsociados:  (item.anexos.length > 0) ? item.anexos[0].nombre : "", 
-                            documentosAsociadosLink:  (item.anexos.length > 0) ? item.anexos[0].hipervinculo : "", 
-                            enfoquesDiferenciales: (item.enfoque.length > 0) ? item.enfoque[0].tipo : "",
+                            palabrasClaves: /* (item.palabras_clave.length > 0) ? item.palabras_clave[0].palabra : */ "", 
+                            hechos: /*(item.hechos_antecedentes !== null) ? item.hechos_antecedentes : */ "", 
+                            problemasJuridicos: /*(item.problema_juridico !== null) ? item.problema_juridico : */ "",
+                            reglas: /*(item.reglas_juridicas !== null) ? item.reglas_juridicas : */ "",
+                            aplicacionCasoConcreto: /*(item.analisis_caso_concreto !== null) ? item.analisis_caso_concreto : */ "", 
+                            resuelve: /*(item.resuelve.length > 0) ? item.resuelve[0].nombre : */ "", 
+                            documentosAsociados:  /*(item.anexos.length > 0) ? item.anexos[0].nombre : */ "", 
+                            documentosAsociadosLink:  /*(item.anexos.length > 0) ? item.anexos[0].hipervinculo : */ "", 
+                            enfoquesDiferenciales: /*(item.enfoque.length > 0) ? item.enfoque[0].tipo : */ "",
                             notasRelatoria: "", //No mostrar  
-                            hipervinculo:   (item.hipervinculo !== null ) ? `https://relatoria.jep.gov.co/${item.hipervinculo}` : "", 
-                            hipervinculoFichaJuris:   (item.ficha_id !== null ) ? `https://relatoria.jep.gov.co/downloadfichaext/${item.ficha_id}` : "",
+                            hipervinculo:  /*(item.hipervinculo !== null ) ? `https://relatoria.jep.gov.co/${item.hipervinculo}` : */ "", 
+                            hipervinculoFichaJuris:  /*(item.ficha_id !== null ) ? `https://relatoria.jep.gov.co/downloadfichaext/${item.ficha_id}` : */ "",
                             estadoFichaJuris: false,
                             extractoBusqueda: "",
-                            caso: (item.macrocaso.length > 0) ? item.macrocaso[0].nombre : "",
+                            caso: /*(item.macrocaso.length > 0) ? item.macrocaso[0].nombre : */ "",
+                            autocompletarBuscador: ""
                         };
-                        newItem["autocompletarBuscador"] = { id: newItem.id, title: `${newItem.salaOSeccion} ${newItem.delitos} ${newItem.procedimientos} ${newItem.compareciente} ${newItem.tipoSujeto} ${newItem.departamentoNombre} ${newItem.nombreDecision} ${newItem.magistrado}`}; 
-                        console.log(newItem);
+                        //newItem["autocompletarBuscador"] = { id: newItem.id, title: `${newItem.salaOSeccion} ${newItem.delitos} ${newItem.procedimientos} ${newItem.compareciente} ${newItem.tipoSujeto} ${newItem.departamentoNombre} ${newItem.nombreDecision} ${newItem.magistrado}`}; 
+                        //console.log(newItem);
                         return newItem;
                   });
                   setDatos(newDatos);
