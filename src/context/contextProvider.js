@@ -13,6 +13,7 @@ const ContextProvider = ({ children }) => {
   const [isDatosMapaJurisprudencial, setIsDatosMapaJurisprudencial] = useState(false);
   const [dptoSelMapaJurisprudencial, setDptoSelMapaJurisprudencial] = useState(null);
   const [filtroJurisprudencial, setFiltroJurisprudencial] = useState(filtroByDefault);
+  const [stringQuery, setStringQuery] = useState("");
   
   return (
     <Context.Provider 
@@ -29,7 +30,9 @@ const ContextProvider = ({ children }) => {
                filtroJurisprudencial, 
                setFiltroJurisprudencial,
                estadoVerTodasDecisiones,
-               setEstadoVerTodasDecisiones
+               setEstadoVerTodasDecisiones,
+               stringQuery,
+               setStringQuery
             }}
     >
       {children}

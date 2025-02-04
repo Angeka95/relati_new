@@ -9,6 +9,7 @@ import LinearWithValueLabel from '../components/linearProgress.js';
 import Context from '../context/context.js';
 import { filtroByDefault, removeFragmentoInString, getOpcionesAutocompletar, obtenerPalabrasFromArrayObject, validarfiltroJurisprudencial } from '../helpers/utils.js';
 import '../App.css';
+import datos_resultados_AI_test_beta from '../data/data_busqueda_AI_test_beta';
 
 export default function SearchResults() {
 
@@ -16,19 +17,61 @@ export default function SearchResults() {
   const [searchParams] = useSearchParams();
 
   const [selectedFilters, setSelectedFilters] = useState([]);
-  const [stringQuery, setStringQuery] = useState("");
   const [message, setMessage] = useState({ message: "", classname: "" });
   const [datos, setDatos] = useState([]);
   const [searchOptions, setSearchOptions] = useState([]);
 
   const { filtroJurisprudencial, setFiltroJurisprudencial } = useContext(Context);
   const { estadoVerTodasDecisiones, setEstadoVerTodasDecisiones } = useContext(Context);
+  const { stringQuery, setStringQuery } = useContext(Context);
+  
+  const [stringQueryLs, setStringQueryLs] = useState("");
+  const [dataFromQueryLs, setDataFromQueryLs] = useState("");
   
   const [openModal, setOpenModal] = useState(false);
   const handleOpenModal = () => setOpenModal(true);
   const handleCloseModal = () => setOpenModal(false);
 
   const stringParam = decodeURIComponent(searchParams.get('string'));
+  
+  useEffect(()=>{
+    console.log("stringQueryLs:", stringQueryLs, "stringQuery:", stringQuery);
+    if (!localStorage.hasOwnProperty('stringQueryLs')) {
+      localStorage.setItem('stringQueryLs', '');
+      localStorage.setItem('dataFromQueryLs', '');
+    } else {
+    
+      if(stringQuery.length > 0 ){
+        console.log(stringQuery, localStorage.getItem('stringQueryLs'))
+        if(stringQuery === localStorage.getItem('stringQueryLs')){
+          let newArray = localStorage.getItem('dataFromQueryLs');
+          console.log(newArray);
+          //setDatos(JSON.parse(localStorage.getItem('dataFromQueryLs')));
+        } else {
+          localStorage.setItem('stringQueryLs', stringQuery);
+          localStorage.setItem('dataFromQueryLs', dataFromQueryLs);
+          setStringQueryLs(stringQuery);
+        }
+      }
+      /*setStringQueryLs(localStorage.getItem('stringQueryLs')); 
+      console.log("strniquer", stringQueryLs);
+      if(stringQuery.length > 0 ){
+        if(stringQueryLs.length === 0) {
+        console.log("eenntra");
+          localStorage.setItem('stringQueryLs', stringQuery);
+        }
+        if(stringQuery === stringQueryLs){
+          console.log("Son iguales");
+          setDataFromQueryLs(JSON.parse(localStorage.getItem('dataFromQueryLs'))); 
+          setDatos(JSON.parse(localStorage.getItem('dataFromQueryLs')));
+        } else {
+          console.log("Son diferentes");
+          localStorage.setItem('stringQueryLs', stringQuery);
+          localStorage.setItem('dataFromQueryLs', JSON.stringify(datos));
+        }
+      }*/
+    }
+  },[stringQuery, dataFromQueryLs]);
   
   useEffect(()=>{
       setEstadoVerTodasDecisiones(false);
@@ -102,6 +145,7 @@ export default function SearchResults() {
                   });
                   setDatos(newDatos);
                   setSearchOptions(getOpcionesAutocompletar(newDatos));
+                  setDataFromQueryLs(JSON.stringify(newDatos));
                   newMessage["message"] = `${response.status_info.reason}`;
                   newMessage["classname"] = 'success';
               } else if(response.status_info.status === 500) {

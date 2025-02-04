@@ -95,12 +95,11 @@ export default function Search({ isSearchAdvance, isSearchMain }) {
   };
   
   useEffect(()=>{
-    console.log("Estado actual de verDecisiones", estadoVerTodasDecisiones);
     if((estadoVerTodasDecisiones === true) && (window.location.pathname !== "/ver-todas-las-decisiones") ){
       window.location.href = `/ver-todas-las-decisiones`;
     } 
     if((estadoVerTodasDecisiones === false) && (window.location.pathname === "/ver-todas-las-decisiones") ){
-      const params = new URLSearchParams({ string: encodeURIComponent("") });
+      const params = new URLSearchParams({ string: encodeURIComponent("farc") });
       window.location.href = `/resultados-busqueda?${params.toString()}`;
     }
   },[estadoVerTodasDecisiones]);
