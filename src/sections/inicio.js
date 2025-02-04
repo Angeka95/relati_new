@@ -457,9 +457,9 @@ export default function Home() {
                                             Buscar
                                         </Button>
                                     {/*</Link>*/} 
-                                    <div className="texto_ver_todas_las_decisiones">
-                                        <p>¿No encuentra lo que busca? 
-                                        <Link to="ver-todas-las-decisiones"> 
+                                    <div className="texto_ver_todas_las_decisiones margin_bottom_m">
+                                        <p>¿No encuentra lo que busca?  
+                                        <Link to="ver-todas-las-decisiones" className="link_primary margin_left_xs"> 
                                         Ver todas las decisiones
                                         </Link>
                                         </p>
@@ -473,8 +473,8 @@ export default function Home() {
                     </div>
                 </div>
             </div>
-            <Container xs={12} sm={12} md={12} lg={12} xl={12} className='margin_top_l'>
-                <div className="justify_start padding_x">
+            <Container xs={12} sm={12} md={12} lg={12} xl={12} className='alert_search_message_container'>
+                <div className="justify_start padding_x alert_search_message">
                 {(messageSearch.message.trim() !== '') && 
                                 <Alert variant="outlined" severity={messageSearch.classname}>
                                     {messageSearch.message}
@@ -482,7 +482,7 @@ export default function Home() {
                 }
                 </div>
             </Container>
-            <Container xs={12} sm={12} md={12} lg={12} xl={12} className="margin_top_m">
+            <Container xs={12} sm={12} md={12} lg={12} xl={12} className="margin_top_xlx">
             
                 <h2 className="text_bolder text_left padding_x">Decisiones recientes </h2>
 

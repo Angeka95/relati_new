@@ -385,7 +385,11 @@ h6 {
 .margin_top_xxl {
   margin-top: 180px !important;
 }
-
+  
+.margin_top_xlx {
+  margin-top: 150px !important;
+}  
+  
 .margin_top_xl {
   margin-top: 120px !important;
 }
@@ -2342,7 +2346,17 @@ padding: 0px 0% 0% 3%;
   box-shadow: 0px 8px 16px rgba(57, 129, 195, 0.2);
 }
 
+.alert_search_message_container {
+  position: relative;
+  width: auto;
+}
 
+.alert_search_message {
+  position: absolute;
+  width: 100%;
+  height: auto;
+  top: 80px;
+}
 
 /*\END HEADER*/
 
