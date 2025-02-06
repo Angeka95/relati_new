@@ -66,7 +66,7 @@ export default function VerTodasLasDecisiones() {
                             ficha_id: (item.getfichas.length > 0 ) ? item.getfichas[0]["id"] : "",
                             providencia_id: item.id, 
                             salaOSeccion: (item.despacho.length > 0) ? obtenerPalabrasFromArrayObject(item.despacho, "nombre", null, false) : "",
-                            nombreDecision: (item.asuntocaso !== null) ? item.asuntocaso : "",
+                            nombreDecision: (item.nombre !== null) ? item.nombre : "",
                             procedimiento:(item.actuacion.length > 0) ? obtenerPalabrasFromArrayObject(item.actuacion, "actuacion", null, false) : "",
                             expediente:  (item.orfeo !== null) ? item.orfeo : "", 
                             departamento: (item.departamento_ext.length > 0) ? removeFragmentoInString("DEPARTAMENTO", item.departamento_ext[0].nombre_dpto) : "",
