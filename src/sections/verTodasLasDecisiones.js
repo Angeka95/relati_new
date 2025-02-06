@@ -50,7 +50,9 @@ export default function VerTodasLasDecisiones() {
         buscadorService
           .getAllResults(page)
           .then(response => {
+              console.log(response.data.data);
               if((response.status_info.status === 200) && (response.data.length > 0)) {
+              console.log("entra");
                     const newDatos = response.data.map((i, k) => { 
                         //console.log("item", i);
                         let item = i;
