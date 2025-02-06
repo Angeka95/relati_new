@@ -16,10 +16,11 @@ export default function VerTodasLasDecisiones() {
   const [searchParams] = useSearchParams();
 
   const [selectedFilters, setSelectedFilters] = useState([]);
-  const [stringQuery, setStringQuery] = useState("Todos los resultados");
+  const [stringQuery, setStringQuery] = useState("Ver todas las decisiones");
   const [message, setMessage] = useState({ message: "", classname: "" });
   const [datos, setDatos] = useState([]);
   const [searchOptions, setSearchOptions] = useState([]);
+  const [pagination, setPagination] = useState({});
 
   const { filtroJurisprudencial, setFiltroJurisprudencial } = useContext(Context);
   const { estadoVerTodasDecisiones, setEstadoVerTodasDecisiones } = useContext(Context);
@@ -28,7 +29,7 @@ export default function VerTodasLasDecisiones() {
   const handleOpenModal = () => setOpenModal(true);
   const handleCloseModal = () => setOpenModal(false);
 
-  const stringParam = decodeURIComponent(searchParams.get('string'));
+  const stringParam = decodeURIComponent(searchParams.get('page'));
   
   useEffect(()=>{
       setEstadoVerTodasDecisiones(true);
@@ -50,10 +51,11 @@ export default function VerTodasLasDecisiones() {
         buscadorService
           .getAllResults(page)
           .then(response => {
-              console.log(response.data.data);
-              if((response.status_info.status === 200) && (response.data.length > 0)) {
-              console.log("entra");
-                    const newDatos = response.data.map((i, k) => { 
+              if((response.status_info.status === 200) && (response.data.data.length > 0)) {
+                    let objPagination = Object.assign({}, response.data);
+                    delete objPagination.data;
+                    setPagination(objPagination);
+                    const newDatos = response.data.data.map((i, k) => { 
                         //console.log("item", i);
                         let item = i;
                         let newItem = {
@@ -124,28 +126,18 @@ export default function VerTodasLasDecisiones() {
             handleMessage(newMessage);
         });
   };
-
+  
   useEffect(() => {
     if (!stringParam) {
-      let newMessage = {};
-      newMessage["message"] = `No se puede realizar la solicitud.`;
-      newMessage["classname"] = 'error';
-      handleMessage(newMessage);
-      setDatos([]);
-      /*
-      setTimeout(() => {
-        navigate('/');
-      }, 7000);*/
-      return;
+      getAllResults(1);
     } else {
       if(stringQuery === ""){
         setStringQuery(stringParam);
       } else {
-        getAllResults(2);
-        
+        getAllResults(Number(stringParam));
       }
     }
-  }, [stringQuery, stringParam ]);
+  }, [stringQuery, stringParam]);  
   
   useEffect(() => {
     if(datos.length === 0){
@@ -162,7 +154,7 @@ export default function VerTodasLasDecisiones() {
           <Grid container spacing={2}>
             <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
               <>
-              <p>Buscando por: <strong>"{stringParam}"</strong></p>
+              <p>Página: <strong>{stringParam}</strong></p>
               { (message.message === "") ?
                 <>
                 <LinearWithValueLabel processingMessages={["Procesando solicitud...", "Preparando respuesta..."]}></LinearWithValueLabel> 
@@ -191,7 +183,7 @@ export default function VerTodasLasDecisiones() {
               <Filter setSelectedFilters={setSelectedFilters}></Filter> 
             </Grid>
             <Grid item xs={12} sm={12} md={8} lg={8} xl={8}>
-                <ListCardSearch datosBusqueda={datos} selectedTerm={stringQuery} searchOptions={searchOptions} selectedFilters={selectedFilters}></ListCardSearch>
+                <ListCardSearch datosBusqueda={datos} selectedTerm={stringQuery} searchOptions={searchOptions} selectedFilters={selectedFilters} customPagination={pagination}></ListCardSearch>
             </Grid>
           </Grid>
         </Container>

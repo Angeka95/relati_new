@@ -95,7 +95,6 @@ export default function Search({ isSearchAdvance, isSearchMain }) {
   };
   
   useEffect(()=>{
-    console.log("Estado actual de verDecisiones", estadoVerTodasDecisiones);
     if((estadoVerTodasDecisiones === true) && (window.location.pathname !== "/ver-todas-las-decisiones") ){
       window.location.href = `/ver-todas-las-decisiones`;
     } 

@@ -12,14 +12,14 @@ const getAllResults = (page) => {
     },
     params: {  }
   };
-  const request =  axios.get('https://relatoria.jep.gov.co/getlistdoc?page=2', config);
+  const request =  axios.get(`https://relatoria.jep.gov.co/getlistdoc?page=${page}`, config);
   return request.then(response => { 
     if((response.data.status !== undefined) || (response.data.status === 401) || (response.data.status === 403)) {
       return { "data": [], "status_info": { "status": response.data.status, "reason": response.data.reason }};
     } else {
       let data = [];
       let status_info = {};
-      if(response.data.hasOwnProperty('data')) {
+      if(response.data.data.hasOwnProperty('data')) {
         data = response.data.data;
         status_info = { "status": 200, "reason": "La consulta se ha realizado satisfactoriamente." };
         if(data.length === 0){
