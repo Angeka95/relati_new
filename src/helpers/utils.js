@@ -207,6 +207,16 @@ function obtenerAnioDeTexto(cadena) {
     return coincidencia ? coincidencia[0] : null;
 }
 
+/**
+ * ordenarArrayPorFechaHitos()
+ * Funcionalidad que recibe un array de objetos que posee una propiedad fecha y ordena en forma ascendente
+ * Parametros de entrada:
+ * - arr: Array de objeto que contiene una fecha "13/11/2022"
+ * Salida:
+ * - Retorna un nuevo array con las fechas en orden ascendente
+ * Aplicación:
+ * - En caso.js para ordenar los hitos
+*/
 function ordenarArrayPorFechaHitos(arr){
     let newArr = arr.slice().sort((a, b) => {
         // Divide cada fecha en año y mes
