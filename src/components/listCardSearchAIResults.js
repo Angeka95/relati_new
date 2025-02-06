@@ -25,6 +25,7 @@ import { macrocasos } from '../data/datos_macrocaso.js';
 import ButtonDownloadXLS from './buttonDownloadXLS.js';
 
 export default function Card({ datosBusqueda, searchOptions, selectedFilters, isListSmall, selectedTerm, isLargeResult, isExternalFilters, customPagination = {} }) {  
+
     const [datos, setDatos] = useState(datosBusqueda);
     const [datosOriginales, setDatosOriginales] = useState(datosBusqueda);
     const [selectedDoc, setSelectedDoc] = useState({ "title": "* Todos los resultados", "id": 0 });
@@ -179,9 +180,10 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
     const startIndexPage = Math.ceil(page * itemsPerPage + 1 - itemsPerPage);
 
     // custom Pagination
+    const [itemsCustomPerPage, setItemsCustomPerPage] = useState(customPagination.per_page);
     const handleChangeCustomPagination = (event, value) => {
         console.log("Custom paginate processing...", value);
-        const params = new URLSearchParams({ page: encodeURIComponent(value) });
+        const params = new URLSearchParams({ page: encodeURIComponent(value), per_page: encodeURIComponent(customPagination.per_page) });
         window.location.href = `/ver-todas-las-decisiones?${params.toString()}`;
     }
 
@@ -207,7 +209,11 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
         setPage(1);
     }
 
-
+    const handleChangeResultsPerPage = (event, value) => {
+        const params = new URLSearchParams({ page: encodeURIComponent(customPagination.current_page), per_page: encodeURIComponent(value.props.value) });
+        window.location.href = `/ver-todas-las-decisiones?${params.toString()}`;
+    }
+    
     // Grids personalizadas
 
 
@@ -492,8 +498,8 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
                                         <FormControl fullWidth>
                                             {/* <InputLabel id="demo-simple-select-label"></InputLabel> */}
                                             <Select className= {isListSmall ? "select_items_results_small" : ("select_items_results justify_center")} 
-                                                value={itemsPerPage}
-                                                onChange={handleChange2}
+                                                value={itemsCustomPerPage}
+                                                onChange={ handleChangeResultsPerPage }
                                                 MenuProps={{
                                                     PaperProps: {
                                                         sx: {
@@ -504,6 +510,8 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
                                                 }}
                                             >
                                                 <MenuItem value={10}>10</MenuItem>
+                                                <MenuItem value={20}>20</MenuItem>
+                                                <MenuItem value={30}>30</MenuItem>
                                             </Select>
                                         </FormControl>
                                     </Box>

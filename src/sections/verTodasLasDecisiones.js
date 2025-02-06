@@ -29,7 +29,8 @@ export default function VerTodasLasDecisiones() {
   const handleOpenModal = () => setOpenModal(true);
   const handleCloseModal = () => setOpenModal(false);
 
-  const stringParam = decodeURIComponent(searchParams.get('page'));
+  const stringParamPage = (searchParams.get('page')) ? decodeURIComponent(searchParams.get('page')) : 1;
+  const stringParamPerPage = (searchParams.get('per_page')) ? decodeURIComponent(searchParams.get('per_page')) : 10;
   
   useEffect(()=>{
       setEstadoVerTodasDecisiones(true);
@@ -46,17 +47,17 @@ export default function VerTodasLasDecisiones() {
       }, 6000);*/
   }
   
-  const getAllResults = (page) => {
+  const getAllResults = (page, per_page) => {
         let newMessage = {}; 
         buscadorService
-          .getAllResults(page)
+          .getAllResults(page, per_page)
           .then(response => {
               if((response.status_info.status === 200) && (response.data.data.length > 0)) {
                     let objPagination = Object.assign({}, response.data);
                     delete objPagination.data;
+                    objPagination["per_page"] = Number(objPagination["per_page"]);
                     setPagination(objPagination);
                     const newDatos = response.data.data.map((i, k) => { 
-                        //console.log("item", i);
                         let item = i;
                         let newItem = {
                             id: k + 1,
@@ -122,20 +123,9 @@ export default function VerTodasLasDecisiones() {
   };
   
   useEffect(() => {
-    if (!stringParam) {
-      getAllResults(1);
-    } else {
-      if(stringQuery === ""){
-        setStringQuery(stringParam);
-      } else {
-        getAllResults(Number(stringParam));
-      }
-    }
-  }, [stringQuery, stringParam]);  
-  
-  useEffect(() => {
     if(datos.length === 0){
-        setFiltroJurisprudencial(filtroByDefault);
+      getAllResults(stringParamPage, stringParamPerPage);
+      setFiltroJurisprudencial(filtroByDefault);
     } 
   }, []);
 
@@ -148,7 +138,7 @@ export default function VerTodasLasDecisiones() {
           <Grid container spacing={2}>
             <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
               <>
-              <p>Página: <strong>{stringParam}</strong></p>
+              <p>Página: <strong>{stringParamPage}</strong></p>
               { (message.message === "") ?
                 <>
                 <LinearWithValueLabel processingMessages={["Procesando solicitud...", "Preparando respuesta..."]}></LinearWithValueLabel> 
