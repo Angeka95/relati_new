@@ -24,7 +24,7 @@ import { validarfiltroJurisprudencial, getOpcionesAutocompletar, getDecisionesID
 import { macrocasos } from '../data/datos_macrocaso.js';
 import ButtonDownloadXLS from './buttonDownloadXLS.js';
 
-export default function Card({ datosBusqueda, searchOptions, selectedFilters, isListSmall, selectedTerm, isLargeResult, isExternalFilters }) {
+export default function Card({ datosBusqueda, searchOptions, selectedFilters, isListSmall, selectedTerm, isLargeResult, isExternalFilters, customPagination = {} }) {  
 
     const [datos, setDatos] = useState(datosBusqueda);
     const [datosOriginales, setDatosOriginales] = useState(datosBusqueda);
@@ -179,6 +179,14 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
 
     const startIndexPage = Math.ceil(page * itemsPerPage + 1 - itemsPerPage);
 
+    // custom Pagination
+    const [itemsCustomPerPage, setItemsCustomPerPage] = useState(customPagination.per_page);
+    const handleChangeCustomPagination = (event, value) => {
+        console.log("Custom paginate processing...", value);
+        const params = new URLSearchParams({ page: encodeURIComponent(value), per_page: encodeURIComponent(customPagination.per_page) });
+        window.location.href = `/ver-todas-las-decisiones?${params.toString()}`;
+    }
+
     useEffect(() => {
         if(datos.length > 0){
             getCurrentData();
@@ -201,7 +209,11 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
         setPage(1);
     }
 
-
+    const handleChangeResultsPerPage = (event, value) => {
+        const params = new URLSearchParams({ page: encodeURIComponent(customPagination.current_page), per_page: encodeURIComponent(value.props.value) });
+        window.location.href = `/ver-todas-las-decisiones?${params.toString()}`;
+    }
+    
     // Grids personalizadas
 
 
@@ -420,6 +432,7 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
     
                 {(verTodasDecisiones || busqueda) && (
                     <>
+                        {(Object.keys(customPagination).length === 0) ? 
                         <WrapGrid item xs={12} sm={12} md={12} lg={12} xl={12} className="flex " >
                             <Width100Grid>
                                 <p className="margin_results_page">
@@ -464,6 +477,51 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
                             </div>
                             
                         </WrapGrid>
+                        : 
+                        <WrapGrid item xs={12} sm={12} md={12} lg={12} xl={12} className="flex " >
+                            <Width100Grid>
+                                <p className="margin_results_page">
+                                    
+                                    <span> {customPagination.from} </span> a
+                                    <span> {customPagination.to} </span> de
+                                    <span className="text_bolder"> {customPagination.total} </span> decisiones
+                                </p>
+                            </Width100Grid>
+                            <NoneGrid>
+                                <p className='margin_xs'> | </p>
+                            </NoneGrid>
+    
+                            <div >
+                                <Width100Grid className='width_100 flex '>
+                                <p className="margin_results_page">Resultados por página  </p>
+                                    <Box sx={{ minWidth: 270 }}>
+                                        <FormControl fullWidth>
+                                            {/* <InputLabel id="demo-simple-select-label"></InputLabel> */}
+                                            <Select className= {isListSmall ? "select_items_results_small" : ("select_items_results justify_center")} 
+                                                value={itemsCustomPerPage}
+                                                onChange={ handleChangeResultsPerPage }
+                                                MenuProps={{
+                                                    PaperProps: {
+                                                        sx: {
+                                                            boxShadow: '0px 8px 24px rgba(57, 129, 195, 0.2) ', // Sombra 
+                                                            
+                                                        },
+                                                    },
+                                                }}
+                                            >
+                                                <MenuItem value={10}>10</MenuItem>
+                                                <MenuItem value={20}>20</MenuItem>
+                                                <MenuItem value={30}>30</MenuItem>
+                                            </Select>
+                                        </FormControl>
+                                    </Box>
+                                    
+                                </Width100Grid>
+                                
+                            </div>
+                            
+                        </WrapGrid>
+                        }
                         <div className="justify_end">
                             { (datosToExport !== null) && 
                                 <ButtonDownloadXLS 
@@ -480,8 +538,8 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
                         {(datos.length > 0) && (
                             <> 
                             <SpaceGrid className="justify_end">
-        
-                                <Pagination className="margin_top_s"
+                                {(Object.keys(customPagination).length === 0) ? 
+                                    <Pagination className="margin_top_s"
                                     count={totalPages}
                                     page={page}
                                     onChange={handleChange}
@@ -491,7 +549,20 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
                                             {...item}
                                         />
                                     )}
-                                />
+                                    />
+                                :
+                                    <Pagination className="margin_top_s"
+                                    count={Math.ceil(customPagination.total/customPagination.per_page)}
+                                    page={customPagination.current_page}
+                                    onChange={handleChangeCustomPagination}
+                                    renderItem={(item, id) => (
+                                        <PaginationItem key={id}
+                                            slots={{ previous: ArrowBackIcon, next: ArrowForwardIcon }}
+                                            {...item}
+                                        />
+                                    )}
+                                    />    
+                                }
                             </SpaceGrid>
                             <List className="width_100">
                                 {currentData.map((item, k) => (
@@ -505,18 +576,31 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
                             </List>
         
                             <SpaceGrid className="justify_end">
-                                <Pagination className="pagination_container margin_bottom_s"
+                            {(Object.keys(customPagination).length === 0) ? 
+                                    <Pagination className="margin_top_s"
                                     count={totalPages}
                                     page={page}
                                     onChange={handleChange}
-                                    renderItem={(item) => (
-                                        <PaginationItem
+                                    renderItem={(item, id) => (
+                                        <PaginationItem key={id}
                                             slots={{ previous: ArrowBackIcon, next: ArrowForwardIcon }}
                                             {...item}
                                         />
                                     )}
-                                />
-        
+                                    />
+                                :
+                                    <Pagination className="margin_top_s"
+                                    count={Math.ceil(customPagination.total/customPagination.per_page)}
+                                    page={customPagination.current_page}
+                                    onChange={handleChangeCustomPagination}
+                                    renderItem={(item, id) => (
+                                        <PaginationItem key={id}
+                                            slots={{ previous: ArrowBackIcon, next: ArrowForwardIcon }}
+                                            {...item}
+                                        />
+                                    )}
+                                    />    
+                                }
                             </SpaceGrid>
                             </>
                         )}  

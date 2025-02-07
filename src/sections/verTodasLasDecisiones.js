@@ -16,10 +16,11 @@ export default function VerTodasLasDecisiones() {
   const [searchParams] = useSearchParams();
 
   const [selectedFilters, setSelectedFilters] = useState([]);
-  const [stringQuery, setStringQuery] = useState("Todos los resultados");
+  const [stringQuery, setStringQuery] = useState("Ver todas las decisiones");
   const [message, setMessage] = useState({ message: "", classname: "" });
   const [datos, setDatos] = useState([]);
   const [searchOptions, setSearchOptions] = useState([]);
+  const [pagination, setPagination] = useState({});
 
   const { filtroJurisprudencial, setFiltroJurisprudencial } = useContext(Context);
   const { estadoVerTodasDecisiones, setEstadoVerTodasDecisiones } = useContext(Context);
@@ -28,7 +29,8 @@ export default function VerTodasLasDecisiones() {
   const handleOpenModal = () => setOpenModal(true);
   const handleCloseModal = () => setOpenModal(false);
 
-  const stringParam = decodeURIComponent(searchParams.get('string'));
+  const stringParamPage = (searchParams.get('page')) ? decodeURIComponent(searchParams.get('page')) : 1;
+  const stringParamPerPage = (searchParams.get('per_page')) ? decodeURIComponent(searchParams.get('per_page')) : 10;
   
   useEffect(()=>{
       setEstadoVerTodasDecisiones(true);
@@ -45,60 +47,58 @@ export default function VerTodasLasDecisiones() {
       }, 6000);*/
   }
   
-  const getAllResults = (page) => {
+  const getAllResults = (page, per_page) => {
         let newMessage = {}; 
         buscadorService
-          .getAllResults(page)
+          .getAllResults(page, per_page)
           .then(response => {
-              if((response.status_info.status === 200) && (response.data.length > 0)) {
-                    const newDatos = response.data.map((i, k) => { 
-                        //console.log("item", i);
+              if((response.status_info.status === 200) && (response.data.data.length > 0)) {
+                    let objPagination = Object.assign({}, response.data);
+                    delete objPagination.data;
+                    objPagination["per_page"] = Number(objPagination["per_page"]);
+                    setPagination(objPagination);
+                    const newDatos = response.data.data.map((i, k) => { 
                         let item = i;
                         let newItem = {
                             id: k + 1,
                             score: "",
                             fecha: item.fecha_providencia,
-                            ficha_id: item.ficha_id,
-                            providencia_id: item.providencia_id,
+                            ficha_id: (item.getfichas.length > 0 ) ? item.getfichas[0]["id"] : "",
+                            providencia_id: item.id, 
                             salaOSeccion: (item.despacho.length > 0) ? obtenerPalabrasFromArrayObject(item.despacho, "nombre", null, false) : "",
-                            sala: (item.despacho.length > 0) ? obtenerPalabrasFromArrayObject(item.despacho, "nombre", null, false) : "",
-                            nombreDecision: (item.asuntocaso !== null) ? item.asuntocaso : "",
-                            procedimiento: /*(item.actuacion.length > 0) ? item.actuacion[0].actuacion :*/ "", 
-                            procedimientos: (item.actuacion.length > 0) ? item.actuacion[0].actuacion : "", 
-                            expediente: "", 
-                            departamento: /*(item.departamento.length > 0) ? obtenerPalabrasFromArrayObject(item.departamento, "nombre", null, false) : */"",
-                            departamentoNombre: /* (item.departamento.length > 0) ? removeFragmentoInString("DEPARTAMENTO", item.departamento[0].nombre) : */"",
-                            magistrado: (item.autor !== null) ? item.autor : "", 
-                            municipio: "", 
-                            delito: /*(item.delitos.length > 0) ? obtenerPalabrasFromArrayObject(item.delitos, "nombre", null, false) : */"", 
-                            delitos: /*(item.delitos.length > 0) ? obtenerPalabrasFromArrayObject(item.delitos, "nombre", null, false) : */"", 
-                            anioHechos: /*(item.anio_hechos.length > 0) ? item.anio_hechos[0].anio : */"",
-                            anio: /*(item.anio_hechos.length > 0) ? item.anio_hechos[0].anio : */ "",
-                            tipo: /*(item.tipo_documento !== null) ? item.tipo_documento : */ "", 
-                            radicado: /*(item.radicado_documento !== null) ? item.radicado_documento : */ "",
-                            compareciente:  /*(item.tipopeti.length > 0) ? obtenerPalabrasFromArrayObject(item.tipopeti, "tipo", null, false) : */ "", 
-                            comparecientes:  /*(item.tipopeti.length > 0) ? obtenerPalabrasFromArrayObject(item.tipopeti, "tipo", null, false) : */ "", 
-                            tipoSujeto: /*(item.tipopeti.length > 0) ? obtenerPalabrasFromArrayObject(item.tipopeti, "tipo", null, false) : */ "", 
-                            accionadoVinculado: "", 
-                            palabrasClaves: /* (item.palabras_clave.length > 0) ? item.palabras_clave[0].palabra : */ "", 
-                            hechos: /*(item.hechos_antecedentes !== null) ? item.hechos_antecedentes : */ "", 
-                            problemasJuridicos: /*(item.problema_juridico !== null) ? item.problema_juridico : */ "",
-                            reglas: /*(item.reglas_juridicas !== null) ? item.reglas_juridicas : */ "",
-                            aplicacionCasoConcreto: /*(item.analisis_caso_concreto !== null) ? item.analisis_caso_concreto : */ "", 
-                            resuelve: /*(item.resuelve.length > 0) ? item.resuelve[0].nombre : */ "", 
-                            documentosAsociados:  /*(item.anexos.length > 0) ? item.anexos[0].nombre : */ "", 
-                            documentosAsociadosLink:  /*(item.anexos.length > 0) ? item.anexos[0].hipervinculo : */ "", 
-                            enfoquesDiferenciales: /*(item.enfoque.length > 0) ? item.enfoque[0].tipo : */ "",
-                            notasRelatoria: "", //No mostrar  
-                            hipervinculo:  /*(item.hipervinculo !== null ) ? `https://relatoria.jep.gov.co/${item.hipervinculo}` : */ "", 
-                            hipervinculoFichaJuris:  /*(item.ficha_id !== null ) ? `https://relatoria.jep.gov.co/downloadfichaext/${item.ficha_id}` : */ "",
+                            nombreDecision: (item.nombre !== null) ? item.nombre : "",
+                            procedimiento:(item.actuacion.length > 0) ? obtenerPalabrasFromArrayObject(item.actuacion, "actuacion", null, false) : "",
+                            expediente:  (item.orfeo !== null) ? item.orfeo : "", 
+                            departamento: (item.departamento_ext.length > 0) ? removeFragmentoInString("DEPARTAMENTO", item.departamento_ext[0].nombre_dpto) : "",
+                            magistrado: (item.magistrado.length > 0) ? obtenerPalabrasFromArrayObject(item.magistrado, "nombre_magistrado", "nombre", false) : "",
+                            municipio: (item.municipio_ext.length > 0) ? removeFragmentoInString("MUNICIPIO", item.municipio_ext[0].nombre_muni) : "",
+                            delito: (item.delitos.length > 0) ? obtenerPalabrasFromArrayObject(item.delitos, "delito", null, false) : "", 
+                            anioHechos: (item.anio_hechos.length > 0) ? obtenerPalabrasFromArrayObject(item.anio_hechos, "anio", null, false) : "",
+                            tipo:  (item.documento !== null) ? item.documento.nombre : "",
+                            radicado: (item.radicado !== null) ? item.radicado : "",
+                            compareciente:  (item.tipopeti.length > 0) ? obtenerPalabrasFromArrayObject(item.tipopeti, "tipo", null, false) : "", 
+                            tipoSujeto: "", 
+                            accionadoVinculado: (item.accionado.length > 0) ? obtenerPalabrasFromArrayObject(item.accionado, "accionado", null, false) : "", 
+                            palabrasClaves: "", 
+                            hechos: "", 
+                            problemasJuridicos: "",
+                            reglas: "", 
+                            aplicacionCasoConcreto: "", 
+                            resuelve: "", 
+                            documentosAsociados:  (item.providencia_votos.length > 0) ? item.providencia_votos[0].nombre : "", 
+                            documentosAsociadosLink:  (item.providencia_votos.length > 0) ? item.providencia_votos[0].hipervinculo : "", //
+                            enfoquesDiferenciales:  "", 
+                            notasRelatoria: "", 
+                            hipervinculo:  (item.hipervinculo !== null ) ? `https://relatoria.jep.gov.co/${item.hipervinculo}` : "", 
+                            hipervinculoFichaJuris:  "", 
                             estadoFichaJuris: false,
                             extractoBusqueda: "",
-                            caso: /*(item.macrocaso.length > 0) ? item.macrocaso[0].nombre : */ "",
-                            autocompletarBuscador: ""
+                            caso:  (item.casopro.length > 0) ? obtenerPalabrasFromArrayObject(item.casopro, "caso", null, false) : "",
+                            autocompletarBuscador: "",
+                            estado_id: (item.getfichas.length > 0 ) ? item.getfichas[0]["estado_id"] : "", 
                         };
-                        //newItem["autocompletarBuscador"] = { id: newItem.id, title: `${newItem.salaOSeccion} ${newItem.delitos} ${newItem.procedimientos} ${newItem.compareciente} ${newItem.tipoSujeto} ${newItem.departamentoNombre} ${newItem.nombreDecision} ${newItem.magistrado}`}; 
-                        //console.log(newItem);
+                        newItem["hipervinculoFichaJuris"] = ((newItem.ficha_id !== null ) && ( newItem.estado_id === 14 )) ? `https://relatoria.jep.gov.co/downloadfichaext/${newItem.ficha_id}` : " ";
+                        newItem["autocompletarBuscador"] = { id: newItem.id, title: `${newItem.salaOSeccion} ${newItem.nombreDecision} ${newItem.departamento} ${newItem.delito} ${newItem.procedimiento} ${newItem.compareciente} ${newItem.magistrado}`}; 
                         return newItem;
                   });
                   setDatos(newDatos);
@@ -121,32 +121,11 @@ export default function VerTodasLasDecisiones() {
             handleMessage(newMessage);
         });
   };
-
-  useEffect(() => {
-    if (!stringParam) {
-      let newMessage = {};
-      newMessage["message"] = `No se puede realizar la solicitud.`;
-      newMessage["classname"] = 'error';
-      handleMessage(newMessage);
-      setDatos([]);
-      /*
-      setTimeout(() => {
-        navigate('/');
-      }, 7000);*/
-      return;
-    } else {
-      if(stringQuery === ""){
-        setStringQuery(stringParam);
-      } else {
-        getAllResults(2);
-        
-      }
-    }
-  }, [stringQuery, stringParam ]);
   
   useEffect(() => {
     if(datos.length === 0){
-        setFiltroJurisprudencial(filtroByDefault);
+      getAllResults(stringParamPage, stringParamPerPage);
+      setFiltroJurisprudencial(filtroByDefault);
     } 
   }, []);
 
@@ -159,7 +138,7 @@ export default function VerTodasLasDecisiones() {
           <Grid container spacing={2}>
             <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
               <>
-              <p>Buscando por: <strong>"{stringParam}"</strong></p>
+              <p>Página: <strong>{stringParamPage}</strong></p>
               { (message.message === "") ?
                 <>
                 <LinearWithValueLabel processingMessages={["Procesando solicitud...", "Preparando respuesta..."]}></LinearWithValueLabel> 
@@ -188,7 +167,7 @@ export default function VerTodasLasDecisiones() {
               <Filter setSelectedFilters={setSelectedFilters}></Filter> 
             </Grid>
             <Grid item xs={12} sm={12} md={8} lg={8} xl={8}>
-                <ListCardSearch datosBusqueda={datos} selectedTerm={stringQuery} searchOptions={searchOptions} selectedFilters={selectedFilters}></ListCardSearch>
+                <ListCardSearch datosBusqueda={datos} selectedTerm={stringQuery} searchOptions={searchOptions} selectedFilters={selectedFilters} customPagination={pagination}></ListCardSearch>
             </Grid>
           </Grid>
         </Container>
