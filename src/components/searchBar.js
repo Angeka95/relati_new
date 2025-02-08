@@ -99,7 +99,8 @@ export default function Search({ isSearchAdvance, isSearchMain }) {
       window.location.href = `/ver-todas-las-decisiones`;
     } 
     if((estadoVerTodasDecisiones === false) && (window.location.pathname === "/ver-todas-las-decisiones") ){
-      const params = new URLSearchParams({ string: encodeURIComponent("farc") });
+      const stringQueryLs = localStorage.getItem('stringQueryLs');
+      const params = new URLSearchParams({ string: encodeURIComponent(stringQueryLs) });
       window.location.href = `/resultados-busqueda?${params.toString()}`;
     }
   },[estadoVerTodasDecisiones]);

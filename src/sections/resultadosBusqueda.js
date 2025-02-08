@@ -3,7 +3,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import SearchBar from '../components/searchBar.js';
 import Filter from '../components/filter.js';
 import ListCardSearch from '../components/listCardSearchAIResults.js';
-import { Container, Grid, Alert } from '@mui/material';
+import { Container, Grid, Alert, Button, Box } from '@mui/material';
 import buscadorService from '../services/buscador.js';
 import LinearWithValueLabel from '../components/linearProgress.js';  
 import Context from '../context/context.js';
@@ -23,10 +23,9 @@ export default function SearchResults() {
 
   const { filtroJurisprudencial, setFiltroJurisprudencial } = useContext(Context);
   const { estadoVerTodasDecisiones, setEstadoVerTodasDecisiones } = useContext(Context);
-  const { stringQuery, setStringQuery } = useContext(Context);
+  const [stringQuery, setStringQuery] = useState("");
   
   const [stringQueryLs, setStringQueryLs] = useState("");
-  const [dataFromQueryLs, setDataFromQueryLs] = useState("");
   
   const [openModal, setOpenModal] = useState(false);
   const handleOpenModal = () => setOpenModal(true);
@@ -34,156 +33,146 @@ export default function SearchResults() {
 
   const stringParam = decodeURIComponent(searchParams.get('string'));
   
+  const getResultadosBuscadorAI = (string) => {
+    let newMessage = {}; 
+    buscadorService
+      .getSearchQData(string)
+      //.getSearchQDataTest(string)
+      .then(response => {
+          if((response.status_info.status === 200) && (response.data.length > 0)) {
+                const newDatos = response.data.map((i, k) => { 
+                    let item = i._source;
+                    let newItem = {
+                        id: k + 1,
+                        score: i._score,
+                        fecha: item.fecha_documento,
+                        ficha_id: item.ficha_id,
+                        providencia_id: item.providencia_id,
+                        salaOSeccion: (item.sala_seccion !== null) ? item.sala_seccion : "",
+                        nombreDecision: (item.nombre_providencia !== null) ? item.nombre_providencia : "",
+                        procedimiento: (item.procedimiento.length > 0) ? obtenerPalabrasFromArrayObject(item.procedimiento, "nombre", null, false) : "",
+                        expediente: (item.expediente !== null) ? item.expediente : "", 
+                        departamento: (item.departamento.length > 0) ? obtenerPalabrasFromArrayObject(item.departamento, "nombre", null, false) : "",
+                        magistrado: (item.autor !== null) ? item.autor : "", 
+                        municipio:  (item.municipio.length > 0) ? obtenerPalabrasFromArrayObject(item.municipio, "nombre", null, false) : "",
+                        delito: (item.delito.length > 0) ? obtenerPalabrasFromArrayObject(item.delito, "nombre", null, false) : "", 
+                        anioHechos: (item.anio_hechos.length > 0) ? item.anio_hechos[0].anio : "",
+                        tipo: (item.tipo_documento !== null) ? item.tipo_documento : "", 
+                        radicado: (item.radicado_documento !== null) ? item.radicado_documento : "",
+                        compareciente: (item.tipo_compareciente.length > 0) ? obtenerPalabrasFromArrayObject(item.tipo_compareciente, "tipo", null, false) : "", 
+                        tipoSujeto: "", 
+                        accionadoVinculado: "", 
+                        palabrasClaves:  (item.palabras_clave.length > 0) ? obtenerPalabrasFromArrayObject(item.palabras_clave, "palabra", null, false) : "",
+                        hechos: (item.hechos_antecedentes !== null) ? item.hechos_antecedentes : "", 
+                        problemasJuridicos: (item.problema_juridico !== null) ? item.problema_juridico : "",
+                        reglas: (item.reglas_juridicas !== null) ? item.reglas_juridicas : "",
+                        aplicacionCasoConcreto: (item.analisis_caso_concreto !== null) ? item.analisis_caso_concreto : "", 
+                        resuelve: (item.resuelve.length > 0) ? obtenerPalabrasFromArrayObject(item.resuelve, "nombre", null, false) : "",
+                        documentosAsociados:  (item.anexos.length > 0) ? item.anexos[0].nombre : "", 
+                        documentosAsociadosLink:  (item.anexos.length > 0) ? item.anexos[0].hipervinculo : "", 
+                        enfoquesDiferenciales: (item.enfoque.length > 0) ? item.enfoque[0].tipo : "",
+                        notasRelatoria: "", 
+                        hipervinculo:   (item.hipervinculo !== null ) ? `https://relatoria.jep.gov.co/${item.hipervinculo}` : "", 
+                        hipervinculoFichaJuris: "",
+                        estadoFichaJuris: false,
+                        extractoBusqueda: "",
+                        caso: (item.macrocaso.length > 0) ? item.macrocaso[0].nombre : "",
+                        autocompletarBuscador: "",
+                        estado_id: /*(item.getfichas.length > 0 ) ? item.getfichas[0]["estado_id"] :*/ "", 
+                    };
+                    newItem["hipervinculoFichaJuris"] = ((newItem.ficha_id !== null ) && ( newItem.estado_id === 14 )) ? `https://relatoria.jep.gov.co/downloadfichaext/${newItem.ficha_id}` : " ";
+                    newItem["autocompletarBuscador"] = { id: newItem.id, title: `${newItem.salaOSeccion} ${newItem.nombreDecision} ${newItem.departamento} ${newItem.delito} ${newItem.procedimiento} ${newItem.compareciente} ${newItem.magistrado}`};  
+                    return newItem;
+              });
+              setDatos(newDatos);
+              setSearchOptions(getOpcionesAutocompletar(newDatos));
+              sessionStorage.setItem('dataFromQueryLs', JSON.stringify(newDatos));
+              newMessage["message"] = `${response.status_info.reason}`;
+              newMessage["classname"] = 'success';
+          } else if(response.status_info.status === 500) {
+              localStorage.setItem('stringQueryLs', '');
+              sessionStorage.setItem('dataFromQueryLs', '');
+              newMessage["message"] = `${response.status_info.reason}`;
+              newMessage["classname"] = 'error';
+          } else {
+            localStorage.setItem('stringQueryLs', '');
+            sessionStorage.setItem('dataFromQueryLs', '');
+            newMessage["message"] = `${response.status_info.reason}`;
+            newMessage["classname"] = 'warning';
+          }
+          handleMessage(newMessage);
+      }
+    )
+    .catch(error => { 
+        newMessage["message"] = `${error}`;
+        newMessage["classname"] = 'error';
+        handleMessage(newMessage);
+    });
+};
+
+const handleMessage = (newMessage) => {
+  handleOpenModal();
+  setTimeout(function(){ 
+      handleCloseModal();
+      setMessage(newMessage);
+  }, 3000);
+  /*setTimeout(() => {
+      setMessage({ message: "", classname: "" }); 
+  }, 6000);*/
+};
+  
+  // Si la seccion /resultados-busqueda no cuenta con ningun parametro, lo envia al home
+  useEffect(() => {
+    const url = window.location.href;  
+    const tieneParametros = url.includes('?');
+    if (!tieneParametros) {
+      navigate("/");
+    } 
+  },[]);
+  
+  /* Este useEffect almacena la cadena de consulta en el localStorage
+     Los datos obtenidos a partir de la cadena de consulta se almacenan en sessionStorage
+     Si el stringQuery recien ingresado es el mismo que esta en localStorage.stringQueryLs toma los datos almacenados del sesionStorage 
+     En caso contrario, una consulta diferente procede a obtener nuevos registros.
+  */
   useEffect(()=>{
-    console.log("stringQueryLs:", stringQueryLs, "stringQuery:", stringQuery);
     if (!localStorage.hasOwnProperty('stringQueryLs')) {
       localStorage.setItem('stringQueryLs', '');
-      localStorage.setItem('dataFromQueryLs', '');
+      sessionStorage.setItem('dataFromQueryLs', '');
     } else {
-    
       if(stringQuery.length > 0 ){
         console.log(stringQuery, localStorage.getItem('stringQueryLs'))
         if(stringQuery === localStorage.getItem('stringQueryLs')){
-          let newArray = localStorage.getItem('dataFromQueryLs');
-          console.log(newArray);
-          //setDatos(JSON.parse(localStorage.getItem('dataFromQueryLs')));
+          setDatos(JSON.parse(sessionStorage.getItem('dataFromQueryLs')));
         } else {
+          getResultadosBuscadorAI(stringQuery);
           localStorage.setItem('stringQueryLs', stringQuery);
-          localStorage.setItem('dataFromQueryLs', dataFromQueryLs);
           setStringQueryLs(stringQuery);
         }
       }
-      /*setStringQueryLs(localStorage.getItem('stringQueryLs')); 
-      console.log("strniquer", stringQueryLs);
-      if(stringQuery.length > 0 ){
-        if(stringQueryLs.length === 0) {
-        console.log("eenntra");
-          localStorage.setItem('stringQueryLs', stringQuery);
-        }
-        if(stringQuery === stringQueryLs){
-          console.log("Son iguales");
-          setDataFromQueryLs(JSON.parse(localStorage.getItem('dataFromQueryLs'))); 
-          setDatos(JSON.parse(localStorage.getItem('dataFromQueryLs')));
-        } else {
-          console.log("Son diferentes");
-          localStorage.setItem('stringQueryLs', stringQuery);
-          localStorage.setItem('dataFromQueryLs', JSON.stringify(datos));
-        }
-      }*/
     }
-  },[stringQuery, dataFromQueryLs]);
+  },[stringQuery]);
   
   useEffect(()=>{
       setEstadoVerTodasDecisiones(false);
   },[]);
-  
-
-  const handleMessage = (newMessage) => {
-      handleOpenModal();
-      setTimeout(function(){ 
-          handleCloseModal();
-          setMessage(newMessage);
-      }, 3000);
-      /*setTimeout(() => {
-          setMessage({ message: "", classname: "" }); 
-      }, 6000);*/
-  }
-  
-  const getResultadosBuscadorAI = (string) => {
-        let newMessage = {}; 
-        buscadorService
-          .getSearchQData(string)
-          //.getSearchQDataTest(string)
-          .then(response => {
-              if((response.status_info.status === 200) && (response.data.length > 0)) {
-                    const newDatos = response.data.map((i, k) => { 
-                        let item = i._source;
-                        let newItem = {
-                            id: k + 1,
-                            score: i._score,
-                            fecha: item.fecha_documento,
-                            ficha_id: item.ficha_id,
-                            providencia_id: item.providencia_id,
-                            salaOSeccion: (item.sala_seccion !== null) ? item.sala_seccion : "",
-                            sala: (item.sala_seccion !== null) ? item.sala_seccion : "",
-                            nombreDecision: (item.nombre_providencia !== null) ? item.nombre_providencia : "",
-                            procedimiento: (item.procedimiento.length > 0) ? item.procedimiento[0].nombre : "", 
-                            procedimientos: (item.procedimiento.length > 0) ? item.procedimiento[0].nombre : "", 
-                            expediente: "", 
-                            departamento: (item.departamento.length > 0) ? obtenerPalabrasFromArrayObject(item.departamento, "nombre", null, false) : "",
-                            departamentoNombre: (item.departamento.length > 0) ? removeFragmentoInString("DEPARTAMENTO", item.departamento[0].nombre) : "",
-                            magistrado: (item.autor !== null) ? item.autor : "", 
-                            municipio: "", 
-                            delito: (item.delito.length > 0) ? obtenerPalabrasFromArrayObject(item.delito, "nombre", null, false) : "", 
-                            delitos: (item.delito.length > 0) ? obtenerPalabrasFromArrayObject(item.delito, "nombre", null, false) : "", 
-                            anioHechos: (item.anio_hechos.length > 0) ? item.anio_hechos[0].anio : "",
-                            anio: (item.anio_hechos.length > 0) ? item.anio_hechos[0].anio : "",
-                            tipo: (item.tipo_documento !== null) ? item.tipo_documento : "", 
-                            radicado: (item.radicado_documento !== null) ? item.radicado_documento : "",
-                            compareciente:  (item.compareciente !== null) ? item.compareciente : "",
-                            comparecientes:  (item.tipo_compareciente.length > 0) ? obtenerPalabrasFromArrayObject(item.tipo_compareciente, "tipo", null, false) : "", 
-                            tipoSujeto: (item.tipo_compareciente.length > 0) ? obtenerPalabrasFromArrayObject(item.tipo_compareciente, "tipo", null, false) : "", 
-                            accionadoVinculado: "", 
-                            palabrasClaves:  (item.palabras_clave.length > 0) ? item.palabras_clave[0].palabra : "", 
-                            hechos: (item.hechos_antecedentes !== null) ? item.hechos_antecedentes : "", 
-                            problemasJuridicos: (item.problema_juridico !== null) ? item.problema_juridico : "",
-                            reglas: (item.reglas_juridicas !== null) ? item.reglas_juridicas : "",
-                            aplicacionCasoConcreto: (item.analisis_caso_concreto !== null) ? item.analisis_caso_concreto : "", 
-                            resuelve: (item.resuelve.length > 0) ? item.resuelve[0].nombre : "", 
-                            documentosAsociados:  (item.anexos.length > 0) ? item.anexos[0].nombre : "", 
-                            documentosAsociadosLink:  (item.anexos.length > 0) ? item.anexos[0].hipervinculo : "", 
-                            enfoquesDiferenciales: (item.enfoque.length > 0) ? item.enfoque[0].tipo : "",
-                            notasRelatoria: "", //No mostrar  
-                            hipervinculo:   (item.hipervinculo !== null ) ? `https://relatoria.jep.gov.co/${item.hipervinculo}` : "", 
-                            hipervinculoFichaJuris:   (item.ficha_id !== null ) ? `https://relatoria.jep.gov.co/downloadfichaext/${item.ficha_id}` : "",
-                            estadoFichaJuris: false,
-                            extractoBusqueda: "",
-                            caso: (item.macrocaso.length > 0) ? item.macrocaso[0].nombre : "",
-                        };
-                        newItem["autocompletarBuscador"] = { id: newItem.id, title: `${newItem.salaOSeccion} ${newItem.delitos} ${newItem.procedimientos} ${newItem.compareciente} ${newItem.tipoSujeto} ${newItem.departamentoNombre} ${newItem.nombreDecision} ${newItem.magistrado}`}; 
-                        return newItem;
-                  });
-                  setDatos(newDatos);
-                  setSearchOptions(getOpcionesAutocompletar(newDatos));
-                  setDataFromQueryLs(JSON.stringify(newDatos));
-                  newMessage["message"] = `${response.status_info.reason}`;
-                  newMessage["classname"] = 'success';
-              } else if(response.status_info.status === 500) {
-                  newMessage["message"] = `${response.status_info.reason}`;
-                  newMessage["classname"] = 'error';
-              } else {
-                newMessage["message"] = `${response.status_info.reason}`;
-                newMessage["classname"] = 'warning';
-              }
-              handleMessage(newMessage);
-          }
-        )
-        .catch(error => { 
-            newMessage["message"] = `${error}`;
-            newMessage["classname"] = 'error';
-            handleMessage(newMessage);
-        });
-  };
-
+    
   useEffect(() => {
-    if (!stringParam) {
+    if (!stringParam){
       let newMessage = {};
       newMessage["message"] = `No se puede realizar la solicitud.`;
       newMessage["classname"] = 'error';
       handleMessage(newMessage);
       setDatos([]);
-      /*
+      localStorage.setItem('stringQueryLs', '');
+      sessionStorage.setItem('dataFromQueryLs', '');
       setTimeout(() => {
         navigate('/');
-      }, 7000);*/
-      return;
+      }, 3000);
     } else {
       if(stringQuery === ""){
         setStringQuery(stringParam);
-      } else {
-        getResultadosBuscadorAI(stringQuery);
-        
-      }
+      } 
     }
   }, [stringQuery, stringParam ]);
   
@@ -208,9 +197,18 @@ export default function SearchResults() {
                 <LinearWithValueLabel processingMessages={["Procesando solicitud...", "Preparando respuesta..."]}></LinearWithValueLabel> 
                 </> 
                 :
+                <>
                 <Alert variant="outlined" severity={message.classname}>
-                {message.message}
-                </Alert> 
+                  {message.message}
+                </Alert>
+                { ((message.classname === "error") || (message.classname === "warning")) && 
+                  <Box sx={{ px: 0, my: 2, display: 'flex', justifyContent: 'center' }}>
+                  <a href="/" target='_self' rel="noreferrer">
+                      <Button className="button_primary margin_xs card_size_small">Realiza una nueva búsqueda</Button>
+                  </a> 
+                  </Box>
+                }
+                </>
               } 
               </>
             </Grid>
