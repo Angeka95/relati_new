@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import enfoqueGeneroService from '../services/enfoque_genero.js';
-import { removeFragmentoInString, getOpcionesAutocompletar, obtenerPalabrasFromArrayObject, obtenerAnio, truncateWithEllipsis } from '../helpers/utils.js';
+import { removeFragmentoInString, getOpcionesAutocompletar, obtenerPalabrasFromArrayObject, truncateWithEllipsis } from '../helpers/utils.js';
 import { Container, Grid, Alert } from '@mui/material';
 //import ListCardSearch from '../components/listCardSearchAIResults.js';
 import ListCardSearch from '../components/listCardSearchEnfoqueGenero.js';

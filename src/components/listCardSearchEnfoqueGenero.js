@@ -3,6 +3,8 @@ import '../App.css';
 import { Stack, Pagination, PaginationItem, List, ListItem, Button, Box, Chip } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
+import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
@@ -358,8 +360,8 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
                                                         </Button>
                                                         {isButtonSorterEnabled && (
                                                             <div className='container_date_sorted'>
-                                                                <Button onClick={sortAscByDate} className='items_sorted'>fecha ascendente </Button>
-                                                                <Button onClick={sortDescByDate} className='items_sorted'>fecha descendente </Button>
+                                                                <Button onClick={sortAscByDate} className='items_sorted' endIcon={<ArrowUpwardIcon />}>fecha ascendente </Button>
+                                                                <Button onClick={sortDescByDate} className='items_sorted' endIcon={<ArrowDownwardIcon />}>fecha descendente </Button>
                                                             </div>
                                                         )}
                                                     </NoneGrid>
@@ -372,8 +374,8 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
                                                   </Button>
                                                   {isButtonSorterEnabled && (
                                                       <div className='container_date_sorted'>
-                                                          <Button onClick={sortAscByDate} className='items_sorted'>fecha ascendente </Button>
-                                                          <Button onClick={sortDescByDate} className='items_sorted'>fecha descendente </Button>
+                                                           <Button onClick={sortAscByDate} className='items_sorted' endIcon={<ArrowUpwardIcon />}>fecha ascendente </Button>
+                                                           <Button onClick={sortDescByDate} className='items_sorted' endIcon={<ArrowDownwardIcon />}>fecha descendente </Button>
                                                       </div>
                                                   )}
                                                 </NoneGrid>  
