@@ -78,7 +78,7 @@ export default function SearchResults() {
                         extractoBusqueda: "",
                         caso: (item.macrocaso.length > 0) ? item.macrocaso[0].nombre : "",
                         autocompletarBuscador: "",
-                        estado_id: /*(item.getfichas.length > 0 ) ? item.getfichas[0]["estado_id"] :*/ "", 
+                        estado_id: (item.estado_id > 0) ? item.estado_id : "",
                     };
                     newItem["hipervinculoFichaJuris"] = ((newItem.ficha_id !== null ) && ( newItem.estado_id === 14 )) ? `https://relatoria.jep.gov.co/downloadfichaext/${newItem.ficha_id}` : " ";
                     newItem["autocompletarBuscador"] = { id: newItem.id, title: `${newItem.salaOSeccion} ${newItem.nombreDecision} ${newItem.departamento} ${newItem.delito} ${newItem.procedimiento} ${newItem.compareciente} ${newItem.magistrado}`};  
