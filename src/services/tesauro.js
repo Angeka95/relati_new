@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { ordenarTerminosABCD } from '../helpers/utils.js';
 
 const getTermsByLetter = (letter) => {
 
@@ -23,7 +24,8 @@ const getTermsByLetter = (letter) => {
           return item.string; 
         }
       });
-      return { "data": termsList, "status_info": { "status": 200, "reason": "OK" } };
+      let termsListABCD = ordenarTerminosABCD(termsList);
+      return { "data": termsListABCD, "status_info": { "status": 200, "reason": "OK" } };
     }
   }).catch(error => { 
       return { "data": [], "status_info": { "status": error.response.data.status, "reason": error.response.data.reason } };

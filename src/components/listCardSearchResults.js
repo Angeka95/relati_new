@@ -1,11 +1,9 @@
 import React, { useState, useEffect, useContext } from 'react';
-import '../App.css';
-import { Grid, Stack, Pagination, PaginationItem, List, ListItem, Button, Box, Chip, Alert } from '@mui/material';
+import { Grid, Stack, Pagination, PaginationItem, List, ListItem, Button, Box, Chip, Alert, InputLabel } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
-import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
@@ -13,15 +11,12 @@ import CardSearch from '../components/cardSearchResults.js';
 import SearchBarSmall from '../components/searchBarSmallAI.js';
 import SortIcon from '@mui/icons-material/Sort';
 import { styled } from '@mui/material/styles';
-import { EditCalendar } from '@mui/icons-material';
 import Context from '../context/context';
-import ExpandLessOutlinedIcon from '@mui/icons-material/ExpandLessOutlined';
-import ExpandMoreOutlinedIcon from '@mui/icons-material/ExpandMoreOutlined';
 import FilterShort from './filterShort';
-import FilterListIcon from '@mui/icons-material/FilterList';
 import LinearWithValueLabel from '../components/linearProgress.js';
 import tesauroService from './../services/tesauro.js';
 import { obtenerPalabrasFromArrayObject, getOpcionesAutocompletar } from '../helpers/utils.js';
+import '../App.css';
 
 export default function Card({ selectedFilters, isListSmall, selectedTerm, isLargeResult, isExternalFilters }) {
 
@@ -93,14 +88,6 @@ export default function Card({ selectedFilters, isListSmall, selectedTerm, isLar
             setMessage(newMessage);
         }, 3000);
     }
-
-    // Genera el listado de opciones de documentos para el autocompletar
-    const getOpcionesDocs = (arrDatos) => {
-        const arrLinted = Array.from(
-            new Map(arrDatos.map(item => [item.asunto, item])).values()
-        );
-        return [ { "title": "* Todos los resultados" } ].concat(arrLinted.map( item => { return { "title": item.asunto } }));
-    };
 
     // Funcion que permite mostrar la lista de providencias en el autocompletar
     const handlerSetSelectedDoc = (newSelectedOption) => { 

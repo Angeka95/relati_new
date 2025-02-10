@@ -3,6 +3,7 @@ import { Container, Box } from '@mui/material';
 import '../App.css';
 import { convertObjFiltroJurisToQuery } from '../helpers/utils.js';
 import mapaJurisprudencialService from '../services/mapa_jurisprudencial.js';
+import tesauroService from '../services/tesauro.js';
 import boletinesService from '../services/boletines.js';
 
 export default function TestServices() {
@@ -21,6 +22,16 @@ export default function TestServices() {
             )
             .catch(error => console.log(error));
     }*/
+    
+    const getTestService = () => {
+            tesauroService
+                    .getTermsByLetter("a")
+            .then(response => {
+                setDatos(JSON.stringify(response.data, null, 2));
+             }
+            )
+            .catch(error => console.log(error));
+    }
     
     const sendBoletinService = () => {
         const objToSend = {
@@ -77,7 +88,7 @@ export default function TestServices() {
        
     useEffect(() => {
         if(datos.length === 0){
-            //getTestService();
+            getTestService();
             //testUtilsFunction();
         } 
     }, [datos]);

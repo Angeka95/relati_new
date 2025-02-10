@@ -1,12 +1,9 @@
-import '../App.css';
-import { Container, Grid, Button, Tooltip, Autocomplete } from '@mui/material';
 import React, { useState, useEffect } from 'react';
-import SearchBarSmall from '../components/searchBarSmall.js';
-import TextField from '@mui/material/TextField';
-import Stack from '@mui/material/Stack';
+import { Container, Grid, Button, Autocomplete, TextField, Stack } from '@mui/material';
+import tesauroService from '../services/tesauro.js';
 import SearchIcon from '@mui/icons-material/Search';
 import ListCardSearch from '../components/listCardSearchResults.js';
-import tesauroService from '../services/tesauro.js';
+import '../App.css';
 
 export default function Tesauro() {
    
@@ -73,31 +70,24 @@ export default function Tesauro() {
         <Container>
             <Grid container spacing={2} className="justify_center">
                 <Grid item xs={12} sm={12} md={12} lg={12} xl={12} >
-
                     <div className="margin_bottom_m wrap justify_center  button_alphabet_container">
-
-
                         <h1 className="width_100 text_center margin_top_l">Tesauro</h1>
                         <h5 className="width_100 text_center margin_bottom_m">Encuentre las decisiones a través de conceptos clave </h5>
                         {Object.keys(data).map((letter) => 
                             (
-
                             <Button className={`shadow  button_alphabet ${getButtonActiveClass(letter)}  `} key={letter} onClick={() => selectLetter(letter)}>
                                 {letter.toUpperCase()}
                             </Button>
                         ))}
                     </div>
-
                     <div className="container_list_tesauro ">
                         {!activeLetter && (
                             <p className="text_diabled text_center padding_x">(Seleccione una letra para mostrarle términos del Tesauro)</p> 
                         )}
-
                         {!selectedTerm && activeLetter && (
                             <div className="list_container_tesauro scroll-container text_center padding_x">
                                 <div className="wrap justify_between margin_bottom_m margin_top_s list_container_header">
                                     <h3> Términos encontrados por {activeLetter ? activeLetter.toUpperCase() : ''}</h3>
-
                                     <div>
                                         <Stack className='autocomplete_bar_search_terms'>
                                             <Autocomplete
@@ -118,9 +108,6 @@ export default function Tesauro() {
                                         </Stack>
                                     </div>
                                 </div>
-                                
-
-
                                 {!selectedTerm && activeLetter &&  (
                                     <div className="list_tesauro">
                                         {/* {data[activeLetter].map((term, index) => (
@@ -137,26 +124,23 @@ export default function Tesauro() {
                                                 title={term}
                                             >
                                                 <a className="link_nounderline text_blue"
-                                                    href="#"
+                                                    href=":javascript"
                                                     onClick={(e) => {
                                                         e.preventDefault(); // Previene la navegación
                                                         handleTermClick(term); // Actualiza el término seleccionado
                                                     }}
                                                 >   <div className="text_ellipsis text_capitalize">
                                                     {term.toLowerCase()} 
-                                                    </div> 
-  
-                                                    
+                                                    </div>               
                                                 </a>
                                             </div>
                                         ) : (
                                             <div
                                                 className="list_item_tesauro text_blue link_simple"
                                                 key={index}
-                                                
                                             >
-                                                <a  className="link_inline link_nounderline text_blue "
-                                                    href="#"
+                                                <a className="link_inline link_nounderline text_blue"
+                                                    href=":javascript"
                                                     onClick={(e) => {
                                                         e.preventDefault(); // Previene la navegación
                                                         handleTermClick(term.nombreReal); // Actualiza el término seleccionado
@@ -169,32 +153,20 @@ export default function Tesauro() {
                                                     <div title={term.nombreReal} className="margin_left_s text_ellipsis text_capitalize"> 
                                                         {term.nombreReal.toLowerCase()} 
                                                     </div> 
-
                                                 </a>
                                             </div>
                                         )
                                     )}
-
                                     </div>
                                 )}
-
-
                             </div>
-
-
-
                         )}
                     </div>
-                    
                             {selectedTerm && (
                                 <div className="">
                                     <ListCardSearch selectedTerm={selectedTerm} isLargeResult={true}/>
                                 </div>
                             )}
-
-
-
-
                 </Grid>
             </Grid>
         </Container>

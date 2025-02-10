@@ -415,6 +415,25 @@ const convertObjFiltroJurisToQuery = (objFiltroJuris) => {
         
 }
 
+/**
+ * ordenarTerminosABCD()
+ * Funcionalidad que obtiene la lista de terminos ordenados alfabeticamente
+ * Parametros de entrada:
+ * - arr: los datos generados a partir del servicio
+ * Salida:
+ * - Retorna un nuevo array de terms ordenados alfabeticamente
+ * Aplicación:
+ * tesauro.js servicio
+*/
+
+const ordenarTerminosABCD = (arr) => {
+    return arr.sort((a, b) => {
+      const valorA = typeof a === "string" ? a : a.nombreReal;
+      const valorB = typeof b === "string" ? b : b.nombreReal;
+      return valorA.localeCompare(valorB, 'es', { sensitivity: 'base' });
+    });
+  }
+
 export { filtroByDefault, 
          truncateWithEllipsis, 
          obtenerAnio, 
@@ -433,5 +452,6 @@ export { filtroByDefault,
          getDecisionesIDsToExport,
          verificaGuardaEnArray,
          getArrayDataGraph,
-         convertObjFiltroJurisToQuery
+         convertObjFiltroJurisToQuery,
+         ordenarTerminosABCD
         };
