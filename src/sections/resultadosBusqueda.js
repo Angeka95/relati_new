@@ -51,20 +51,15 @@ export default function SearchResults() {
                         salaOSeccion: (item.sala_seccion !== null) ? item.sala_seccion : "",
                         nombreDecision: (item.nombre_providencia !== null) ? item.nombre_providencia : "",
                         procedimiento: (item.procedimiento.length > 0) ? obtenerPalabrasFromArrayObject(item.procedimiento, "nombre", null, false) : "",
-                        procedimientos: (item.procedimiento.length > 0) ? obtenerPalabrasFromArrayObject(item.procedimiento, "nombre", null, false) : "",
                         expediente: (item.expediente !== null) ? item.expediente : "", 
                         departamento: (item.departamento.length > 0) ? obtenerPalabrasFromArrayObject(item.departamento, "nombre", null, false) : "",
-                        departamentoNombre: (item.departamento.length > 0) ? obtenerPalabrasFromArrayObject(item.departamento, "nombre", null, false) : "",
                         magistrado: (item.autor !== null) ? item.autor : "", 
                         municipio:  (item.municipio.length > 0) ? obtenerPalabrasFromArrayObject(item.municipio, "nombre", null, false) : "",
                         delito: (item.delito.length > 0) ? obtenerPalabrasFromArrayObject(item.delito, "nombre", null, false) : "", 
-                        delitos: (item.delito.length > 0) ? obtenerPalabrasFromArrayObject(item.delito, "nombre", null, false) : "", 
                         anioHechos: (item.anio_hechos.length > 0) ? item.anio_hechos[0].anio : "",
-                        anio: (item.anio_hechos.length > 0) ? item.anio_hechos[0].anio : "",
                         tipo: (item.tipo_documento !== null) ? item.tipo_documento : "", 
                         radicado: (item.radicado_documento !== null) ? item.radicado_documento : "",
                         compareciente: (item.tipo_compareciente.length > 0) ? obtenerPalabrasFromArrayObject(item.tipo_compareciente, "tipo", null, false) : "", 
-                        comparecientes: (item.tipo_compareciente.length > 0) ? obtenerPalabrasFromArrayObject(item.tipo_compareciente, "tipo", null, false) : "", 
                         tipoSujeto: "", 
                         accionadoVinculado: "", 
                         palabrasClaves:  (item.palabras_clave.length > 0) ? obtenerPalabrasFromArrayObject(item.palabras_clave, "palabra", null, false) : "",
@@ -85,6 +80,11 @@ export default function SearchResults() {
                         autocompletarBuscador: "",
                         estado_id: (item.estado_id > 0) ? item.estado_id : ""
                     };
+                    newItem["departamentoNombre"] = newItem.departamento;
+                    newItem["procedimientos"] = newItem.procedimiento; 
+                    newItem["anio"] = newItem.anioHechos;
+                    newItem["comparecientes"] = newItem.compareciente;
+                    newItem["delitos"] = newItem.delito;
                     newItem["hipervinculoFichaJuris"] = ((newItem.ficha_id !== null ) && ( newItem.estado_id === 14 )) ? `https://relatoria.jep.gov.co/downloadfichaext/${newItem.ficha_id}` : " ";
                     newItem["autocompletarBuscador"] = { id: newItem.id, title: `${newItem.salaOSeccion} ${newItem.nombreDecision} ${newItem.departamento} ${newItem.delito} ${newItem.procedimiento} ${newItem.compareciente} ${newItem.magistrado}`};  
                     return newItem;

@@ -69,20 +69,15 @@ export default function VerTodasLasDecisiones() {
                             salaOSeccion: (item.despacho.length > 0) ? obtenerPalabrasFromArrayObject(item.despacho, "nombre", null, false) : "",
                             nombreDecision: (item.nombre !== null) ? item.nombre : "",
                             procedimiento:(item.actuacion.length > 0) ? obtenerPalabrasFromArrayObject(item.actuacion, "actuacion", null, false) : "",
-                            procedimientos:(item.actuacion.length > 0) ? obtenerPalabrasFromArrayObject(item.actuacion, "actuacion", null, false) : "",
                             expediente:  (item.orfeo !== null) ? item.orfeo : "", 
                             departamento: (item.departamento_ext.length > 0) ? removeFragmentoInString("DEPARTAMENTO", item.departamento_ext[0].nombre_dpto) : "",
-                            departamentoNombre: (item.departamento_ext.length > 0) ? removeFragmentoInString("DEPARTAMENTO", item.departamento_ext[0].nombre_dpto) : "",
                             magistrado: (item.magistrado.length > 0) ? obtenerPalabrasFromArrayObject(item.magistrado, "nombre_magistrado", "nombre", false) : "",
                             municipio: (item.municipio_ext.length > 0) ? removeFragmentoInString("MUNICIPIO", item.municipio_ext[0].nombre_muni) : "",
                             delito: (item.delitos.length > 0) ? obtenerPalabrasFromArrayObject(item.delitos, "delito", null, false) : "", 
-                            delitos: (item.delitos.length > 0) ? obtenerPalabrasFromArrayObject(item.delitos, "delito", null, false) : "", 
-                            anio: (item.anio_hechos.length > 0) ? obtenerPalabrasFromArrayObject(item.anio_hechos, "anio", null, false) : "",
                             anioHechos: (item.anio_hechos.length > 0) ? obtenerPalabrasFromArrayObject(item.anio_hechos, "anio", null, false) : "",
                             tipo:  (item.documento !== null) ? item.documento.nombre : "",
                             radicado: (item.radicado !== null) ? item.radicado : "",
                             compareciente:  (item.tipopeti.length > 0) ? obtenerPalabrasFromArrayObject(item.tipopeti, "tipo", null, false) : "", 
-                            comparecientes:  (item.tipopeti.length > 0) ? obtenerPalabrasFromArrayObject(item.tipopeti, "tipo", null, false) : "", 
                             tipoSujeto: "", 
                             accionadoVinculado: (item.accionado.length > 0) ? obtenerPalabrasFromArrayObject(item.accionado, "accionado", null, false) : "", 
                             palabrasClaves: "", 
@@ -103,6 +98,11 @@ export default function VerTodasLasDecisiones() {
                             autocompletarBuscador: "",
                             estado_id: (item.getfichas.length > 0 ) ? item.getfichas[0]["estado_id"] : ""
                         };
+                        newItem["departamentoNombre"] = newItem.departamento;
+                        newItem["procedimientos"] = newItem.procedimiento; 
+                        newItem["anio"] = newItem.anioHechos;
+                        newItem["comparecientes"] = newItem.compareciente;
+                        newItem["delitos"] = newItem.delito;
                         newItem["hipervinculoFichaJuris"] = ((newItem.ficha_id !== null ) && ( newItem.estado_id === 14 )) ? `https://relatoria.jep.gov.co/downloadfichaext/${newItem.ficha_id}` : " ";
                         newItem["autocompletarBuscador"] = { id: newItem.id, title: `${newItem.salaOSeccion} ${newItem.nombreDecision} ${newItem.departamento} ${newItem.delito} ${newItem.procedimiento} ${newItem.compareciente} ${newItem.magistrado}`}; 
                         return newItem;

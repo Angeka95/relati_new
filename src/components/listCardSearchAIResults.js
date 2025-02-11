@@ -36,6 +36,7 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
 
     useEffect(() => {
         if(!validarfiltroJurisprudencial(filtroJurisprudencial)) { 
+            
             let datosFiltrados = datosOriginales;
             if(filtroJurisprudencial.departamentos.length > 0){
                 datosFiltrados = datosFiltrados.filter( item => { 
