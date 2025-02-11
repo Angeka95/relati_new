@@ -9,7 +9,6 @@ import LinearWithValueLabel from '../components/linearProgress.js';
 import Context from '../context/context.js';
 import { filtroByDefault, removeFragmentoInString, getOpcionesAutocompletar, obtenerPalabrasFromArrayObject, validarfiltroJurisprudencial } from '../helpers/utils.js';
 import '../App.css';
-import datos_resultados_AI_test_beta from '../data/data_busqueda_AI_test_beta';
 
 export default function SearchResults() {
 
@@ -113,7 +112,6 @@ export default function SearchResults() {
 const handleMessage = (newMessage) => {
   handleOpenModal();
   setTimeout(function(){ 
-      handleCloseModal();
       setMessage(newMessage);
   }, 3000);
   /*setTimeout(() => {

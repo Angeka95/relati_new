@@ -16,16 +16,20 @@ const getTermsByLetter = (letter) => {
     if((response.data.status !== undefined) || (response.data.status === 401) || (response.data.status === 403)) {
       return { "data": [], "status_info": { "status": response.data.status, "reason": response.data.reason } };
     } else {
-      let termsListTemp = Object.values(response.data.terms.result);
-      let termsList = termsListTemp.map(item => {
+      if(response.data.terms.hasOwnProperty("result")){
+        let termsListTemp = Object.values(response.data.terms.result);
+        let termsList = termsListTemp.map(item => {
         if((typeof item.no_term_string === 'string') && ( item.no_term_string.length > 0)){
           return { "nombreReal": item.string, "alias": item.no_term_string.toUpperCase() };
         } else {
           return item.string; 
         }
-      });
-      let termsListABCD = ordenarTerminosABCD(termsList);
-      return { "data": termsListABCD, "status_info": { "status": 200, "reason": "OK" } };
+        });
+        let termsListABCD = ordenarTerminosABCD(termsList);
+        return { "data": termsListABCD, "status_info": { "status": 200, "reason": "OK" } };
+      } else {
+        return { "data": [], "status_info": { "status": 200, "reason": "No se encontraron resultados" } };
+      }
     }
   }).catch(error => { 
       return { "data": [], "status_info": { "status": error.response.data.status, "reason": error.response.data.reason } };
