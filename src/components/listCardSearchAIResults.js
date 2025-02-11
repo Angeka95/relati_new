@@ -25,7 +25,7 @@ import { macrocasos } from '../data/datos_macrocaso.js';
 import ButtonDownloadXLS from './buttonDownloadXLS.js';
 
 export default function Card({ datosBusqueda, searchOptions, selectedFilters, isListSmall, selectedTerm, isLargeResult, isExternalFilters, customPagination = {} }) {  
-
+    
     const [datos, setDatos] = useState(datosBusqueda);
     const [datosOriginales, setDatosOriginales] = useState(datosBusqueda);
     const [selectedDoc, setSelectedDoc] = useState({ "title": "* Todos los resultados", "id": 0 });
