@@ -38,7 +38,6 @@ export default function SearchResults() {
       .getSearchQData(string)
       //.getSearchQDataTest()
       .then(response => {
-      console.log("response", response);
           if((response.status_info.status === 200) && (response.data.length > 0)) {
                 const newDatos = response.data.map((i, k) => { 
                     let item = i._source;
@@ -76,7 +75,7 @@ export default function SearchResults() {
                         hipervinculo:   (item.hipervinculo !== null ) ? `https://relatoria.jep.gov.co/${item.hipervinculo}` : "", 
                         hipervinculoFichaJuris: "",
                         estadoFichaJuris: false,
-                        extractoBusqueda: (item.sintesis > 0) ? item.sintesis : "",
+                        extractoBusqueda: (item.sintesis !== null ) ? item.sintesis : "",
                         caso: (item.macrocaso !== null ) ? item.macrocaso : "",
                         autocompletarBuscador: "",
                         estado_id: (item.estado_id > 0) ? item.estado_id : ""

@@ -31,10 +31,11 @@ export default function CardDecision({ decisiones }) {
                     </div> 
                 )}
                 {((typeof decisiones.salaOSeccion === 'string' ) && (decisiones.salaOSeccion.trim() !== '')) && (
-                    <p className="text_space_min">• Sala/Sesión:  <span className="text_bolder">{decisiones.salaOSeccion}</span></p>
+                    <p className="text_space_min">• Sala/Sección:  <span className="text_bolder">{decisiones.salaOSeccion}</span></p>
                 )}
+                {/* Pertenece a */}
                 {((typeof decisiones.tipoSujeto === 'string' ) && (decisiones.tipoSujeto.trim() !== '')) && (
-                            <p className="text_space_min">• Pertenece a:  <span className="text_bolder"> {decisiones.tipoSujeto}</span> </p>
+                            <p className="text_space_min">• Calidad de compareciente:  <span className="text_bolder"> {decisiones.tipoSujeto}</span> </p>
                 )}
                 {isButtonInfoEnabled && (
                     <Button className="link_primary text_lowercase" onClick={toggleButtonInfo}>ver más</Button>)}
@@ -46,7 +47,7 @@ export default function CardDecision({ decisiones }) {
                             <p className="text_space_min">• Lugar de los hechos: <span className="text_bolder"> {decisiones.lugarHechos}</span></p>
                         )}
                         {((typeof decisiones.magistrado === 'string' ) && (decisiones.magistrado.trim() !== '')) && (
-                            <p className="text_space_min">• Magistrado: <span className="text_bolder">{decisiones.magistrado}</span></p>
+                            <p className="text_space_min">• Magistrado/Magistrada: <span className="text_bolder">{decisiones.magistrado}</span></p>
                         )}
                         {((typeof decisiones.caso === 'string' ) && (decisiones.caso.trim() !== '')) && (
                             <p className="text_space_min">• Macrocasos: <span className="text_bolder">{decisiones.caso}</span></p>

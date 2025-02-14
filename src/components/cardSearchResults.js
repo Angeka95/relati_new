@@ -15,7 +15,7 @@ import ExpandMoreOutlinedIcon from '@mui/icons-material/ExpandMoreOutlined';
 import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
 
 export default function CardSearch({ datos }) {
-  const { busqueda, verTodasDecisiones } = useContext(Context);
+  const { busqueda } = useContext(Context);
   const [isButtonInfoEnabled, setIsButtonInfoEnabled] = useState(true);
 
   // Estado del boton info 
@@ -358,18 +358,14 @@ export default function CardSearch({ datos }) {
           </CustomGrid>
         </div>
 
-        <div className="width_100">
+        <div className="width_100 margin_m" >
             <>
-              <p className="text_center margin_top_s"
+              <p className="text_center"
                 style={{
                   height: isButtonExtractEnabled ? 'auto' : '50px',
                   overflow: 'hidden'
                 }}>
-                {((typeof datos.extractoBusqueda === 'string' ) && (datos.extractoBusqueda.trim() !== '')) && 
-                  <>
-                  {datos.extractoBusqueda}
-                  </>
-                }
+                {datos.extractoBusqueda}
               </p>
 
               {isButtonExtractEnabled && (
