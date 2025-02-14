@@ -36,8 +36,9 @@ export default function SearchResults() {
     let newMessage = {}; 
     buscadorService
       .getSearchQData(string)
-      //.getSearchQDataTest(string)
+      //.getSearchQDataTest()
       .then(response => {
+      console.log("response", response);
           if((response.status_info.status === 200) && (response.data.length > 0)) {
                 const newDatos = response.data.map((i, k) => { 
                     let item = i._source;
@@ -50,33 +51,33 @@ export default function SearchResults() {
                         sala: (item.sala_seccion !== null) ? item.sala_seccion : "",
                         salaOSeccion: (item.sala_seccion !== null) ? item.sala_seccion : "",
                         nombreDecision: (item.nombre_providencia !== null) ? item.nombre_providencia : "",
-                        procedimiento: (item.procedimiento.length > 0) ? obtenerPalabrasFromArrayObject(item.procedimiento, "nombre", null, false) : "",
+                        procedimiento: (item.procedimiento !== null ) ? item.procedimiento : "",
                         expediente: (item.expediente !== null) ? item.expediente : "", 
-                        departamento: (item.departamento.length > 0) ? obtenerPalabrasFromArrayObject(item.departamento, "nombre", null, false) : "",
+                        departamento: (item.departamento !== null ) ? item.departamento : "",
                         magistrado: (item.autor !== null) ? item.autor : "", 
-                        municipio:  (item.municipio.length > 0) ? obtenerPalabrasFromArrayObject(item.municipio, "nombre", null, false) : "",
-                        delito: (item.delito.length > 0) ? obtenerPalabrasFromArrayObject(item.delito, "nombre", null, false) : "", 
-                        anioHechos: (item.anio_hechos.length > 0) ? item.anio_hechos[0].anio : "",
+                        municipio:  (item.municipio !== null ) ? item.municipio : "",
+                        delito: (item.delito !== null ) ? item.delito : "",
+                        anioHechos: (item.anio_hechos !== null ) ? item.anio_hechos : "",
                         tipo: (item.tipo_documento !== null) ? item.tipo_documento : "", 
                         radicado: (item.radicado_documento !== null) ? item.radicado_documento : "",
-                        compareciente: (item.tipo_compareciente.length > 0) ? obtenerPalabrasFromArrayObject(item.tipo_compareciente, "tipo", null, false) : "", 
+                        compareciente: (item.tipo_compareciente !== null ) ? item.tipo_compareciente : "",
                         tipoSujeto: "", 
-                        accionadoVinculado: "", 
-                        palabrasClaves:  (item.palabras_clave.length > 0) ? obtenerPalabrasFromArrayObject(item.palabras_clave, "palabra", null, false) : "",
+                        accionadoVinculado: (item.accionadoVinculado !== null ) ? item.accionadoVinculado : "",
+                        palabrasClaves: (item.palabras_clave !== null ) ? item.palabras_clave : "",
                         hechos: (item.hechos_antecedentes !== null) ? item.hechos_antecedentes : "", 
                         problemasJuridicos: (item.problema_juridico !== null) ? item.problema_juridico : "",
                         reglas: (item.reglas_juridicas !== null) ? item.reglas_juridicas : "",
                         aplicacionCasoConcreto: (item.analisis_caso_concreto !== null) ? item.analisis_caso_concreto : "", 
-                        resuelve: (item.resuelve.length > 0) ? obtenerPalabrasFromArrayObject(item.resuelve, "nombre", null, false) : "",
+                        resuelve:  (item.resuelve !== null ) ? item.resuelve : "",
                         documentosAsociados:  (item.anexos.length > 0) ? item.anexos[0].nombre : "", 
                         documentosAsociadosLink:  (item.anexos.length > 0) ? item.anexos[0].hipervinculo : "", 
-                        enfoquesDiferenciales: (item.enfoque.length > 0) ? item.enfoque[0].tipo : "",
+                        enfoquesDiferenciales: (item.enfoque !== null ) ? item.enfoque : "",
                         notasRelatoria: "", 
                         hipervinculo:   (item.hipervinculo !== null ) ? `https://relatoria.jep.gov.co/${item.hipervinculo}` : "", 
                         hipervinculoFichaJuris: "",
                         estadoFichaJuris: false,
                         extractoBusqueda: (item.sintesis > 0) ? item.sintesis : "",
-                        caso: (item.macrocaso.length > 0) ? item.macrocaso[0].nombre : "",
+                        caso: (item.macrocaso !== null ) ? item.macrocaso : "",
                         autocompletarBuscador: "",
                         estado_id: (item.estado_id > 0) ? item.estado_id : ""
                     };
@@ -145,7 +146,7 @@ const handleMessage = (newMessage) => {
       sessionStorage.setItem('dataFromQueryLs', '');
     } else {
       if(stringQuery.length > 0 ){
-        console.log(stringQuery, localStorage.getItem('stringQueryLs'))
+        //console.log(stringQuery, localStorage.getItem('stringQueryLs'))
         if(stringQuery === localStorage.getItem('stringQueryLs')){
           setDatos(JSON.parse(sessionStorage.getItem('dataFromQueryLs')));
         } else {
@@ -185,6 +186,8 @@ const handleMessage = (newMessage) => {
         setFiltroJurisprudencial(filtroByDefault);
     } 
   }, []);
+
+  //return(<></>);
 
   return (
     <>
@@ -238,7 +241,6 @@ const handleMessage = (newMessage) => {
           </Grid>
         </Container>
       }
-    </>
-    
+    </>  
   );
 }
