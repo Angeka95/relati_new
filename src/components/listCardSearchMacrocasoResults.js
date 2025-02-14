@@ -244,13 +244,8 @@ export default function Card({ datosTramite, selectedFilters, isListSmall, selec
                         )}
     
                         {selectedTerm && (
-                            <h4 >Está buscando por <span className="text_bolder">{selectedTerm}</span> </h4>
+                            <h4 >Está buscando por <span className="text_bolder">{selectedTerm} </span> </h4>
             
-                        )}
-    
-    
-                        {busqueda && (
-                            <h4 >Está buscando por <span className="text_bolder">{busqueda}</span> </h4>
                         )}
     
                         {!selectedTerm && !isExternalFilters && selectedFilters.length === 0 && (
@@ -291,11 +286,8 @@ export default function Card({ datosTramite, selectedFilters, isListSmall, selec
                         </JustMapNoneGrid>
                     </SpaceGrid>
     
-                    {(verTodasDecisiones || busqueda) && (
-                        <div >
-    
+                        <div> 
                             <Grid container spacing={2}>
-    
     
                                 <SpaceBetweenGrid item xs={12} sm={12} md={12} lg={12} xl={12} >
                                     <Grid item xs={12} sm={12} md= {(isListSmall ? 12 : 6)} lg={(isListSmall ? 12 : 6)} xl={(isListSmall ? 12 : 6)}>
@@ -341,11 +333,9 @@ export default function Card({ datosTramite, selectedFilters, isListSmall, selec
     
                             </Grid>
                         </div>
-                    )}
+        
                 </div>
-    
-                {(verTodasDecisiones || busqueda) && (
-                    <>
+                    <> 
                         <WrapGrid item xs={12} sm={12} md={12} lg={12} xl={12} className="flex " >
                             <Width100Grid>
                                 <p className="margin_results_page">
@@ -432,10 +422,6 @@ export default function Card({ datosTramite, selectedFilters, isListSmall, selec
     
                         </SpaceGrid>
                     </>
-                )
-    
-                }
-    
             </Stack>
     
         );

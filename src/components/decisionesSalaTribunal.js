@@ -137,20 +137,17 @@ export default function DecisionesSalaTribunal({caso}) {
     useEffect(() => {
         let datosFiltrados = datos;
         if(selectedtipoDecision.length > 0){
-            console.log("entra a selected decision")
             datosFiltrados = datosFiltrados.filter( item => { 
                 return selectedtipoDecision.includes(item.tipoDecision);
             }); 
             setDatos(datosFiltrados);
         } 
         if(selectedSubcasos.length > 0){
-            console.log("entra a subcaso")
             datosFiltrados = datosFiltrados.filter( item => { 
                 return selectedSubcasos.includes(item.subcaso);
             }); 
             setDatos(datosFiltrados);
         } 
-        console.log("Datos filtrados:", datosFiltrados);
     }, [ selectedtipoDecision, selectedSubcasos]);
      
     return (
