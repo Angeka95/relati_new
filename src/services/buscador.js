@@ -18,21 +18,21 @@ const getAllResults = (page, per_page) => {
     if((response.data.status !== undefined) || (response.data.status === 401) || (response.data.status === 403)) {
       return { "data": [], "status_info": { "status": response.data.status, "reason": response.data.reason }};
     } else {
-      let data = [];
+      let data = {};
       let status_info = {};
       if(response.data.data.hasOwnProperty('data')) {
         data = response.data.data;
         status_info = { "status": 200, "reason": "La consulta se ha realizado satisfactoriamente." };
-        if(data.length === 0){
+        if(data.data.length === 0){
           status_info = { "status": 200, "reason": "No se encontraron resultados." };
         } 
       } else {
         status_info = { "status": 204, "reason": "La consulta no esta disponible por el momento.(Elastic Search)." } 
       }
-      return { "data": data , "status_info": status_info };
+      return { "data": data, "status_info": status_info };
     }
   }).catch(error => {
-    return { "data": [], "status_info": { "status": 500, "reason": "Lo sentimos, algo salió mal. Parece que hubo un problema en nuestro servidor. Estamos trabajando para solucionarlo. Por favor, inténtalo de nuevo más tarde." } };
+    return { "data": {}, "status_info": { "status": 500, "reason": "Lo sentimos, algo salió mal. Parece que hubo un problema en nuestro servidor. Estamos trabajando para solucionarlo. Por favor, inténtalo de nuevo más tarde." } };
   });
   
 }

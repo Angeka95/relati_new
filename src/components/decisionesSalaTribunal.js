@@ -36,7 +36,7 @@ export default function DecisionesSalaTribunal({caso}) {
               municipio: (item.municipio_ext.length > 0 )? obtenerPalabrasFromArrayObject(item.municipio_ext, "nombre_muni", null, false) : "", 
               delito: (item.delitos.length > 0 )?  obtenerPalabrasFromArrayObject(item.delitos, "delito") : "", 
               anioHechos: (item.anio_hechos.length > 0 )? obtenerPalabrasFromArrayObject(item.anio_hechos, "anio") : "", 
-              tipo: (item.detalle_caso !== null ) ? item.detalle_caso : "",
+              tipo: (item.detalle_caso !== null ) ?  `${item.detalle_caso}` : "",
               radicado: (item.radicado.length !== null ) ? item.radicado : "",
               compareciente: (item.getfichas.length > 0 )? obtenerPalabrasFromArrayObject(item.getfichas, "compareciente", null, false) : "", 
               tipoSujeto: (item.tipopeti.length > 0 )? obtenerPalabrasFromArrayObject(item.tipopeti, "tipo", null, false) : "",
@@ -54,7 +54,7 @@ export default function DecisionesSalaTribunal({caso}) {
               hipervinculoFichaJuris: ((item.getfichas.length > 0 ) && (item.getfichas[0].estado_id === 14)) ? `https://relatoria.jep.gov.co/downloadfichaext/${item.getfichas[0].id}` : "",
               estadoFichaJuris: ((item.getfichas.length > 0 ) && (item.getfichas[0].estado_id !== null))  ?  item.getfichas[0].estado_id : "",
               extractoBusqueda: "",
-              tipoDecision: (item.detalle_caso !== null ) ? item.detalle_caso.trim() : "",
+              tipoDecision: (item.detalle_caso !== null ) ? `${item.detalle_caso}` : "",
               caso: (item.caso !== null ) ? item.caso : "",
               subcaso: (item.casopro.length > 0 ) ? obtenerPalabrasFromArrayObject(item.casopro, "caso", null, false) : "",
           }
@@ -137,17 +137,20 @@ export default function DecisionesSalaTribunal({caso}) {
     useEffect(() => {
         let datosFiltrados = datos;
         if(selectedtipoDecision.length > 0){
+            console.log("entra a selected decision")
             datosFiltrados = datosFiltrados.filter( item => { 
                 return selectedtipoDecision.includes(item.tipoDecision);
             }); 
             setDatos(datosFiltrados);
         } 
         if(selectedSubcasos.length > 0){
+            console.log("entra a subcaso")
             datosFiltrados = datosFiltrados.filter( item => { 
                 return selectedSubcasos.includes(item.subcaso);
             }); 
             setDatos(datosFiltrados);
         } 
+        console.log("Datos filtrados:", datosFiltrados);
     }, [ selectedtipoDecision, selectedSubcasos]);
      
     return (
@@ -210,7 +213,7 @@ export default function DecisionesSalaTribunal({caso}) {
     
                                 </FormControl>
                                 {/* Por el momento se omite subcaso */}
-                                {/*<FormControl className="input_caso">
+                                <FormControl className="input_caso">
                                 <InputLabel id="multi-select-label">Subcaso</InputLabel>
                                 <Select
                                     labelId="multi-select-label"
@@ -231,7 +234,7 @@ export default function DecisionesSalaTribunal({caso}) {
                                     </MenuItem>
                                     ))}
                                 </Select>
-                                </FormControl>*/}
+                                </FormControl>
                                 {(selectedtipoDecision.length > 0 || selectedSubcasos.length > 0) && (
                                 <div className='width_100'>
                                     <ListCardSearch datosTramite={datos} isExternalFilters={false} selectedTerm={`"${(selectedtipoDecision.concat(selectedSubcasos)).join(", ")}"`} />
@@ -280,7 +283,7 @@ export default function DecisionesSalaTribunal({caso}) {
                                 </Select>
                                 </FormControl>
                                 {/* Por el momento se omite subcaso */}
-                                {/*<FormControl className="input_caso">
+                                <FormControl className="input_caso">
                                 <InputLabel id="multi-select-label">Subcaso</InputLabel>
                                 <Select
                                     labelId="multi-select-label"
@@ -301,7 +304,7 @@ export default function DecisionesSalaTribunal({caso}) {
                                     </MenuItem>
                                     ))}
                                 </Select>
-                                </FormControl>*/}
+                                </FormControl>
                                 {(selectedtipoDecision.length > 0 || selectedSubcasos.length > 0) && (
                                 <div className='width_100'>
                                     <ListCardSearch datosTramite={datos} isExternalFilters={false} selectedTerm={`"${(selectedtipoDecision.concat(selectedSubcasos)).join(", ")}"`} />

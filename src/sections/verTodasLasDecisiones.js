@@ -3,7 +3,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import SearchBar from '../components/searchBar.js';
 import Filter from '../components/filter.js';
 import ListCardSearch from '../components/listCardSearchAIResults.js';
-import { Container, Grid, Alert } from '@mui/material';
+import { Container, Grid, Alert, Box, Button } from '@mui/material';
 import buscadorService from '../services/buscador.js';
 import LinearWithValueLabel from '../components/linearProgress.js';  
 import Context from '../context/context.js';
@@ -122,6 +122,7 @@ export default function VerTodasLasDecisiones() {
           }
         )
         .catch(error => { 
+            console.log("falla de la promesa");
             newMessage["message"] = `${error}`;
             newMessage["classname"] = 'error';
             handleMessage(newMessage);
@@ -150,9 +151,18 @@ export default function VerTodasLasDecisiones() {
                 <LinearWithValueLabel processingMessages={["Procesando solicitud...", "Preparando respuesta..."]}></LinearWithValueLabel> 
                 </> 
                 :
+                <>
                 <Alert variant="outlined" severity={message.classname}>
-                {message.message}
-                </Alert> 
+                  {message.message}
+                </Alert>
+                { ((message.classname === "error") || (message.classname === "warning")) && 
+                  <Box sx={{ px: 0, my: 2, display: 'flex', justifyContent: 'center' }}>
+                  <a href="/ver-todas-las-decisiones" target='_self' rel="noreferrer">
+                      <Button className="button_primary margin_xs card_size_small">Intenta nuevamente</Button>
+                  </a> 
+                  </Box>
+                }
+                </>
               } 
               </>
             </Grid>

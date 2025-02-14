@@ -359,23 +359,17 @@ export default function CardSearch({ datos }) {
         </div>
 
         <div className="width_100">
-          {!verTodasDecisiones && (
             <>
               <p className="text_center margin_top_s"
                 style={{
                   height: isButtonExtractEnabled ? 'auto' : '50px',
                   overflow: 'hidden'
                 }}>
-                {datos.extractoBusqueda.split('secuestro').map((extracto, index) => (
-                  <React.Fragment key={index}>
-                    {extracto}
-                    {index != datos.extractoBusqueda.split('secuestro').length - 1 ? (
-                      <span className="text_bolder">{busqueda}</span>
-                    ) : (
-                      <></>
-                    )}
-                  </React.Fragment>
-                ))}
+                {((typeof datos.extractoBusqueda === 'string' ) && (datos.extractoBusqueda.trim() !== '')) && 
+                  <>
+                  {datos.extractoBusqueda}
+                  </>
+                }
               </p>
 
               {isButtonExtractEnabled && (
@@ -389,8 +383,6 @@ export default function CardSearch({ datos }) {
                 </Button>
               )}
             </>
-          )
-          }
         </div>
 
         
