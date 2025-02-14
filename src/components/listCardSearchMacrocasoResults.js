@@ -26,12 +26,12 @@ export default function Card({ datosTramite, selectedFilters, isListSmall, selec
     const [datos, setDatos] = useState([]);
     const [datosOriginales, setDatosOriginales] = useState([]);
     const [message, setMessage] = useState("");
-    const [selectedDoc, setSelectedDoc] = useState({ "title": "* Todos los resultados", "id": 0 });
+    const [selectedDoc, setSelectedDoc] = useState([]);
     const [searchDocsOptions, setSearchDocsOptions] = useState([]);
 
      // Funcion que permite mostrar la lista de providencias en el autocompletar
      const handlerSetSelectedDoc = (newSelectedOption) => { 
-        if(newSelectedOption.title !== "* Todos los resultados"){
+        if(newSelectedOption.title !== "*"){
             const newArrDatos = datos.filter(item => item.id === newSelectedOption.id);
             setSelectedDoc(newSelectedOption);
             setDatos(newArrDatos);
@@ -309,11 +309,11 @@ export default function Card({ datosTramite, selectedFilters, isListSmall, selec
                                                         <Button className="button_function" startIcon={<SortIcon />} onClick={toggleButton}>Ordenar
                                                         </Button>
                                                         {isButtonSorterEnabled && (
-                                                            <div className='container_date_sorted'>
-                                                                 <Button onClick={sortAscByDate} className='items_sorted' endIcon={<ArrowUpwardIcon />}>fecha ascendente </Button>
-                                                                 <Button onClick={sortDescByDate} className='items_sorted' endIcon={<ArrowDownwardIcon />}>fecha descendente </Button>
-                                                            </div>
-                                                        )}
+                                                              <div className='container_date_sorted'>
+                                                                   <Button onClick={sortAscByDate} className='items_sorted' endIcon={<ArrowUpwardIcon />}>fecha ascendente </Button>
+                                                                   <Button onClick={sortDescByDate} className='items_sorted' endIcon={<ArrowDownwardIcon />}>fecha descendente </Button>
+                                                              </div>
+                                                          )}
                                                     </NoneGrid>
                                                 </div>
                                             )}

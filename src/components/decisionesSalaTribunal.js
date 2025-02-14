@@ -213,7 +213,7 @@ export default function DecisionesSalaTribunal({caso}) {
     
                                 </FormControl>
                                 {/* Por el momento se omite subcaso */}
-                                <FormControl className="input_caso">
+                                {/*<FormControl className="input_caso">
                                 <InputLabel id="multi-select-label">Subcaso</InputLabel>
                                 <Select
                                     labelId="multi-select-label"
@@ -234,7 +234,7 @@ export default function DecisionesSalaTribunal({caso}) {
                                     </MenuItem>
                                     ))}
                                 </Select>
-                                </FormControl>
+                                </FormControl>*/}
                                 {(selectedtipoDecision.length > 0 || selectedSubcasos.length > 0) && (
                                 <div className='width_100'>
                                     <ListCardSearch datosTramite={datos} isExternalFilters={false} selectedTerm={`"${(selectedtipoDecision.concat(selectedSubcasos)).join(", ")}"`} />
@@ -283,7 +283,7 @@ export default function DecisionesSalaTribunal({caso}) {
                                 </Select>
                                 </FormControl>
                                 {/* Por el momento se omite subcaso */}
-                                <FormControl className="input_caso">
+                                {/*<FormControl className="input_caso">
                                 <InputLabel id="multi-select-label">Subcaso</InputLabel>
                                 <Select
                                     labelId="multi-select-label"
@@ -304,7 +304,7 @@ export default function DecisionesSalaTribunal({caso}) {
                                     </MenuItem>
                                     ))}
                                 </Select>
-                                </FormControl>
+                                </FormControl>*/}
                                 {(selectedtipoDecision.length > 0 || selectedSubcasos.length > 0) && (
                                 <div className='width_100'>
                                     <ListCardSearch datosTramite={datos} isExternalFilters={false} selectedTerm={`"${(selectedtipoDecision.concat(selectedSubcasos)).join(", ")}"`} />
