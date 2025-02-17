@@ -36,6 +36,7 @@ export default function Card({ selectedFilters, isListSmall, selectedTerm, isLar
                         let item = i._source;
                         let newItem = { 
                             id: k + 1,
+                            score: i._score,
                             fecha:  (item.fecha_documento !== null ) ? item.fecha_documento : "",
                             ficha_id: item.ficha_id,
                             asunto: "",
@@ -124,12 +125,13 @@ export default function Card({ selectedFilters, isListSmall, selectedTerm, isLar
 
     const [currentData, setCurrentData] = useState([]);
 
-    // Función para ordenar en orden ascendente por fecha
-    const sortAscByDate = () => {
+     // Función para ordenar en orden ascendente por fecha
+     const sortAscByDate = () => {
         const sortedDatos = [...datos].sort((a, b) => new Date(a.fecha) - new Date(b.fecha));
         setDatos(sortedDatos);
         getCurrentData();
         setIsButtonSorterEnabled(false);
+        //setDatosToExport(getDecisionesIDsToExport(sortedDatos, "providencia_id"));
     };
 
     // Función para ordenar en orden descendente por fecha
@@ -138,6 +140,25 @@ export default function Card({ selectedFilters, isListSmall, selectedTerm, isLar
         setDatos(sortedDatos);
         getCurrentData();
         setIsButtonSorterEnabled(false);
+        //setDatosToExport(getDecisionesIDsToExport(sortedDatos, "providencia_id"));
+    };
+    
+    // Función para ordenar en orden ascendente por score
+    const sortAscByScore = () => {
+        const sortedDatos = [...datos].sort((a, b) => new Date(a.score) - new Date(b.score));
+        setDatos(sortedDatos);
+        getCurrentData();
+        setIsButtonSorterEnabled(false);
+        //setDatosToExport(getDecisionesIDsToExport(sortedDatos, "providencia_id"));
+    };
+
+    // Función para ordenar en orden descendente por score
+    const sortDescByScore = () => {
+        const sortedDatos = [...datos].sort((a, b) => new Date(b.score) - new Date(a.score));
+        setDatos(sortedDatos);
+        getCurrentData();
+        setIsButtonSorterEnabled(false);
+        //setDatosToExport(getDecisionesIDsToExport(sortedDatos, "providencia_id"));
     };
 
 
@@ -372,8 +393,10 @@ export default function Card({ selectedFilters, isListSmall, selectedTerm, isLar
                                                         </Button>
                                                         {isButtonSorterEnabled && (
                                                             <div className='container_date_sorted'>
-                                                                 <Button onClick={sortAscByDate} className='items_sorted' endIcon={<ArrowUpwardIcon />}>fecha ascendente </Button>
-                                                                 <Button onClick={sortDescByDate} className='items_sorted' endIcon={<ArrowDownwardIcon />}>fecha descendente </Button>
+                                                              <Button onClick={sortDescByDate} className='items_sorted' endIcon={<ArrowUpwardIcon />} >Más recientes </Button>
+                                                              <Button onClick={sortAscByDate} className='items_sorted' endIcon={<ArrowDownwardIcon />} >Más antiguos </Button>
+                                                              <Button onClick={sortDescByScore} className='items_sorted' endIcon={<ArrowUpwardIcon />} >Mayor puntuación </Button>
+                                                              <Button onClick={sortAscByScore} className='items_sorted' endIcon={<ArrowDownwardIcon />} >Menor puntuación </Button>
                                                             </div>
                                                         )}
                                                     </NoneGrid>
@@ -384,12 +407,14 @@ export default function Card({ selectedFilters, isListSmall, selectedTerm, isLar
                                                 <NoneGrid>
                                                   <Button className="button_function" startIcon={<SortIcon />} onClick={toggleButton}>Ordenar
                                                   </Button>
-                                                  {isButtonSorterEnabled && (
-                                                      <div className='container_date_sorted'>
-                                                           <Button onClick={sortAscByDate} className='items_sorted' endIcon={<ArrowUpwardIcon />}>fecha ascendente </Button>
-                                                           <Button onClick={sortDescByDate} className='items_sorted' endIcon={<ArrowDownwardIcon />}>fecha descendente </Button>
-                                                      </div>
-                                                  )}
+                                                        {isButtonSorterEnabled && (
+                                                            <div className='container_date_sorted'>
+                                                              <Button onClick={sortDescByDate} className='items_sorted' endIcon={<ArrowUpwardIcon />} >Más recientes </Button>
+                                                              <Button onClick={sortAscByDate} className='items_sorted' endIcon={<ArrowDownwardIcon />} >Más antiguos </Button>
+                                                              <Button onClick={sortDescByScore} className='items_sorted' endIcon={<ArrowUpwardIcon />} >Mayor puntuación </Button>
+                                                              <Button onClick={sortAscByScore} className='items_sorted' endIcon={<ArrowDownwardIcon />} >Menor puntuación </Button>
+                                                            </div>
+                                                        )}
                                                 </NoneGrid>  
                                             )}
                                     </Grid>
