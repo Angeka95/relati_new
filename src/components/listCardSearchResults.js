@@ -37,6 +37,7 @@ export default function Card({ selectedFilters, isListSmall, selectedTerm, isLar
                         let newItem = { 
                             id: k + 1,
                             fecha:  (item.fecha_documento !== null ) ? item.fecha_documento : "",
+                            ficha_id: item.ficha_id,
                             asunto: "",
                             salaOSeccion: item.sala_seccion,
                             nombreDecision: item.nombre_providencia,
@@ -63,8 +64,10 @@ export default function Card({ selectedFilters, isListSmall, selectedTerm, isLar
                             hipervinculo:  `https://relatoria.jep.gov.co/${item.hipervinculo}`,
                             hipervinculoFichaJuris: "",
                             estadoFichaJuris: "",
-                            extractoBusqueda: ""
+                            estado_id: (item.estado_id > 0) ? item.estado_id : "",
+                            extractoBusqueda: (item.sintesis !== null ) ? item.sintesis : "",
                         };
+                        newItem["hipervinculoFichaJuris"] = ((newItem.ficha_id !== null ) && ( newItem.estado_id === 14 )) ? `https://relatoria.jep.gov.co/downloadfichaext/${newItem.ficha_id}` : " ";
                         newItem["autocompletarBuscador"] = { id: newItem.id, title: `${newItem.salaOSeccion} ${newItem.delito} ${newItem.procedimiento} ${newItem.compareciente} ${newItem.tipoSujeto} ${newItem.departamento} ${newItem.nombreDecision} ${newItem.magistrado}  ${newItem.palabrasClaves}`}; 
                         return newItem;
                     });
