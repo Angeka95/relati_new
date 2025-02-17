@@ -55,7 +55,7 @@ const getSearchQData = (string) => {
     } else {
       let data = [];
       let status_info = {};
-      if(response.data.hasOwnProperty('hits')) {
+      if(response.data.hasOwnProperty('hits')) { 
         data = response.data.hits.hits;
         status_info = { "status": 200, "reason": "La consulta se ha realizado satisfactoriamente." };
         if(data.length === 0){

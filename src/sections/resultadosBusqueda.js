@@ -33,6 +33,7 @@ export default function SearchResults() {
   const stringParam = decodeURIComponent(searchParams.get('string'));
   
   const getResultadosBuscadorAI = (string) => {
+    console.log("fdasfsadfsafd");
     let newMessage = {}; 
     buscadorService
       .getSearchQData(string)
@@ -68,7 +69,7 @@ export default function SearchResults() {
                         reglas: (item.reglas_juridicas !== null) ? item.reglas_juridicas : "",
                         aplicacionCasoConcreto: (item.analisis_caso_concreto !== null) ? item.analisis_caso_concreto : "", 
                         resuelve:  (item.resuelve !== null ) ? item.resuelve : "",
-                        documentosAsociados:  (item.anexos.length > 0) ? item.anexos[0].nombre : "", 
+                        documentosAsociados: (item.anexos.length > 0) ? item.anexos[0].nombre : "", 
                         documentosAsociadosLink:  (item.anexos.length > 0) ? item.anexos[0].hipervinculo : "", 
                         enfoquesDiferenciales: (item.enfoque !== null ) ? item.enfoque : "",
                         notasRelatoria: "", 
@@ -91,17 +92,17 @@ export default function SearchResults() {
               });
               setDatos(newDatos);
               setSearchOptions(getOpcionesAutocompletar(newDatos));
-              sessionStorage.setItem('dataFromQueryLs', JSON.stringify(newDatos));
+              localStorage.setItem('dataFromQueryLs', JSON.stringify(newDatos));
               newMessage["message"] = `${response.status_info.reason}`;
               newMessage["classname"] = 'success';
           } else if(response.status_info.status === 500) {
               localStorage.setItem('stringQueryLs', '');
-              sessionStorage.setItem('dataFromQueryLs', '');
+              localStorage.setItem('dataFromQueryLs', '');
               newMessage["message"] = `${response.status_info.reason}`;
               newMessage["classname"] = 'error';
           } else {
             localStorage.setItem('stringQueryLs', '');
-            sessionStorage.setItem('dataFromQueryLs', '');
+            localStorage.setItem('dataFromQueryLs', '');
             newMessage["message"] = `${response.status_info.reason}`;
             newMessage["classname"] = 'warning';
           }
@@ -135,19 +136,19 @@ const handleMessage = (newMessage) => {
   },[]);
   
   /* Este useEffect almacena la cadena de consulta en el localStorage
-     Los datos obtenidos a partir de la cadena de consulta se almacenan en sessionStorage
+     Los datos obtenidos a partir de la cadena de consulta se almacenan en localStorage
      Si el stringQuery recien ingresado es el mismo que esta en localStorage.stringQueryLs toma los datos almacenados del sesionStorage 
      En caso contrario, una consulta diferente procede a obtener nuevos registros.
   */
   useEffect(()=>{
     if (!localStorage.hasOwnProperty('stringQueryLs')) {
       localStorage.setItem('stringQueryLs', '');
-      sessionStorage.setItem('dataFromQueryLs', '');
+      localStorage.setItem('dataFromQueryLs', '');
     } else {
       if(stringQuery.length > 0 ){
         //console.log(stringQuery, localStorage.getItem('stringQueryLs'))
         if(stringQuery === localStorage.getItem('stringQueryLs')){
-          setDatos(JSON.parse(sessionStorage.getItem('dataFromQueryLs')));
+          setDatos(JSON.parse(localStorage.getItem('dataFromQueryLs')));
         } else {
           getResultadosBuscadorAI(stringQuery);
           localStorage.setItem('stringQueryLs', stringQuery);
@@ -169,7 +170,7 @@ const handleMessage = (newMessage) => {
       handleMessage(newMessage);
       setDatos([]);
       localStorage.setItem('stringQueryLs', '');
-      sessionStorage.setItem('dataFromQueryLs', '');
+      localStorage.setItem('dataFromQueryLs', '');
       setTimeout(() => {
         navigate('/');
       }, 3000);
