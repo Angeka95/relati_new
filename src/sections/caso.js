@@ -249,7 +249,7 @@ export default function Caso() {
           </div>
                    
         </Container>
-        
+        {console.log("boletines macrocaso", boletinesMacrocaso)}
         <Container maxWidth="lg" disableGutters className="margin_top_l ">
           <div className="align_center carousel_main_container margin_top_l " >
               {( boletinesMacrocaso.length === 0) ?
