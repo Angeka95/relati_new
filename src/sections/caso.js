@@ -268,24 +268,22 @@ export default function Caso() {
               }
           </div>
         </Container>
-  
+        
         <Container>
-  
           <div className="podcast_space margin_bottom_xl ">
-            <h2 className="text_bolder width_100 text_center margin_bottom_m ">Podcast relacionados al Caso</h2>
-            <div className="justify_center"> 
-            {((caso.hasOwnProperty("multimedia")) && (caso.multimedia.length > 0) && (caso.multimedia[0] !== "")) ?
-              <iframe className="podcast_container shadow_smooth "
-              src={`https://widget.spreaker.com/player?episode_id=${caso.spreakerID}&theme=dark&playlist=show&playlist-continuous=true&chapters-image=true`} width='100%' height='400px' frameBorder='0' title="Podcast relacionados al Caso">
-              </iframe> 
-          :
-              <iframe className="podcast_container shadow_smooth "
-              src='https://widget.spreaker.com/player?show_id=5701029&theme=dark&playlist=show&playlist-continuous=true&chapters-image=true' width='100%' height='400px' frameBorder='0' title="Podcast relacionados al Caso">
-              </iframe>
-          }
-            </div> 
-          </div>
-  
+          { /*(caso["multimedia"] = "https://open.spotify.com/embed/show/5hEeZojgIOkXfOkGxDDsiS?utm_source=generator") && (<></>) */}
+          { (caso["multimedia"] = "") && (<></>)}
+          {((caso.hasOwnProperty("multimedia")) && (caso.multimedia !== "")) && (
+            <>
+              <h2 className="text_bolder width_100 text_center margin_bottom_m ">Podcast relacionado al Caso</h2>
+              <div className="justify_center"> 
+                <iframe className="podcast_container shadow_smooth"
+                src={caso.multimedia} width='100%' height='100px' frameBorder="0" title="Podcast relacionado al Caso">
+                </iframe>
+              </div> 
+            </>
+          )}
+          </div> 
         </Container>
       </div>
     );
