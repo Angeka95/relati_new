@@ -86,9 +86,10 @@ export default function Home() {
             .getHomeData()
             .then(response => {
                     if((response.status_info.status === 200) && (response.data.length > 0)) {
-                        let arrBoletines = response.data[0].boletines.map(item => { return {
+                        let arrBoletines = response.data[0].boletines.map(item => { 
+                        let boletin =  {
                             id : item.id,
-                            titulo : item.titulo,
+                            titulo : item.titulo.trim(),
                             idioma : item.idioma,
                             nombre : item.providencias.nombre,
                             nombreWithExt : `${item.providencias.nombre}.pdf`,
@@ -100,7 +101,9 @@ export default function Home() {
                             versionIngles: `https://relatoria.jep.gov.co/documentos/providencias/17/23/en/boletin_eng_diciembre_2022.pdf`,
                             esEspecial: true, 
                             imagenPortada: (item.imagen !== null) ? `https://relatoria.jep.gov.co/${item.imagen}` : ``
-                            }
+                        };
+                        boletin["anioMes"] = boletin["titulo"].split(" ")[2].concat("-01");       
+                        return boletin;
                         });
                         const dataDecisiones = setArrayDatosDecisiones(response.data[0].providencias);
                         //console.log("decisiones", dataDecisiones);

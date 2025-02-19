@@ -446,11 +446,11 @@ const ordenarTerminosABCD = (arr) => {
 */
 
 const ordenarBoletinesActuales = (arr) => {
-    
+
     let boletinesOrdenados = [...arr].sort((a, b) => {
-        const valorA = typeof a === "string" ? a : a.anioMes;
-        const valorB = typeof b === "string" ? b : b.anioMes;
-        return valorB.localeCompare(valorA);
+        const valorA = typeof a === "string" ? a : new Date(a.anioMes);
+        const valorB = typeof b === "string" ? b : new Date(b.anioMes);
+        return valorB - valorA;
     });
         
     let boletinesAnio = [...boletinesOrdenados].filter( boletin => boletin.fecha ===  String(new Date().getFullYear()) )
@@ -458,7 +458,7 @@ const ordenarBoletinesActuales = (arr) => {
     if(boletinesAnio.length > 0 ){
         boletinesOrdenados = [...boletinesAnio];
     }
-    
+
     return boletinesOrdenados;
   }
 

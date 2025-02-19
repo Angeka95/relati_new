@@ -104,7 +104,7 @@ export default function Caso() {
                 const arrBoletines = response.data.map(item => { 
                   let boletin = {
                     id : item.id,
-                    titulo : item.titulo,
+                    titulo : item.titulo.trim(),
                     idioma : item.idioma,
                     nombre : item.providencias.nombre,
                     nombreWithExt : `${item.providencias.nombre}.pdf`,
@@ -117,7 +117,7 @@ export default function Caso() {
                     esEspecial: true, 
                     imagenPortada: (item.imagen !== null) ? `https://relatoria.jep.gov.co/${item.imagen}` : ``
                     };
-                    boletin["anioMes"] = (boletin["titulo"].trim()).slice(-7);   
+                    boletin["anioMes"] = boletin["titulo"].split(" ")[2].concat("-01");     
                   return boletin;
                 });
                 setBoletinesMacrocaso(arrBoletines);

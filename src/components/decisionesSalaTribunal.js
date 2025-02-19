@@ -50,13 +50,13 @@ export default function DecisionesSalaTribunal({caso}) {
               documentosAsociados:  (item.providencia_votos.length > 0 )? obtenerPalabrasFromArrayObject(item.providencia_votos, "nombre", null, false): "", 
               enfoquesDiferenciales: (item.getfichas.length > 0 )? obtenerPalabrasFromArrayObject(item.getfichas[0].enfoques_diferenciales, "nombre_enfoque", null, false): "", 
               notasRelatoria: ((item.getfichas.length > 0 ) && (item.getfichas[0].hasOwnProperty("notas"))) ? item.getfichas[0].notas : "", 
-              hipervinculo:  `https://relatoria.jep.gov.co${item.hipervinculo}`,
+              hipervinculo:  (item.hipervinculo !== "" ) ? `https://relatoria.jep.gov.co/${item.hipervinculo}` : "", 
               hipervinculoFichaJuris: ((item.getfichas.length > 0 ) && (item.getfichas[0].estado_id === 14)) ? `https://relatoria.jep.gov.co/downloadfichaext/${item.getfichas[0].id}` : "",
               estadoFichaJuris: ((item.getfichas.length > 0 ) && (item.getfichas[0].estado_id !== null))  ?  item.getfichas[0].estado_id : "",
-              extractoBusqueda: "",
               tipoDecision: (item.detalle_caso !== null ) ? `${item.detalle_caso}` : "",
               caso: (item.caso !== null ) ? item.caso : "",
               subcaso: (item.casopro.length > 0 ) ? obtenerPalabrasFromArrayObject(item.casopro, "caso", null, false) : "",
+              extractoBusqueda: ((item.getfichas.length > 0 ) && (item.getfichas[0].sintesis_descripcion !== null))  ?  item.getfichas[0].sintesis_descripcion : "",
           }
           newItem["autocompletarBuscador"] = { id: newItem.id, title: `${newItem.salaOSeccion} ${newItem.delito} ${newItem.procedimiento} ${newItem.compareciente} ${newItem.tipoSujeto} ${newItem.departamento} ${newItem.nombreDecision} ${newItem.magistrado}  ${newItem.palabrasClaves}`}; 
           return newItem;
