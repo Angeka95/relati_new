@@ -3,10 +3,12 @@ import ArrowBackIosOutlinedIcon from '@mui/icons-material/ArrowBackIosOutlined';
 import IconButton from '@mui/material/IconButton';
 import ArrowForwardIosOutlinedIcon from '@mui/icons-material/ArrowForwardIosOutlined';
 import imagenPortadaPlaceHolder from '../assets/images/boletin_placeholder.png';
+import { ordenarBoletinesActuales } from '../helpers/utils.js';
 
 export default function Carrusel({ boletines }) {
-
-  const boletinesActuales = boletines.map(x => x).filter(boletin => new Date(boletin.fecha + 'T00:00:00Z').getUTCFullYear() === 2024);
+    
+  const boletinesActuales = ordenarBoletinesActuales(boletines);
+     
   // Agrupa en pares el carrusel
   const pares = [];
   // for (let i = 0; i < boletines.length; i += 2) {
@@ -14,12 +16,8 @@ export default function Carrusel({ boletines }) {
   // }
   for (let i = 0; i < boletinesActuales.length; i += 2) {
     pares.push(boletinesActuales.slice(i, i + 2));
-  }
-
-
-
-
-
+  } 
+ 
   return (
     <div>
       <Carousel

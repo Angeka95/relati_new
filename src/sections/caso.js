@@ -101,7 +101,8 @@ export default function Caso() {
         .getBoletinesMacrocaso(macrocaso)
         .then(response => {
             if((response.status_info.status === 200) && (response.data.length > 0)) {
-                let arrBoletines = response.data.map(item => { return {
+                const arrBoletines = response.data.map(item => { 
+                  let boletin = {
                     id : item.id,
                     titulo : item.titulo,
                     idioma : item.idioma,
@@ -115,7 +116,9 @@ export default function Caso() {
                     versionIngles: `https://relatoria.jep.gov.co/documentos/providencias/17/23/en/boletin_eng_diciembre_2022.pdf`,
                     esEspecial: true, 
                     imagenPortada: (item.imagen !== null) ? `https://relatoria.jep.gov.co/${item.imagen}` : ``
-                    }
+                    };
+                    boletin["anioMes"] = (boletin["titulo"].trim()).slice(-7);   
+                  return boletin;
                 });
                 setBoletinesMacrocaso(arrBoletines);
                 setMessage(`Success: ${response.status_info.status}. ${response.status_info.reason}`);
@@ -249,7 +252,7 @@ export default function Caso() {
           </div>
                    
         </Container>
-        {console.log("boletines macrocaso", boletinesMacrocaso)}
+
         <Container maxWidth="lg" disableGutters className="margin_top_l ">
           <div className="align_center carousel_main_container margin_top_l " >
               {( boletinesMacrocaso.length === 0) ?

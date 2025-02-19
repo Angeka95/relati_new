@@ -428,10 +428,38 @@ const convertObjFiltroJurisToQuery = (objFiltroJuris) => {
 
 const ordenarTerminosABCD = (arr) => {
     return arr.sort((a, b) => {
-      const valorA = typeof a === "string" ? a : a.nombreReal;
-      const valorB = typeof b === "string" ? b : b.nombreReal;
+      const valorA = typeof a === "string" ? a : a.fecha;
+      const valorB = typeof b === "string" ? b : b.fecha;
       return valorA.localeCompare(valorB, 'es', { sensitivity: 'base' });
     });
+  }
+
+/**
+ * ordenarBoletinesActuales()
+ * Funcionalidad que obtiene la lista de boletines ordenados por fecha anioMes de mayor a menor
+ * Parametros de entrada:
+ * - arr: el array de objetos de boletines
+ * Salida:
+ * - Retorna un nuevo array de boletines ordenados por fecha    
+ * Aplicación:
+ * carousel.js componente
+*/
+
+const ordenarBoletinesActuales = (arr) => {
+    
+    let boletinesOrdenados = [...arr].sort((a, b) => {
+        const valorA = typeof a === "string" ? a : a.anioMes;
+        const valorB = typeof b === "string" ? b : b.anioMes;
+        return valorB.localeCompare(valorA);
+    });
+        
+    let boletinesAnio = [...boletinesOrdenados].filter( boletin => boletin.fecha ===  String(new Date().getFullYear()) )
+    
+    if(boletinesAnio.length > 0 ){
+        boletinesOrdenados = [...boletinesAnio];
+    }
+    
+    return boletinesOrdenados;
   }
 
 export { filtroByDefault, 
@@ -453,5 +481,6 @@ export { filtroByDefault,
          verificaGuardaEnArray,
          getArrayDataGraph,
          convertObjFiltroJurisToQuery,
-         ordenarTerminosABCD
+         ordenarTerminosABCD,
+         ordenarBoletinesActuales
         };
