@@ -582,9 +582,13 @@ export default function Home() {
                 <h5 className="justify_center  align_center margin_top_s margin_bottom_m">Escuche la historia detrás de cada decisión de la JEP</h5>
                 <div className="justify_center"> 
                 <iframe className="podcast_container shadow_smooth "
-                    src='https://widget.spreaker.com/player?show_id=5701029&theme=dark&playlist=show&playlist-continuous=true&chapters-image=true' width='100%' height='400px' frameBorder='0'>
+                    src="https://open.spotify.com/embed/show/5hEeZojgIOkXfOkGxDDsiS?utm_source=generator&theme=0" width='100%' height='400px' frameBorder='0'>
 
                 </iframe>
+                {/*<iframe className="podcast_container shadow_smooth "
+                    src='https://widget.spreaker.com/player?show_id=5701029&theme=dark&playlist=show&playlist-continuous=true&chapters-image=true' width='100%' height='400px' frameBorder='0'>
+
+                </iframe>*/}    
                 </div>
 
             </Container>
