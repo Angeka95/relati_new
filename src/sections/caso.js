@@ -275,7 +275,6 @@ export default function Caso() {
         <Container>
           <div className="podcast_space margin_bottom_xl ">
           { /*(caso["multimedia"] = "https://open.spotify.com/embed/show/5hEeZojgIOkXfOkGxDDsiS?utm_source=generator") && (<></>) */}
-          { (caso["multimedia"] = "") && (<></>)}
           {((caso.hasOwnProperty("multimedia")) && (caso.multimedia !== "")) && (
             <>
               <h2 className="text_bolder width_100 text_center margin_bottom_m ">Podcast relacionado al Caso</h2>
