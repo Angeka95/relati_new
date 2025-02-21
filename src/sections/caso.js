@@ -1,5 +1,5 @@
 import '../App.css';
-import { Container, Grid, TextField, Button, Snackbar, Box, AppBar, Tabs, Tab, Select, MenuItem, Chip, FormControl, InputLabel } from '@mui/material';
+import { Container, Tooltip, Grid, TextField, Button, Snackbar, Box, AppBar, Tabs, Tab, Select, MenuItem, Chip, FormControl, InputLabel } from '@mui/material';
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import TabCustom from '../components/tab.js';
@@ -194,12 +194,16 @@ export default function Caso() {
                 <div className="timeline_content">
                   {event.enlace.length > 0 ? (
                     <a href={event.enlace} target="_blank" rel="noreferrer" className="link_primary link_nounderline ">
-                      <h6>{event.hecho}</h6>
+                      <Tooltip title={event.hecho}>
+                      <h6 className="limit_lines">{event.hecho}</h6>
+                      </Tooltip>
                       <p className="margin_bottom_l">{event.actor}</p>
                     </a>
                   ) : (
                     <>
-                      <h6>{event.hecho}</h6>
+                    <Tooltip title={event.hecho}>
+                      <h6 className="limit_lines">{event.hecho}</h6>
+                    </Tooltip>
                       <p className="margin_bottom_l">{event.actor}</p>
                     </>
                   )
