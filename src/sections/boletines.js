@@ -65,6 +65,9 @@ export default function SearchResults() {
         } 
     }, [boletines]);
 
+    const titleBoletin = "Boletines";
+    const titleEspecial = "Ediciones Especiales"
+
   return (
     <div>
     <Container maxWidth="lg" disableGutters>
@@ -120,11 +123,37 @@ export default function SearchResults() {
                   <TabCustom key={datoBoletin.id} pdf={datoBoletin.pdf} fecha={datoBoletin.fecha} imagenPortada={datoBoletin.imagenPortada} />
                 ))} */}
 
-                    <TabCustom boletines={boletines}/> 
+                    <TabCustom boletines={boletines} title={titleBoletin}/> 
                 </div> 
                 </>
               }
                </Container>
+<Box className="padding-y secondary_blue"> 
+          <Container maxWidth="lg" disableGutters >
+          <h1 className="width_100 text_center margin_top_l text_white">Ediciones Especiales</h1>
+          <h5 className="text_center title_description margin_bottom_l text_white">Destacamos aquí las decisiones judiciales más importantes de las Salas y Secciones de la JEP. Este producto editorial plasma la síntesis de los casos, las reglas y argumentos de derecho, así como el sentido de la decisión</h5>
+          {( boletines.length === 0 ) ? 
+                    <LinearWithValueLabel></LinearWithValueLabel>
+                :
+                <div className="align_center carousel_main_container"> 
+                  <p className=" align_center text_carousel_container text_white">Consulte las decisiones más relevantes de la JEP, analizadas mes a mes</p>
+
+                  <div className="carousel_container ">
+                      <Carousel boletines={boletines}/>
+                  </div> 
+                </div> 
+          }
+
+    </Container>
+    </Box>
+
+
+
+              
+          <div class="margin_top_xl">
+
+        <TabCustom boletines={boletines} title={titleEspecial}/> 
+          </div>
     </div>
   );
 }
