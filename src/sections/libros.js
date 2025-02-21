@@ -15,7 +15,7 @@ export default function Libros() {
             pdf: 'https://relatoria.jep.gov.co/documentos/libros/TOMO_1_Las-SENIT-1-2-3.pdf', 
             fecha: "2024-01", 
             qr: 'https://relatoria.jep.gov.co/img/libros/qr-tomo-1.png', 
-            title: ` Tomo I: 
+            title: ` Tomo I </br>
             Las Sentencias Interpretativas - SENIT 1, 2 Y 3`,
             text:`Las Sentencias Interpretativas (SENIT) son providencias que buscan: </br>
                 <strong> • Asegurar la unidad de la interpretación del derecho </strong> </br> 
@@ -38,7 +38,8 @@ export default function Libros() {
             pdf: 'https://relatoria.jep.gov.co/documentos/libros/Tomo_2_lineamientos_analisis_tematico.pdf', 
             fecha: "2024-01", 
             qr: 'https://relatoria.jep.gov.co/img/libros/qr-tomo-2.jpeg', 
-            title: `Lineamientos para el análisis temático de las decisiones de la JEP: reflexiones desde la teoría jurídica y la práctica judicial`,
+            title: `Tomo II </br>
+            Lineamientos para el análisis temático de las decisiones de la JEP: reflexiones desde la teoría jurídica y la práctica judicial`,
             text:`Es un libro orientado a público jurídico o académico con interés en el desarrollo de las temáticas de la Jurisdicción Especial para la Paz. Se ha estructurado de la siguiente forma:</br> En un primer apartado se explica de manera detallada el fundamento teórico y conceptual de la metodología, para entender, primero, el rol del juez dentro del derecho para el establecimiento de reglas y subreglas jurídicas a través del precedente y, segundo, cómo esto fundamenta la necesidad del levantamiento de líneas jurisprudenciales.</br> Posteriormente, en el segundo apartado se explican cada uno de los pasos contemplados dentro de la metodología, junto con algunos ejemplos de su aplicabilidad.  </br> Por último, se incorporan dos anexos para la comprensión de la creación del Banco de decisiones y la elaboración del documento analítico, que hacen parte de los resultados esperados dentro del desarrollo de las líneas jurisprudenciales. 
                 `, 
             cover: 'https://relatoria.jep.gov.co/img/libros/portada_tomo_II.jpg'
@@ -90,15 +91,18 @@ export default function Libros() {
                         <p className="text_center_mobile ">
                         Esta publicación electrónica, de acceso libre, es una guía práctica con la que se espera facilitar el estudio y/o conocimiento, por parte de un público amplio, sobre el desarrollo normativo, procesal y jurisprudencial de la Jurisdicción Especial para la Paz.
                         </p>
+                        <a href="https://xperta.legis.co/intermedia/intermedia_jep.html" target="_blank"  class="margin_top_s link_primary"> Saber más de esta publicación
+                        </a> 
                     </div>
                 </div> 
-                <div className="book_container justify_center" > 
-                    <a href="https://xperta.legis.co/intermedia/intermedia_jep.html" target="_blank" rel="noreferrer" className="justify_center">
+                <div className="book_container justify_center d-flex flex-wrap " > 
+                    <a href="https://relatoria.jep.gov.co/documentos/libros/CODIGO_JURISDICCION_ESPECIAL_PAZ_1A_ED.pdf" target="_blank" rel="noreferrer" className="justify_center">
                     <img className="cover_container" src="https://relatoria.jep.gov.co/img/libros/portada_codigo_JEP_c.png"/> 
-
                     </a>
+                
                     
                 </div> 
+
             </div> 
             
             </Container>
@@ -131,8 +135,9 @@ export default function Libros() {
 
                                 <div className="book_container">
                                     <div className="collection_container_text">
-                                        <h3 className="text_bolder text_white text_center margin_bottom_m  book_margin_mobile carrousel_title_mobile" >{libros[currentIndex].title}</h3>
+                                    <div className="text_bolder title_text text_white text_center margin_bottom_m  book_margin_mobile carrousel_title_mobile" dangerouslySetInnerHTML={{__html: libros[currentIndex].title}}></div>
                                         <div className="text_white padding_m book_margin_mobile" dangerouslySetInnerHTML={{__html: libros[currentIndex].text}}></div>
+                                        
                                     </div> 
                                 </div>
 

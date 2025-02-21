@@ -216,6 +216,10 @@ h6 {
   text-decoration: none !important;
 }
 
+.border_none{
+  border: none !important;
+}
+
 .title_description{
   width: 70%;
   margin-left: 15%;
@@ -240,6 +244,7 @@ h6 {
   border-radius: 32px !important;
   padding: 10px 30px !important;
   font-weight: 600 !important;
+  transition: all 0.5s ease-out;
 }
 
 
@@ -250,6 +255,7 @@ h6 {
   border-radius: 32px !important;
   padding: 10px 30px !important;
   font-weight: 600 !important;
+  transition: all 0.5s ease-out;
 }
 
 
@@ -260,6 +266,7 @@ h6 {
   border-radius: 32px !important;
   padding: 10px 30px !important;
   font-weight: 600 !important;
+  transition: all 0.5s ease-out;
 }
 
 
@@ -269,6 +276,7 @@ h6 {
   color: #98C438 !important;
   font-weight: 700 !important;
   padding: 0px !important;
+  transition: all 0.5s ease-out;
 }
 
 .link_primary:hover {
@@ -283,6 +291,7 @@ h6 {
   font-weight: 700 !important;
   padding: 0px !important;
   text-decoration: none !important;
+  transition: all 0.5s ease-out;
 }
 
 .link_secondary:hover {
@@ -297,6 +306,7 @@ h6 {
   color: #007CAE !important;
   padding: 0px !important;
   text-decoration: none !important;
+  transition: all 0.5s ease-out;
 }
 
 .link_terciary:hover {
@@ -510,6 +520,10 @@ h6 {
 }
 .padding_xl {
   padding: 120px !important;
+}
+
+.padding-y{
+  padding: 40px 0px 170px 0px; 
 }
 
 
@@ -1724,9 +1738,9 @@ controlodares carrusel  */
 }
 
 .item_boletin{
-  min-width:230px;
-  max-width: 231px;
-  height: 360px;
+  min-width:300px;
+  max-width: 300px;
+  height: auto;
   background-color: #ffffff; 
   color: white;
   flex: 1 1 calc(25% - 10px); 
@@ -1750,8 +1764,8 @@ controlodares carrusel  */
 }
 
 .item_boletin_size{
-  min-width:230px;
-  max-width: 231px;
+  min-width:300px;
+  max-width: 300px;
   margin: 0px 16px;
   padding: 0%;
 
@@ -1974,6 +1988,13 @@ controlodares carrusel  */
 /*\ END SUBSCRIPTION*/
 
 /*\ MACROCASO*/
+
+.limit_lines{
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
 
 .section_blue{
   padding:60px 0px;
@@ -2546,6 +2567,13 @@ padding: 0px 0% 0% 3%;
 .qr_container{
   width: 230px;
   border: 5px solid #98c438;
+}
+
+.title_text{
+
+    font-weight: 700 !important;
+    font-size: 1.3em !important; 
+
 }
 
 .cover_container{

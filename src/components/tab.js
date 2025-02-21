@@ -12,7 +12,7 @@ import ExpandMoreOutlinedIcon from '@mui/icons-material/ExpandMoreOutlined';
 
 
 
-export default function CustomTab({ boletines}) {
+export default function CustomTab({ boletines, title}) {
     const [value, setValue] = React.useState(2);
     
     const handleChangeTab = (event, newValue) => {
@@ -44,6 +44,21 @@ export default function CustomTab({ boletines}) {
         }
     }
 
+        // mostrar y ocular boletines
+        const [showAll, setShowAll] = useState(false);
+
+        const boletinesFiltrados = boletines.filter(
+            boletin => new Date(boletin.fecha).getUTCFullYear() === anioBoletin[value]
+          );
+
+            
+         const boletinesToShow = showAll ? boletinesFiltrados : boletinesFiltrados.slice(0, 3);
+
+        const handleToggleShowAll = () => {
+            setShowAll(prevState => !prevState);
+        };
+
+
 
     return (
         <div>
@@ -68,10 +83,8 @@ export default function CustomTab({ boletines}) {
                             
                             <Container className='width_100 margin_bottom_l'>
                                 <div className="wrap justify_center item_boletin_container">
-                                    <h2 className="width_100 text_center margin_m text_bolder">Boletines {anioBoletin[value]}</h2>
-                                    {boletines
-                                        .filter(boletin => new Date(boletin.fecha).getUTCFullYear() === anioBoletin[value]) // Filtrar por anio del tab activo
-                                        .map(boletin => (
+                                    <h2 className="width_100 text_center margin_m text_bolder">{title} {anioBoletin[value]}</h2>
+                                    {boletinesToShow.map(boletin => (
 
                                             <div key={boletin.id}>
                                                
@@ -92,12 +105,12 @@ export default function CustomTab({ boletines}) {
 
                                                     <a className="justify_center cursor_pointer"  onClick={() => toggleDetailsBoletin(boletin.id)}>
                                                     {isMoreInfoOpen.includes(boletin.id) ?   
-                                                    <div>
+                                                    <div class="link_secondary">
                                                         <ExpandLessOutlinedIcon />
                                                         <span>Ocultar información</span>
                                                      </div> 
                                                      :  
-                                                     <div>
+                                                     <div class="link_secondary">
                                                      <ExpandMoreOutlinedIcon />
                                                      <span>Saber más del boletín</span>
                                                   </div> 
@@ -116,15 +129,34 @@ export default function CustomTab({ boletines}) {
                                                     <ShareOptions boletines={boletines} currentBoletinId={boletin.id} > </ShareOptions>
                                                 </div>
                                             </div>
+                                        
                                         ))}
+
+                                            <div  class="width_100 justify_center"> 
+                                                    {!showAll && boletines.length > 3 && (
+                                                    <button onClick={handleToggleShowAll} class="button_primary border_none">Ver más {title} </button>
+                                                    )}
+                                            
+                                            </div> 
+
+                                                    <div class="width_100 justify_center"> 
+                                                        {showAll && boletines.length > 3 && (
+                                                        <button onClick={handleToggleShowAll} class="button_primary border_none">Ocultar {title}</button>
+                                                        )}
+
+                                                    </div>
+
+
                                 </div>
                             </Container>
+
                             
                         </div>
                     </Box>
 
                 </Container>
                 </>
+
 
             </Box>
         </div>
