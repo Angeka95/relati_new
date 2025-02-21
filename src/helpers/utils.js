@@ -428,11 +428,11 @@ const convertObjFiltroJurisToQuery = (objFiltroJuris) => {
 
 const ordenarTerminosABCD = (arr) => {
     return arr.sort((a, b) => {
-      const valorA = typeof a === "string" ? a : a.fecha;
-      const valorB = typeof b === "string" ? b : b.fecha;
-      return valorA.localeCompare(valorB, 'es', { sensitivity: 'base' });
+        const valorA = typeof a === "string" ? a : a.nombreReal;
+        const valorB = typeof b === "string" ? b : b.nombreReal;
+        return valorA.localeCompare(valorB, 'es', { sensitivity: 'base' });
     });
-  }
+}
 
 /**
  * ordenarBoletinesActuales()
