@@ -8,7 +8,8 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import CardSearch from './cardSearchResults.js';
-import SearchBarSmall from './searchBarSmallAI.js';
+//import SearchBarSmall from './searchBarSmallAI.js';
+import SearchBarForInnerResults from './searchBarForInnerResults.js';
 import SortIcon from '@mui/icons-material/Sort';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
@@ -31,7 +32,8 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
     const [selectedDoc, setSelectedDoc] = useState({ "title": "* Todos los resultados", "id": 0 });
     const [searchDocsOptions, setSearchDocsOptions] = useState(searchOptions);
     const [datosToExport, setDatosToExport] = useState("");
-
+    const [valorBuscadorEnResultados, setValorBuscadorEnResultados] = useState("");
+    
     const { filtroJurisprudencial } = useContext(Context);
 
     useEffect(() => {
@@ -215,8 +217,20 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
         window.location.href = `/ver-todas-las-decisiones?${params.toString()}`;
     }
     
+    // Manipula el valor de busqueda que viene desde SearchBarForInnerResults y en valor
+    const handlerInnerSearch = (valueSearchBarInner) => {
+        if(valueSearchBarInner !== ""){
+            const newArrDatos = [...datosOriginales].filter(item => {
+                return item.autocompletarBuscador.title.toLowerCase().includes(valueSearchBarInner.toLowerCase());
+            });
+            setValorBuscadorEnResultados(valueSearchBarInner);
+            setDatos(newArrDatos);
+        } else {
+            setDatos(datosOriginales);
+        }
+    };
+    
     // Grids personalizadas
-
 
     const SpaceGrid = styled(Grid)(({ theme }) => ({
 
@@ -373,7 +387,6 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
                         )}
                         </JustMapNoneGrid>
                     </SpaceGrid>
-    
                     {(verTodasDecisiones || busqueda) && (
                         <div >
     
@@ -420,9 +433,8 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
                                     </Grid>
     
                                     <Grid item  className="justify_end_partial" xs={12} sm={12} md= {(isListSmall ? 12 : 6)} lg={(isListSmall ? 12 : 6)} xl={(isListSmall ? 12 : 6) }>
-                                        
-                                        <SearchBarSmall searchOptions={searchDocsOptions} handlerSetSelectedOption={handlerSetSelectedDoc}> </SearchBarSmall>
-    
+                                        {/*<SearchBarSmall searchOptions={searchDocsOptions} handlerSetSelectedOption={handlerSetSelectedDoc}> </SearchBarSmall>*/}
+                                        <SearchBarForInnerResults handlerInnerSearch={handlerInnerSearch}></SearchBarForInnerResults>
                                     </Grid>
                                 </SpaceBetweenGrid>
     
