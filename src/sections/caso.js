@@ -83,7 +83,7 @@ export default function Caso() {
             let hitoMacrocaso = {
               mes: obtenerMesEnEspanol(item.fecha),
               anio: obtenerAnioDeTexto(item.fecha),
-              hecho: item.asunto,
+              hecho: item.tipo, //item.asunto
               actor: '',
               enlace: item.enlace,
               fecha: ""

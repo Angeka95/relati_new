@@ -150,7 +150,7 @@ export default function SearchResults() {
 
 
               
-          <div class="margin_top_xl">
+          <div className="margin_top_xl">
 
         <TabCustom boletines={boletines} title={titleEspecial}/> 
           </div>

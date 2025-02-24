@@ -105,12 +105,12 @@ export default function CustomTab({ boletines, title}) {
 
                                                     <a className="justify_center cursor_pointer"  onClick={() => toggleDetailsBoletin(boletin.id)}>
                                                     {isMoreInfoOpen.includes(boletin.id) ?   
-                                                    <div class="link_secondary">
+                                                    <div className="link_secondary">
                                                         <ExpandLessOutlinedIcon />
                                                         <span>Ocultar información</span>
                                                      </div> 
                                                      :  
-                                                     <div class="link_secondary">
+                                                     <div className="link_secondary">
                                                      <ExpandMoreOutlinedIcon />
                                                      <span>Saber más del boletín</span>
                                                   </div> 
@@ -132,16 +132,16 @@ export default function CustomTab({ boletines, title}) {
                                         
                                         ))}
 
-                                            <div  class="width_100 justify_center"> 
+                                            <div  className="width_100 justify_center"> 
                                                     {!showAll && boletines.length > 3 && (
-                                                    <button onClick={handleToggleShowAll} class="button_primary border_none">Ver más {title} </button>
+                                                    <button onClick={handleToggleShowAll} className="button_primary border_none">Ver más {title} </button>
                                                     )}
                                             
                                             </div> 
 
-                                                    <div class="width_100 justify_center"> 
+                                                    <div className="width_100 justify_center"> 
                                                         {showAll && boletines.length > 3 && (
-                                                        <button onClick={handleToggleShowAll} class="button_primary border_none">Ocultar {title}</button>
+                                                        <button onClick={handleToggleShowAll} className="button_primary border_none">Ocultar {title}</button>
                                                         )}
 
                                                     </div>
