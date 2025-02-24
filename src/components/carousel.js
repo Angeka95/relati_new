@@ -5,7 +5,7 @@ import ArrowForwardIosOutlinedIcon from '@mui/icons-material/ArrowForwardIosOutl
 import imagenPortadaPlaceHolder from '../assets/images/boletin_placeholder.png';
 import { ordenarBoletinesActuales } from '../helpers/utils.js';
 
-export default function Carrusel({ boletines }) {
+export default function Carrusel({ boletines , libros }) {
     
   const boletinesActuales = ordenarBoletinesActuales(boletines);
      
