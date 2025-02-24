@@ -33,7 +33,6 @@ export default function SearchResults() {
   const stringParam = decodeURIComponent(searchParams.get('string'));
   
   const getResultadosBuscadorAI = (string) => {
-    console.log("fdasfsadfsafd");
     let newMessage = {}; 
     buscadorService
       .getSearchQData(string)
