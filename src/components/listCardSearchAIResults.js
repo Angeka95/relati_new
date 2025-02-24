@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import '../App.css';
-import { Stack, Pagination, PaginationItem, List, ListItem, Button, Box, Chip } from '@mui/material';
+import { Stack, Pagination, PaginationItem, List, ListItem, Button, Box, Chip, Alert } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import InputLabel from '@mui/material/InputLabel';
@@ -10,6 +10,7 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 import CardSearch from './cardSearchResults.js';
 //import SearchBarSmall from './searchBarSmallAI.js';
 import SearchBarForInnerResults from './searchBarForInnerResults.js';
+import { SpaceGrid, WrapGrid, SpaceBetweenGrid, Width100Grid, NoneGrid, JustMapGrid, JustMapNoneGrid } from './listCardSearch/gridComponents.js';
 import SortIcon from '@mui/icons-material/Sort';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
@@ -23,6 +24,7 @@ import FilterShort from './filterShort.js';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import { validarfiltroJurisprudencial, getOpcionesAutocompletar, getDecisionesIDsToExport } from '../helpers/utils.js';
 import { macrocasos } from '../data/datos_macrocaso.js';
+import LinearWithValueLabel from '../components/linearProgress.js';  
 import ButtonDownloadXLS from './buttonDownloadXLS.js';
 
 export default function Card({ datosBusqueda, searchOptions, selectedFilters, isListSmall, selectedTerm, isLargeResult, isExternalFilters, customPagination = {} }) {  
@@ -33,6 +35,7 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
     const [searchDocsOptions, setSearchDocsOptions] = useState(searchOptions);
     const [datosToExport, setDatosToExport] = useState("");
     const [valorBuscadorEnResultados, setValorBuscadorEnResultados] = useState("");
+    const [message, setMessage] = useState({ message: "", classname: "" });
     
     const { filtroJurisprudencial } = useContext(Context);
 
@@ -219,109 +222,33 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
     
     // Manipula el valor de busqueda que viene desde SearchBarForInnerResults y en valor
     const handlerInnerSearch = (valueSearchBarInner) => {
+        let newMessage = {}; 
         if(valueSearchBarInner !== ""){
             const newArrDatos = [...datosOriginales].filter(item => {
                 return item.autocompletarBuscador.title.toLowerCase().includes(valueSearchBarInner.toLowerCase());
             });
+            if(newArrDatos.length > 0) {
+                newMessage["message"] = `Hay resultados`;
+                newMessage["classname"] = 'success';
+            } else {
+                newMessage["message"] = `No se encontraron resultados por ${valueSearchBarInner}`;
+                newMessage["classname"] = 'warning';
+            }
             setValorBuscadorEnResultados(valueSearchBarInner);
             setDatos(newArrDatos);
         } else {
             setDatos(datosOriginales);
+            newMessage["message"] = "";
+            newMessage["classname"] = "";
         }
+        setTimeout(() => setMessage(newMessage), 1300);
     };
     
-    // Grids personalizadas
-
-    const SpaceGrid = styled(Grid)(({ theme }) => ({
-
-        [theme.breakpoints.down('sm')]: {
-            display: 'flex',
-            justifyContent: 'center',
-            flexWrap: 'wrap',
-            textAlign: 'center',
-            width: "100%",
-            margin: '20px 0px 0px 0px',
-        },
-    }));
-
-    const WrapGrid = styled(Grid)(({ theme }) => ({
-
-        [theme.breakpoints.down('sm')]: {
-            display: 'flex',
-            justifyContent: 'center',
-            flexWrap: 'wrap',
-            textAlign: 'center',
-            width: "100%",
-            margin: '20px 0px 0px 0px',
-        },
-        [theme.breakpoints.up('sm')]: {
-            margin: '0px 0px',
-            display: isListSmall?'flex': '',
-            flexWrap: isListSmall?'wrap': '',
-        },
-    }));
-
-    const SpaceBetweenGrid = styled(Grid)(({ theme }) => ({
-
-        [theme.breakpoints.down('sm')]: {
-            display: 'flex',
-            justifyContent: 'center',
-            flexWrap: 'wrap',
-            textAlign: 'center',
-            width: "100%",
-            textAlign: 'center',
-            margin: '20px 0px 0px 0px',
-        },
-        [theme.breakpoints.up('sm')]: {
-            margin: '0px 0px',
-            display: 'flex',
-            flexWrap: isListSmall ? 'wrap' : '',
-            width: isListSmall ? "100%" : '',
-
-        },
-    }));
-
-
-    const Width100Grid = styled(Grid)(({ theme }) => ({
-
-        [theme.breakpoints.down('md')]: {
-            width: '100%',
-        },
-        [theme.breakpoints.up('md')]: {
-
-            width: isListSmall?'100%': '',
-
-        }
-    }));
-
-    const NoneGrid = styled(Grid)(({ theme }) => ({
-
-        [theme.breakpoints.down('sm')]: {
-            display: 'none',
-        },
-        [theme.breakpoints.up('sm')]: {
-            display: isListSmall ? 'none' : '',
-        }
-    }));
-
-    const  JustMapGrid = styled(Grid)(({ theme }) => ({
-
-        [theme.breakpoints.down('sm')]: {
-            display: 'none',
-        },
-        [theme.breakpoints.up('sm')]: {
-            display: isListSmall ? 'flex' : 'none',
-           
-        }
-    }));
-
-    const  JustMapNoneGrid = styled(Grid)(({ theme }) => ({
-
-        [theme.breakpoints.up('xs')]: {
-            display: isListSmall ? 'none' : '',
-        }
-    }));
-
+    const deshacerBusqueda = (e) => {
+        setDatos(datosOriginales);
+        setMessage({ message: "", classname: "" });
+    }
+    
      if(datosBusqueda.length > 0) {
         return (
             <Stack>
@@ -387,65 +314,60 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
                         )}
                         </JustMapNoneGrid>
                     </SpaceGrid>
-                    {(verTodasDecisiones || busqueda) && (
-                        <div >
-    
-                            <Grid container spacing={2}>
-    
-    
-                                <SpaceBetweenGrid item xs={12} sm={12} md={12} lg={12} xl={12} >
-                                    <Grid item xs={12} sm={12} md= {(isListSmall ? 12 : 6)} lg={(isListSmall ? 12 : 6)} xl={(isListSmall ? 12 : 6)}>
-                                        <JustMapGrid > 
-                                            <h4 className="text_bolder"> Decisiones </h4> 
-                                        </JustMapGrid>
-                                            {isExternalFilters && (
-                                                <div className='filter_sort_container'>
-                                                    <FilterShort setSelectedFilters={setExternalFilters}/>
-                                                    <NoneGrid className='margin_left_s'>
-                                                        <Button className="button_function" startIcon={<SortIcon />} onClick={toggleButton}>Ordenar
-                                                        </Button>  
-                                                        {isButtonSorterEnabled && (
-                                                            <div className='container_date_sorted'>
-                                                              <Button onClick={sortDescByDate} className='items_sorted' endIcon={<ArrowUpwardIcon />} >Más recientes </Button>
-                                                              <Button onClick={sortAscByDate} className='items_sorted' endIcon={<ArrowDownwardIcon />} >Más antiguos </Button>
-                                                              <Button onClick={sortDescByScore} className='items_sorted' endIcon={<ArrowUpwardIcon />} >Mayor puntuación </Button>
-                                                              <Button onClick={sortAscByScore} className='items_sorted' endIcon={<ArrowDownwardIcon />} >Menor puntuación </Button>
-                                                            </div>
-                                                        )}
-                                                    </NoneGrid>
-                                                </div>
-                                            )}
-    
-                                            {!isExternalFilters && (
-                                                <NoneGrid>
-                                                  <Button className="button_function" startIcon={<SortIcon />} onClick={toggleButton}>Ordenar
-                                                  </Button>
-                                                  {isButtonSorterEnabled && (
-                                                      <div className='container_date_sorted'>
+                    <div>
+                        <Grid container spacing={2}>
+                            <SpaceBetweenGrid item xs={12} sm={12} md={12} lg={12} xl={12} >
+                                <Grid item xs={12} sm={12} md= {(isListSmall ? 12 : 6)} lg={(isListSmall ? 12 : 6)} xl={(isListSmall ? 12 : 6)}>
+                                    <JustMapGrid > 
+                                        <h4 className="text_bolder"> Decisiones </h4> 
+                                    </JustMapGrid>
+                                        {isExternalFilters && (
+                                            <div className='filter_sort_container'>
+                                                <FilterShort setSelectedFilters={setExternalFilters}/>
+                                                <NoneGrid className='margin_left_s'>
+                                                    <Button className="button_function" startIcon={<SortIcon />} onClick={toggleButton}>Ordenar
+                                                    </Button>  
+                                                    {isButtonSorterEnabled && (
+                                                        <div className='container_date_sorted'>
                                                           <Button onClick={sortDescByDate} className='items_sorted' endIcon={<ArrowUpwardIcon />} >Más recientes </Button>
                                                           <Button onClick={sortAscByDate} className='items_sorted' endIcon={<ArrowDownwardIcon />} >Más antiguos </Button>
                                                           <Button onClick={sortDescByScore} className='items_sorted' endIcon={<ArrowUpwardIcon />} >Mayor puntuación </Button>
                                                           <Button onClick={sortAscByScore} className='items_sorted' endIcon={<ArrowDownwardIcon />} >Menor puntuación </Button>
-                                                      </div>
-                                                  )}
-                                                </NoneGrid>  
-                                            )}
-                                    </Grid>
-    
-                                    <Grid item  className="justify_end_partial" xs={12} sm={12} md= {(isListSmall ? 12 : 6)} lg={(isListSmall ? 12 : 6)} xl={(isListSmall ? 12 : 6) }>
-                                        {/*<SearchBarSmall searchOptions={searchDocsOptions} handlerSetSelectedOption={handlerSetSelectedDoc}> </SearchBarSmall>*/}
-                                        <SearchBarForInnerResults handlerInnerSearch={handlerInnerSearch}></SearchBarForInnerResults>
-                                    </Grid>
-                                </SpaceBetweenGrid>
-    
-                            </Grid>
-                        </div>
-                    )}
+                                                        </div>
+                                                    )}
+                                                </NoneGrid>
+                                            </div>
+                                        )}
+
+                                        {!isExternalFilters && (
+                                            <NoneGrid>
+                                              <Button className="button_function" startIcon={<SortIcon />} onClick={toggleButton}>Ordenar
+                                              </Button>
+                                              {isButtonSorterEnabled && (
+                                                  <div className='container_date_sorted'>
+                                                      <Button onClick={sortDescByDate} className='items_sorted' endIcon={<ArrowUpwardIcon />} >Más recientes </Button>
+                                                      <Button onClick={sortAscByDate} className='items_sorted' endIcon={<ArrowDownwardIcon />} >Más antiguos </Button>
+                                                      <Button onClick={sortDescByScore} className='items_sorted' endIcon={<ArrowUpwardIcon />} >Mayor puntuación </Button>
+                                                      <Button onClick={sortAscByScore} className='items_sorted' endIcon={<ArrowDownwardIcon />} >Menor puntuación </Button>
+                                                  </div>
+                                              )}
+                                            </NoneGrid>  
+                                        )}
+                                </Grid>
+
+                                <Grid item  className="justify_end_partial" xs={12} sm={12} md={(isListSmall ? 12 : 6)} lg={(isListSmall ? 12 : 6)} xl={(isListSmall ? 12 : 6) }>
+                                    {/*<SearchBarSmall searchOptions={searchDocsOptions} handlerSetSelectedOption={handlerSetSelectedDoc}> </SearchBarSmall>*/}
+                                    <SearchBarForInnerResults handlerInnerSearch={handlerInnerSearch}></SearchBarForInnerResults>
+                                </Grid>
+                            </SpaceBetweenGrid>
+
+                        </Grid>
+                    </div>
                 </div>
-    
-                {(verTodasDecisiones || busqueda) && (
-                    <>
-                        {(Object.keys(customPagination).length === 0) ? 
+                <>  
+                    {(Object.keys(customPagination).length === 0) ? 
+                        <>                            
+                        {/* Paginacion para seccion resultados de busqueda */}
                         <WrapGrid item xs={12} sm={12} md={12} lg={12} xl={12} className="flex " >
                             <Width100Grid>
                                 <p className="margin_results_page">
@@ -458,8 +380,7 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
                             <NoneGrid>
                                 <p className='margin_xs'> | </p>
                             </NoneGrid>
-    
-                            <div >
+                            <div>
                                 <Width100Grid className='width_100 flex '>
                                 <p className="margin_results_page">Resultados por página  </p>
                                     <Box sx={{ minWidth: 270 }}>
@@ -484,13 +405,13 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
                                             </Select>
                                         </FormControl>
                                     </Box>
-                                    
                                 </Width100Grid>
-                                
                             </div>
-                            
                         </WrapGrid>
-                        : 
+                        </>
+                    : 
+                        <>
+                        {/* Paginacion para seccion ver todas las decisiones */}
                         <WrapGrid item xs={12} sm={12} md={12} lg={12} xl={12} className="flex " >
                             <Width100Grid>
                                 <p className="margin_results_page">
@@ -534,96 +455,110 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
                             </div>
                             
                         </WrapGrid>
+                        </> 
+                    }
+                    <div className="justify_end">
+                        { (datosToExport !== null) && 
+                            <ButtonDownloadXLS 
+                                stringURL={`https://relatoria.jep.gov.co/downloadresult`}
+                                stringParams={`idpro=${datosToExport}`}
+                                datosToExport={datosToExport}
+                                filename="resultados.xlsx"
+                                requireService="no"
+                            />
                         }
-                        <div className="justify_end">
-                            { (datosToExport !== null) && 
-                                <ButtonDownloadXLS 
-                                    stringURL={`https://relatoria.jep.gov.co/downloadresult`}
-                                    stringParams={`idpro=${datosToExport}`}
-                                    datosToExport={datosToExport}
-                                    filename="resultados.xlsx"
-                                    requireService="no"
-                                />
-                            }
-                        </div>
-    
-                        <div className="separator width_100"></div>
-                        {(datos.length > 0) && (
-                            <> 
-                            <SpaceGrid className="justify_end">
-                                {(Object.keys(customPagination).length === 0) ? 
-                                    <Pagination className="margin_top_s"
-                                    count={totalPages}
-                                    page={page}
-                                    onChange={handleChange}
-                                    renderItem={(item, id) => (
-                                        <PaginationItem key={id}
-                                            slots={{ previous: ArrowBackIcon, next: ArrowForwardIcon }}
-                                            {...item}
-                                        />
-                                    )}
-                                    />
-                                :
-                                    <Pagination className="margin_top_s"
-                                    count={Math.ceil(customPagination.total/customPagination.per_page)}
-                                    page={customPagination.current_page}
-                                    onChange={handleChangeCustomPagination}
-                                    renderItem={(item, id) => (
-                                        <PaginationItem key={id}
-                                            slots={{ previous: ArrowBackIcon, next: ArrowForwardIcon }}
-                                            {...item}
-                                        />
-                                    )}
-                                    />    
-                                }
-                            </SpaceGrid>
-                            <List className="width_100">
-                                {currentData.map((item, k) => (
-                                    <SpaceGrid key={k}>
-                                        <ListItem className="padding_none" key={item.id}>
-                                            <CardSearch className="padding_none" datos={item}></CardSearch>
-                                        </ListItem>
-                                    </SpaceGrid>
-                                ))}
-        
-                            </List>
-        
-                            <SpaceGrid className="justify_end">
+                    </div>
+                    <div className="separator width_100"></div>
+                    {/* Lista de resultados */}
+                    {(datos.length > 0) ? 
+                        <> 
+                        <SpaceGrid className="justify_end">
                             {(Object.keys(customPagination).length === 0) ? 
-                                    <Pagination className="margin_top_s"
-                                    count={totalPages}
-                                    page={page}
-                                    onChange={handleChange}
-                                    renderItem={(item, id) => (
-                                        <PaginationItem key={id}
-                                            slots={{ previous: ArrowBackIcon, next: ArrowForwardIcon }}
-                                            {...item}
-                                        />
-                                    )}
+                                <Pagination className="margin_top_s"
+                                count={totalPages}
+                                page={page}
+                                onChange={handleChange}
+                                renderItem={(item, id) => (
+                                    <PaginationItem key={id}
+                                        slots={{ previous: ArrowBackIcon, next: ArrowForwardIcon }}
+                                        {...item}
                                     />
+                                )}
+                                />
+                            :
+                                <Pagination className="margin_top_s"
+                                count={Math.ceil(customPagination.total/customPagination.per_page)}
+                                page={customPagination.current_page}
+                                onChange={handleChangeCustomPagination}
+                                renderItem={(item, id) => (
+                                    <PaginationItem key={id}
+                                        slots={{ previous: ArrowBackIcon, next: ArrowForwardIcon }}
+                                        {...item}
+                                    />
+                                )}
+                                />    
+                            }
+                        </SpaceGrid>
+                        <List className="width_100"> 
+                            {currentData.map((item, k) => (
+                                <SpaceGrid key={k}>
+                                    <ListItem className="padding_none" key={item.id}>
+                                        <CardSearch className="padding_none" datos={item}></CardSearch>
+                                    </ListItem>
+                                </SpaceGrid>
+                            ))}
+                        </List>
+                        <SpaceGrid className="justify_end">
+                        {(Object.keys(customPagination).length === 0) ? 
+                                <Pagination className="margin_top_s"
+                                count={totalPages}
+                                page={page}
+                                onChange={handleChange}
+                                renderItem={(item, id) => (
+                                    <PaginationItem key={id}
+                                        slots={{ previous: ArrowBackIcon, next: ArrowForwardIcon }}
+                                        {...item}
+                                    />
+                                )}
+                                />
+                            :
+                                <Pagination className="margin_top_s"
+                                count={Math.ceil(customPagination.total/customPagination.per_page)}
+                                page={customPagination.current_page}
+                                onChange={handleChangeCustomPagination}
+                                renderItem={(item, id) => (
+                                    <PaginationItem key={id}
+                                        slots={{ previous: ArrowBackIcon, next: ArrowForwardIcon }}
+                                        {...item}
+                                    />
+                                )}
+                                />    
+                            }
+                        </SpaceGrid>
+                        </>
+                    :
+                        <>
+                            { (message.message === "") ?
+                                <>
+                                <LinearWithValueLabel processingMessages={["Procesando solicitud...", "Preparando respuesta..."]}></LinearWithValueLabel> 
+                                </> 
                                 :
-                                    <Pagination className="margin_top_s"
-                                    count={Math.ceil(customPagination.total/customPagination.per_page)}
-                                    page={customPagination.current_page}
-                                    onChange={handleChangeCustomPagination}
-                                    renderItem={(item, id) => (
-                                        <PaginationItem key={id}
-                                            slots={{ previous: ArrowBackIcon, next: ArrowForwardIcon }}
-                                            {...item}
-                                        />
-                                    )}
-                                    />    
+                                <>
+                                <Alert variant="outlined" severity={message.classname}>
+                                  {message.message}
+                                </Alert>
+                                { ((message.classname === "error") || (message.classname === "warning")) && 
+                                  <Box sx={{ px: 0, my: 2, display: 'flex', justifyContent: 'center' }}>
+                                    <Button className="button_primary margin_xs card_size_small" target='_self' rel="noreferrer" onClick={deshacerBusqueda}>Deshacer búsqueda</Button>
+                                  </Box>
                                 }
-                            </SpaceGrid>
-                            </>
-                        )}  
-                    </>
-                )
-    
-                }
-    
+                                </>
+                            }
+                        </>
+                    }
+                    {/* Lista de resultados */}
+                </>
             </Stack>
-    
         );
      } 
 }
