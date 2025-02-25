@@ -79,6 +79,7 @@ export default function EnfoqueGenero() {
                             municipio: "",
                             palabrasClaveBuscador: "",
                             palabrasClaveFichaJuridica: "",
+                            conclusion_resuelve: ((item.conclusion_resuelve !== null) && (item.hasOwnProperty("conclusion_resuelve"))) ? item.conclusion_resuelve : ""
                         };
                         newItem["asuntoNombreCaso"] = `${newItem["asuntoNombre"]}`;
                         newItem["palabrasClave"] = `${newItem["delitos"]}, ${newItem["comparecientes"]}, ${newItem["procedimientos"]}`;
