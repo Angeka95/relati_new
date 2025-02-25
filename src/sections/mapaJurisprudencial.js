@@ -215,38 +215,7 @@ export default function Mapa() {
 
             { ( isDatosMapaJurisprudencial === true ) && (
                 <MapGrid item xs={12} sm={12} md={7} lg={7} xl={7} sx={{ height: '100%', overflow: 'hidden' }}>
-                    <Box component="section" sx={{ p: 5, border: '1px solid grey', mb: 2 }}>
-                        {<ResponsiveContainer width="100%" height={300}>
-                        
-                                <LineChart data={graf} margin={{ top: 30, right: 30, left: 30, bottom: 30 }}>
-                                <CartesianGrid stroke="#f5f5f5" />
-                                <XAxis dataKey="name" padding={{ left: 30, right: 30 }}
-                                    label={{
-                                        value: `Fecha`,
-                                        style: { textAnchor: 'middle', paddingBottom: '0'},
-                                        position: 'insideCenter',
-                                        offset: 0,
-                                        dx: 0,
-                                        dy: 25
-                                    }}
-                                />
-                                <YAxis 
-                                    label={{
-                                        value: `Decisiones Publicadas`,
-                                        style: { textAnchor: 'middle', paddingBottom: '0'},
-                                        angle: -90,
-                                        position: 'insideLeft',
-                                        offset: 0,
-                                        dx: -6
-                                    }}/>
-                                <Legend verticalAlign="top" height={36}/>
-                                <Line type="monotone" dataKey="fecha" stroke="#8884d8" activeDot={{ r: 8 }} label={'fffff'}/>
-                            </LineChart>
-                           
-                            
-                        </ResponsiveContainer>
-                        }
-                    </Box>
+                    
 
                     <div className="map light_blue">
                         <MapContainer center={[4.624335, -74.063645]} zoom={6}  style={{ height: "100vh", zIndex: 0 }} scrollWheelZoom={false} fadeAnimation={true} markerZoomAnimation={true} doubleClickZoom={false} dragging={true}>
@@ -282,6 +251,39 @@ export default function Mapa() {
 
                         </MapContainer>
                     </div>
+                    
+                    <Box component="section" sx={{ p: 5, border: '1px solid grey', mt: 2 }}>
+                        {<ResponsiveContainer width="100%" height={300}>
+                        
+                                <LineChart data={graf} margin={{ top: 30, right: 30, left: 30, bottom: 30 }}>
+                                <CartesianGrid stroke="#f5f5f5" />
+                                <XAxis dataKey="name" padding={{ left: 30, right: 30 }}
+                                    label={{
+                                        value: `Fecha`,
+                                        style: { textAnchor: 'middle', paddingBottom: '0'},
+                                        position: 'insideCenter',
+                                        offset: 0,
+                                        dx: 0,
+                                        dy: 25
+                                    }}
+                                />
+                                <YAxis 
+                                    label={{
+                                        value: `Decisiones Publicadas`,
+                                        style: { textAnchor: 'middle', paddingBottom: '0'},
+                                        angle: -90,
+                                        position: 'insideLeft',
+                                        offset: 0,
+                                        dx: -6
+                                    }}/>
+                                <Legend verticalAlign="top" height={36}/>
+                                <Line type="monotone" dataKey="fecha" stroke="#8884d8" activeDot={{ r: 8 }} label={'fffff'}/>
+                            </LineChart>
+                           
+                            
+                        </ResponsiveContainer>
+                        }
+                    </Box>
                     
                 </MapGrid>
             )}
