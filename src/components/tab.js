@@ -13,16 +13,18 @@ import ExpandMoreOutlinedIcon from '@mui/icons-material/ExpandMoreOutlined';
 
 
 export default function CustomTab({ boletines, title}) {
-    const [value, setValue] = React.useState(2);
     
-    const handleChangeTab = (event, newValue) => {
-        setValue(newValue);
-    };
 
     // Anios del boletin
 
     const anioBoletin = [...new Set(boletines.map(boletin => { return new Date(boletin.fecha).getUTCFullYear(); }))];
-
+    
+    const [value, setValue] = React.useState(0);
+    
+    const handleChangeTab = (event, newValue) => {
+        setValue(newValue);
+    };
+    
     // Estado para el tab activo
 
     const handleChangeAnio = (event, newValue) => {
@@ -71,8 +73,7 @@ export default function CustomTab({ boletines, title}) {
                     <AppBar position="static" className="noshadow ">
                         <Tabs value={value} onChange={handleChangeTab} className='light_white ' classes={{ indicator: 'custom_indicator' }}>
                             {anioBoletin.map((anio, index) => (
-                                <Tab key={anio} label={anio} className={`tab ${value === anio ? 'tab_active' : ''}`} />
-
+                                <Tab key={anio} label={anio} className={`tab ${value === index ? 'tab_active' : ''}`} />
                             ))}
                         </Tabs>
                         <div className="separator_tab"> </div>
