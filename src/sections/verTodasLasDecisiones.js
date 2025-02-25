@@ -96,7 +96,8 @@ export default function VerTodasLasDecisiones() {
                             extractoBusqueda: "",
                             caso:  (item.casopro.length > 0) ? obtenerPalabrasFromArrayObject(item.casopro, "caso", null, false) : "",
                             autocompletarBuscador: "",
-                            estado_id: (item.getfichas.length > 0 ) ? item.getfichas[0]["estado_id"] : ""
+                            estado_id: (item.getfichas.length > 0 ) ? item.getfichas[0]["estado_id"] : "",
+                            conclusion_resuelve: ((item.conclusion_resuelve !== null) && (item.hasOwnProperty("conclusion_resuelve"))) ? item.conclusion_resuelve : "", 
                         };
                         newItem["departamentoNombre"] = newItem.departamento;
                         newItem["procedimientos"] = newItem.procedimiento; 

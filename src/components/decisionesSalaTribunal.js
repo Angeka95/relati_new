@@ -57,6 +57,7 @@ export default function DecisionesSalaTribunal({caso}) {
               caso: (item.caso !== null ) ? item.caso : "",
               subcaso: (item.casopro.length > 0 ) ? obtenerPalabrasFromArrayObject(item.casopro, "caso", null, false) : "",
               extractoBusqueda: ((item.getfichas.length > 0 ) && (item.getfichas[0].sintesis_descripcion !== null))  ?  item.getfichas[0].sintesis_descripcion : "",
+              conclusion_resuelve: ((item.conclusion_resuelve !== null) && (item.hasOwnProperty("conclusion_resuelve"))) ? item.conclusion_resuelve : ""
           }
           newItem["autocompletarBuscador"] = { id: newItem.id, title: `${newItem.salaOSeccion} ${newItem.delito} ${newItem.procedimiento} ${newItem.compareciente} ${newItem.tipoSujeto} ${newItem.departamento} ${newItem.nombreDecision} ${newItem.magistrado}  ${newItem.palabrasClaves}`}; 
           return newItem;

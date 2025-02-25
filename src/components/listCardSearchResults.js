@@ -67,6 +67,7 @@ export default function Card({ selectedFilters, isListSmall, selectedTerm, isLar
                             estadoFichaJuris: "",
                             estado_id: (item.estado_id > 0) ? item.estado_id : "",
                             extractoBusqueda: (item.sintesis !== null ) ? item.sintesis : "",
+                            conclusion_resuelve: ((item.conclusion_resuelve !== null) && (item.hasOwnProperty("conclusion_resuelve"))) ? item.conclusion_resuelve : ""
                         };
                         newItem["hipervinculoFichaJuris"] = ((newItem.ficha_id !== null ) && ( newItem.estado_id === 14 )) ? `https://relatoria.jep.gov.co/downloadfichaext/${newItem.ficha_id}` : " ";
                         newItem["autocompletarBuscador"] = { id: newItem.id, title: `${newItem.salaOSeccion} ${newItem.delito} ${newItem.procedimiento} ${newItem.compareciente} ${newItem.tipoSujeto} ${newItem.departamento} ${newItem.nombreDecision} ${newItem.magistrado}  ${newItem.palabrasClaves}`}; 

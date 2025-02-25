@@ -55,6 +55,7 @@ export default function CardSearch({ datos }) {
   const [isEnfoquesDiferencialesExpanded, setIsEnfoquesDiferencialesExpanded] = useState(false);
   const [isNotasExpanded, setIsNotasExpanded] = useState(false);
   const [isAnalisisJuridicoExpanded, setIsAnalisisJuridicoExpanded] = useState(false);
+  const [isConclusionResuelveExpanded, setIsConclusionResuelveExpanded] = useState(false);
 
   const toggleMagistrados = () => {
     setIsMagistradosExpanded(prev => !prev);
@@ -71,6 +72,10 @@ export default function CardSearch({ datos }) {
 
   const toggleResuelve = () => {
     setIsResuelveExpanded(prev => !prev);
+  };
+  
+  const toggleConclusionResuelve = () => {
+    setIsConclusionResuelveExpanded(prev => !prev);
   };
 
   const toggleDocumentosAsociados = () => {
@@ -326,6 +331,20 @@ export default function CardSearch({ datos }) {
                 <div className="margin_top_s">
                   {((typeof datos.notasRelatoria === 'string' ) && (datos.notasRelatoria.trim() !== '')) && (
                   <p className="text_space_min text_justify">{/*• Notas de la Relatoría: */}  <span className="text_bolder"> {datos.notasRelatoria}</span> </p>
+                  )}
+                </div>
+              )}
+           </div>
+           )}
+           {((typeof datos.conclusion_resuelve === 'string' ) && (datos.conclusion_resuelve.trim() !== '')) && (
+          <div className="width_100">
+            <Button onClick={toggleConclusionResuelve} className=" link_secondary text_capitalize"  startIcon={isSujetosProcesalesExpanded ?<ExpandLessOutlinedIcon /> :  <ExpandMoreOutlinedIcon />}>
+            Conclusión 
+            </Button>
+            {isConclusionResuelveExpanded && (
+                <div className="margin_top_s">
+                  {((typeof datos.conclusion_resuelve === 'string' ) && (datos.conclusion_resuelve.trim() !== '')) && (
+                  <p className="text_space_min text_justify">{/*• Conclusión resuelve: */}<span className="text_bolder"> {datos.conclusion_resuelve}</span> </p>
                   )}
                 </div>
               )}

@@ -78,7 +78,8 @@ export default function SearchResults() {
                         extractoBusqueda: (item.sintesis !== null ) ? item.sintesis : "",
                         caso: (item.macrocaso !== null ) ? item.macrocaso : "",
                         autocompletarBuscador: "",
-                        estado_id: (item.estado_id > 0) ? item.estado_id : ""
+                        estado_id: (item.estado_id > 0) ? item.estado_id : "",
+                        conclusion_resuelve: (item.conclusion_resuelve !== null) ? item.conclusion_resuelve : "", 
                     };
                     newItem["departamentoNombre"] = newItem.departamento;
                     newItem["procedimientos"] = newItem.procedimiento; 
