@@ -1,28 +1,19 @@
 import React, { useState, useEffect, useContext } from 'react';
-import '../App.css';
-import { Stack, Pagination, PaginationItem, List, ListItem, Button, Box, Chip } from '@mui/material';
+import Context from '../context/context.js';
+import { validarfiltroJurisprudencial, getOpcionesAutocompletar, getDecisionesIDsToExport } from '../helpers/utils.js';
+import { Grid, Stack, Pagination, PaginationItem, List, ListItem, Button, Box, Chip, MenuItem, FormControl, Select } from '@mui/material';
+import { styled } from '@mui/material/styles';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
-import CardSearch from './cardSearchResultsGenero.js';
-import SearchBarSmall from './searchBarSmallAI.js';
 import SortIcon from '@mui/icons-material/Sort';
-import { Container, Grid } from '@mui/material';
-import { styled } from '@mui/material/styles';
-import { EditCalendar } from '@mui/icons-material';
-import Context from '../context/context.js';
-import ExpandLessOutlinedIcon from '@mui/icons-material/ExpandLessOutlined';
-import ExpandMoreOutlinedIcon from '@mui/icons-material/ExpandMoreOutlined';
+//import CardSearch from './cardSearchResultsGenero.js';
+import CardSearch from './cardSearchResults.js';
+import SearchBarSmall from './searchBarSmallAI.js';
 import FilterShort from './filterShort.js';
-import FilterListIcon from '@mui/icons-material/FilterList';
-import { validarfiltroJurisprudencial, getOpcionesAutocompletar, getDecisionesIDsToExport } from '../helpers/utils.js';
-import { macrocasos } from '../data/datos_macrocaso.js';
 import ButtonDownloadXLS from './buttonDownloadXLS.js';
+import '../App.css';
 
 export default function Card({ datosBusqueda, searchOptions, selectedFilters, isListSmall, selectedTerm, isLargeResult, isExternalFilters }) {
 
