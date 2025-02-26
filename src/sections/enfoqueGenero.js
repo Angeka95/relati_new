@@ -3,7 +3,6 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import enfoqueGeneroService from '../services/enfoque_genero.js';
 import { removeFragmentoInString, getOpcionesAutocompletar, obtenerPalabrasFromArrayObject, truncateWithEllipsis } from '../helpers/utils.js';
 import { Container, Grid, Alert } from '@mui/material';
-//import ListCardSearch from '../components/listCardSearchAIResults.js';
 import ListCardSearch from '../components/listCardSearchEnfoqueGenero.js';
 import LinearWithValueLabel from '../components/linearProgress.js';  
 import '../App.css';
@@ -54,38 +53,50 @@ export default function EnfoqueGenero() {
                         let item = i;
                         let newItem = {
                             id: k + 1,
+                            fecha: item.fecha_providencia,
                             ficha_id: item.id,
                             providencia_id: item.id,
-                            fecha: item.fecha_providencia,
-                            anio: (item.anio_hechos.length > 0) ? item.anio_hechos[0].anio : "",
-                            asuntoNombreCaso: "",
-                            asuntoCasoEllipsed: ((item.nombre !== null)) ? truncateWithEllipsis(item.nombre) : "", 
-                            asuntoNombre: ((item.nombre !== null)) ? item.nombre : "",
-                            nombre: ((item.nombre !== null)) ? item.nombre : "",
-                            actuacion: (item.hasOwnProperty("actuacion")) && (item.actuacion.length > 0 )? obtenerPalabrasFromArrayObject(item.actuacion, "actuacion", null, false) : "",
-                            caso:  (item.casopro.length > 0 ) ? obtenerPalabrasFromArrayObject(item.casopro, "caso", null, false) : "",
-                            sala: (item.despacho.length > 0) ? obtenerPalabrasFromArrayObject(item.despacho, "nombre", null, false) : "",
-                            salaDescripcion:  (item.despacho.length > 0) ? obtenerPalabrasFromArrayObject(item.despacho, "nombre", null, false) : "",
-                            salaId: (item.despacho.length > 0) ? obtenerPalabrasFromArrayObject(item.despacho, "id", null, false) : "",
-                            asuntoCaso: ((item.nombre !== null)) ? truncateWithEllipsis(item.nombre) : "", 
-                            departamentoId: "",
-                            providencia: "",
-                            departamentoNombre: (item.departamento_ext.length > 0) ? removeFragmentoInString("DEPARTAMENTO", item.departamento_ext[0].nombre_dpto) : "",
+                            sala: (item.despacho) ? item.despacho.nombre : "",
+                            salaOSeccion: (item.despacho) ? item.despacho.nombre : "",
+                            nombreDecision: ((item.nombre !== null)) ? item.nombre : "",
+                            procedimiento: (item.hasOwnProperty("actuacion")) && (item.actuacion.length > 0 )? obtenerPalabrasFromArrayObject(item.actuacion, "actuacion", null, false) : "", 
+                            expediente: "",
+                            departamento: (item.departamento_ext.length > 0) ? removeFragmentoInString("DEPARTAMENTO", item.departamento_ext[0].nombre_dpto) : "",
+                            magistrado: (item.magistrado.length > 0) ? obtenerPalabrasFromArrayObject(item.magistrado, "id", null, false) : "", //Requiere nombre
+                            municipio:  (item.municipio_ext.length > 0) ? removeFragmentoInString("MUNICIPIO", item.municipio_ext[0].nombre_muni) : "",
+                            delito: (item.delitos.length > 0) ? obtenerPalabrasFromArrayObject(item.delitos, "delito", null, false) : "", 
+                            anioHechos: (item.anio_hechos.length > 0) ? item.anio_hechos[0].anio : "",
+                            tipo: (item.documento.length > 0) ? obtenerPalabrasFromArrayObject(item.documento, "nombre", null, false) : "", 
+                            radicado: (item.radicado !== null) ? item.radicado : "",
+                            compareciente: (item.tipopeti.length > 0) ? obtenerPalabrasFromArrayObject(item.tipopeti, "tipo", null, false) : "", 
+                            tipoSujeto: (item.hasOwnProperty("tipo_compareciente") && (item.tipo_compareciente !== null )) ? item.tipo_compareciente : "", 
+                            accionadoVinculado: (item.hasOwnProperty("accionadoVinculado") && (item.accionadoVinculado !== null )) ? item.accionadoVinculado : "",
+                            palabrasClaves: (item.hasOwnProperty("palabras_clave") && (item.palabras_clave !== null )) ? item.palabras_clave : "",
+                            hechos:  (item.hasOwnProperty("hechos_antecedentes") && (item.hechos_antecedentes !== null)) ? item.hechos_antecedentes : "", 
+                            problemasJuridicos: (item.hasOwnProperty("problema_juridico") && (item.problema_juridico !== null)) ? item.problema_juridico : "",
+                            reglas: (item.hasOwnProperty("reglas_juridicas") && (item.reglas_juridicas !== null)) ? item.reglas_juridicas : "",
+                            aplicacionCasoConcreto: (item.hasOwnProperty("analisis_caso_concreto") && (item.analisis_caso_concreto !== null)) ? item.analisis_caso_concreto : "", 
+                            resuelve:  (item.hasOwnProperty("resuelve") && (item.resuelve !== null )) ? item.resuelve : "",
+                            documentosAsociados: (item.hasOwnProperty("anexos") && (item.anexos.length > 0)) ? item.anexos[0].nombre : "", 
+                            documentosAsociadosLink:  (item.hasOwnProperty("anexos") && (item.anexos.length > 0)) ? item.anexos[0].hipervinculo : "", 
+                            enfoquesDiferenciales: (item.hasOwnProperty("enfoque") && (item.enfoque !== null )) ? item.enfoque : "",
+                            notasRelatoria: "", 
                             hipervinculo:   (item.hipervinculo !== null ) ? `https://relatoria.jep.gov.co/${item.hipervinculo}` : "", 
-                            comparecientes:  (item.tipopeti.length > 0) ? obtenerPalabrasFromArrayObject(item.tipopeti, "tipo", null, false) : "", 
-                            delitos: (item.delitos.length > 0) ? obtenerPalabrasFromArrayObject(item.delitos, "delito", null, false) : "", 
-                            procedimientos: (item.hasOwnProperty("actuacion")) && (item.actuacion.length > 0 )? obtenerPalabrasFromArrayObject(item.actuacion, "actuacion", null, false) : "", 
-                            palabrasClave: "",
-                            municipio: "",
-                            palabrasClaveBuscador: "",
-                            palabrasClaveFichaJuridica: "",
-                            conclusion_resuelve: ((item.conclusion_resuelve !== null) && (item.hasOwnProperty("conclusion_resuelve"))) ? item.conclusion_resuelve : ""
+                            hipervinculoFichaJuris: "",
+                            estadoFichaJuris: false,
+                            extractoBusqueda: (item.asuntocaso !== null ) ? item.asuntocaso : "", // No tiene Sintesis
+                            caso: (item.casopro.length > 0 ) ? obtenerPalabrasFromArrayObject(item.casopro, "caso", null, false) : "",
+                            autocompletarBuscador: "",
+                            estado_id: (item.estado_id > 0) ? item.estado_id : "",
+                            conclusion_resuelve: ((item.conclusion_resuelve !== null) && (item.hasOwnProperty("conclusion_resuelve"))) ? item.conclusion_resuelve : "", // No tiene Conclusion Resuelve
                         };
-                        newItem["asuntoNombreCaso"] = `${newItem["asuntoNombre"]}`;
-                        newItem["palabrasClave"] = `${newItem["delitos"]}, ${newItem["comparecientes"]}, ${newItem["procedimientos"]}`;
-                        newItem["autocompletarBuscador"] = { 
-                              id: newItem.id, 
-                              title: `${newItem["providencia_id"]} - ${newItem["asuntoNombreCaso"]} ${newItem["sala"]} ${newItem["departamentoNombre"]} ${newItem["delitos"]}, ${newItem["comparecientes"]}, ${newItem["procedimientos"]}`}; 
+                        newItem["departamentoNombre"] = newItem.departamento;
+                        newItem["procedimientos"] = newItem.procedimiento; 
+                        newItem["anio"] = newItem.anioHechos;
+                        newItem["comparecientes"] = newItem.compareciente;
+                        newItem["delitos"] = newItem.delito;
+                        newItem["hipervinculoFichaJuris"] = ((newItem.ficha_id !== null ) && ( newItem.estado_id === 14 )) ? `https://relatoria.jep.gov.co/downloadfichaext/${newItem.ficha_id}` : " ";
+                        newItem["autocompletarBuscador"] = { id: newItem.id, title: `${newItem.salaOSeccion} ${newItem.nombreDecision} ${newItem.departamento} ${newItem.delito} ${newItem.procedimiento} ${newItem.compareciente} ${newItem.magistrado}`};  
                         return newItem;
                   });
                   setDatos(newDatos);
