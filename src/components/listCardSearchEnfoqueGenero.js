@@ -8,7 +8,6 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import SortIcon from '@mui/icons-material/Sort';
-//import CardSearch from './cardSearchResultsGenero.js';
 import CardSearch from './cardSearchResults.js';
 import SearchBarSmall from './searchBarSmallAI.js';
 import FilterShort from './filterShort.js';
@@ -343,34 +342,34 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
                                         <JustMapGrid > 
                                             <h4 className="text_bolder"> Decisiones </h4> 
                                         </JustMapGrid>
-                                            {isExternalFilters && (
-                                                <div className='filter_sort_container'>
-                                                    <FilterShort setSelectedFilters={setExternalFilters}/>
-                                                    <NoneGrid className='margin_left_s'>
-                                                        <Button className="button_function" startIcon={<SortIcon />} onClick={toggleButton}>Ordenar
-                                                        </Button>
-                                                        {isButtonSorterEnabled && (
-                                                            <div className='container_date_sorted'>
-                                                                <Button onClick={sortAscByDate} className='items_sorted' endIcon={<ArrowUpwardIcon />}>fecha ascendente </Button>
-                                                                <Button onClick={sortDescByDate} className='items_sorted' endIcon={<ArrowDownwardIcon />}>fecha descendente </Button>
-                                                            </div>
-                                                        )}
-                                                    </NoneGrid>
-                                                </div>
-                                            )}
-    
-                                            {!isExternalFilters && (
-                                                <NoneGrid>
-                                                  <Button className="button_function" startIcon={<SortIcon />} onClick={toggleButton}>Ordenar
-                                                  </Button>
-                                                  {isButtonSorterEnabled && (
-                                                      <div className='container_date_sorted'>
-                                                           <Button onClick={sortAscByDate} className='items_sorted' endIcon={<ArrowUpwardIcon />}>fecha ascendente </Button>
-                                                           <Button onClick={sortDescByDate} className='items_sorted' endIcon={<ArrowDownwardIcon />}>fecha descendente </Button>
-                                                      </div>
-                                                  )}
-                                                </NoneGrid>  
-                                            )}
+                                        {isExternalFilters && (
+                                            <div className='filter_sort_container'>
+                                                <FilterShort setSelectedFilters={setExternalFilters}/>
+                                                <NoneGrid className='margin_left_s'>
+                                                    <Button className="button_function" startIcon={<SortIcon />} onClick={toggleButton}>Ordenar
+                                                    </Button>  
+                                                    {isButtonSorterEnabled && (
+                                                        <div className='container_date_sorted'>
+                                                          <Button onClick={sortDescByDate} className='items_sorted' endIcon={<ArrowUpwardIcon />} >Más recientes </Button>
+                                                          <Button onClick={sortAscByDate} className='items_sorted' endIcon={<ArrowDownwardIcon />} >Más antiguos </Button>
+                                                        </div>
+                                                    )}
+                                                </NoneGrid>
+                                            </div>
+                                        )}
+
+                                        {!isExternalFilters && (
+                                            <NoneGrid>
+                                              <Button className="button_function" startIcon={<SortIcon />} onClick={toggleButton}>Ordenar
+                                              </Button>
+                                              {isButtonSorterEnabled && (
+                                                  <div className='container_date_sorted'>
+                                                      <Button onClick={sortDescByDate} className='items_sorted' endIcon={<ArrowUpwardIcon />} >Más recientes </Button>
+                                                      <Button onClick={sortAscByDate} className='items_sorted' endIcon={<ArrowDownwardIcon />} >Más antiguos </Button>
+                                                  </div>
+                                              )}
+                                            </NoneGrid>  
+                                        )}
                                     </Grid>
     
                                     <Grid item  className="justify_end_partial" xs={12} sm={12} md= {(isListSmall ? 12 : 6)} lg={(isListSmall ? 12 : 6)} xl={(isListSmall ? 12 : 6) }>
