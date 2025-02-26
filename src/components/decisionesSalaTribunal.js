@@ -9,7 +9,7 @@ export default function DecisionesSalaTribunal({caso}) {
 
     //const tipoDecision = ['Apertura', 'Determinación de hechos y conductas', 'Resolución de conclusiones', 'Acreditación de víctimas individuales y colectivas', 'Auto que fija fecha de audiencia y/o diligencia', 'Régimen de condicionalidad', 'Otras decisiones'];
     
-    const tipoDecisionSala = ['Apertura', 'Determinación de hechos y conductas', 'Resolución de conclusiones', 'Acreditación de víctimas individuales y colectivas', 'Auto que fija fecha de audiencia y/o diligencia', 'Régimen de condicionalidad', 'Otras decisiones'];
+    const tipoDecisionSala = ['Apertura', 'Determinación de hechos y conductas', 'Resolución de conclusiones', 'Acreditación de víctimas individuales y colectivas', 'Auto que fija fecha de audiencia y/o diligencia', 'Otras decisiones'];
     
     const tipoDecisionTribunal = ['Asume competencia', 'Audiencias de observaciones a la resolución de conclusiones', 'Auto de Correspondencia', 'Sentencia', 'Medidas cautelares', 'Auto que fija fecha de audiencia y/o diligencia', 'Otras decisiones'];
     
