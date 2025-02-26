@@ -1726,6 +1726,42 @@ controlodares carrusel  */
   padding-right: 50px;
 }
 
+.cta_container .button_primary {
+  width: 200px;
+  height: 50px;
+  background-color: #98C438;
+  color: #fff;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 1em;
+  line-height: normal;
+  text-align: center;
+  text-transform: capitalize;
+  box-shadow: rgba(57, 129, 195, 0.2) 0px 8px 24px;
+  transition: transform 0.3s ease;
+}
+
+@media (max-width: 539px) {
+  .cta_container .button_primary {
+      margin-bottom: 1rem;
+  }
+}
+
+@media (min-width: 540px) {
+  .cta_container .button_primary {
+    margin-right: 1rem;
+    margin-bottom: 1rem;
+  }
+}
+
+@media (min-width: 580px) {
+  .cta_container .button_primary {
+    margin-right: 1rem;
+    margin-bottom: 0;
+  }
+}
+
+
 /*END CTA BOLETINES*/
 
 /*LIST BOLETINES*/

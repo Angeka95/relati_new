@@ -236,10 +236,12 @@ export default function Caso() {
             <Container >
               <div className="cta_container">
                 <h6 className="text_bolder cta_text">Conozca los lineamientos en materia de sanción propia y Trabajos, Obras y Actividades con contenido Reparador (TOAR)</h6>
-                {( datos_links_toar[0] !== "") && 
-                 <Button className="button_primary button_container" href={datos_links_toar[0]} target='_blank' rel="noreferrer">Ver TOAR</Button>
+                {( datos_links_toar[0]["link"] !== "") && 
+                 <Button className="button_primary" href={datos_links_toar[0]["link"]} target='_blank' rel="noreferrer">{datos_links_toar[0]["nombre"]}</Button>
                 }
-
+                {( datos_links_toar[1]["link"] !== "") && 
+                 <Button className="button_primary" href={datos_links_toar[1]["link"]} target='_blank' rel="noreferrer">{datos_links_toar[1]["nombre"]}</Button>
+                }
               </div>
             </Container>
           </div>
