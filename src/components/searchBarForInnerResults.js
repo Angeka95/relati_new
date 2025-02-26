@@ -4,10 +4,10 @@ import { Button, TextField, Stack, Autocomplete } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import '../App.css';
 
-const SearchBarForInnerResults = ({handlerInnerSearch}) => {
+const SearchBarForInnerResults = ({handlerInnerSearch, ref = null }) => {
     
   const options = [];  
-  const inputRef = useRef(null);
+  const inputRef = useRef(ref);
   
   const [valueSearchBar, setValueSearchBar] = useState('');
   
@@ -18,11 +18,12 @@ const SearchBarForInnerResults = ({handlerInnerSearch}) => {
   return (
     <Stack className='autocomplete_bar_search_small'>
       <Autocomplete
-        id="free-solo-demo"
+        id="searchBarForInnerResults"
         value={valueSearchBar}
         freeSolo
         options={options.map((option) => option.title)}
         renderInput={(params) => <TextField {...params}
+                                    id="searchBarForInnerResultsTextField"
                                     ref={inputRef}
                                     label="Buscar en los resultados" 
                                     placeholder=""

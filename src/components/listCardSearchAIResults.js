@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, useRef } from 'react';
 import '../App.css';
 import { Stack, Pagination, PaginationItem, List, ListItem, Button, Box, Chip, Alert } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
@@ -221,6 +221,9 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
     }
     
     // Manipula el valor de busqueda que viene desde SearchBarForInnerResults y en valor
+    
+    const searchBarForInnerResultsInputRef = useRef(null);
+    
     const handlerInnerSearch = (valueSearchBarInner) => {
         let newMessage = {}; 
         if(valueSearchBarInner !== ""){
@@ -247,7 +250,12 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
     const deshacerBusqueda = (e) => {
         setDatos(datosOriginales);
         setMessage({ message: "", classname: "" });
+        document.getElementById("searchBarForInnerResultsTextField").value = "";
     }
+    
+    useEffect(() => {
+        
+    }, []);
     
      if(datosBusqueda.length > 0) {
         return (
@@ -357,7 +365,7 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
 
                                 <Grid item  className="justify_end_partial" xs={12} sm={12} md={(isListSmall ? 12 : 6)} lg={(isListSmall ? 12 : 6)} xl={(isListSmall ? 12 : 6) }>
                                     {/*<SearchBarSmall searchOptions={searchDocsOptions} handlerSetSelectedOption={handlerSetSelectedDoc}> </SearchBarSmall>*/}
-                                    <SearchBarForInnerResults handlerInnerSearch={handlerInnerSearch}></SearchBarForInnerResults>
+                                    <SearchBarForInnerResults handlerInnerSearch={handlerInnerSearch} ref={searchBarForInnerResultsInputRef}></SearchBarForInnerResults>
                                 </Grid>
                             </SpaceBetweenGrid>
 
