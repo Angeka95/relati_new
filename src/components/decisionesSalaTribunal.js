@@ -7,7 +7,12 @@ import { obtenerPalabrasFromArrayObject } from '../helpers/utils.js';
 
 export default function DecisionesSalaTribunal({caso}) {
 
-    const tipoDecision = ['Apertura', 'Determinación de hechos y conductas', 'Resolución de conclusiones', 'Acreditación de víctimas individuales y colectivas', 'Auto que fija fecha de audiencia y/o diligencia', 'Régimen de condicionalidad', 'Otras decisiones'];
+    //const tipoDecision = ['Apertura', 'Determinación de hechos y conductas', 'Resolución de conclusiones', 'Acreditación de víctimas individuales y colectivas', 'Auto que fija fecha de audiencia y/o diligencia', 'Régimen de condicionalidad', 'Otras decisiones'];
+    
+    const tipoDecisionSala = ['Apertura', 'Determinación de hechos y conductas', 'Resolución de conclusiones', 'Acreditación de víctimas individuales y colectivas', 'Auto que fija fecha de audiencia y/o diligencia', 'Régimen de condicionalidad', 'Otras decisiones'];
+    
+    const tipoDecisionTribunal = ['Asume competencia', 'Audiencias de observaciones a la resolución de conclusiones', 'Auto de Correspondencia', 'Sentencia', 'Medidas cautelares', 'Auto que fija fecha de audiencia y/o diligencia', 'Otras decisiones'];
+    
 
     const subcasos = ['Caso 001', 'Caso 002', 'Caso 003', 'Caso 004', 'Caso 005', 'Caso 006', 'Caso 007', 'Caso 008', 'Caso 009', 'Caso 010', 'Caso 011'];
     //const subcasos = ['Subcaso 01', 'Subcaso 02', 'Subcaso 03', 'Subcaso 04'];
@@ -202,7 +207,7 @@ export default function DecisionesSalaTribunal({caso}) {
                                     </Box>
                                     )}
                                 >
-                                    {tipoDecision.map((option) => (
+                                    {tipoDecisionSala.map((option) => (
                                     <MenuItem key={option} value={option}>
                                         {option}
                                     </MenuItem>
@@ -273,7 +278,7 @@ export default function DecisionesSalaTribunal({caso}) {
                                     </Box>
                                     )}
                                 >
-                                    {tipoDecision.map((option) => (
+                                    {tipoDecisionTribunal.map((option) => (
                                     <MenuItem key={option} value={option}>
                                         {option}
                                     </MenuItem>
