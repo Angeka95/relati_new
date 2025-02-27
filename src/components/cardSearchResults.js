@@ -253,6 +253,7 @@ export default function CardSearch({ datos }) {
 
       {!isButtonInfoSpecificEnabled  && value === 1 && (
         <div> 
+          {((typeof datos.problemasJuridicos === 'string' ) && (datos.problemasJuridicos.trim() !== '')) && (
           <div className="width_100">
             <Button onClick={toggleAnalisisJuridico} className=" link_secondary text_capitalize"  startIcon={isSujetosProcesalesExpanded ?<ExpandLessOutlinedIcon /> :  <ExpandMoreOutlinedIcon />}>
             Análisis Jurídico
@@ -275,7 +276,7 @@ export default function CardSearch({ datos }) {
                 </div>
               )}
            </div>
-
+         )}
           {((typeof datos.resuelve === 'string' ) && (datos.resuelve.trim() !== '')) && (
           <div className="width_100">
             <Button onClick={toggleResuelve} className=" link_secondary text_capitalize"  startIcon={isSujetosProcesalesExpanded ?<ExpandLessOutlinedIcon /> :  <ExpandMoreOutlinedIcon />}>

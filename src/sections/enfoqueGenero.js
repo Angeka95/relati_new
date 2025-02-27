@@ -62,7 +62,7 @@ export default function EnfoqueGenero() {
                             procedimiento: (item.hasOwnProperty("actuacion")) && (item.actuacion.length > 0 )? obtenerPalabrasFromArrayObject(item.actuacion, "actuacion", null, false) : "", 
                             expediente: "",
                             departamento: (item.departamento_ext.length > 0) ? removeFragmentoInString("DEPARTAMENTO", item.departamento_ext[0].nombre_dpto) : "",
-                            magistrado: (item.magistrado.length > 0) ? obtenerPalabrasFromArrayObject(item.magistrado, "id", null, false) : "", //Requiere nombre
+                            magistrado: (item.magistrado.length > 0) ? obtenerPalabrasFromArrayObject(item.magistrado, "nombre_magistrado", "nombre", false) : "", //Requiere nombre
                             municipio:  (item.municipio_ext.length > 0) ? removeFragmentoInString("MUNICIPIO", item.municipio_ext[0].nombre_muni) : "",
                             delito: (item.delitos.length > 0) ? obtenerPalabrasFromArrayObject(item.delitos, "delito", null, false) : "", 
                             anioHechos: (item.anio_hechos.length > 0) ? item.anio_hechos[0].anio : "",
@@ -73,7 +73,7 @@ export default function EnfoqueGenero() {
                             accionadoVinculado: (item.hasOwnProperty("accionadoVinculado") && (item.accionadoVinculado !== null )) ? item.accionadoVinculado : "",
                             palabrasClaves: (item.hasOwnProperty("palabras_clave") && (item.palabras_clave !== null )) ? item.palabras_clave : "",
                             hechos:  (item.hasOwnProperty("hechos_antecedentes") && (item.hechos_antecedentes !== null)) ? item.hechos_antecedentes : "", 
-                            problemasJuridicos: (item.hasOwnProperty("problema_juridico") && (item.problema_juridico !== null)) ? item.problema_juridico : "",
+                            problemasJuridicos: ((item.getfichas.length > 0 ) && (item.getfichas[0].sintesis_descripcion !== null))  ?  item.getfichas[0].sintesis_descripcion : "",
                             reglas: (item.hasOwnProperty("reglas_juridicas") && (item.reglas_juridicas !== null)) ? item.reglas_juridicas : "",
                             aplicacionCasoConcreto: (item.hasOwnProperty("analisis_caso_concreto") && (item.analisis_caso_concreto !== null)) ? item.analisis_caso_concreto : "", 
                             resuelve:  (item.hasOwnProperty("resuelve") && (item.resuelve !== null )) ? item.resuelve : "",
@@ -84,7 +84,7 @@ export default function EnfoqueGenero() {
                             hipervinculo:   (item.hipervinculo !== null ) ? `https://relatoria.jep.gov.co/${item.hipervinculo}` : "", 
                             hipervinculoFichaJuris: "",
                             estadoFichaJuris: false,
-                            extractoBusqueda: (item.asuntocaso !== null ) ? item.asuntocaso : "", // No tiene Sintesis
+                            extractoBusqueda:  ((item.getfichas.length > 0 ) && (item.getfichas[0].sintesis_titulo !== null))  ?  item.getfichas[0].sintesis_titulo : "",
                             caso: (item.casopro.length > 0 ) ? obtenerPalabrasFromArrayObject(item.casopro, "caso", null, false) : "",
                             autocompletarBuscador: "",
                             estado_id: (item.estado_id > 0) ? item.estado_id : "",
@@ -95,7 +95,7 @@ export default function EnfoqueGenero() {
                         newItem["anio"] = newItem.anioHechos;
                         newItem["comparecientes"] = newItem.compareciente;
                         newItem["delitos"] = newItem.delito;
-                        newItem["hipervinculoFichaJuris"] = ((newItem.ficha_id !== null ) && ( newItem.estado_id === 14 )) ? `https://relatoria.jep.gov.co/downloadfichaext/${newItem.ficha_id}` : " ";
+                        newItem["hipervinculoFichaJuris"] = ( newItem.ficha_id !== null ) ? `https://relatoria.jep.gov.co/downloadfichaext/${newItem.ficha_id}` : " ";
                         newItem["autocompletarBuscador"] = { id: newItem.id, title: `${newItem.salaOSeccion} ${newItem.nombreDecision} ${newItem.departamento} ${newItem.delito} ${newItem.procedimiento} ${newItem.compareciente} ${newItem.magistrado}`};  
                         return newItem;
                   });
