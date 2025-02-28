@@ -55,7 +55,7 @@ export default function EnfoqueGenero() {
                             id: k + 1,
                             fecha: item.fecha_providencia,
                             ficha_id: item.id,
-                            providencia_id: item.id,
+                            providencia_id: ((item.getfichas.length > 0 ) && (item.getfichas[0].id !== null))  ?  item.getfichas[0].id : "",
                             sala: (item.despacho) ? item.despacho.nombre : "",
                             salaOSeccion: (item.despacho) ? item.despacho.nombre : "",
                             nombreDecision: ((item.nombre !== null)) ? item.nombre : "",
@@ -95,7 +95,7 @@ export default function EnfoqueGenero() {
                         newItem["anio"] = newItem.anioHechos;
                         newItem["comparecientes"] = newItem.compareciente;
                         newItem["delitos"] = newItem.delito;
-                        newItem["hipervinculoFichaJuris"] = ( newItem.ficha_id !== null ) ? `https://relatoria.jep.gov.co/downloadfichaext/${newItem.ficha_id}` : " ";
+                        newItem["hipervinculoFichaJuris"] = ( newItem.ficha_id !== null ) ? `https://relatoria.jep.gov.co/downloadfichaext/${newItem.providencia_id}` : " ";
                         newItem["autocompletarBuscador"] = { id: newItem.id, title: `${newItem.salaOSeccion} ${newItem.nombreDecision} ${newItem.departamento} ${newItem.delito} ${newItem.procedimiento} ${newItem.compareciente} ${newItem.magistrado}`};  
                         return newItem;
                   });
