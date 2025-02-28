@@ -463,7 +463,7 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
                                 {currentData.map((item, k) => (
                                     <SpaceGrid key={k}>
                                         <ListItem className="padding_none" key={item.id}>
-                                            <CardSearch className="padding_none" datos={item}></CardSearch>
+                                            <CardSearch className="padding_none" datos={item} hiddenAnalisisJuridico={true}></CardSearch>
                                         </ListItem>
                                     </SpaceGrid>
                                 ))}

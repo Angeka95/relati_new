@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
+import DOMPurify from 'dompurify';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import enfoqueGeneroService from '../services/enfoque_genero.js';
 import { removeFragmentoInString, getOpcionesAutocompletar, obtenerPalabrasFromArrayObject, truncateWithEllipsis } from '../helpers/utils.js';
@@ -89,12 +90,14 @@ export default function EnfoqueGenero() {
                             autocompletarBuscador: "",
                             estado_id: (item.estado_id > 0) ? item.estado_id : "",
                             conclusion_resuelve: ((item.conclusion_resuelve !== null) && (item.hasOwnProperty("conclusion_resuelve"))) ? item.conclusion_resuelve : "", // No tiene Conclusion Resuelve
+                            analisis: ((item.getfichas.length > 0 ) && (item.getfichas[0].sintesis_titulo !== null))  ?  item.getfichas[0].sintesis_titulo : "",
                         };
                         newItem["departamentoNombre"] = newItem.departamento;
                         newItem["procedimientos"] = newItem.procedimiento; 
                         newItem["anio"] = newItem.anioHechos;
                         newItem["comparecientes"] = newItem.compareciente;
                         newItem["delitos"] = newItem.delito;
+                        newItem["hechos"] =  DOMPurify.sanitize(newItem.analisis, { ALLOWED_TAGS: [] });
                         newItem["hipervinculoFichaJuris"] = ( newItem.ficha_id !== null ) ? `https://relatoria.jep.gov.co/downloadfichaext/${newItem.providencia_id}` : " ";
                         newItem["autocompletarBuscador"] = { id: newItem.id, title: `${newItem.salaOSeccion} ${newItem.nombreDecision} ${newItem.departamento} ${newItem.delito} ${newItem.procedimiento} ${newItem.compareciente} ${newItem.magistrado}`};  
                         return newItem;
