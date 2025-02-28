@@ -72,7 +72,7 @@ export default function EnfoqueGenero() {
                             compareciente: (item.tipopeti.length > 0) ? obtenerPalabrasFromArrayObject(item.tipopeti, "tipo", null, false) : "", 
                             tipoSujeto: (item.hasOwnProperty("tipo_compareciente") && (item.tipo_compareciente !== null )) ? item.tipo_compareciente : "", 
                             accionadoVinculado: (item.hasOwnProperty("accionadoVinculado") && (item.accionadoVinculado !== null )) ? item.accionadoVinculado : "",
-                            palabrasClaves: (item.hasOwnProperty("palabras_clave") && (item.palabras_clave !== null )) ? item.palabras_clave : "",
+                            palabrasClaves:  (item.getfichas.length > 0 )? obtenerPalabrasFromArrayObject(item.getfichas[0].palabras_clave_problemas_juridicos, "palabras", null, false) : "", 
                             hechos:  (item.hasOwnProperty("hechos_antecedentes") && (item.hechos_antecedentes !== null)) ? item.hechos_antecedentes : "", 
                             problemasJuridicos: ((item.getfichas.length > 0 ) && (item.getfichas[0].sintesis_descripcion !== null))  ?  item.getfichas[0].sintesis_descripcion : "",
                             reglas: (item.hasOwnProperty("reglas_juridicas") && (item.reglas_juridicas !== null)) ? item.reglas_juridicas : "",
