@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Container, Box, AppBar, Tabs, Tab, Select, MenuItem, Chip, FormControl, InputLabel } from '@mui/material';
+import DOMPurify from 'dompurify';
 import ListCardSearch from '../components/listCardSearchMacrocasoResults.js';
 import LinearWithValueLabel from '../components/linearProgress.js';
 import macrocasoService from '../services/macrocaso.js';
@@ -62,7 +63,7 @@ export default function DecisionesSalaTribunal({caso}) {
               accionadoVinculado: (item.accionado.length > 0 )? obtenerPalabrasFromArrayObject(item.accionado, "accionado", null, false): "",  
               palabrasClaves:  (item.getfichas.length > 0 )? obtenerPalabrasFromArrayObject(item.getfichas[0].palabras_clave_problemas_juridicos, "palabras", null, false) : "",
               hechos: (item.getfichas.length > 0 )? obtenerPalabrasFromArrayObject(item.getfichas[0].problemas_juridicos, "hechos", null, false) : "",
-              problemasJuridicos: (item.getfichas.length > 0 )? obtenerPalabrasFromArrayObject(item.getfichas[0].problemas_juridicos, "nombre", null, false) : "", 
+              problemasJuridicos: (item.getfichas.length > 0 )? obtenerPalabrasFromArrayObject(item.getfichas[0].palabras_clave_problemas_juridicos, "palabras", null, false) : "", 
               reglas: (item.getfichas.length > 0 )? obtenerPalabrasFromArrayObject(item.getfichas[0].problemas_juridicos, "reglas", null, false) : "",
               aplicacionCasoConcreto: (item.getfichas.length > 0 )? obtenerPalabrasFromArrayObject(item.getfichas[0].problemas_juridicos, "tesisjurisprudencial", null, false) : "",
               resuelve: (item.getfichas.length > 0 )? obtenerPalabrasFromArrayObject(item.getfichas[0].resuelve, "descripcion", null, false) : "",
@@ -77,7 +78,10 @@ export default function DecisionesSalaTribunal({caso}) {
               subcaso: (item.casopro.length > 0 ) ? obtenerPalabrasFromArrayObject(item.casopro, "caso", null, false) : "",
               extractoBusqueda: ((item.getfichas.length > 0 ) && (item.getfichas[0].sintesis_descripcion !== null))  ?  item.getfichas[0].sintesis_descripcion : "",
               conclusion_resuelve: ((item.conclusion_resuelve !== null) && (item.hasOwnProperty("conclusion_resuelve"))) ? item.conclusion_resuelve : ""
-          }
+          };
+          newItem["hechos"] =  DOMPurify.sanitize(newItem.hechos, { ALLOWED_TAGS: [] });
+          newItem["extractoBusqueda"] =  DOMPurify.sanitize(newItem.extractoBusqueda, { ALLOWED_TAGS: [] });
+          newItem["problemasJuridicos"] =  DOMPurify.sanitize(newItem.problemasJuridicos, { ALLOWED_TAGS: [] });
           newItem["autocompletarBuscador"] = { id: newItem.id, title: `${newItem.salaOSeccion} ${newItem.delito} ${newItem.procedimiento} ${newItem.compareciente} ${newItem.tipoSujeto} ${newItem.departamento} ${newItem.nombreDecision} ${newItem.magistrado}  ${newItem.palabrasClaves}`}; 
           return newItem;
         });
