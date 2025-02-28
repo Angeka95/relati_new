@@ -70,7 +70,7 @@ export default function EnfoqueGenero() {
                             tipo: (item.documento.length > 0) ? obtenerPalabrasFromArrayObject(item.documento, "nombre", null, false) : "", 
                             radicado: (item.radicado !== null) ? item.radicado : "",
                             compareciente:  ((item.getfichas.length > 0 ) && (item.getfichas[0].compareciente !== null))  ?  item.getfichas[0].compareciente : "", 
-                            tipoSujeto: "", 
+                            tipoSujeto: (item.tipopeti.length > 0) ? obtenerPalabrasFromArrayObject(item.tipopeti, "tipo", null, false) : "", 
                             accionadoVinculado: (item.hasOwnProperty("accionadoVinculado") && (item.accionadoVinculado !== null )) ? item.accionadoVinculado : "",
                             palabrasClaves:  (item.getfichas.length > 0 )? obtenerPalabrasFromArrayObject(item.getfichas[0].palabras_clave_problemas_juridicos, "palabras", null, false) : "", 
                             hechos:  (item.hasOwnProperty("hechos_antecedentes") && (item.hechos_antecedentes !== null)) ? item.hechos_antecedentes : "", 
@@ -88,8 +88,8 @@ export default function EnfoqueGenero() {
                             extractoBusqueda:  ((item.getfichas.length > 0 ) && (item.getfichas[0].sintesis_titulo !== null))  ?  item.getfichas[0].sintesis_titulo : "",
                             caso: (item.casopro.length > 0 ) ? obtenerPalabrasFromArrayObject(item.casopro, "caso", null, false) : "",
                             autocompletarBuscador: "",
-                            estado_id: (item.estado_id > 0) ? item.estado_id : "",
-                            conclusion_resuelve: ((item.conclusion_resuelve !== null) && (item.hasOwnProperty("conclusion_resuelve"))) ? item.conclusion_resuelve : "", // No tiene Conclusion Resuelve
+                            estado_id: ((item.getfichas.length > 0 ) && (item.getfichas[0].estado_id !== null))  ?  item.getfichas[0].estado_id : "",
+                            conclusion_resuelve: ((item.conclusion_resuelve !== null) && (item.hasOwnProperty("conclusion_resuelve"))) ? item.conclusion_resuelve : "", 
                             analisis: ((item.getfichas.length > 0 ) && (item.getfichas[0].sintesis_titulo !== null))  ?  item.getfichas[0].sintesis_titulo : "",
                         };
                         newItem["departamentoNombre"] = newItem.departamento;
@@ -98,7 +98,7 @@ export default function EnfoqueGenero() {
                         newItem["comparecientes"] = newItem.compareciente;
                         newItem["delitos"] = newItem.delito;
                         newItem["hechos"] =  DOMPurify.sanitize(newItem.analisis, { ALLOWED_TAGS: [] });
-                        newItem["hipervinculoFichaJuris"] = ( newItem.ficha_id !== null ) ? `https://relatoria.jep.gov.co/downloadfichaext/${newItem.providencia_id}` : " ";
+                        newItem["hipervinculoFichaJuris"] = ((newItem.providencia_id !== null) && ( newItem.estado_id === 14 )) ? `https://relatoria.jep.gov.co/downloadfichaext/${newItem.providencia_id}` : " ";
                         newItem["autocompletarBuscador"] = { id: newItem.id, title: `${newItem.salaOSeccion} ${newItem.nombreDecision} ${newItem.departamento} ${newItem.delito} ${newItem.procedimiento} ${newItem.compareciente} ${newItem.magistrado}`};  
                         return newItem;
                   });
