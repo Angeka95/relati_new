@@ -14,7 +14,7 @@ import ExpandLessOutlinedIcon from '@mui/icons-material/ExpandLessOutlined';
 import ExpandMoreOutlinedIcon from '@mui/icons-material/ExpandMoreOutlined';
 import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
 
-export default function CardSearch({ datos }) {
+export default function CardSearch({ datos, hiddenAnalisisJuridico = false }) {
   const { busqueda } = useContext(Context);
   const [isButtonInfoEnabled, setIsButtonInfoEnabled] = useState(true);
 
@@ -51,6 +51,7 @@ export default function CardSearch({ datos }) {
   const [isSujetosProcesalesExpanded, setIsSujetosProcesalesExpanded] = useState(false);
   const [isPalabrasClaveExpanded, setIsPalabrasClaveExpanded] = useState(false);
   const [isResuelveExpanded, setIsResuelveExpanded] = useState(false);
+  const [isAnalisisExpanded, setIsAnalisisExpanded] = useState(false);
   const [isDocumentosAsociadosExpanded, setIsDocumentosAsociadosExpanded] = useState(false);
   const [isEnfoquesDiferencialesExpanded, setIsEnfoquesDiferencialesExpanded] = useState(false);
   const [isNotasExpanded, setIsNotasExpanded] = useState(false);
@@ -72,6 +73,10 @@ export default function CardSearch({ datos }) {
 
   const toggleResuelve = () => {
     setIsResuelveExpanded(prev => !prev);
+  };
+  
+  const toggleAnalisis = () => {
+    setIsAnalisisExpanded(prev => !prev);
   };
   
   const toggleConclusionResuelve = () => {
@@ -253,6 +258,24 @@ export default function CardSearch({ datos }) {
 
       {!isButtonInfoSpecificEnabled  && value === 1 && (
         <div> 
+          {/* Campo Análisis solo aplicable a Enfoque Genero */}
+          {((hiddenAnalisisJuridico === true ) && (typeof datos.analisis === 'string' ) && (datos.analisis.trim() !== '')) && (
+          <div className="width_100">
+            <Button onClick={toggleAnalisis} className=" link_secondary text_capitalize"  startIcon={isSujetosProcesalesExpanded ?<ExpandLessOutlinedIcon /> :  <ExpandMoreOutlinedIcon />}>
+            Análisis
+            </Button>
+
+            {isAnalisisExpanded && (
+                <div className="margin_top_s">
+                  {((typeof datos.analisis === 'string' ) && (datos.analisis.trim() !== '')) && (
+                  <p className="text_space_min text_justify">{/*• Análisis: */}<span className="text_bolder"> {datos.analisis}</span> </p>
+                  )}
+                </div>
+              )}
+           </div>
+          )}
+          {/* Campo Análisis solo aplicable a Enfoque Genero */}
+          {((hiddenAnalisisJuridico === false ) && (typeof datos.problemasJuridicos === 'string' ) && (datos.problemasJuridicos.trim() !== '')) && (
           <div className="width_100">
             <Button onClick={toggleAnalisisJuridico} className=" link_secondary text_capitalize"  startIcon={isSujetosProcesalesExpanded ?<ExpandLessOutlinedIcon /> :  <ExpandMoreOutlinedIcon />}>
             Análisis Jurídico
@@ -275,7 +298,7 @@ export default function CardSearch({ datos }) {
                 </div>
               )}
            </div>
-
+          )}
           {((typeof datos.resuelve === 'string' ) && (datos.resuelve.trim() !== '')) && (
           <div className="width_100">
             <Button onClick={toggleResuelve} className=" link_secondary text_capitalize"  startIcon={isSujetosProcesalesExpanded ?<ExpandLessOutlinedIcon /> :  <ExpandMoreOutlinedIcon />}>

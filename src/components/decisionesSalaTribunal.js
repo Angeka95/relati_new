@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Container, Box, AppBar, Tabs, Tab, Select, MenuItem, Chip, FormControl, InputLabel } from '@mui/material';
+import DOMPurify from 'dompurify';
 import ListCardSearch from '../components/listCardSearchMacrocasoResults.js';
 import LinearWithValueLabel from '../components/linearProgress.js';
 import macrocasoService from '../services/macrocaso.js';
@@ -9,10 +10,24 @@ export default function DecisionesSalaTribunal({caso}) {
 
     //const tipoDecision = ['Apertura', 'Determinación de hechos y conductas', 'Resolución de conclusiones', 'Acreditación de víctimas individuales y colectivas', 'Auto que fija fecha de audiencia y/o diligencia', 'Régimen de condicionalidad', 'Otras decisiones'];
     
-    const tipoDecisionSala = ['Apertura', 'Determinación de hechos y conductas', 'Resolución de conclusiones', 'Acreditación de víctimas individuales y colectivas', 'Auto que fija fecha de audiencia y/o diligencia', 'Otras decisiones'];
+    const tipoDecisionSala = [
+        'Acreditación de víctimas individuales y colectivas',
+        'Apertura',
+        'Auto que fija fecha de audiencia y/o diligencia',
+        'Determinación de hechos y conductas',
+        'Otras decisiones',
+        'Resolución de conclusiones'
+    ];
     
-    const tipoDecisionTribunal = ['Asume competencia', 'Audiencias de observaciones a la resolución de conclusiones', 'Auto de Correspondencia', 'Sentencia', 'Medidas cautelares', 'Auto que fija fecha de audiencia y/o diligencia', 'Otras decisiones'];
-    
+    const tipoDecisionTribunal = [
+        'Asume competencia',
+        'Audiencias de observaciones a la resolución de conclusiones',
+        'Auto de Correspondencia',
+        'Auto que fija fecha de audiencia y/o diligencia',
+        'Medidas cautelares',
+        'Otras decisiones',
+        'Sentencia'
+    ];
 
     const subcasos = ['Caso 001', 'Caso 002', 'Caso 003', 'Caso 004', 'Caso 005', 'Caso 006', 'Caso 007', 'Caso 008', 'Caso 009', 'Caso 010', 'Caso 011'];
     //const subcasos = ['Subcaso 01', 'Subcaso 02', 'Subcaso 03', 'Subcaso 04'];
@@ -34,21 +49,21 @@ export default function DecisionesSalaTribunal({caso}) {
               asunto: item.asuntocaso,
               salaOSeccion: item.despacho.nombre,
               nombreDecision: item.nombre,
-              procedimiento: (item.getfichas.length > 0 )? obtenerPalabrasFromArrayObject(item.getfichas, "actuacion") : "",
-              expediente: (item.getfichas.length > 0 )? obtenerPalabrasFromArrayObject(item.getfichas, "nombre") : "",
+              procedimiento: (item.actuacion.length > 0 )? obtenerPalabrasFromArrayObject(item.actuacion, "actuacion", null, true) : "",
+              expediente: (item.orfeo !== null ) ? item.orfeo : "",
               departamento: (item.departamento_ext.length > 0 )? obtenerPalabrasFromArrayObject(item.departamento_ext, "nombre_dpto") : "",
               magistrado: (item.magistrado.length > 0 )? obtenerPalabrasFromArrayObject(item.magistrado, "nombre_magistrado", "nombre", false) : "", 
               municipio: (item.municipio_ext.length > 0 )? obtenerPalabrasFromArrayObject(item.municipio_ext, "nombre_muni", null, false) : "", 
               delito: (item.delitos.length > 0 )?  obtenerPalabrasFromArrayObject(item.delitos, "delito") : "", 
               anioHechos: (item.anio_hechos.length > 0 )? obtenerPalabrasFromArrayObject(item.anio_hechos, "anio") : "", 
-              tipo: (item.detalle_caso !== null ) ?  `${item.detalle_caso}` : "",
+              tipo: (item.documento !== null ) ?  `${item.documento.nombre}` : "",
               radicado: (item.radicado.length !== null ) ? item.radicado : "",
               compareciente: (item.getfichas.length > 0 )? obtenerPalabrasFromArrayObject(item.getfichas, "compareciente", null, false) : "", 
               tipoSujeto: (item.tipopeti.length > 0 )? obtenerPalabrasFromArrayObject(item.tipopeti, "tipo", null, false) : "",
               accionadoVinculado: (item.accionado.length > 0 )? obtenerPalabrasFromArrayObject(item.accionado, "accionado", null, false): "",  
               palabrasClaves:  (item.getfichas.length > 0 )? obtenerPalabrasFromArrayObject(item.getfichas[0].palabras_clave_problemas_juridicos, "palabras", null, false) : "",
               hechos: (item.getfichas.length > 0 )? obtenerPalabrasFromArrayObject(item.getfichas[0].problemas_juridicos, "hechos", null, false) : "",
-              problemasJuridicos: (item.getfichas.length > 0 )? obtenerPalabrasFromArrayObject(item.getfichas[0].problemas_juridicos, "nombre", null, false) : "", 
+              problemasJuridicos: (item.getfichas.length > 0 )? obtenerPalabrasFromArrayObject(item.getfichas[0].palabras_clave_problemas_juridicos, "palabras", null, false) : "", 
               reglas: (item.getfichas.length > 0 )? obtenerPalabrasFromArrayObject(item.getfichas[0].problemas_juridicos, "reglas", null, false) : "",
               aplicacionCasoConcreto: (item.getfichas.length > 0 )? obtenerPalabrasFromArrayObject(item.getfichas[0].problemas_juridicos, "tesisjurisprudencial", null, false) : "",
               resuelve: (item.getfichas.length > 0 )? obtenerPalabrasFromArrayObject(item.getfichas[0].resuelve, "descripcion", null, false) : "",
@@ -63,7 +78,10 @@ export default function DecisionesSalaTribunal({caso}) {
               subcaso: (item.casopro.length > 0 ) ? obtenerPalabrasFromArrayObject(item.casopro, "caso", null, false) : "",
               extractoBusqueda: ((item.getfichas.length > 0 ) && (item.getfichas[0].sintesis_descripcion !== null))  ?  item.getfichas[0].sintesis_descripcion : "",
               conclusion_resuelve: ((item.conclusion_resuelve !== null) && (item.hasOwnProperty("conclusion_resuelve"))) ? item.conclusion_resuelve : ""
-          }
+          };
+          newItem["hechos"] =  DOMPurify.sanitize(newItem.hechos, { ALLOWED_TAGS: [] });
+          newItem["extractoBusqueda"] =  DOMPurify.sanitize(newItem.extractoBusqueda, { ALLOWED_TAGS: [] });
+          newItem["problemasJuridicos"] =  DOMPurify.sanitize(newItem.problemasJuridicos, { ALLOWED_TAGS: [] });
           newItem["autocompletarBuscador"] = { id: newItem.id, title: `${newItem.salaOSeccion} ${newItem.delito} ${newItem.procedimiento} ${newItem.compareciente} ${newItem.tipoSujeto} ${newItem.departamento} ${newItem.nombreDecision} ${newItem.magistrado}  ${newItem.palabrasClaves}`}; 
           return newItem;
         });
@@ -94,16 +112,21 @@ export default function DecisionesSalaTribunal({caso}) {
                 setMessage(newMessage); 
             });
       };
+      
     
     useEffect(() => {
-        if((datosSala.length === 0) && (datosTribunal.length === 0)) {
+        if((datosSala.length === 0) && (value === 0) && (caso !== null)) {
             getCasos(caso.nombre);
-        } else {
+        } 
+    }, [value, caso]);
+    
+    useEffect(() => {
             if(value === 0) {
                 setDatos(datosSala);
-            }
-        }
-    }, [datosSala, datosTribunal]);
+            } else {
+                setDatos(datosTribunal);
+            }    
+    }, [value]);
     
     const handleChangeTabCaso = (event, newValue) => {
         setSelectedtipoDecision([]);

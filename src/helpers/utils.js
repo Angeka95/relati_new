@@ -1,3 +1,4 @@
+import DOMPurify from 'dompurify';
 import datos_sala_seccion from '../data/datos_sala_seccion.js';
 /** 
  * filtroByDefault
@@ -461,6 +462,28 @@ const ordenarBoletinesActuales = (arr) => {
 
     return boletinesOrdenados;
   }
+  
+/**
+ * convertirStringAHtml()
+ * Funcionalidad que convierte una cadena de texto formateandola a HTML
+ * Parametros de entrada:
+ * - str: cadena con etiquetas HTML
+ * Salida:
+ * - Retorna en formato HTML   
+ * Aplicación:
+ * CardSearchResults componente
+*/
+
+const convertirStringAHtml = (str) => {
+    
+    let newStr  = DOMPurify.sanitize(str);
+    
+    // Validando strings HTML de tipo <p>null</p>
+    if((newStr.trim() === "") || (newStr === null)){
+        return "";
+    }
+    
+};
 
 export { filtroByDefault, 
          truncateWithEllipsis, 
@@ -482,5 +505,6 @@ export { filtroByDefault,
          getArrayDataGraph,
          convertObjFiltroJurisToQuery,
          ordenarTerminosABCD,
-         ordenarBoletinesActuales
+         ordenarBoletinesActuales,
+         convertirStringAHtml
         };

@@ -23,7 +23,6 @@ const getMacrocasos = () => {
 };
 
 const getCasosXTramite = (caso) => {
-
   const config = {
     headers: {
       'Authorization': `Bearer ${process.env.REACT_APP_API_ACCESS_TOKEN}`,
@@ -40,10 +39,10 @@ const getCasosXTramite = (caso) => {
       let dataSala = [];
       let dataTribunal = [];
       if(response.data[0]["tramite_sala"].length > 0 ){
-        dataSala = response.data[0]["tramite_sala"].filter(item => item.caso === caso);
+        dataSala = response.data[0]["tramite_sala"].filter(item => ((item.casopro[0].caso === caso) && (item.detalle_caso !== null)));
       }
       if(response.data[1]["tramite_tribunal"].length > 0 ){
-        dataTribunal = response.data[1]["tramite_tribunal"].filter(item => item.caso === caso);
+        dataTribunal = response.data[1]["tramite_tribunal"].filter(item => ((item.casopro[0].caso === caso) && (item.detalle_caso !== null)));
       }
       return { "data": [{ casosSala: dataSala, casosTribunal: dataTribunal }], "status_info": { "status": 200, "reason": "OK" } };
     }
