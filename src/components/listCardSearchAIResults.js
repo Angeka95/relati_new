@@ -225,9 +225,12 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
     const searchBarForInnerResultsInputRef = useRef(null);
             
     const handlerInnerSearch = (valueSearchBarInner) => {
-        let newMessage = {}; 
+        let newMessage = { message: "", classname: "" }; 
+        let newArrDatos = [];
+        setDatos([]);
+        setMessage({ message: "", classname: "" });
         if(valueSearchBarInner !== ""){
-            const newArrDatos = [...datosOriginales].filter(item => {
+            newArrDatos = [...datosOriginales].filter(item => {
                 return item.autocompletarBuscador.title.toLowerCase().includes(valueSearchBarInner.toLowerCase());
             });
             if(newArrDatos.length > 0) {
@@ -238,19 +241,24 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
                 newMessage["classname"] = 'warning';
             }
             setValorBuscadorEnResultados(valueSearchBarInner);
-            setDatos(newArrDatos);
         } else {
-            setDatos(datosOriginales);
+            newArrDatos = [...datosOriginales];
             newMessage["message"] = "";
             newMessage["classname"] = "";
         }
-        setTimeout(() => setMessage(newMessage), 1300);
+        setTimeout(() => { 
+            setDatos(newArrDatos);
+            setMessage(newMessage);
+        }, 800); 
     };
-    
+        
     const deshacerBusqueda = (e) => {
-        setDatos(datosOriginales);
+        setDatos([]);
         setMessage({ message: "", classname: "" });
         searchBarForInnerResultsInputRef.current.clear(); 
+        setTimeout(() => { 
+            setDatos(datosOriginales);
+        }, 800); 
     }
         
      if(datosBusqueda.length > 0) {
