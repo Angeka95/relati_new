@@ -816,6 +816,8 @@ h6 {
 /*SEARCH BAR SMALL*/
 
 .autocomplete_bar_inner_search { 
+  width: 100%;
+  height: auto;
   display: flex;
   flex-direction: column;
   justify-content: start;

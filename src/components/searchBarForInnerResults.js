@@ -1,19 +1,31 @@
 import React from 'react';
-import { useState, useRef } from 'react';
+import { useState, useRef, forwardRef, useImperativeHandle } from 'react';
 import { Button, TextField, Stack, Autocomplete, Box } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import '../App.css';
 
-const SearchBarForInnerResults = ({handlerInnerSearch, ref = null }) => {
+const SearchBarForInnerResults = forwardRef(( props, ref ) => {
+
+  const inputRef = useRef(null); 
+
+  const { handlerInnerSearch, handlerReset } = props;
     
   const options = [];  
-  const inputRef = useRef(ref);
   
   const [valueSearchBar, setValueSearchBar] = useState('');
   
   const updateSelectedValue = (e) => {
     setValueSearchBar(e.target.value);
   };
+  
+  useImperativeHandle(ref, () => ({
+    clear: () => {
+      setValueSearchBar('')
+    },
+    getValue: () => {
+      return valueSearchBar;
+    }
+  }));
     
   return (
     <div className="autocomplete_bar_inner_search">
@@ -25,8 +37,8 @@ const SearchBarForInnerResults = ({handlerInnerSearch, ref = null }) => {
           options={options.map((option) => option.title)}
           renderInput={(params) => <TextField {...params}
                                       id="searchBarForInnerResultsTextField"
+                                      label="Buscar en los resultados"
                                       ref={inputRef}
-                                      label="Buscar en los resultados" 
                                       placeholder=""
                                       inputProps={{
                                             ...params.inputProps,
@@ -39,10 +51,10 @@ const SearchBarForInnerResults = ({handlerInnerSearch, ref = null }) => {
         <Button className="autocomplete_button_small button_primary z-index_front" onClick={()=>handlerInnerSearch(valueSearchBar)} ><SearchIcon /></Button>
       </Stack>
       <Box>
-        <Button variant="outlined" className='autocomplete_bar_inner_search_undo_results' size="small" onClick={() => {/* Add your undo search logic here */}}>Reestablecer resultados</Button>
+        <Button variant="outlined" className='autocomplete_bar_inner_search_undo_results' size="small" onClick={() => handlerReset()}>Reestablecer resultados</Button>
       </Box>
     </div>
   ); 
-}
+});
 
 export default SearchBarForInnerResults;
