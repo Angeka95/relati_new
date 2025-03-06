@@ -485,6 +485,52 @@ const convertirStringAHtml = (str) => {
     
 };
 
+/**
+ * setLocalStorageWithExpiry()
+ * Funcionalidad que guarda en localStorage con expiración
+ * Parametros de entrada:
+ * - key: nombre variable localStorage
+ * - value: valor de la variable localStorage
+ * - ttl: tiempo de expiracion de la variable localStorage dada en milisegundos, ej. 180000; // 3 minutos en milisegundos
+ * Salida:
+ * - Crea una nueva variable en localStorage de tipo objeto {value: "", expiry: ""}
+ * Aplicación:
+ * - resultadosBusqueda.js
+*/
+const setLocalStorageWithExpiry = (key, value, ttl) => {
+    const now = new Date();
+    const item = {
+      value: value,
+      expiry: now.getTime() + ttl,
+    };
+    localStorage.setItem(key, JSON.stringify(item));
+};
+  
+/**
+ * getLocalStorageWithExpiry()
+ * Funcionalidad que obtiene el valor de una variable en localStorage de la cual en caso de que expire sea automaticamente eliminada
+ * Parametros de entrada:
+ * - key: nombre variable localStorage
+ * Salida:
+ * - Obtiene el valor de la variable en caso de que no haya expirado
+ * Aplicación:
+ * - resultadosBusqueda.js
+*/
+
+const getLocalStorageWithExpiry = (key) => {
+    const itemStr = localStorage.getItem(key);
+    if (!itemStr) return null;
+  
+    const item = JSON.parse(itemStr);
+    const now = new Date();
+  
+    /*if (now.getTime() > item.expiry) {
+      localStorage.removeItem(key);
+      return null;
+    }*/
+    return item.value;
+};
+
 export { filtroByDefault, 
          truncateWithEllipsis, 
          obtenerAnio, 
@@ -506,5 +552,7 @@ export { filtroByDefault,
          convertObjFiltroJurisToQuery,
          ordenarTerminosABCD,
          ordenarBoletinesActuales,
-         convertirStringAHtml
-        };
+         convertirStringAHtml,
+         setLocalStorageWithExpiry,
+         getLocalStorageWithExpiry
+};

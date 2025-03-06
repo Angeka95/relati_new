@@ -10,12 +10,12 @@ import LogoRelati from '../assets/images/logo_Relativ4.png';
 import Escudo from '../assets/images/escudo.png';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-
+import { useCleanLocalStorageVars } from '../hooks/useCleanLocalStorageVars';
 
 
 export default function MenuBar() {
 
-
+    
     const [openDrawer, setOpenDrawer] = useState(false);  // Para abrir/cerrar el Drawer / version mobile
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('md')); // Detecta si es un dispositivo móvil
@@ -104,8 +104,8 @@ export default function MenuBar() {
     }));
   };
 
-
-  
+  // Hook personalizado para limpiar variables en storage
+  useCleanLocalStorageVars();
 
     return (
         <div>
