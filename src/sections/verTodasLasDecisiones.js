@@ -146,7 +146,7 @@ export default function VerTodasLasDecisiones() {
           <Grid container spacing={2}>
             <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
               <>
-              <p>Página: <strong>{stringParamPage}</strong></p>
+              {/*<p>Página: <strong>{stringParamPage}</strong></p>*/}
               { (message.message === "") ?
                 <>
                 <LinearWithValueLabel processingMessages={["Procesando solicitud...", "Preparando respuesta..."]}></LinearWithValueLabel> 

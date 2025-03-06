@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext, useRef } from 'react';
 import Context from '../context/context';
+import { getLocalStorageWithExpiry } from '../helpers/utils.js';
 import { Button, Switch, FormControlLabel, Grid, Alert, TextField, Stack, Autocomplete } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import { styled } from '@mui/material/styles';
@@ -17,8 +18,8 @@ export default function Search({ isSearchAdvance, isSearchMain }) {
 
   // Trae el valor de la busqueda y del switch desde el contexto 
 
-  const { estadoVerTodasDecisiones, setEstadoVerTodasDecisiones, setBusqueda } = useContext(Context);
-  
+  const { estadoVerTodasDecisiones, setEstadoVerTodasDecisiones } = useContext(Context);
+    
   const updateSelectedValue = (event, value) => {
     setValueBar(event.target.value);
   };
@@ -99,7 +100,7 @@ export default function Search({ isSearchAdvance, isSearchMain }) {
       window.location.href = `/ver-todas-las-decisiones`;
     } 
     if((estadoVerTodasDecisiones === false) && (window.location.pathname === "/ver-todas-las-decisiones") ){
-      const stringQueryLs = localStorage.getItem('stringQueryLs');
+      const stringQueryLs = getLocalStorageWithExpiry('stringQueryLs');
       const params = new URLSearchParams({ string: encodeURIComponent(stringQueryLs) });
       window.location.href = `/resultados-busqueda?${params.toString()}`;
     }
