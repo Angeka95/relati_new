@@ -13,6 +13,7 @@ const ContextProvider = ({ children }) => {
   const [isDatosMapaJurisprudencial, setIsDatosMapaJurisprudencial] = useState(false);
   const [dptoSelMapaJurisprudencial, setDptoSelMapaJurisprudencial] = useState(null);
   const [filtroJurisprudencial, setFiltroJurisprudencial] = useState(filtroByDefault);  
+  const [ttl, setTtl] = useState(60000); // Variable define el tiempo para eliminar variables de localStorage
   return (
     <Context.Provider 
       value={{ verTodasDecisiones, 
@@ -28,7 +29,8 @@ const ContextProvider = ({ children }) => {
                filtroJurisprudencial, 
                setFiltroJurisprudencial,
                estadoVerTodasDecisiones,
-               setEstadoVerTodasDecisiones
+               setEstadoVerTodasDecisiones,
+               ttl
             }}
     >
       {children}

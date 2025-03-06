@@ -14,7 +14,7 @@ import ExpandLessOutlinedIcon from '@mui/icons-material/ExpandLessOutlined';
 import ExpandMoreOutlinedIcon from '@mui/icons-material/ExpandMoreOutlined';
 import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
 
-export default function CardSearch({ datos }) {
+export default function CardSearch({ datos, hiddenAnalisisJuridico = false }) {
   const { busqueda } = useContext(Context);
   const [isButtonInfoEnabled, setIsButtonInfoEnabled] = useState(true);
 
@@ -51,10 +51,12 @@ export default function CardSearch({ datos }) {
   const [isSujetosProcesalesExpanded, setIsSujetosProcesalesExpanded] = useState(false);
   const [isPalabrasClaveExpanded, setIsPalabrasClaveExpanded] = useState(false);
   const [isResuelveExpanded, setIsResuelveExpanded] = useState(false);
+  const [isAnalisisExpanded, setIsAnalisisExpanded] = useState(false);
   const [isDocumentosAsociadosExpanded, setIsDocumentosAsociadosExpanded] = useState(false);
   const [isEnfoquesDiferencialesExpanded, setIsEnfoquesDiferencialesExpanded] = useState(false);
   const [isNotasExpanded, setIsNotasExpanded] = useState(false);
   const [isAnalisisJuridicoExpanded, setIsAnalisisJuridicoExpanded] = useState(false);
+  const [isConclusionResuelveExpanded, setIsConclusionResuelveExpanded] = useState(false);
 
   const toggleMagistrados = () => {
     setIsMagistradosExpanded(prev => !prev);
@@ -71,6 +73,14 @@ export default function CardSearch({ datos }) {
 
   const toggleResuelve = () => {
     setIsResuelveExpanded(prev => !prev);
+  };
+  
+  const toggleAnalisis = () => {
+    setIsAnalisisExpanded(prev => !prev);
+  };
+  
+  const toggleConclusionResuelve = () => {
+    setIsConclusionResuelveExpanded(prev => !prev);
   };
 
   const toggleDocumentosAsociados = () => {
@@ -248,6 +258,24 @@ export default function CardSearch({ datos }) {
 
       {!isButtonInfoSpecificEnabled  && value === 1 && (
         <div> 
+          {/* Campo Análisis solo aplicable a Enfoque Genero */}
+          {((hiddenAnalisisJuridico === true ) && (typeof datos.analisis === 'string' ) && (datos.analisis.trim() !== '')) && (
+          <div className="width_100">
+            <Button onClick={toggleAnalisis} className=" link_secondary text_capitalize"  startIcon={isSujetosProcesalesExpanded ?<ExpandLessOutlinedIcon /> :  <ExpandMoreOutlinedIcon />}>
+            Análisis
+            </Button>
+
+            {isAnalisisExpanded && (
+                <div className="margin_top_s">
+                  {((typeof datos.analisis === 'string' ) && (datos.analisis.trim() !== '')) && (
+                  <p className="text_space_min text_justify">{/*• Análisis: */}<span className="text_bolder"> {datos.analisis}</span> </p>
+                  )}
+                </div>
+              )}
+           </div>
+          )}
+          {/* Campo Análisis solo aplicable a Enfoque Genero */}
+          {((hiddenAnalisisJuridico === false ) && (typeof datos.problemasJuridicos === 'string' ) && (datos.problemasJuridicos.trim() !== '')) && (
           <div className="width_100">
             <Button onClick={toggleAnalisisJuridico} className=" link_secondary text_capitalize"  startIcon={isSujetosProcesalesExpanded ?<ExpandLessOutlinedIcon /> :  <ExpandMoreOutlinedIcon />}>
             Análisis Jurídico
@@ -270,7 +298,7 @@ export default function CardSearch({ datos }) {
                 </div>
               )}
            </div>
-
+          )}
           {((typeof datos.resuelve === 'string' ) && (datos.resuelve.trim() !== '')) && (
           <div className="width_100">
             <Button onClick={toggleResuelve} className=" link_secondary text_capitalize"  startIcon={isSujetosProcesalesExpanded ?<ExpandLessOutlinedIcon /> :  <ExpandMoreOutlinedIcon />}>
@@ -326,6 +354,20 @@ export default function CardSearch({ datos }) {
                 <div className="margin_top_s">
                   {((typeof datos.notasRelatoria === 'string' ) && (datos.notasRelatoria.trim() !== '')) && (
                   <p className="text_space_min text_justify">{/*• Notas de la Relatoría: */}  <span className="text_bolder"> {datos.notasRelatoria}</span> </p>
+                  )}
+                </div>
+              )}
+           </div>
+           )}
+           {((typeof datos.conclusion_resuelve === 'string' ) && (datos.conclusion_resuelve.trim() !== '')) && (
+          <div className="width_100">
+            <Button onClick={toggleConclusionResuelve} className=" link_secondary text_capitalize"  startIcon={isSujetosProcesalesExpanded ?<ExpandLessOutlinedIcon /> :  <ExpandMoreOutlinedIcon />}>
+            Conclusión 
+            </Button>
+            {isConclusionResuelveExpanded && (
+                <div className="margin_top_s">
+                  {((typeof datos.conclusion_resuelve === 'string' ) && (datos.conclusion_resuelve.trim() !== '')) && (
+                  <p className="text_space_min text_justify">{/*• Conclusión resuelve: */}<span className="text_bolder"> {datos.conclusion_resuelve}</span> </p>
                   )}
                 </div>
               )}

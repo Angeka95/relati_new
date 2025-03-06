@@ -139,11 +139,19 @@ export default function Home() {
 
     const goToMapaJurispudencialPage = () => {
         navigate('/mapa-jurisprudencial');
+        window.scrollTo(0, 0);
     };
 
     const goToBoletinesPage = () => {
         navigate('/boletines');
+        window.scrollTo(0, 0);
     };
+
+    const goToLibrosPage = () => {
+        navigate('/libros');
+        window.scrollTo(0, 0);
+    };
+
 
     /*const options = [
         { title: 'Competencia de la JEP' },
@@ -344,6 +352,32 @@ export default function Home() {
         
             return () => clearTimeout(timer);
           }, [currentIndex]); 
+
+        //   Libros
+
+          const libros = [
+            {
+                id : 1,
+                pdf: 'https://relatoria.jep.gov.co/documentos/libros/CODIGO_JURISDICCION_ESPECIAL_PAZ_1A_ED.pdf', 
+                fecha: "2025-01", 
+                imagenPortada: 'https://relatoria.jep.gov.co/img/libros/portada_codigo_JEP_c.png'
+             },
+            {
+                id : 2,
+                pdf: 'https://relatoria.jep.gov.co/documentos/libros/TOMO_1_Las-SENIT-1-2-3.pdf', 
+                fecha: "2024-01", 
+                imagenPortada: 'https://relatoria.jep.gov.co/img/libros/TOMO_1_Las-SENIT-1-2-3.jpg'
+             },
+             {
+                id : 3,
+                pdf: 'https://relatoria.jep.gov.co/documentos/libros/Tomo_2_lineamientos_analisis_tematico.pdf', 
+                fecha: "2024-01", 
+                imagenPortada: 'https://relatoria.jep.gov.co/img/libros/portada_tomo_II.jpg'
+             },
+
+        
+        
+        ]
 
 
     return (
@@ -548,7 +582,7 @@ export default function Home() {
                     {casesToDisplay.map((caso) => (
 
                         <div key={caso.id} className="card_small transition_smooth">
-                            <Link to={`/caso/${caso.id}`}>
+                            <Link to={`/caso/${caso.id}`}  onClick={() => window.scrollTo(0, 0)}>
                                 <p className="text_center text_black" >  Caso
                                     <span className="text_big display_block margin_top_s margin_bottom_s text_green text_bolder">  {caso.numeroCaso} </span>
                                     {caso.nombreCaso}
@@ -574,9 +608,28 @@ export default function Home() {
 
             </Container>
 
+            <Container maxWidth="lg" disableGutters className="margin_top_xl margin_bottom_xxl">
+            {( boletines.length === 0 ) ? 
+                    <LinearWithValueLabel></LinearWithValueLabel>
+                :
+                <div className="align_center carousel_main_container " >
+                    <div className="wrap text_carousel_container" >
+                        <h2 className="align_center text_bolder"> Libros</h2>
+                        <h5 className=" align_center margin_top_s margin_bottom_m">Explore nuestros libros que cuentan con la colaboración de magistradas, magistrados y profesionales de la JEP</h5>
+                        <Button onClick={goToLibrosPage} className="button_primary "> Ver todos los libros</Button>
+                    </div>
+                    <div className="carousel_container">
+
+                        <Carousel boletines={libros} />
+
+                    </div>
+                </div>
+            }
+            </Container>
+
 
             <Container className="margin_top_xl ">
-                <h2 className="justify_center text_bolder text_center">Podcast
+                <h2 className="justify_center text_bolder text_center ">Podcast
                     <br></br>Relatos de la JEP </h2>
 
                 <h5 className="justify_center  align_center margin_top_s margin_bottom_m">Escuche la historia detrás de cada decisión de la JEP</h5>

@@ -7,7 +7,8 @@ import { Container, Grid, Alert, Button, Box } from '@mui/material';
 import buscadorService from '../services/buscador.js';
 import LinearWithValueLabel from '../components/linearProgress.js';  
 import Context from '../context/context.js';
-import { filtroByDefault, removeFragmentoInString, getOpcionesAutocompletar, obtenerPalabrasFromArrayObject, validarfiltroJurisprudencial } from '../helpers/utils.js';
+import { useCleanLocalStorageVars } from '../hooks/useCleanLocalStorageVars.js';
+import { filtroByDefault, removeFragmentoInString, getOpcionesAutocompletar, setLocalStorageWithExpiry, getLocalStorageWithExpiry } from '../helpers/utils.js';
 import '../App.css';
 
 export default function SearchResults() {
@@ -20,6 +21,7 @@ export default function SearchResults() {
   const [datos, setDatos] = useState([]);
   const [searchOptions, setSearchOptions] = useState([]);
 
+  const { ttl } = useContext(Context);
   const { filtroJurisprudencial, setFiltroJurisprudencial } = useContext(Context);
   const { estadoVerTodasDecisiones, setEstadoVerTodasDecisiones } = useContext(Context);
   const [stringQuery, setStringQuery] = useState("");
@@ -33,7 +35,6 @@ export default function SearchResults() {
   const stringParam = decodeURIComponent(searchParams.get('string'));
   
   const getResultadosBuscadorAI = (string) => {
-    console.log("fdasfsadfsafd");
     let newMessage = {}; 
     buscadorService
       .getSearchQData(string)
@@ -79,7 +80,8 @@ export default function SearchResults() {
                         extractoBusqueda: (item.sintesis !== null ) ? item.sintesis : "",
                         caso: (item.macrocaso !== null ) ? item.macrocaso : "",
                         autocompletarBuscador: "",
-                        estado_id: (item.estado_id > 0) ? item.estado_id : ""
+                        estado_id: (item.estado_id > 0) ? item.estado_id : "",
+                        conclusion_resuelve: (item.conclusion_resuelve !== null) ? item.conclusion_resuelve : "", 
                     };
                     newItem["departamentoNombre"] = newItem.departamento;
                     newItem["procedimientos"] = newItem.procedimiento; 
@@ -92,17 +94,17 @@ export default function SearchResults() {
               });
               setDatos(newDatos);
               setSearchOptions(getOpcionesAutocompletar(newDatos));
-              localStorage.setItem('dataFromQueryLs', JSON.stringify(newDatos));
+              setLocalStorageWithExpiry('dataFromQueryLs', JSON.stringify(newDatos), ttl);
               newMessage["message"] = `${response.status_info.reason}`;
               newMessage["classname"] = 'success';
           } else if(response.status_info.status === 500) {
-              localStorage.setItem('stringQueryLs', '');
-              localStorage.setItem('dataFromQueryLs', '');
+              setLocalStorageWithExpiry('stringQueryLs', '', ttl);
+              setLocalStorageWithExpiry('dataFromQueryLs', '', ttl);
               newMessage["message"] = `${response.status_info.reason}`;
               newMessage["classname"] = 'error';
           } else {
-            localStorage.setItem('stringQueryLs', '');
-            localStorage.setItem('dataFromQueryLs', '');
+            setLocalStorageWithExpiry('stringQueryLs', '', ttl);
+            setLocalStorageWithExpiry('dataFromQueryLs', '', ttl);
             newMessage["message"] = `${response.status_info.reason}`;
             newMessage["classname"] = 'warning';
           }
@@ -142,38 +144,39 @@ const handleMessage = (newMessage) => {
   */
   useEffect(()=>{
     if (!localStorage.hasOwnProperty('stringQueryLs')) {
-      localStorage.setItem('stringQueryLs', '');
-      localStorage.setItem('dataFromQueryLs', '');
+      setLocalStorageWithExpiry('stringQueryLs', '', ttl);
+      setLocalStorageWithExpiry('dataFromQueryLs', '', ttl);
     } else {
       if(stringQuery.length > 0 ){
-        //console.log(stringQuery, localStorage.getItem('stringQueryLs'))
-        if(stringQuery === localStorage.getItem('stringQueryLs')){
-          setDatos(JSON.parse(localStorage.getItem('dataFromQueryLs')));
+        if((stringQuery === getLocalStorageWithExpiry('stringQueryLs')) && localStorage.hasOwnProperty('dataFromQueryLs')){
+          setDatos(JSON.parse(getLocalStorageWithExpiry('dataFromQueryLs')));
         } else {
           getResultadosBuscadorAI(stringQuery);
-          localStorage.setItem('stringQueryLs', stringQuery);
+          setLocalStorageWithExpiry('stringQueryLs', stringQuery, ttl);
           setStringQueryLs(stringQuery);
         }
       }
     }
   },[stringQuery]);
   
+  // Limpian las variables LocalStorage almacenadas despues de cierto tiempo
+  useCleanLocalStorageVars();
+  
   useEffect(()=>{
       setEstadoVerTodasDecisiones(false);
   },[]);
     
   useEffect(() => {
-    if (!stringParam){
+    if ((stringParam === "") || (stringParam === null) || (stringParam === "null")) {
       let newMessage = {};
       newMessage["message"] = `No se puede realizar la solicitud.`;
       newMessage["classname"] = 'error';
       handleMessage(newMessage);
       setDatos([]);
-      localStorage.setItem('stringQueryLs', '');
-      localStorage.setItem('dataFromQueryLs', '');
-      setTimeout(() => {
-        navigate('/');
-      }, 3000);
+      setLocalStorageWithExpiry('stringQueryLs', '', ttl);
+      setLocalStorageWithExpiry('dataFromQueryLs', '', ttl);
+      //setTimeout(() => navigate('/'), 3000);
+      navigate('/');
     } else {
       if(stringQuery === ""){
         setStringQuery(stringParam);

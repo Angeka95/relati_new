@@ -13,16 +13,18 @@ import ExpandMoreOutlinedIcon from '@mui/icons-material/ExpandMoreOutlined';
 
 
 export default function CustomTab({ boletines, title}) {
-    const [value, setValue] = React.useState(2);
     
-    const handleChangeTab = (event, newValue) => {
-        setValue(newValue);
-    };
 
     // Anios del boletin
 
     const anioBoletin = [...new Set(boletines.map(boletin => { return new Date(boletin.fecha).getUTCFullYear(); }))];
-
+    
+    const [value, setValue] = React.useState(0);
+    
+    const handleChangeTab = (event, newValue) => {
+        setValue(newValue);
+    };
+    
     // Estado para el tab activo
 
     const handleChangeAnio = (event, newValue) => {
@@ -71,8 +73,7 @@ export default function CustomTab({ boletines, title}) {
                     <AppBar position="static" className="noshadow ">
                         <Tabs value={value} onChange={handleChangeTab} className='light_white ' classes={{ indicator: 'custom_indicator' }}>
                             {anioBoletin.map((anio, index) => (
-                                <Tab key={anio} label={anio} className={`tab ${value === anio ? 'tab_active' : ''}`} />
-
+                                <Tab key={anio} label={anio} className={`tab ${value === index ? 'tab_active' : ''}`} />
                             ))}
                         </Tabs>
                         <div className="separator_tab"> </div>
@@ -105,12 +106,12 @@ export default function CustomTab({ boletines, title}) {
 
                                                     <a className="justify_center cursor_pointer"  onClick={() => toggleDetailsBoletin(boletin.id)}>
                                                     {isMoreInfoOpen.includes(boletin.id) ?   
-                                                    <div class="link_secondary">
+                                                    <div className="link_secondary">
                                                         <ExpandLessOutlinedIcon />
                                                         <span>Ocultar información</span>
                                                      </div> 
                                                      :  
-                                                     <div class="link_secondary">
+                                                     <div className="link_secondary">
                                                      <ExpandMoreOutlinedIcon />
                                                      <span>Saber más del boletín</span>
                                                   </div> 
@@ -132,16 +133,16 @@ export default function CustomTab({ boletines, title}) {
                                         
                                         ))}
 
-                                            <div  class="width_100 justify_center"> 
+                                            <div  className="width_100 justify_center"> 
                                                     {!showAll && boletines.length > 3 && (
-                                                    <button onClick={handleToggleShowAll} class="button_primary border_none">Ver más {title} </button>
+                                                    <button onClick={handleToggleShowAll} className="button_primary border_none">Ver más {title} </button>
                                                     )}
                                             
                                             </div> 
 
-                                                    <div class="width_100 justify_center"> 
+                                                    <div className="width_100 justify_center"> 
                                                         {showAll && boletines.length > 3 && (
-                                                        <button onClick={handleToggleShowAll} class="button_primary border_none">Ocultar {title}</button>
+                                                        <button onClick={handleToggleShowAll} className="button_primary border_none">Ocultar {title}</button>
                                                         )}
 
                                                     </div>
