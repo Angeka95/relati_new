@@ -20,10 +20,10 @@ const getAllResults = (page, per_page) => {
     } else {
       let data = {};
       let status_info = {};
-      if(response.data.data.hasOwnProperty('data')) {
+      if(response.data.hasOwnProperty('data')) {
         data = response.data.data;
         status_info = { "status": 200, "reason": "La consulta se ha realizado satisfactoriamente." };
-        if(data.data.length === 0){
+        if(data.length === 0){
           status_info = { "status": 200, "reason": "No se encontraron resultados." };
         } 
       } else {
