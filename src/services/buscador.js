@@ -21,14 +21,15 @@ const getAllResults = (page, per_page) => {
       let data = {};
       let status_info = {};
       if(response.data.hasOwnProperty('data')) {
-        data = response.data.data;
+        data = response.data;
         status_info = { "status": 200, "reason": "La consulta se ha realizado satisfactoriamente." };
-        if(data.length === 0){
+        if(data.data.length === 0){
           status_info = { "status": 200, "reason": "No se encontraron resultados." };
         } 
       } else {
         status_info = { "status": 204, "reason": "La consulta no esta disponible por el momento.(Elastic Search)." } 
       }
+      console.log("Servicio",{ "data": data, "status_info": status_info } );
       return { "data": data, "status_info": status_info };
     }
   }).catch(error => {

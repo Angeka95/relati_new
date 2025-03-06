@@ -53,12 +53,13 @@ export default function VerTodasLasDecisiones() {
         buscadorService
           .getAllResults(page, per_page)
           .then(response => {
-              if((response.status_info.status === 200) && (response.data.length > 0)) {
+              console.log("response", response);
+              if((response.status_info.status === 200) && (response.data.data.length > 0)) {
                     let objPagination = Object.assign({}, response.data);
                     delete objPagination.data;
                     objPagination["per_page"] = Number(objPagination["per_page"]);
                     setPagination(objPagination);
-                    const newDatos = response.data.map((i, k) => { 
+                    const newDatos = response.data.data.map((i, k) => { 
                         let item = i._source;
                         let newItem = {
                             id: k + 1,
