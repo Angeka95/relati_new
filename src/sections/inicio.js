@@ -382,7 +382,7 @@ export default function Home() {
 
     return (
         <div className="nowrap">
-            {isModalVisible && (
+            {/* {isModalVisible && (
             <div className="modal_floating">
                 <div className="width_100">
                     <div className="modal_float_date versalitas">
@@ -432,8 +432,8 @@ export default function Home() {
                  
 
              </div> 
-             )}
-              {!isModalVisible && (
+             )} */}
+              {/* {!isModalVisible && (
             <div className="modal_floating_expand">
                 <div className="width_100">
                     <Tooltip title="Expandir">
@@ -444,7 +444,7 @@ export default function Home() {
                     
                 </div>
             </div>
-              )}
+              )} */}
 
 
             <div className="header_container justify_center ">
