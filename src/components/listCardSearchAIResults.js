@@ -22,7 +22,7 @@ import ExpandLessOutlinedIcon from '@mui/icons-material/ExpandLessOutlined';
 import ExpandMoreOutlinedIcon from '@mui/icons-material/ExpandMoreOutlined';
 import FilterShort from './filterShort.js';
 import FilterListIcon from '@mui/icons-material/FilterList';
-import { validarfiltroJurisprudencial, getOpcionesAutocompletar, getDecisionesIDsToExport } from '../helpers/utils.js';
+import { filtroByDefault, validarfiltroJurisprudencial, getOpcionesAutocompletar, getDecisionesIDsToExport } from '../helpers/utils.js';
 import { macrocasos } from '../data/datos_macrocaso.js';
 import LinearWithValueLabel from '../components/linearProgress.js';  
 import ButtonDownloadXLS from './buttonDownloadXLS.js';
@@ -37,7 +37,7 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
     const [valorBuscadorEnResultados, setValorBuscadorEnResultados] = useState("");
     const [message, setMessage] = useState({ message: "", classname: "" });
     
-    const { filtroJurisprudencial } = useContext(Context);
+    const { filtroJurisprudencial, setFiltroJurisprudencial } = useContext(Context);
 
     useEffect(() => {
         if(!validarfiltroJurisprudencial(filtroJurisprudencial)) { 
@@ -253,11 +253,13 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
     };
         
     const deshacerBusqueda = (e) => {
+    console.log("filtro juris", filtroJurisprudencial);
         setDatos([]);
         setMessage({ message: "", classname: "" });
         searchBarForInnerResultsInputRef.current.clear(); 
         setTimeout(() => { 
             setDatos(datosOriginales);
+            setFiltroJurisprudencial(filtroByDefault);
         }, 800); 
     }
         
