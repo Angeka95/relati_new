@@ -15,7 +15,7 @@ import Context from '../context/context';
 import FilterShort from './filterShort';
 import LinearWithValueLabel from '../components/linearProgress.js';
 import tesauroService from './../services/tesauro.js';
-import { obtenerPalabrasFromArrayObject, getOpcionesAutocompletar } from '../helpers/utils.js';
+import { obtenerPalabrasFromArrayObject, getOpcionesAutocompletar, convertirStringAHtml } from '../helpers/utils.js';
 import '../App.css';
 
 export default function Card({ selectedFilters, isListSmall, selectedTerm, isLargeResult, isExternalFilters }) {
@@ -66,7 +66,7 @@ export default function Card({ selectedFilters, isListSmall, selectedTerm, isLar
                             hipervinculoFichaJuris: "",
                             estadoFichaJuris: "",
                             estado_id: (item.estado_id > 0) ? item.estado_id : "",
-                            extractoBusqueda: (item.sintesis !== null ) ? item.sintesis : "",
+                            extractoBusqueda: (item.sintesis !== null ) ? convertirStringAHtml(item.sintesis) : "",
                             conclusion_resuelve: ((item.conclusion_resuelve !== null) && (item.hasOwnProperty("conclusion_resuelve"))) ? item.conclusion_resuelve : ""
                         };
                         newItem["hipervinculoFichaJuris"] = ((newItem.ficha_id !== null ) && ( newItem.estado_id === 14 )) ? `https://relatoria.jep.gov.co/downloadfichaext/${newItem.ficha_id}` : " ";

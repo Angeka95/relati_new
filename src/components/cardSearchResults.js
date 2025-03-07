@@ -399,7 +399,7 @@ export default function CardSearch({ datos, hiddenAnalisisJuridico = false }) {
             )}
           </CustomGrid>
         </div>
-
+        {((typeof datos.extractoBusqueda === 'string' ) && (datos.extractoBusqueda.trim() !== '')) && (
         <div className="width_100 margin_m" >
             <>
               <p className="text_center"
@@ -422,7 +422,7 @@ export default function CardSearch({ datos, hiddenAnalisisJuridico = false }) {
               )}
             </>
         </div>
-
+        )}
         
       </CardActions>
 

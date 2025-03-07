@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import DOMPurify from 'dompurify';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import enfoqueGeneroService from '../services/enfoque_genero.js';
-import { removeFragmentoInString, getOpcionesAutocompletar, obtenerPalabrasFromArrayObject, truncateWithEllipsis } from '../helpers/utils.js';
+import { removeFragmentoInString, getOpcionesAutocompletar, obtenerPalabrasFromArrayObject, convertirStringAHtml } from '../helpers/utils.js';
 import { Container, Grid, Alert } from '@mui/material';
 import ListCardSearch from '../components/listCardSearchEnfoqueGenero.js';
 import LinearWithValueLabel from '../components/linearProgress.js';  
@@ -85,12 +85,12 @@ export default function EnfoqueGenero() {
                             hipervinculo:   (item.hipervinculo !== null ) ? `https://relatoria.jep.gov.co/${item.hipervinculo}` : "", 
                             hipervinculoFichaJuris: "",
                             estadoFichaJuris: false,
-                            extractoBusqueda:  ((item.getfichas.length > 0 ) && (item.getfichas[0].sintesis_titulo !== null))  ?  item.getfichas[0].sintesis_titulo : "",
+                            extractoBusqueda:  ((item.getfichas.length > 0 ) && (item.getfichas[0].sintesis_titulo !== null))  ?  convertirStringAHtml(item.getfichas[0].sintesis_titulo) : "",
                             caso: (item.casopro.length > 0 ) ? obtenerPalabrasFromArrayObject(item.casopro, "caso", null, false) : "",
                             autocompletarBuscador: "",
                             estado_id: ((item.getfichas.length > 0 ) && (item.getfichas[0].estado_id !== null))  ?  item.getfichas[0].estado_id : "",
                             conclusion_resuelve: ((item.conclusion_resuelve !== null) && (item.hasOwnProperty("conclusion_resuelve"))) ? item.conclusion_resuelve : "", 
-                            analisis: ((item.getfichas.length > 0 ) && (item.getfichas[0].sintesis_titulo !== null))  ?  item.getfichas[0].sintesis_titulo : "",
+                            analisis: ((item.getfichas.length > 0 ) && (item.getfichas[0].sintesis_titulo !== null))  ?  convertirStringAHtml(item.getfichas[0].sintesis_titulo) : "",
                         };
                         newItem["departamentoNombre"] = newItem.departamento;
                         newItem["procedimientos"] = newItem.procedimiento; 

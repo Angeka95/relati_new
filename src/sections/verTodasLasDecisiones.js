@@ -8,7 +8,7 @@ import { Container, Grid, Alert, Box, Button } from '@mui/material';
 import buscadorService from '../services/buscador.js';
 import LinearWithValueLabel from '../components/linearProgress.js';  
 import Context from '../context/context.js';
-import { filtroByDefault, removeFragmentoInString, getOpcionesAutocompletar, obtenerPalabrasFromArrayObject, validarfiltroJurisprudencial } from '../helpers/utils.js';
+import { filtroByDefault, removeFragmentoInString, getOpcionesAutocompletar, obtenerPalabrasFromArrayObject, validarfiltroJurisprudencial, convertirStringAHtml } from '../helpers/utils.js';
 import '../App.css';
 
 export default function VerTodasLasDecisiones() {
@@ -95,7 +95,7 @@ export default function VerTodasLasDecisiones() {
                             hipervinculo:   (item.hipervinculo !== null ) ? `https://relatoria.jep.gov.co/${item.hipervinculo}` : "", 
                             hipervinculoFichaJuris: "",
                             estadoFichaJuris: false,
-                            extractoBusqueda: (item.sintesis !== null ) ? item.sintesis : "",
+                            extractoBusqueda: (item.sintesis !== null ) ? convertirStringAHtml(item.sintesis) : "",
                             caso: (item.macrocaso !== null ) ? item.macrocaso : "",
                             autocompletarBuscador: "",
                             estado_id: (item.estado_id > 0) ? item.estado_id : "",

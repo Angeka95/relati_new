@@ -479,9 +479,11 @@ const convertirStringAHtml = (str) => {
     let newStr  = DOMPurify.sanitize(str);
     
     // Validando strings HTML de tipo <p>null</p>
-    if((newStr.trim() === "") || (newStr === null)){
+    if((newStr.trim() === "") || (newStr === null) || (newStr === "null")){
         return "";
-    }
+    } 
+    
+    return newStr;
     
 };
 

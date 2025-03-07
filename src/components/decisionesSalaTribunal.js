@@ -4,7 +4,7 @@ import DOMPurify from 'dompurify';
 import ListCardSearch from '../components/listCardSearchMacrocasoResults.js';
 import LinearWithValueLabel from '../components/linearProgress.js';
 import macrocasoService from '../services/macrocaso.js';
-import { obtenerPalabrasFromArrayObject } from '../helpers/utils.js';
+import { obtenerPalabrasFromArrayObject, convertirStringAHtml } from '../helpers/utils.js';
 
 export default function DecisionesSalaTribunal({caso}) {
 
@@ -76,7 +76,7 @@ export default function DecisionesSalaTribunal({caso}) {
               tipoDecision: (item.detalle_caso !== null ) ? `${item.detalle_caso}` : "",
               caso: (item.caso !== null ) ? item.caso : "",
               subcaso: (item.casopro.length > 0 ) ? obtenerPalabrasFromArrayObject(item.casopro, "caso", null, false) : "",
-              extractoBusqueda: ((item.getfichas.length > 0 ) && (item.getfichas[0].sintesis_descripcion !== null))  ?  item.getfichas[0].sintesis_descripcion : "",
+              extractoBusqueda: ((item.getfichas.length > 0 ) && (item.getfichas[0].sintesis_descripcion !== null))  ?  convertirStringAHtml(item.getfichas[0].sintesis_descripcion) : "",
               conclusion_resuelve: ((item.conclusion_resuelve !== null) && (item.hasOwnProperty("conclusion_resuelve"))) ? item.conclusion_resuelve : ""
           };
           newItem["hechos"] =  DOMPurify.sanitize(newItem.hechos, { ALLOWED_TAGS: [] });
