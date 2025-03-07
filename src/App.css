@@ -1567,6 +1567,12 @@ h6 {
   text-decoration: none;
 }
 
+.fixed_header{
+  /* background-color: #Fff; */
+  /* position: fixed; */
+  /* height: 100px; */
+}
+
 
 /*END TESAURO */
 

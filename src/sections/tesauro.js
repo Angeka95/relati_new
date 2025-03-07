@@ -136,10 +136,10 @@ export default function Tesauro() {
                                            </Alert>
                                            :
                                             <div className="list_container_tesauro scroll-container text_center padding_x">
-                                            <div className="wrap justify_between margin_bottom_m margin_top_s list_container_header">
+                                            <div className="wrap justify_between margin_bottom_m margin_top_s list_container_header fixed_header">
                                                 <h3> Términos encontrados por {activeLetter ? activeLetter.toUpperCase() : ''}</h3>
                                                 <div>
-                                                    <Stack className='autocomplete_bar_search_terms'>
+                                                    <Stack className='autocomplete_bar_search_terms '>
                                                         <Autocomplete
                                                             id="free-solo-demo"
                                                             freeSolo
