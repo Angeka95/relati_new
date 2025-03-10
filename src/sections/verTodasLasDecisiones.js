@@ -104,7 +104,7 @@ export default function VerTodasLasDecisiones() {
                         newItem["departamentoNombre"] = newItem.departamento;
                         newItem["procedimientos"] = newItem.procedimiento; 
                         newItem["anio"] = newItem.anioHechos;
-                        newItem["comparecientes"] = newItem.compareciente;
+                        newItem["comparecientes"] = newItem.tipoSujeto;
                         newItem["delitos"] = newItem.delito;
                         newItem["hipervinculoFichaJuris"] = ((newItem.ficha_id !== null ) && ( newItem.estado_id === 14 )) ? `https://relatoria.jep.gov.co/downloadfichaext/${newItem.ficha_id}` : " ";
                         newItem["autocompletarBuscador"] = { id: newItem.id, title: `${newItem.salaOSeccion} ${newItem.nombreDecision} ${newItem.departamento} ${newItem.delito} ${newItem.procedimiento} ${newItem.compareciente} ${newItem.magistrado}`};  

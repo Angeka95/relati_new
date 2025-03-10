@@ -7,15 +7,26 @@ import '../App.css';
 import React, { useState, useEffect, useContext } from 'react';
 import Context from '../context/context';
 import { FormControl, InputLabel, Select, MenuItem, OutlinedInput, Chip, Checkbox, ListItemText, Tooltip } from '@mui/material';
+import { validarfiltroJurisprudencial } from '../helpers/utils.js';
 import CloseIcon from '@mui/icons-material/Close';
 
 export default function Select_field({ datos_filtros, label, id, selectedData, setSelectedData, isDisabled }) {
-
+    
   const [selectedValues, setSelectedValues] = useState([]);
+  
+  const { filtroJurisprudencial } = useContext(Context);
   
   useEffect(()=>{
     setSelectedValues([...selectedData]);
   },[selectedData]);
+  
+  
+  useEffect(()=>{
+    if(validarfiltroJurisprudencial(filtroJurisprudencial)) { 
+      setSelectedValues([]);
+    }
+  },[filtroJurisprudencial]);
+  
   
   const handleChange = (event) => {
     setSelectedValues(event.target.value);

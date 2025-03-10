@@ -25,7 +25,7 @@ export default function Card({ selectedFilters, isListSmall, selectedTerm, isLar
     const [message, setMessage] = useState({ message: "", classname: "" });
     const [selectedDoc, setSelectedDoc] = useState({ "title": "* Todos los resultados", "id": 0 });
     const [searchDocsOptions, setSearchDocsOptions] = useState([]);
-
+              
     const getDocsTerm = () => {
         tesauroService
             .getDocsByTermAI(selectedTerm)
@@ -70,6 +70,7 @@ export default function Card({ selectedFilters, isListSmall, selectedTerm, isLar
                             conclusion_resuelve: ((item.conclusion_resuelve !== null) && (item.hasOwnProperty("conclusion_resuelve"))) ? item.conclusion_resuelve : ""
                         };
                         newItem["hipervinculoFichaJuris"] = ((newItem.ficha_id !== null ) && ( newItem.estado_id === 14 )) ? `https://relatoria.jep.gov.co/downloadfichaext/${newItem.ficha_id}` : " ";
+                        newItem["comparecientes"] = newItem.tipoSujeto;
                         newItem["autocompletarBuscador"] = { id: newItem.id, title: `${newItem.salaOSeccion} ${newItem.delito} ${newItem.procedimiento} ${newItem.compareciente} ${newItem.tipoSujeto} ${newItem.departamento} ${newItem.nombreDecision} ${newItem.magistrado}  ${newItem.palabrasClaves}`}; 
                         return newItem;
                     });
@@ -349,8 +350,6 @@ export default function Card({ selectedFilters, isListSmall, selectedTerm, isLar
                                         }}
                                         className="chip_select" key={value} label={value}
                                     />
-    
-    
                                 ))}
                             </Box>
                         )}

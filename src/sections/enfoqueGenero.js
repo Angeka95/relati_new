@@ -95,7 +95,7 @@ export default function EnfoqueGenero() {
                         newItem["departamentoNombre"] = newItem.departamento;
                         newItem["procedimientos"] = newItem.procedimiento; 
                         newItem["anio"] = newItem.anioHechos;
-                        newItem["comparecientes"] = newItem.compareciente;
+                        newItem["comparecientes"] = newItem.tipoSujeto;
                         newItem["delitos"] = newItem.delito;
                         newItem["hechos"] =  DOMPurify.sanitize(newItem.analisis, { ALLOWED_TAGS: [] });
                         newItem["hipervinculoFichaJuris"] = ((newItem.providencia_id !== null) && ( newItem.estado_id === 14 )) ? `https://relatoria.jep.gov.co/downloadfichaext/${newItem.providencia_id}` : " ";

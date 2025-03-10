@@ -28,7 +28,7 @@ import LinearWithValueLabel from '../components/linearProgress.js';
 import ButtonDownloadXLS from './buttonDownloadXLS.js';
 
 export default function Card({ datosBusqueda, searchOptions, selectedFilters, isListSmall, selectedTerm, isLargeResult, isExternalFilters, customPagination = {} }) {  
-    
+       
     const [datos, setDatos] = useState(datosBusqueda);
     const [datosOriginales, setDatosOriginales] = useState(datosBusqueda);
     const [selectedDoc, setSelectedDoc] = useState({ "title": "* Todos los resultados", "id": 0 });
@@ -41,8 +41,9 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
 
     useEffect(() => {
         if(!validarfiltroJurisprudencial(filtroJurisprudencial)) { 
-            
-            let datosFiltrados = datosOriginales;
+            let newMessage = { message: "", classname: "" }; 
+            let datosFiltrados = [...datos];
+            setMessage({ message: "", classname: "" });
             if(filtroJurisprudencial.departamentos.length > 0){
                 datosFiltrados = datosFiltrados.filter( item => { 
                     return filtroJurisprudencial.departamentos.includes(item.departamentoNombre); 
@@ -94,6 +95,15 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
                     return false;
                 });
             } 
+            //console.log("Datos filtrados", datosFiltrados)
+            if(datosFiltrados.length > 0) {
+                newMessage["message"] = `Hay resultados.`;
+                newMessage["classname"] = 'success';
+            } else {
+                newMessage["message"] = `No se encontraron resultados.`;
+                newMessage["classname"] = 'warning';
+            }
+            setMessage(newMessage);
             setDatos(datosFiltrados);
             setSearchDocsOptions(getOpcionesAutocompletar(datosFiltrados));
         } else {
@@ -101,17 +111,6 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
             setSearchDocsOptions(searchOptions);
         }
     }, [filtroJurisprudencial]);
-
-    // Funcion que permite mostrar la lista de providencias en el autocompletar
-    const handlerSetSelectedDoc = (newSelectedOption) => { 
-        if(newSelectedOption.title !== "* Todos los resultados"){
-            const newArrDatos = datos.filter(item => item.id === newSelectedOption.id);
-            setSelectedDoc(newSelectedOption);
-            setDatos(newArrDatos);
-        } else {
-            setDatos(datosOriginales);
-        }
-    }
 
     const { verTodasDecisiones, busqueda } = useContext(Context);
 
@@ -225,12 +224,13 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
     const searchBarForInnerResultsInputRef = useRef(null);
             
     const handlerInnerSearch = (valueSearchBarInner) => {
+        //console.log("filtro jurs", filtroJurisprudencial);
         let newMessage = { message: "", classname: "" }; 
         let newArrDatos = [];
         setDatos([]);
         setMessage({ message: "", classname: "" });
         if(valueSearchBarInner !== ""){
-            newArrDatos = [...datosOriginales].filter(item => {
+            newArrDatos = [...datos].filter(item => {
                 return item.autocompletarBuscador.title.toLowerCase().includes(valueSearchBarInner.toLowerCase());
             });
             if(newArrDatos.length > 0) {
@@ -253,7 +253,6 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
     };
         
     const deshacerBusqueda = (e) => {
-    console.log("filtro juris", filtroJurisprudencial);
         setDatos([]);
         setMessage({ message: "", classname: "" });
         searchBarForInnerResultsInputRef.current.clear(); 
@@ -262,6 +261,8 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
             setFiltroJurisprudencial(filtroByDefault);
         }, 800); 
     }
+    
+    // Fin de manipula el valor de busqueda que viene desde SearchBarForInnerResults y en valor
         
      if(datosBusqueda.length > 0) {
         return (
@@ -303,8 +304,6 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
                                         }}
                                         className="chip_select" key={value} label={value}
                                     />
-    
-    
                                 ))}
                             </Box>
                         )}

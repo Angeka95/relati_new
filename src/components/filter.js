@@ -101,7 +101,7 @@ export default function Filter({ setSelectedFilters, isFilterFloat, isShowingFil
     /*if(filtroJurisprudencial.departamentos.length === 1){
       setSelectedDataFilter3([...filtroJurisprudencial.departamentos]);
     }*/
-
+  
     setSelectedFilters(
       [
         ...selectedDataFilter1,
@@ -123,6 +123,7 @@ export default function Filter({ setSelectedFilters, isFilterFloat, isShowingFil
       comparecientes: [...selectedDataFilter6],
       procedimientos: [...selectedDataFilter7]
     });
+        
   };
 
   useEffect(() => {
@@ -160,9 +161,15 @@ export default function Filter({ setSelectedFilters, isFilterFloat, isShowingFil
       } 
       //console.log("updateselectedfilters", updateSelectedFilters);
       setSelectedFilters(updateSelectedFilters);
+    } else {
+        setSelectedDataFilter1([]);
+        setSelectedDataFilter2([]);
+        setSelectedDataFilter3([]);
+        setSelectedDataFilter4([]);
+        setSelectedDataFilter5([]);
+        setSelectedDataFilter6([]);
     }
   }, [filtroJurisprudencial]);
-
 
   const JustFilterFloatNoneGrid = styled(Grid)(({ theme }) => ({
 
