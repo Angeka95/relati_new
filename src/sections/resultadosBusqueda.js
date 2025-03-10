@@ -8,7 +8,7 @@ import buscadorService from '../services/buscador.js';
 import LinearWithValueLabel from '../components/linearProgress.js';  
 import Context from '../context/context.js';
 import { useCleanLocalStorageVars } from '../hooks/useCleanLocalStorageVars.js';
-import { filtroByDefault, convertirStringAHtml, getOpcionesAutocompletar, setLocalStorageWithExpiry, getLocalStorageWithExpiry } from '../helpers/utils.js';
+import { filtroByDefault, validarfiltroJurisprudencial, convertirStringAHtml, getOpcionesAutocompletar, setLocalStorageWithExpiry, getLocalStorageWithExpiry } from '../helpers/utils.js';
 import '../App.css';
 
 export default function SearchResults() {
@@ -86,10 +86,10 @@ export default function SearchResults() {
                     newItem["departamentoNombre"] = newItem.departamento;
                     newItem["procedimientos"] = newItem.procedimiento; 
                     newItem["anio"] = newItem.anioHechos;
-                    newItem["comparecientes"] = newItem.compareciente;
+                    newItem["comparecientes"] = newItem.tipoSujeto;
                     newItem["delitos"] = newItem.delito;
                     newItem["hipervinculoFichaJuris"] = ((newItem.ficha_id !== null ) && ( newItem.estado_id === 14 )) ? `https://relatoria.jep.gov.co/downloadfichaext/${newItem.ficha_id}` : " ";
-                    newItem["autocompletarBuscador"] = { id: newItem.id, title: `${newItem.salaOSeccion} ${newItem.nombreDecision} ${newItem.departamento} ${newItem.delito} ${newItem.procedimiento} ${newItem.compareciente} ${newItem.magistrado}`};  
+                    newItem["autocompletarBuscador"] = { id: newItem.id, title: `${newItem.salaOSeccion} ${newItem.nombreDecision} ${newItem.departamento} ${newItem.delito} ${newItem.procedimiento} ${newItem.compareciente} ${newItem.magistrado} ${newItem.anioHechos} `};  
                     return newItem;
               });
               setDatos(newDatos);
@@ -189,6 +189,13 @@ const handleMessage = (newMessage) => {
         setFiltroJurisprudencial(filtroByDefault);
     } 
   }, []);
+  
+  // Valida filtroJurisprudencial si esta vacio, el selectedFilters queda vacio
+  useEffect(() => {
+    if(validarfiltroJurisprudencial(filtroJurisprudencial)){ 
+        setSelectedFilters([]);
+    } 
+  }, [filtroJurisprudencial]);
 
   //return(<></>);
 
@@ -236,7 +243,7 @@ const handleMessage = (newMessage) => {
           </Grid>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
-              <Filter setSelectedFilters={setSelectedFilters}></Filter> 
+              <Filter setSelectedFilters={setSelectedFilters}></Filter>
             </Grid>
             <Grid item xs={12} sm={12} md={8} lg={8} xl={8}>
                 <ListCardSearch datosBusqueda={datos} selectedTerm={stringQuery} searchOptions={searchOptions} selectedFilters={selectedFilters}></ListCardSearch>

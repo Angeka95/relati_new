@@ -81,6 +81,7 @@ export default function DecisionesSalaTribunal({caso}) {
           };
           newItem["hechos"] =  DOMPurify.sanitize(newItem.hechos, { ALLOWED_TAGS: [] });
           newItem["extractoBusqueda"] =  DOMPurify.sanitize(newItem.extractoBusqueda, { ALLOWED_TAGS: [] });
+          newItem["comparecientes"] = newItem.tipoSujeto;
           newItem["problemasJuridicos"] =  DOMPurify.sanitize(newItem.problemasJuridicos, { ALLOWED_TAGS: [] });
           newItem["autocompletarBuscador"] = { id: newItem.id, title: `${newItem.salaOSeccion} ${newItem.delito} ${newItem.procedimiento} ${newItem.compareciente} ${newItem.tipoSujeto} ${newItem.departamento} ${newItem.nombreDecision} ${newItem.magistrado}  ${newItem.palabrasClaves}`}; 
           return newItem;
