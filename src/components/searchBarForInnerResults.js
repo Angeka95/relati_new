@@ -26,6 +26,12 @@ const SearchBarForInnerResults = forwardRef(( props, ref ) => {
       return valueSearchBar;
     }
   }));
+  
+  const keypressEnterResultadosBusqueda = (event) => {
+    if (event.key === "Enter") {    
+      handlerInnerSearch(valueSearchBar);
+    } 
+  };
     
   return (
     <div className="autocomplete_bar_inner_search">
@@ -39,6 +45,7 @@ const SearchBarForInnerResults = forwardRef(( props, ref ) => {
                                       id="searchBarForInnerResultsTextField"
                                       label="Buscar en los resultados"
                                       ref={inputRef}
+                                      onKeyDown={keypressEnterResultadosBusqueda}
                                       placeholder=""
                                       inputProps={{
                                             ...params.inputProps,

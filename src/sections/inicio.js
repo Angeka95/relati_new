@@ -213,33 +213,28 @@ export default function Home() {
         
     };
     
-    useEffect(() => {
-        
+    const keypressEnterResultadosBusqueda = (event) => {
+    
         const formAutocomplete = document.querySelector('.autocomplete_home_container');
         const inputAutocomplete = formAutocomplete.querySelector('.autocomplete_home input');
         const buttonAutocomplete = formAutocomplete.querySelector('button.searchAIButton');
-        if(inputAutocomplete){
-            inputAutocomplete.focus();
-        }
-        if(buttonAutocomplete){
-            document.addEventListener("keydown", function(event) {
-                if (event.key === "Enter") { 
-                    let message_ = { message: "", classname: "" };
-                    if (inputAutocomplete.value.trim() !== "") {
-                        buttonAutocomplete.click(); 
-                    } else {
-                        message_ = { message: "Busque por palabra clave, número de decisión, radicado...", classname: "warning" };
-                    }
-                    setTimeout(function(){ 
-                        setMessageSearch(message_);
-                    }, 300);
-                    setTimeout(() => {
-                        setMessageSearch({ message: "", classname: "" }); 
-                    }, 1500);
-                }
-            });
-        }
-    },[]);
+        
+        if (event.key === "Enter") {    
+            let message_ = { message: "", classname: "" };
+            if (inputAutocomplete.value.trim() !== "") {
+                buttonAutocomplete.click(); 
+            } else {
+                message_ = { message: "Busque por palabra clave, número de decisión, radicado...", classname: "warning" };
+            }
+            setTimeout(function(){ 
+                setMessageSearch(message_);
+            }, 300);
+            setTimeout(() => {
+                setMessageSearch({ message: "", classname: "" }); 
+            }, 1500);
+        } 
+        
+    };
 
     // Modal 
     const [openModal, setOpenModal] = useState(false);
@@ -477,6 +472,7 @@ export default function Home() {
                                         value={valueBar}
                                         freeSolo
                                         onChange={updateSelectedValue}
+                                        onKeyDown={keypressEnterResultadosBusqueda}
                                         options={options.map((option) => option.title)}
                                         renderInput={(params) => 
                                             <TextField ref={inputRef} {...params} placeholder="Busque por palabra clave, número de decisión, radicado...  " inputProps={{
