@@ -45,46 +45,13 @@ export default function Search({ isSearchAdvance, isSearchMain }) {
     }
 
   };
-
-  useEffect(() => {
-
-          const formAutocomplete = document.querySelector('.autocomplete_search');
-          const inputAutocomplete = formAutocomplete.querySelector('input');
-          const buttonAutocomplete = formAutocomplete.querySelectorAll('button.searchAIButton')[0];
-          
-          if(inputAutocomplete){
-            inputAutocomplete.focus();
-          }
-          
-          if(buttonAutocomplete){
-          
-              document.addEventListener("keydown", function(event) {
-                  if (event.key === "Enter") { 
-                  
-                    let message_ = { message: "", classname: "" };
-                    let searchValue = valueBar;
-                    
-                    if(searchValue.length === 0){
-                      message_ = { message: "Busque por palabra clave, número de decisión, radicado...", classname: "warning" };
-                      setTimeout(function(){ 
-                          setMessageSearch(message_);
-                      }, 300);
-                      setTimeout(() => {
-                          setMessageSearch({ message: "", classname: "" }); 
-                      }, 1500);
-                    } else {
-                      const params = new URLSearchParams({ string: encodeURIComponent(searchValue) });
-                      window.location.href = `/resultados-busqueda?${params.toString()}`;
-                    }
-                    
-                  }  
-              });
-              
-          }  
-          
-  },[valueBar]);
- 
-
+  
+  const keypressEnterResultadosBusqueda = (event) => {
+    if (event.key === "Enter") {    
+      search();
+    } 
+  };
+  
   // Encender y apagar switch ver todas las decisiones 
 
   const handleChange = () => {
@@ -151,7 +118,7 @@ export default function Search({ isSearchAdvance, isSearchMain }) {
               value={valueBar}
               onChange={updateSelectedValue}
               options={searchOptions.map((option) => option.title)}
-              renderInput={(params) => <TextField ref={inputRef} {...params} placeholder="Busque por palabra clave, número de decisión, radicado...  " 
+              renderInput={(params) => <TextField {...params} ref={inputRef} onKeyDown={keypressEnterResultadosBusqueda} placeholder="Busque por palabra clave, número de decisión, radicado...  " 
               inputProps={{
                 ...params.inputProps,
                 maxLength: 80
