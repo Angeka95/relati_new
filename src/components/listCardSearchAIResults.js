@@ -7,7 +7,7 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
-import CardSearch from './cardSearchResults.js';
+import CardSearch from './cardSearchResultsAI.js';
 //import SearchBarSmall from './searchBarSmallAI.js';
 import SearchBarForInnerResults from './searchBarForInnerResults.js';
 import { SpaceGrid, WrapGrid, SpaceBetweenGrid, Width100Grid, NoneGrid, JustMapGrid, JustMapNoneGrid } from './listCardSearch/gridComponents.js';
