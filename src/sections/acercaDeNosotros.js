@@ -20,7 +20,7 @@ export default function Acerca() {
                     <div className="container_left_about margin_eje_xl"> 
 
                             <h2 className="text_bolder margin_bottom_m"> ¿Qué hace la Relatoría General de la JEP? </h2> 
-                            <p className="">La Relatoría General de la JEP tiene la función de <strong>publicar, clasificar, analizar y divulgar las decisiones judiciales </strong>y los demás documentos remitidos por la magistratura de la JEP y otras instancias de la entidad que así lo requieran u ordenen. En ese sentido, <strong> a través de la plataforma Relati, se facilita el acceso a la jurisprudencia de la JEP</strong> a la población interesada (comparecientes, estudiantes, investigadores, litigantes, etc.), garantizando el cumplimiento del principio de publicidad de las decisiones judiciales. 
+                            <p className="">La Relatoría General de la JEP tiene la función de publicar, clasificar, analizar y divulgar las decisiones judiciales y los demás documentos remitidos por la magistratura de la JEP y otras instancias de la entidad que así lo requieran u ordenen. En ese sentido, <strong> a través de la plataforma Relati, se facilita el acceso a la jurisprudencia de la JEP</strong> a la población interesada (comparecientes, estudiantes, investigadores, litigantes, etc.), garantizando el cumplimiento del principio de publicidad de las decisiones judiciales. 
                             </p> 
                     </div> 
                     <div className="container_right_about margin_eje_xl"> 

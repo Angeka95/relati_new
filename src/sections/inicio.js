@@ -195,7 +195,7 @@ export default function Home() {
         let searchValue = inputRef.current.querySelector('input').value;
         
         if(searchValue.length === 0){
-            message_ = { message: "Busque por palabra clave, número de decisión, radicado...", classname: "warning" };
+            message_ = { message: "Busque por palabras clave, número de decisión, radicado...", classname: "warning" };
             setTimeout(function(){ 
                 setMessageSearch(message_);
             }, 300);
@@ -228,7 +228,7 @@ export default function Home() {
                     if (inputAutocomplete.value.trim() !== "") {
                         buttonAutocomplete.click(); 
                     } else {
-                        message_ = { message: "Busque por palabra clave, número de decisión, radicado...", classname: "warning" };
+                        message_ = { message: "Busque por palabras clave, número de decisión, radicado...", classname: "warning" };
                     }
                     setTimeout(function(){ 
                         setMessageSearch(message_);
@@ -479,7 +479,7 @@ export default function Home() {
                                         onChange={updateSelectedValue}
                                         options={options.map((option) => option.title)}
                                         renderInput={(params) => 
-                                            <TextField ref={inputRef} {...params} placeholder="Busque por palabra clave, número de decisión, radicado...  " inputProps={{
+                                            <TextField ref={inputRef} {...params} placeholder="Busque por palabras clave, número de decisión, radicado...  " inputProps={{
                                             ...params.inputProps,
                                             maxLength: 400
                                             }} 
