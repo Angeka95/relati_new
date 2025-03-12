@@ -138,16 +138,42 @@ export default function CardSearch({ datos, hiddenAnalisisJuridico = false }) {
         )}
         
       </div> 
-        {value === 0 && 
-        <div className="margin_top_m ">
-            {((typeof datos.salaOSeccion === 'string' ) && (datos.salaOSeccion.trim() !== '')) && (
-              <p className="text_space_min">• Sala o Sección:  <span className="text_bolder"> {datos.salaOSeccion}</span> </p>
-            )}
-            {((typeof datos.procedimiento === 'string' ) && (datos.procedimiento.trim() !== '')) && (
-              <p className="text_space_min">• Procedimiento:  <span className="text_bolder"> {datos.procedimiento}</span> </p>
-            )}
+        {value === 0 && (
+        <>
+          {((typeof datos.extractoBusqueda === 'string' ) && (datos.extractoBusqueda.trim() !== '')) && (
+          <div className="width_100" style={{ marginTop: "1rem", marginBottom: "1rem", marginRight: "1rem", marginLeft: "0rem" }}>
+              <>
+                <p className="text_center"
+                  style={{
+                    height: isButtonExtractEnabled ? 'auto' : '50px',
+                    overflow: 'hidden'
+                  }}>
+                  {datos.extractoBusqueda}
+                </p>
+  
+                {isButtonExtractEnabled && (
+                  <Button
+                    className="link_secondary justify_center text_lowercase" onClick={toggleButtonExtract}> ver menos del extracto
+                  </Button>
+                )}
+                {!isButtonExtractEnabled && (
+                  <Button
+                    className="link_secondary justify_center text_lowercase" onClick={toggleButtonExtract}> ver más del extracto
+                  </Button>
+                )}
+              </>
           </div>
-          }
+          )}
+          <div className="margin_top_m ">
+              {((typeof datos.salaOSeccion === 'string' ) && (datos.salaOSeccion.trim() !== '')) && (
+                <p className="text_space_min">• Sala o Sección:  <span className="text_bolder"> {datos.salaOSeccion}</span> </p>
+              )}
+              {((typeof datos.procedimiento === 'string' ) && (datos.procedimiento.trim() !== '')) && (
+                <p className="text_space_min">• Procedimiento:  <span className="text_bolder"> {datos.procedimiento}</span> </p>
+              )}
+          </div>
+        </>
+        )}
         {value === 1 && 
         
         <div className="margin_top_m ">
@@ -387,8 +413,6 @@ export default function CardSearch({ datos, hiddenAnalisisJuridico = false }) {
 
       <CardActions className="no-spacing card_actions_container">
         <div className="card_search_button_spacing">
-
-
           <CustomGrid className="justify_center">
             {((typeof datos.hipervinculo === 'string' ) && (datos.hipervinculo.trim() !== '')) && (
               <a href={datos.hipervinculo} target='_blank' rel="noreferrer">
@@ -397,31 +421,6 @@ export default function CardSearch({ datos, hiddenAnalisisJuridico = false }) {
             )}
           </CustomGrid>
         </div>
-        {((typeof datos.extractoBusqueda === 'string' ) && (datos.extractoBusqueda.trim() !== '')) && (
-        <div className="width_100 margin_m" >
-            <>
-              <p className="text_center"
-                style={{
-                  height: isButtonExtractEnabled ? 'auto' : '50px',
-                  overflow: 'hidden'
-                }}>
-                {datos.extractoBusqueda}
-              </p>
-
-              {isButtonExtractEnabled && (
-                <Button
-                  className="link_secondary justify_center text_lowercase" onClick={toggleButtonExtract}> ver menos del extracto
-                </Button>
-              )}
-              {!isButtonExtractEnabled && (
-                <Button
-                  className="link_secondary justify_center text_lowercase" onClick={toggleButtonExtract}> ver más del extracto
-                </Button>
-              )}
-            </>
-        </div>
-        )}
-        
       </CardActions>
 
      

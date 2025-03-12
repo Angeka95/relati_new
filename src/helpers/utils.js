@@ -533,6 +533,35 @@ const getLocalStorageWithExpiry = (key) => {
     return item.value;
 };
 
+/**
+ * formatExtractoBusqueda()
+ * Funcionalidad que estructura los datos provenientes de item.hightlight a extracto busqueda
+ * Parametros de entrada:
+ * - hightlight: campo hightlight
+ * Salida:
+ * - Obtiene una cadena concatenada del hightlight
+ * Aplicación:
+ * - resultadosBusqueda.js
+*/
+
+const formatExtractoBusqueda = (hightlight) => {
+    let newExtractoBusqueda = "";
+    
+    if(hightlight.hasOwnProperty("back_consulta")){
+        newExtractoBusqueda += hightlight["back_consulta"][0] + "</br></br>";    
+    }
+    if(hightlight.hasOwnProperty("sintesis")){
+        newExtractoBusqueda += hightlight["sintesis"][0] + "</br></br>";    
+    }
+    if(hightlight.hasOwnProperty("hechos_antecedentes")){
+        newExtractoBusqueda += hightlight["hechos_antecedentes"][0] + "</br></br>";       
+    }
+    if(hightlight.hasOwnProperty("conclusion_resuelve")){
+        newExtractoBusqueda += hightlight["conclusion_resuelve"][0] + "</br></br>";      
+    }
+    return newExtractoBusqueda;
+};
+
 export { filtroByDefault, 
          truncateWithEllipsis, 
          obtenerAnio, 
@@ -556,5 +585,6 @@ export { filtroByDefault,
          ordenarBoletinesActuales,
          convertirStringAHtml,
          setLocalStorageWithExpiry,
-         getLocalStorageWithExpiry
+         getLocalStorageWithExpiry,
+         formatExtractoBusqueda
 };
