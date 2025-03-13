@@ -547,9 +547,9 @@ const getLocalStorageWithExpiry = (key) => {
 const formatExtractoBusqueda = (hightlight) => {
     let newExtractoBusqueda = "";
     
-    if(hightlight.hasOwnProperty("back_consulta")){
+    /*if(hightlight.hasOwnProperty("back_consulta")){
         newExtractoBusqueda += hightlight["back_consulta"][0] + "</br></br>";    
-    }
+    }*/
     if(hightlight.hasOwnProperty("sintesis")){
         newExtractoBusqueda += hightlight["sintesis"][0] + "</br></br>";    
     }
