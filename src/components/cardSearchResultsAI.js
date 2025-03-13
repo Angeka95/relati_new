@@ -25,10 +25,16 @@ export default function CardSearch({ datos, hiddenAnalisisJuridico = false }) {
   };
 
   const [isButtonExtractEnabled, setIsButtonExtractEnabled] = useState(false);
+  const [isButtonHighlightEnabled, setIsButtonHighlightEnabled] = useState(false);
 
   // Estado del boton extracto 
   const toggleButtonExtract = () => {
     setIsButtonExtractEnabled(prev => !prev);
+  };
+  
+  // Estado del boton extracto 
+  const toggleButtonHighlight = () => {
+    setIsButtonHighlightEnabled(prev => !prev);
   };
 
   const CustomGrid = styled(Grid)(({ theme }) => ({
@@ -154,12 +160,12 @@ export default function CardSearch({ datos, hiddenAnalisisJuridico = false }) {
              
                 {isButtonExtractEnabled && (
                   <Button
-                    className="link_secondary justify_center text_lowercase" onClick={toggleButtonExtract}> ver menos del extracto
+                    className="link_secondary justify_center text_lowercase" onClick={toggleButtonExtract}> ver menos síntesis
                   </Button>
                 )}
                 {!isButtonExtractEnabled && (
                   <Button
-                    className="link_secondary justify_center text_lowercase" onClick={toggleButtonExtract}> ver más del extracto
+                    className="link_secondary justify_center text_lowercase" onClick={toggleButtonExtract}> ver más síntesis
                   </Button>
                 )}
               </>
@@ -422,6 +428,30 @@ export default function CardSearch({ datos, hiddenAnalisisJuridico = false }) {
             )}
           </CustomGrid>
         </div>
+        {((value === 0 ) && (typeof datos.highlight === 'string' ) && (datos.highlight.trim() !== '')) && (
+          <div className="width_100" style={{ marginTop: "1rem", marginBottom: "1rem", marginRight: "1rem", marginLeft: "0rem" }}> 
+              <>
+                <div className="text_center"
+                  style={{
+                    height: isButtonHighlightEnabled ? 'auto' : '50px',
+                    overflow: 'hidden'
+                  }}>
+                  <StringToHtml htmlString={datos.highlight}/>
+                </div>
+             
+                {isButtonHighlightEnabled && (
+                  <Button
+                    className="link_secondary justify_center text_lowercase" onClick={toggleButtonHighlight}> ver menos del extracto
+                  </Button>
+                )}
+                {!isButtonHighlightEnabled && (
+                  <Button
+                    className="link_secondary justify_center text_lowercase" onClick={toggleButtonHighlight}> ver más del extracto
+                  </Button>
+                )}
+              </>
+          </div>
+          )}
       </CardActions>
 
      

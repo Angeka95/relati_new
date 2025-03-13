@@ -8,7 +8,7 @@ import buscadorService from '../services/buscador.js';
 import LinearWithValueLabel from '../components/linearProgress.js';  
 import Context from '../context/context.js';
 import { useCleanLocalStorageVars } from '../hooks/useCleanLocalStorageVars.js';
-import { filtroByDefault, validarfiltroJurisprudencial, convertirStringAHtml, getOpcionesAutocompletar, setLocalStorageWithExpiry, getLocalStorageWithExpiry, formatExtractoBusqueda } from '../helpers/utils.js';
+import { filtroByDefault, validarfiltroJurisprudencial, sanitizeString, getOpcionesAutocompletar, setLocalStorageWithExpiry, getLocalStorageWithExpiry, formatHighlight } from '../helpers/utils.js';
 import '../App.css';
 
 export default function SearchResults() {
@@ -77,11 +77,12 @@ export default function SearchResults() {
                         hipervinculo:   (item.hipervinculo !== null ) ? `https://relatoria.jep.gov.co/${item.hipervinculo}` : "", 
                         hipervinculoFichaJuris: "",
                         estadoFichaJuris: false,
-                        extractoBusqueda: (i.highlight !== null ) ? formatExtractoBusqueda(i.highlight) : "",
+                        extractoBusqueda: (item.sintesis !== null ) ? sanitizeString(item.sintesis) : "",
                         caso: (item.macrocaso !== null ) ? item.macrocaso : "",
                         autocompletarBuscador: "",
                         estado_id: (item.estado_id > 0) ? item.estado_id : "",
                         conclusion_resuelve: (item.conclusion_resuelve !== null) ? item.conclusion_resuelve : "", 
+                        highlight: (i.highlight !== null ) ? formatHighlight(i.highlight) : "",
                     };
                     newItem["departamentoNombre"] = newItem.departamento;
                     newItem["procedimientos"] = newItem.procedimiento; 

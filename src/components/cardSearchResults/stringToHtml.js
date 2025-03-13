@@ -13,7 +13,7 @@ const StringToHtml = ({htmlString}) => {
             containerRef.current.innerHTML = "";
 
             const template = document.createElement("template");
-            template.innerHTML = `<p>${htmlString}</p>`;
+            template.innerHTML = `${htmlString}`;
             
             containerRef.current.appendChild(template.content.firstChild);
        }

@@ -464,7 +464,7 @@ const ordenarBoletinesActuales = (arr) => {
   }
   
 /**
- * convertirStringAHtml()
+ * sanitizeString()
  * Funcionalidad que convierte una cadena de texto formateandola a HTML
  * Parametros de entrada:
  * - str: cadena con etiquetas HTML
@@ -474,7 +474,7 @@ const ordenarBoletinesActuales = (arr) => {
  * CardSearchResults componente
 */
 
-const convertirStringAHtml = (str) => {
+const sanitizeString = (str) => {
     
     let newStr  = DOMPurify.sanitize(str);
     
@@ -534,31 +534,41 @@ const getLocalStorageWithExpiry = (key) => {
 };
 
 /**
- * formatExtractoBusqueda()
- * Funcionalidad que estructura los datos provenientes de item.hightlight a extracto busqueda
+ * formatHighlight()
+ * Funcionalidad que estructura los datos provenientes de item.highlight a extracto busqueda
  * Parametros de entrada:
- * - hightlight: campo hightlight
+ * - highlight: campo highlight
  * Salida:
- * - Obtiene una cadena concatenada del hightlight
+ * - Obtiene una cadena concatenada del highlight
  * Aplicación:
  * - resultadosBusqueda.js
 */
 
-const formatExtractoBusqueda = (hightlight) => {
+const formatHighlight = (highlight) => {
+    
     let newExtractoBusqueda = "";
     
-    /*if(hightlight.hasOwnProperty("back_consulta")){
-        newExtractoBusqueda += hightlight["back_consulta"][0] + "</br></br>";    
-    }*/
-    if(hightlight.hasOwnProperty("sintesis")){
-        newExtractoBusqueda += hightlight["sintesis"][0] + "</br></br>";    
+    if(highlight !== null){
+    
+        newExtractoBusqueda = "<p>";
+    
+        const highlightProperties = ["sintesis", "hechos_antecedentes", "conclusion_resuelve"];
+    
+        highlightProperties.forEach((property, index) => {
+            if(highlight.hasOwnProperty(property)){
+                for(const i of highlight[property]){
+                    newExtractoBusqueda += i + "</br></br>";    
+                }
+            }
+        });
+    
+        newExtractoBusqueda += "</p>"; 
     }
-    if(hightlight.hasOwnProperty("hechos_antecedentes")){
-        newExtractoBusqueda += hightlight["hechos_antecedentes"][0] + "</br></br>";       
+    
+    if(newExtractoBusqueda === "<p></p>"){
+        newExtractoBusqueda = "";
     }
-    if(hightlight.hasOwnProperty("conclusion_resuelve")){
-        newExtractoBusqueda += hightlight["conclusion_resuelve"][0] + "</br></br>";      
-    }
+    
     return newExtractoBusqueda;
 };
 
@@ -583,8 +593,8 @@ export { filtroByDefault,
          convertObjFiltroJurisToQuery,
          ordenarTerminosABCD,
          ordenarBoletinesActuales,
-         convertirStringAHtml,
+         sanitizeString,
          setLocalStorageWithExpiry,
          getLocalStorageWithExpiry,
-         formatExtractoBusqueda
+         formatHighlight
 };
