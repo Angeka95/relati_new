@@ -61,6 +61,7 @@ export default function Mapa() {
                         };
                         itemProvidencia["asuntoNombreCaso"] = `${item.asuntocaso} ${item.nombre}`;
                         itemProvidencia["palabrasClave"] = `${itemProvidencia["delitos"]}, ${itemProvidencia["comparecientes"]}, ${itemProvidencia["procedimientos"]}`;
+                        itemProvidencia["autocompletarBuscador"] = { id: itemProvidencia.id, title: `${itemProvidencia.sala} ${itemProvidencia.departamentoNombre} ${itemProvidencia.asuntoNombre} ${itemProvidencia.palabrasClave}`};
                         return itemProvidencia;
                     });
                     setMessage(`Success: ${response.status_info.status}. ${response.status_info.reason}`)
@@ -142,7 +143,7 @@ export default function Mapa() {
             setGraf(grafOriginal);
         }   
     }, [filtroJurisprudencial]);
-
+    
     //funcion que realiza el filtro de las providencias cuando se da clic en un dpto
     const searchProDpto = (data) => {
         setDptoSelMapaJurisprudencial(data);

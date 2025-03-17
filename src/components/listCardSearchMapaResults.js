@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, useRef } from 'react';
 import '../App.css';
-import { Stack, Pagination, PaginationItem, List, ListItem, Button, Box, Chip } from '@mui/material';
+import { Stack, Pagination, PaginationItem, List, ListItem, Button, Box, Chip, Alert } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import InputLabel from '@mui/material/InputLabel';
@@ -9,6 +9,7 @@ import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import CardSearch from '../components/cardSearchMapaResults.js';
 import SearchBarSmall from '../components/searchBarSmall.js';
+import SearchBarForInnerResults from './searchBarForInnerResults.js';
 import SortIcon from '@mui/icons-material/Sort';
 import { Container, Grid } from '@mui/material';
 import { styled } from '@mui/material/styles';
@@ -19,32 +20,20 @@ import ExpandMoreOutlinedIcon from '@mui/icons-material/ExpandMoreOutlined';
 import FilterShort from './filterShort';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import LinearWithValueLabel from '../components/linearProgress.js';
-import { validarfiltroJurisprudencial } from '../helpers/utils.js';
+import { validarfiltroJurisprudencial, filtroByDefault } from '../helpers/utils.js';
 
 export default function Card({ datosMapa, datosOriginalesMapa, searchDocsOptionsMapa, selectedFilters, isListSmall, selectedTerm, isLargeResult, isExternalFilters }) {
 
-    const { isDatosMapaJurisprudencial, dptoSelMapaJurisprudencial, setDptoSelMapaJurisprudencial, filtroJurisprudencial } = useContext(Context);
+    const { isDatosMapaJurisprudencial, dptoSelMapaJurisprudencial, setDptoSelMapaJurisprudencial } = useContext(Context);
 
     const [datos, setDatos] = useState(datosMapa);
     const [datosOriginales, setDatosOriginales] = useState(datosOriginalesMapa);
-    const [message, setMessage] = useState("");
-    const [selectedDoc, setSelectedDoc] = useState("");
-    const [searchDocsOptions, setSearchDocsOptions] = useState(searchDocsOptionsMapa);
-
-    // Funcion que permite mostrar la lista de providencias en el autocompletar
-    const handlerSetSelectedDoc = (newSelectedOption) => {
-        if(newSelectedOption !== "* Todos los resultados"){
-            const newArrDatos = datos.filter(item => item.nombre === newSelectedOption);
-            setSelectedDoc(newSelectedOption);
-            setDatos(newArrDatos);
-        } else {
-            setSelectedDoc("");
-            setDptoSelMapaJurisprudencial(null);
-            setDatos(datosOriginales);
-        }
-    }
+    const [message, setMessage] = useState({ message: "", classname: "" });
+    const [valorBuscadorEnResultados, setValorBuscadorEnResultados] = useState("");
 
     const { verTodasDecisiones, busqueda } = useContext(Context);
+    
+    const { filtroJurisprudencial, setFiltroJurisprudencial } = useContext(Context);
 
     if (!selectedFilters) {
         selectedFilters = [];
@@ -178,7 +167,51 @@ export default function Card({ datosMapa, datosOriginalesMapa, searchDocsOptions
         setitemsPerPage(event.target.value);
         setPage(1);
     }
-
+    
+    // Manipula el valor de busqueda que viene desde SearchBarForInnerResults y en valor
+        
+     const searchBarForInnerResultsInputRef = useRef(null);
+            
+     const handlerInnerSearch = (valueSearchBarInner) => {
+         let newMessage = { message: "", classname: "" }; 
+         let newArrDatos = [];
+         setDatos([]);
+         setMessage({ message: "", classname: "" });
+         if(valueSearchBarInner !== ""){
+             newArrDatos = [...datos].filter(item => {
+                 return item.autocompletarBuscador.title.toLowerCase().includes(valueSearchBarInner.toLowerCase());
+             });
+             if(newArrDatos.length > 0) {
+                 newMessage["message"] = `Hay resultados`;
+                 newMessage["classname"] = 'success';
+             } else {
+                 newMessage["message"] = `No se encontraron resultados por ${valueSearchBarInner}`;
+                 newMessage["classname"] = 'warning';
+             }
+             setValorBuscadorEnResultados(valueSearchBarInner);
+         } else {
+             newArrDatos = [...datosOriginales];
+             newMessage["message"] = "";
+             newMessage["classname"] = "";
+         }
+         setTimeout(() => { 
+             setDatos(newArrDatos);
+             setMessage(newMessage);
+         }, 800); 
+     };
+         
+     const deshacerBusqueda = (e) => {
+         setDatos([]);
+         setMessage({ message: "", classname: "" });
+         searchBarForInnerResultsInputRef.current.clear(); 
+         setTimeout(() => { 
+             setDatos(datosOriginales);
+             setFiltroJurisprudencial(filtroByDefault);
+         }, 800); 
+     }
+     
+     // Fin de manipula el valor de busqueda que viene desde SearchBarForInnerResults y en valor
+    
 
     // Grids personalizadas
 
@@ -378,9 +411,8 @@ export default function Card({ datosMapa, datosOriginalesMapa, searchDocsOptions
                                         </Grid>
         
                                         <Grid item  className="justify_end_partial" xs={12} sm={12} md= {(isListSmall ? 12 : 6)} lg={(isListSmall ? 12 : 6)} xl={(isListSmall ? 12 : 6) }>
-                                            
-                                            <SearchBarSmall searchOptions={searchDocsOptions} handlerSetSelectedOption={handlerSetSelectedDoc}> </SearchBarSmall>
-        
+                                            {/*<SearchBarSmall searchOptions={searchDocsOptions} handlerSetSelectedOption={handlerSetSelectedDoc}> </SearchBarSmall>*/}
+                                            <SearchBarForInnerResults handlerInnerSearch={handlerInnerSearch} handlerReset={deshacerBusqueda} showLabel="false" ref={searchBarForInnerResultsInputRef}></SearchBarForInnerResults>
                                         </Grid>
                                     </SpaceBetweenGrid>
         
@@ -390,7 +422,7 @@ export default function Card({ datosMapa, datosOriginalesMapa, searchDocsOptions
                     </div>
         
                     {(verTodasDecisiones || busqueda) && (
-                        <>
+                        <> 
                             <WrapGrid item xs={12} sm={12} md={12} lg={12} xl={12} className="flex " >
                                 <Width100Grid>
                                     <p className="margin_results_page">
@@ -435,8 +467,8 @@ export default function Card({ datosMapa, datosOriginalesMapa, searchDocsOptions
                             </WrapGrid>
         
                             <div className="separator width_100"></div>
-
-                            { (datos.length > 0) && (
+                            {/* Lista de resultados */}
+                            { (datos.length > 0) ?
                                 <>            
                                 <SpaceGrid className="justify_end">
             
@@ -479,8 +511,29 @@ export default function Card({ datosMapa, datosOriginalesMapa, searchDocsOptions
             
                                 </SpaceGrid>
                                 </>            
-                            )}
-
+                            :
+                                <>
+                                    { (message.message === "") ?
+                                        <>
+                                        <LinearWithValueLabel processingMessages={["Procesando solicitud...", "Preparando respuesta..."]}></LinearWithValueLabel> 
+                                        </> 
+                                        :
+                                        <>
+                                        { ((message.classname === "error") || (message.classname === "warning")) && 
+                                          <>
+                                          <Alert variant="outlined" severity={message.classname}>
+                                          {message.message}
+                                          </Alert>
+                                          <Box sx={{ px: 0, my: 2, display: 'flex', justifyContent: 'center' }}>
+                                            <Button className="button_primary margin_xs card_size_small" target='_self' rel="noreferrer" onClick={deshacerBusqueda}>Deshacer búsqueda</Button>
+                                          </Box>
+                                          </>
+                                        }
+                                        </>
+                                    }
+                                </>
+                            }
+                            {/* Lista de resultados */}
                         </>
                     )
         

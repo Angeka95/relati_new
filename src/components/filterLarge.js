@@ -5,8 +5,10 @@ import FilterListIcon from '@mui/icons-material/FilterList';
 import ExpandLessOutlinedIcon from '@mui/icons-material/ExpandLessOutlined';
 import ExpandMoreOutlinedIcon from '@mui/icons-material/ExpandMoreOutlined';
 import Filter from './filter';
+import Context from '../context/context.js';
 import React, { useState, useEffect, useContext } from 'react';
 import { styled } from '@mui/material/styles';
+import { validarfiltroJurisprudencial } from '../helpers/utils.js';
 
 export default function FilterLarge() {
 
@@ -15,11 +17,20 @@ export default function FilterLarge() {
 
   const ButtonFilter = () => {
   }
+  
+  const { filtroJurisprudencial, setFiltroJurisprudencial } = useContext(Context);
   const [showFilter, setShowFilter] = useState(false);
 
   const handleFilter = () => {
     setShowFilter(!showFilter);
   };
+  
+  // Valida filtroJurisprudencial si esta vacio, el selectedFilters queda vacio
+  useEffect(() => {
+    if(validarfiltroJurisprudencial(filtroJurisprudencial)){ 
+        setSelectedFilters([]);
+    } 
+  }, [filtroJurisprudencial]);
 
   const SpaceBetweenGrid = styled(Grid)(({ theme }) => ({
 
