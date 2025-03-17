@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, useRef } from 'react';
 import { Grid, Stack, Pagination, PaginationItem, List, ListItem, Button, Box, Chip, Alert, InputLabel } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
@@ -8,7 +8,7 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import CardSearch from '../components/cardSearchResults.js';
-import SearchBarSmall from '../components/searchBarSmallAI.js';
+import SearchBarForInnerResults from './searchBarForInnerResults.js';
 import SortIcon from '@mui/icons-material/Sort';
 import { styled } from '@mui/material/styles';
 import Context from '../context/context';
@@ -23,8 +23,7 @@ export default function Card({ selectedFilters, isListSmall, selectedTerm, isLar
     const [datos, setDatos] = useState([]);
     const [datosOriginales, setDatosOriginales] = useState([]);
     const [message, setMessage] = useState({ message: "", classname: "" });
-    const [selectedDoc, setSelectedDoc] = useState({ "title": "* Todos los resultados", "id": 0 });
-    const [searchDocsOptions, setSearchDocsOptions] = useState([]);
+    const [valorBuscadorEnResultados, setValorBuscadorEnResultados] = useState("");
               
     const getDocsTerm = () => {
         tesauroService
@@ -77,7 +76,6 @@ export default function Card({ selectedFilters, isListSmall, selectedTerm, isLar
                     setMessage(`Success: ${response.status_info.status}. ${response.status_info.reason}`);
                     setDatos(cardsArr);
                     setDatosOriginales(cardsArr);
-                    setSearchDocsOptions(getOpcionesAutocompletar(cardsArr));
                 } else {
                     newMessage["message"] = `No se encontraron resultados relacionados con el término "${selectedTerm}".`;
                     newMessage["classname"] = 'warning';
@@ -92,17 +90,6 @@ export default function Card({ selectedFilters, isListSmall, selectedTerm, isLar
         setTimeout(function(){ 
             setMessage(newMessage);
         }, 3000);
-    }
-
-    // Funcion que permite mostrar la lista de providencias en el autocompletar
-    const handlerSetSelectedDoc = (newSelectedOption) => { 
-        if(newSelectedOption.title !== "* Todos los resultados"){
-            const newArrDatos = datos.filter(item => item.id === newSelectedOption.id);
-            setSelectedDoc(newSelectedOption);
-            setDatos(newArrDatos);
-        } else {
-            setDatos(datosOriginales);
-        }
     }
 
     const { verTodasDecisiones, busqueda } = useContext(Context);
@@ -178,12 +165,18 @@ export default function Card({ selectedFilters, isListSmall, selectedTerm, isLar
     const startIndexPage = Math.ceil(page * itemsPerPage + 1 - itemsPerPage);
 
     useEffect(() => {
-        if((datos.length === 0)){
+        if((datosOriginales.length === 0)){
             getDocsTerm();
         } else {
             getCurrentData();
         }
-    }, [page, itemsPerPage, datos]);
+    }, [datosOriginales]);
+    
+    useEffect(() => {
+        if(datos.length > 0){
+            getCurrentData();
+        }
+    }, [datos]);
 
     const getCurrentData = (items = 0) => {
         if (items === 0) {
@@ -199,6 +192,49 @@ export default function Card({ selectedFilters, isListSmall, selectedTerm, isLar
         setitemsPerPage(event.target.value);
         setPage(1);
     }
+    
+     // Manipula el valor de busqueda que viene desde SearchBarForInnerResults y en valor
+    
+     const searchBarForInnerResultsInputRef = useRef(null);
+            
+     const handlerInnerSearch = (valueSearchBarInner) => {
+         let newMessage = { message: "", classname: "" }; 
+         let newArrDatos = [];
+         setDatos([]);
+         setMessage({ message: "", classname: "" });
+         if(valueSearchBarInner !== ""){
+             newArrDatos = [...datos].filter(item => {
+                 return item.autocompletarBuscador.title.toLowerCase().includes(valueSearchBarInner.toLowerCase());
+             });
+             if(newArrDatos.length > 0) {
+                 newMessage["message"] = `Hay resultados`;
+                 newMessage["classname"] = 'success';
+             } else {
+                 newMessage["message"] = `No se encontraron resultados por ${valueSearchBarInner}`;
+                 newMessage["classname"] = 'warning';
+             }
+             setValorBuscadorEnResultados(valueSearchBarInner);
+         } else {
+             newArrDatos = [...datosOriginales];
+             newMessage["message"] = "";
+             newMessage["classname"] = "";
+         }
+         setTimeout(() => { 
+             setDatos(newArrDatos);
+             setMessage(newMessage);
+         }, 800); 
+     };
+         
+     const deshacerBusqueda = (e) => {
+         setDatos([]);
+         setMessage({ message: "", classname: "" });
+         searchBarForInnerResultsInputRef.current.clear(); 
+         setTimeout(() => { 
+             setDatos(datosOriginales);
+         }, 800); 
+     }
+     
+     // Fin de manipula el valor de busqueda que viene desde SearchBarForInnerResults y en valor
 
 
     // Grids personalizadas
@@ -294,7 +330,7 @@ export default function Card({ selectedFilters, isListSmall, selectedTerm, isLar
         }
     }));
 
-     if(datos.length === 0) {
+    if(datosOriginales.length === 0) {
         return(<>
                 { (message.message === "") ?
                     <>
@@ -420,9 +456,7 @@ export default function Card({ selectedFilters, isListSmall, selectedTerm, isLar
                                     </Grid>
     
                                     <Grid item  className="justify_end_partial" xs={12} sm={12} md= {(isListSmall ? 12 : 6)} lg={(isListSmall ? 12 : 6)} xl={(isListSmall ? 12 : 6) }>
-                                        
-                                        <SearchBarSmall searchOptions={searchDocsOptions} handlerSetSelectedOption={handlerSetSelectedDoc}> </SearchBarSmall>
-    
+                                        <SearchBarForInnerResults handlerInnerSearch={handlerInnerSearch} handlerReset={deshacerBusqueda} ref={searchBarForInnerResultsInputRef}></SearchBarForInnerResults>
                                     </Grid>
                                 </SpaceBetweenGrid>
     
@@ -477,47 +511,71 @@ export default function Card({ selectedFilters, isListSmall, selectedTerm, isLar
                         </WrapGrid>
     
                         <div className="separator width_100"></div>
-    
-                        <SpaceGrid className="justify_end">
-    
-                            <Pagination className="margin_top_s"
-                                count={totalPages}
-                                page={page}
-                                onChange={handleChange}
-                                renderItem={(item, id) => (
-                                    <PaginationItem key={id}
-                                        slots={{ previous: ArrowBackIcon, next: ArrowForwardIcon }}
-                                        {...item}
+                        {/* Lista de resultados */}
+                        {(datos.length > 0) ? 
+                            <>
+                                <SpaceGrid className="justify_end">
+        
+                                    <Pagination className="margin_top_s"
+                                        count={totalPages}
+                                        page={page}
+                                        onChange={handleChange}
+                                        renderItem={(item, id) => (
+                                            <PaginationItem key={id}
+                                                slots={{ previous: ArrowBackIcon, next: ArrowForwardIcon }}
+                                                {...item}
+                                            />
+                                        )}
                                     />
-                                )}
-                            />
-                        </SpaceGrid>
-    
-                        <List className="width_100">
-                            {currentData.map((item, k) => (
-                                <SpaceGrid key={k}>
-                                    <ListItem className="padding_none" key={item.id}>
-                                        <CardSearch className="padding_none" datos={item}></CardSearch>
-                                    </ListItem>
                                 </SpaceGrid>
-                            ))}
-    
-                        </List>
-    
-                        <SpaceGrid className="justify_end">
-                            <Pagination className="pagination_container margin_bottom_s"
-                                count={totalPages}
-                                page={page}
-                                onChange={handleChange}
-                                renderItem={(item) => (
-                                    <PaginationItem
-                                        slots={{ previous: ArrowBackIcon, next: ArrowForwardIcon }}
-                                        {...item}
+                                <List className="width_100">
+                                    {currentData.map((item, k) => (
+                                        <SpaceGrid key={k}>
+                                            <ListItem className="padding_none" key={item.id}>
+                                                <CardSearch className="padding_none" datos={item}></CardSearch>
+                                            </ListItem>
+                                        </SpaceGrid>
+                                    ))}
+                                
+                                </List>
+                                <SpaceGrid className="justify_end">
+                                    <Pagination className="pagination_container margin_bottom_s"
+                                        count={totalPages}
+                                        page={page}
+                                        onChange={handleChange}
+                                        renderItem={(item) => (
+                                            <PaginationItem
+                                                slots={{ previous: ArrowBackIcon, next: ArrowForwardIcon }}
+                                                {...item}
+                                            />
+                                        )}
                                     />
-                                )}
-                            />
-    
-                        </SpaceGrid>
+                                
+                                </SpaceGrid>
+                            </>    
+                        :
+                            <>
+                                { (message.message === "") ?
+                                    <>
+                                    <LinearWithValueLabel processingMessages={["Procesando solicitud...", "Preparando respuesta..."]}></LinearWithValueLabel> 
+                                    </> 
+                                    :
+                                    <>
+                                    { ((message.classname === "error") || (message.classname === "warning")) && 
+                                      <>
+                                      <Alert variant="outlined" severity={message.classname}>
+                                      {message.message}
+                                      </Alert>
+                                      <Box sx={{ px: 0, my: 2, display: 'flex', justifyContent: 'center' }}>
+                                        <Button className="button_primary margin_xs card_size_small" target='_self' rel="noreferrer" onClick={deshacerBusqueda}>Deshacer búsqueda</Button>
+                                      </Box>
+                                      </>
+                                    }
+                                    </>
+                                }
+                            </>
+                        }
+                        {/* Lista de resultados */}
                     </>
                 )
     

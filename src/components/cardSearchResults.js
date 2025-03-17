@@ -13,6 +13,7 @@ import Tab from '@mui/material/Tab';
 import ExpandLessOutlinedIcon from '@mui/icons-material/ExpandLessOutlined';
 import ExpandMoreOutlinedIcon from '@mui/icons-material/ExpandMoreOutlined';
 import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
+import StringToHtml from './cardSearchResults/stringToHtml';
 
 export default function CardSearch({ datos, hiddenAnalisisJuridico = false }) {
   const { busqueda } = useContext(Context);
@@ -402,13 +403,13 @@ export default function CardSearch({ datos, hiddenAnalisisJuridico = false }) {
         {((typeof datos.extractoBusqueda === 'string' ) && (datos.extractoBusqueda.trim() !== '')) && (
         <div className="width_100 margin_m" >
             <>
-              <p className="text_center"
+              <div className="text_center"
                 style={{
                   height: isButtonExtractEnabled ? 'auto' : '50px',
                   overflow: 'hidden'
                 }}>
-                {datos.extractoBusqueda}
-              </p>
+                <StringToHtml htmlString={datos.extractoBusqueda}/>
+              </div>
 
               {isButtonExtractEnabled && (
                 <Button
