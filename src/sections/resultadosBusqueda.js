@@ -82,7 +82,7 @@ export default function SearchResults() {
                         autocompletarBuscador: "",
                         estado_id: (item.estado_id > 0) ? item.estado_id : "",
                         conclusion_resuelve: (item.conclusion_resuelve !== null) ? item.conclusion_resuelve : "", 
-                        highlight: (i.highlight !== null ) ? formatHighlight(i.highlight) : "",
+                        highlight: (i?.highlight ) ? formatHighlight(i.highlight) : "",
                     };
                     newItem["departamentoNombre"] = newItem.departamento;
                     newItem["procedimientos"] = newItem.procedimiento; 
