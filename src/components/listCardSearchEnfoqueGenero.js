@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext, useRef } from 'react';
 import Context from '../context/context.js';
-import { validarfiltroJurisprudencial, getOpcionesAutocompletar, getDecisionesIDsToExport } from '../helpers/utils.js';
+import { validarfiltroJurisprudencial, getDecisionesIDsToExport } from '../helpers/utils.js';
 import { Grid, Stack, Pagination, PaginationItem, List, ListItem, Button, Box, Chip, MenuItem, FormControl, Select,  Alert } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
