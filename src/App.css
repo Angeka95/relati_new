@@ -967,6 +967,25 @@ h6 {
   background-color: #98C438 !important;
 }
 
+.btn_xs_descargar  span {
+  margin: 0;
+}
+
+.p_semaforo {
+  position: relative;
+}
+
+.semaforo {
+  position: absolute;
+  display: inline-block;
+  width: 40px;
+  height: 20px;
+  margin: 0 10px;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: contain;
+}
+
 /*END CARD SEARCH RESULTS */
 
 

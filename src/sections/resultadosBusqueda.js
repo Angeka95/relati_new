@@ -83,6 +83,8 @@ export default function SearchResults() {
                         estado_id: (item.estado_id > 0) ? item.estado_id : "",
                         conclusion_resuelve: (item.conclusion_resuelve !== null) ? item.conclusion_resuelve : "", 
                         highlight: (i?.highlight ) ? formatHighlight(i.highlight) : "",
+                        anexos: (item.anexos.length > 0) ? item.anexos : "",
+                        recursos: (item.recursos.length > 0) ? item.recursos : "", 
                     };
                     newItem["departamentoNombre"] = newItem.departamento;
                     newItem["procedimientos"] = newItem.procedimiento; 
