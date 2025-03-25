@@ -375,7 +375,9 @@ export default function CardSearch({ datos, hiddenAnalisisJuridico = false }) {
                      <div className="margin_top_s">                       
                        {(datos.recursos.map((recurso, index) => (
                          <div key={index}>
+                           {(recurso.providencia !== 'No Aplica' ) && (
                            <p className="text_space_min text_justify"><span className="text_bolder"><a href={`https://relatoria.jep.gov.co/${recurso.enlace}`} target="_blank" rel="noreferrer">{recurso.providencia}</a></span></p>
+                           )}
                            {((typeof recurso.tipo === 'string' ) && (recurso.tipo.trim() !== '')) && (
                              <p className="text_space_min">• Tipo: <span className="text_bolder"> {recurso.tipo}</span></p>
                            )}
