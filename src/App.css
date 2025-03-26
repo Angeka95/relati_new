@@ -569,6 +569,12 @@ h6 {
   width: 100%;
 }
 
+.justify_space_evenly {
+  display: flex;
+  justify-content: space-evenly;
+  width: 100%;
+}
+
 
 .justify_content_between {
   display: flex;
@@ -971,6 +977,10 @@ h6 {
   margin: 0;
 }
 
+.datos_nombre_decision_semaforo {
+  position: relative;
+}
+
 .p_semaforo {
   position: relative;
 }
@@ -984,6 +994,10 @@ h6 {
   background-repeat: no-repeat;
   background-position: center center;
   background-size: contain;
+}
+
+.datos_nombre_decision_semaforo .semaforo {
+  position: relative;
 }
 
 /*END CARD SEARCH RESULTS */

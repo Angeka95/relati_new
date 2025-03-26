@@ -28,7 +28,7 @@ export default function CardSearch({ datos, hiddenAnalisisJuridico = false }) {
   const [isButtonHighlightEnabled, setIsButtonHighlightEnabled] = useState(false);
   
   // Temporal datos recurso
-  /*const objTemporal = {
+  /* const objTemporal = {
     "recursos": [
       {
         providencia: "Auto_TP-SA-1610_14-febrero-2024",
@@ -84,7 +84,7 @@ export default function CardSearch({ datos, hiddenAnalisisJuridico = false }) {
     ]
   };
   
-  datos = { ...datos, ...objTemporal };*/
+  datos = { ...datos, ...objTemporal }; */
   
   // Fin Temporal datos recurso
   
@@ -200,7 +200,11 @@ export default function CardSearch({ datos, hiddenAnalisisJuridico = false }) {
 
       <CardContent className="card_container">
       {((typeof datos.nombreDecision === 'string' ) && (datos.nombreDecision.trim() !== '')) && (
-        <p className="text_bolder justify_center text_space_min">{datos.nombreDecision}</p>  
+        <p className="text_bolder justify_center text_space_min datos_nombre_decision_semaforo">{datos.nombreDecision}
+          {(datos.hasOwnProperty("recursos") && (datos["recursos"].length > 0 ) && (typeof datos["recursos"][0].resuelve[0].semaforo === 'string' ) && (datos["recursos"][0].resuelve[0].semaforo.trim() !== '')) && (
+          <span className="semaforo" style={{ backgroundImage: `url(${datos["recursos"][0].resuelve[0].semaforo})`}}> </span>
+          )}
+        </p>
       )}
       {((typeof datos.fecha === 'string' ) && (datos.fecha.trim() !== '')) && (
         <p className="text_uppercase justify_center text_spacing text_space_min">{datos.fecha}</p>
@@ -383,9 +387,9 @@ export default function CardSearch({ datos, hiddenAnalisisJuridico = false }) {
                             <span className="text_bolder">
                               <a href={`https://relatoria.jep.gov.co/${recurso.enlace}`} target="_blank" rel="noreferrer">{recurso.providencia}</a>
                             </span>
-                            {((typeof recurso.resuelve[0].semaforo === 'string' ) && (recurso.resuelve[0].semaforo.trim() !== '')) && (
+                            {/*((typeof recurso.resuelve[0].semaforo === 'string' ) && (recurso.resuelve[0].semaforo.trim() !== '')) && (
                                      <span className="semaforo" style={{ backgroundImage: `url(${recurso.resuelve[0].semaforo})`}}> </span>
-                            )}
+                            )*/}
                           </p>
                            )}
                            {((typeof recurso.tipo === 'string' ) && (recurso.tipo.trim() !== '')) && (
