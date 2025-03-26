@@ -5,7 +5,7 @@ import Box from '@mui/material/Box';
 import CardActions from '@mui/material/CardActions';
 import Button from '@mui/material/Button';
 import '../App.css';
-import { Container, Grid } from '@mui/material';
+import { Container, Grid, Tooltip, Divider } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import Context from '../context/context';
 import Tabs from '@mui/material/Tabs';
@@ -220,9 +220,11 @@ export default function CardSearch({ datos, hiddenAnalisisJuridico = false }) {
         {( validarAnexosRecursos() === true ) ?             
           <>
             {((typeof datos.hipervinculoFichaJuris === 'string' ) && (datos.hipervinculoFichaJuris.trim() !== '')) && (
+              <Tooltip title="Descargar ficha">
               <a href={datos.hipervinculoFichaJuris} target='_blank' rel="noreferrer">
                 <Button className="button_secondary margin_xs card_size_small btn_xs_descargar"  startIcon={<FileDownloadOutlinedIcon/>}></Button>
               </a> 
+              </Tooltip>
             )}
           </>
           :
@@ -372,11 +374,19 @@ export default function CardSearch({ datos, hiddenAnalisisJuridico = false }) {
                  Recursos
                  </Button>
                  {isRecursosExpanded && (
-                     <div className="margin_top_s">                       
+                     <div className="margin_top_s" style={{ paddingTop: "1rem", paddingBottom: "1rem" }}>                        
                        {(datos.recursos.map((recurso, index) => (
                          <div key={index}>
                            {(recurso.providencia !== 'No Aplica' ) && (
-                           <p className="text_space_min text_justify"><span className="text_bolder"><a href={`https://relatoria.jep.gov.co/${recurso.enlace}`} target="_blank" rel="noreferrer">{recurso.providencia}</a></span></p>
+                           <p className="text_space_min text_justify">
+                            • Providencia: &nbsp;
+                            <span className="text_bolder">
+                              <a href={`https://relatoria.jep.gov.co/${recurso.enlace}`} target="_blank" rel="noreferrer">{recurso.providencia}</a>
+                            </span>
+                            {((typeof recurso.resuelve[0].semaforo === 'string' ) && (recurso.resuelve[0].semaforo.trim() !== '')) && (
+                                     <span className="semaforo" style={{ backgroundImage: `url(${recurso.resuelve[0].semaforo})`}}> </span>
+                            )}
+                          </p>
                            )}
                            {((typeof recurso.tipo === 'string' ) && (recurso.tipo.trim() !== '')) && (
                              <p className="text_space_min">• Tipo: <span className="text_bolder"> {recurso.tipo}</span></p>
@@ -384,20 +394,9 @@ export default function CardSearch({ datos, hiddenAnalisisJuridico = false }) {
                            {((typeof recurso.detalle === 'string' ) && (recurso.detalle.trim() !== '')) && (
                              <p className="text_space_min">• Detalle: <span className="text_bolder"> {recurso.detalle}</span></p>
                            )}
-                          {( recurso.resuelve.length > 0 ) && (
-                            <>
-                               {(recurso.resuelve.map((resuelve_, index) => (
-                                 <div key={index}>
-                                   {((typeof resuelve_.nombre === 'string' ) && (resuelve_.nombre.trim() !== '')) && (
-                                     <p className="text_space_min">• Resuelve: <span className="text_bolder"> {resuelve_.nombre}</span></p>
-                                   )}
-                                   {((typeof resuelve_.semaforo === 'string' ) && (resuelve_.semaforo.trim() !== '')) && (
-                                     <p className="text_space_min">• Estado: <span className="semaforo" style={{ backgroundImage: `url(${resuelve_.semaforo})`}}> </span></p>
-                                   )}
-                                 </div>
-                               )))}
-                           </>
-                          )}
+                           {((typeof recurso.resuelve[0].nombre === 'string' ) && (recurso.resuelve[0].nombre.trim() !== '')) && (
+                             <p className="text_space_min">• Resuelve: <span className="text_bolder"> {recurso.resuelve[0].nombre}</span></p>
+                           )}
                          </div>
                        )))}
                      </div>
@@ -413,16 +412,17 @@ export default function CardSearch({ datos, hiddenAnalisisJuridico = false }) {
                     Anexos
                     </Button>
                     {isAnexosExpanded && (
-                        <div className="margin_top_s">                       
+                        <div className="margin_top_s" style={{ paddingTop: "1rem", paddingBottom: "1rem" }}>                       
                           {(datos.anexos.map((anexo, index) => (
                             <div key={index}>
-                              <p className="text_space_min text_justify"><span className="text_bolder"><a href={`https://relatoria.jep.gov.co/${anexo.hipervinculo}`} target="_blank" rel="noreferrer">{anexo.nombre}</a></span></p>
+                              <p className="text_space_min text_justify">• Providencia: &nbsp;<span className="text_bolder"><a href={`https://relatoria.jep.gov.co/${anexo.hipervinculo}`} target="_blank" rel="noreferrer">{anexo.nombre}</a></span></p>
                               {((typeof anexo.tipo_documento === 'string' ) && (anexo.tipo_documento.trim() !== '')) && (
                                 <p className="text_space_min">• Tipo de documento: <span className="text_bolder"> {anexo.tipo_documento}</span></p>
                               )}
                               {((typeof anexo.descripcion === 'string' ) && (anexo.descripcion.trim() !== '')) && (
                                 <p className="text_space_min">• Descripción: <span className="text_bolder"> {anexo.descripcion}</span></p>
                               )}
+                              <Divider sx={{ marginTop: "1rem", marginBottom: "1rem" }}/>
                             </div>
                           )))}
                         </div>
