@@ -569,6 +569,12 @@ h6 {
   width: 100%;
 }
 
+.justify_space_evenly {
+  display: flex;
+  justify-content: space-evenly;
+  width: 100%;
+}
+
 
 .justify_content_between {
   display: flex;
@@ -965,6 +971,33 @@ h6 {
 
 .css-1aquho2-MuiTabs-indicator{
   background-color: #98C438 !important;
+}
+
+.btn_xs_descargar  span {
+  margin: 0;
+}
+
+.datos_nombre_decision_semaforo {
+  position: relative;
+}
+
+.p_semaforo {
+  position: relative;
+}
+
+.semaforo {
+  position: absolute;
+  display: inline-block;
+  width: 40px;
+  height: 20px;
+  margin: 0 10px;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: contain;
+}
+
+.datos_nombre_decision_semaforo .semaforo {
+  position: relative;
 }
 
 /*END CARD SEARCH RESULTS */
