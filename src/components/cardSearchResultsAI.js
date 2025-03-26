@@ -202,7 +202,9 @@ export default function CardSearch({ datos, hiddenAnalisisJuridico = false }) {
       {((typeof datos.nombreDecision === 'string' ) && (datos.nombreDecision.trim() !== '')) && (
         <p className="text_bolder justify_center text_space_min datos_nombre_decision_semaforo">{datos.nombreDecision}
           {(datos.hasOwnProperty("recursos") && (datos["recursos"].length > 0 ) && (typeof datos["recursos"][0].resuelve[0].semaforo === 'string' ) && (datos["recursos"][0].resuelve[0].semaforo.trim() !== '')) && (
-          <span className="semaforo" style={{ backgroundImage: `url(${datos["recursos"][0].resuelve[0].semaforo})`}}> </span>
+          <Tooltip title={`${datos["recursos"][0].providencia} - ${datos["recursos"][0].resuelve[0].nombre } | Ver más dellates en Documentos asociados`}>
+            <span className="semaforo" style={{ backgroundImage: `url(${datos["recursos"][0].resuelve[0].semaforo})`}}> </span>
+          </Tooltip>
           )}
         </p>
       )}
