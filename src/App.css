@@ -1915,7 +1915,7 @@ controlodares carrusel  */
   margin-top: -2px;
 }
 
-.css-1h9z7r5-MuiButtonBase-root-MuiTab-root.Mui-selected {
+.css-1h9z7r5-MuiButtonBase-root-MuiTab-root.Mui-selected, .css-1q2h7u5.Mui-selected {
   color: #98C438 !important;
 }
 
@@ -3149,9 +3149,14 @@ a, .breadcrumb-item:hover {
 
 /*FIN FOOTER*/
 
+/* error */
 
+.icon_error{
+font-size: 7rem !important;
+color: rgb(219, 0, 69);
+}
 
-
+/* fin error */
 
 
 /*--------------------------------------------------------------------*/
