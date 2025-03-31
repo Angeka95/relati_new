@@ -1,0 +1,10 @@
+GET https://relatoria.jep.gov.co/downloadresult_t?procedimiento=ACCIÓN DE TUTELA&sala_seccion&anio_hechos=2002&delito&dpto=ANTIOQUIA|QUINDÍO&macrocaso&tipo_compareciente=FARC-EP HTTP/1.1
+user: {{$dotenv REACT_APP_API_USER}}
+password: {{$dotenv REACT_APP_API_PASS}}
+Authorization: Bearer {{$dotenv REACT_APP_API_ACCESS_TOKEN}}
+Content-Type: application/json
+
+{
+
+}
+

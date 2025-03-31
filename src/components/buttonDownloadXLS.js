@@ -1,5 +1,5 @@
 import React, { useState , useEffect } from 'react';
-import getDownloadResultsXLS from '../services/downloads.js';
+import { getDownloadResultsXLS } from '../services/downloads.js';
 import { Alert } from '@mui/material';
 import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
 import '../App.css';
