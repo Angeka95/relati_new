@@ -110,13 +110,9 @@ export default function VerTodasLasDecisiones() {
 };
   
   useEffect(() => {
-  console.log("search params", searchParams.entries());
   const searchParamsObj = Object.fromEntries(searchParams.entries());
-  console.log("paramsObj", searchParamsObj);
-  console.log("Hay props", validateSearchParamsVTD(searchParamsObj));
     if(datos.length === 0){
-      if(searchParamsObj.hasOwnProperty('string') && (validateSearchParamsVTD(searchParamsObj) === true)) { 
-        console.log("entra a results by filter, tiene string")
+      if(validateSearchParamsVTD(searchParamsObj)) { 
         getAllResultsByFilter(searchParamsObj);
       } else {
         getAllResults(stringParamPage, stringParamPerPage);

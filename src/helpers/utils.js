@@ -574,9 +574,9 @@ const formatHighlight = (highlight) => {
 
 /**
  * validateSearchParamsVTD()
- * Funcionalidad que valida los datos de un objeto de tipo searchParams provenientes de React Router. Si el objeto no esta vacio retorna True.
+ * Funcionalidad que valida los datos de un objeto de tipo searchParams provenientes de React Router. Si el objeto no esta vacio y contiene alguna de las propiedades retorna True.
  * Parametros de entrada:
- * - searchParams: el objeto searchParams proveniente de React Router
+ * - searchParamsObj: el objeto searchParams proveniente de React Router
  * Salida:
  * - Obtiene un valor de tipo boolean true o false. True en caso de que el objeto no contenga propiedades vacias
  * Aplicación:
@@ -584,77 +584,46 @@ const formatHighlight = (highlight) => {
 */
 
 const validateSearchParamsVTD = (searchParamsObj) => { 
-    return Object.values(searchParamsObj).some(value => value !== null || value !== undefined || value !== "");
+    return ((Object.values(searchParamsObj).some(value => value !== null || value !== undefined || value !== "")) && 
+    ( searchParamsObj.hasOwnProperty('string') || 
+      searchParamsObj.hasOwnProperty('procedimiento') ||   
+      searchParamsObj.hasOwnProperty('sala_seccion') ||
+      searchParamsObj.hasOwnProperty('anio_hechos') ||
+      searchParamsObj.hasOwnProperty('delito') ||   
+      searchParamsObj.hasOwnProperty('dpto') ||
+      searchParamsObj.hasOwnProperty('macrocaso') ||
+      searchParamsObj.hasOwnProperty('tipo_compareciente') 
+    ));
 }
 
 /**
  * createSearchParamsObject()
  * Funcionalidad que crea un objeto de tipo searchParams recibiendo como parametro string y parametro filtroJurisprudencial
  * Parametros de entrada:
- * - searchParams: el objeto searchParams proveniente de React Router
+ * - filtroJurisprudencial: el objeto que contiene los filtros de busqueda
+ * - stringInnerQuery: el string de busqueda 
  * Salida:
- * - Obtiene un valor de tipo boolean true o false. True en caso de que el objeto no contenga propiedades vacias
+ * - Obtiene un objeto de tipo searchParams para enviar como parametro al servicio de busqueda
  * Aplicación:
  * - src/components/listCardSearchVTDResults.js
 */
 
 const createSearchParamsObj = (filtroJurisprudencial, stringInnerQuery) => { 
 
-
-/* {
-                "departamentos": [
-                    "TOLIMA"
-                ],
-                "anios": [
-                    "2019",
-                    "2018",
-                    "2020"
-                ],
-                "salas": [
-                    "S - Sala de Reconocimiento de Verdad, de Responsabilidad y de Determinación de los Hechos y Conductas",
-                    "S - Sala de Amnistía o Indulto"
-                ],
-                "delitos": [
-                    "HOMICIDIO"
-                ],
-                "macrocasos": [
-                    "Caso 001",
-                    "Caso 002"
-                ],
-                "comparecientes": [
-                    "FARC-EP",
-                    "FUERZA PÚBLICA"
-                ],
-                "procedimientos": [
-                    "ACCIÓN DE TUTELA",
-                    "MEDIDAS CAUTELARES"
-                ]
-            }*/
-
      let filtroJurisprudencialDepartamentos = filtroJurisprudencial.departamentos.map((item)=>{
         return `DEPARTAMENTO ${item}`;
      });
-
-    /* let newObj = { string: encodeURIComponent(stringInnerQuery.trim()), 
-                    procedimiento: encodeURIComponent(filtroJurisprudencial.procedimientos.join("|")),
-                    sala_seccion: encodeURIComponent(filtroJurisprudencial.salas.join("|")), 
-                    anio_hechos: encodeURIComponent(filtroJurisprudencial.anios.join("|")), 
-                    delito: encodeURIComponent(filtroJurisprudencial.delitos.join("|")), 
-                    dpto: encodeURIComponent(filtroJurisprudencialDepartamentos.join("|")), 
-                    macrocaso: encodeURIComponent(filtroJurisprudencial.macrocasos.join("|")),
-                    tipo_compareciente: encodeURIComponent(filtroJurisprudencial.comparecientes.join("|"))
-    };*/
     
-    let newObj = { string: encodeURIComponent(stringInnerQuery.trim()), 
-        procedimiento: encodeURIComponent(filtroJurisprudencial.procedimientos.join("|")),
-        sala_seccion: encodeURIComponent(filtroJurisprudencial.salas.join("|")), 
-        anio_hechos: encodeURIComponent(filtroJurisprudencial.anios.join("|")), 
-        delito: encodeURIComponent(filtroJurisprudencial.delitos.join("|")), 
-        dpto: encodeURIComponent(filtroJurisprudencialDepartamentos.join("|")), 
-        macrocaso: encodeURIComponent(filtroJurisprudencial.macrocasos.join("|")),
-        tipo_compareciente: encodeURIComponent(filtroJurisprudencial.comparecientes.join("|"))
+    let newObj = { string: stringInnerQuery.trim(), 
+        procedimiento: filtroJurisprudencial.procedimientos.join("|"),
+        sala_seccion: filtroJurisprudencial.salas.join("|"), 
+        anio_hechos: filtroJurisprudencial.anios.join("|"), 
+        delito: filtroJurisprudencial.delitos.join("|"), 
+        dpto: filtroJurisprudencialDepartamentos.join("|"), 
+        macrocaso: filtroJurisprudencial.macrocasos.join("|"),
+        tipo_compareciente: filtroJurisprudencial.comparecientes.join("|")
     };
-    console.log("nu obj", newObj);
+    
     return newObj;
 }
 

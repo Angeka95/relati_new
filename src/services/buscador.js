@@ -49,7 +49,6 @@ const getAllResultsByFilter = (searchParamsObj) => {
     params: {  }
   };
   const searchParamsString = new URLSearchParams(searchParamsObj).toString();
-  console.log("sar param string", searchParamsString);
   /*const request =  axios.get(`https://relatoria.jep.gov.co/searchin?string=&procedimiento=&sala_seccion=&anio_hechos=2014|2018&delito=&dpto=DEPARTAMENTO CAUCA|DEPARTAMENTO TOLIMA&macrocaso=&tipo_compareciente=FARC-EP`, config);*/
   const request =  axios.get(`https://relatoria.jep.gov.co/searchin?${searchParamsString}`, config);
   return request.then(response => { 
