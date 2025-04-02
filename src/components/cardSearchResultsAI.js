@@ -201,7 +201,6 @@ export default function CardSearch({ datos, hiddenAnalisisJuridico = false }) {
       <CardContent className="card_container">
       {((typeof datos.nombreDecision === 'string' ) && (datos.nombreDecision.trim() !== '')) && (
         <p className="text_bolder justify_center text_space_min datos_nombre_decision_semaforo">{datos.nombreDecision}
-          {console.log("Recursos item ", datos["nombreDecision"] , datos["recursos"])}
           {(datos.hasOwnProperty("recursos") && (datos["recursos"].length > 0 ) && (typeof datos["recursos"][0].resuelve.length > 0 ) && (typeof datos["recursos"][0].resuelve[0].semaforo === 'string' ) && (datos["recursos"][0].resuelve[0].semaforo.trim() !== '')) && (
           <Tooltip title={`${datos["recursos"][0].providencia} - ${datos["recursos"][0].resuelve[0].nombre } | Ver más dellates en Documentos asociados`}>
             <span className="semaforo" style={{ backgroundImage: `url(${datos["recursos"][0].resuelve[0].semaforo})`}}> </span>
