@@ -572,6 +572,92 @@ const formatHighlight = (highlight) => {
     return newExtractoBusqueda;
 };
 
+/**
+ * validateSearchParamsVTD()
+ * Funcionalidad que valida los datos de un objeto de tipo searchParams provenientes de React Router. Si el objeto no esta vacio retorna True.
+ * Parametros de entrada:
+ * - searchParams: el objeto searchParams proveniente de React Router
+ * Salida:
+ * - Obtiene un valor de tipo boolean true o false. True en caso de que el objeto no contenga propiedades vacias
+ * Aplicación:
+ * - verTodasLasDecisiones.js
+*/
+
+const validateSearchParamsVTD = (searchParamsObj) => { 
+    return Object.values(searchParamsObj).some(value => value !== null || value !== undefined || value !== "");
+}
+
+/**
+ * createSearchParamsObject()
+ * Funcionalidad que crea un objeto de tipo searchParams recibiendo como parametro string y parametro filtroJurisprudencial
+ * Parametros de entrada:
+ * - searchParams: el objeto searchParams proveniente de React Router
+ * Salida:
+ * - Obtiene un valor de tipo boolean true o false. True en caso de que el objeto no contenga propiedades vacias
+ * Aplicación:
+ * - src/components/listCardSearchVTDResults.js
+*/
+
+const createSearchParamsObj = (filtroJurisprudencial, stringInnerQuery) => { 
+
+
+/* {
+                "departamentos": [
+                    "TOLIMA"
+                ],
+                "anios": [
+                    "2019",
+                    "2018",
+                    "2020"
+                ],
+                "salas": [
+                    "S - Sala de Reconocimiento de Verdad, de Responsabilidad y de Determinación de los Hechos y Conductas",
+                    "S - Sala de Amnistía o Indulto"
+                ],
+                "delitos": [
+                    "HOMICIDIO"
+                ],
+                "macrocasos": [
+                    "Caso 001",
+                    "Caso 002"
+                ],
+                "comparecientes": [
+                    "FARC-EP",
+                    "FUERZA PÚBLICA"
+                ],
+                "procedimientos": [
+                    "ACCIÓN DE TUTELA",
+                    "MEDIDAS CAUTELARES"
+                ]
+            }*/
+
+     let filtroJurisprudencialDepartamentos = filtroJurisprudencial.departamentos.map((item)=>{
+        return `DEPARTAMENTO ${item}`;
+     });
+
+    /* let newObj = { string: encodeURIComponent(stringInnerQuery.trim()), 
+                    procedimiento: encodeURIComponent(filtroJurisprudencial.procedimientos.join("|")),
+                    sala_seccion: encodeURIComponent(filtroJurisprudencial.salas.join("|")), 
+                    anio_hechos: encodeURIComponent(filtroJurisprudencial.anios.join("|")), 
+                    delito: encodeURIComponent(filtroJurisprudencial.delitos.join("|")), 
+                    dpto: encodeURIComponent(filtroJurisprudencialDepartamentos.join("|")), 
+                    macrocaso: encodeURIComponent(filtroJurisprudencial.macrocasos.join("|")),
+                    tipo_compareciente: encodeURIComponent(filtroJurisprudencial.comparecientes.join("|"))
+    };*/
+    
+    let newObj = { string: encodeURIComponent(stringInnerQuery.trim()), 
+        procedimiento: encodeURIComponent(filtroJurisprudencial.procedimientos.join("|")),
+        sala_seccion: encodeURIComponent(filtroJurisprudencial.salas.join("|")), 
+        anio_hechos: encodeURIComponent(filtroJurisprudencial.anios.join("|")), 
+        delito: encodeURIComponent(filtroJurisprudencial.delitos.join("|")), 
+        dpto: encodeURIComponent(filtroJurisprudencialDepartamentos.join("|")), 
+        macrocaso: encodeURIComponent(filtroJurisprudencial.macrocasos.join("|")),
+        tipo_compareciente: encodeURIComponent(filtroJurisprudencial.comparecientes.join("|"))
+    };
+    console.log("nu obj", newObj);
+    return newObj;
+}
+
 export { filtroByDefault, 
          truncateWithEllipsis, 
          obtenerAnio, 
@@ -596,5 +682,7 @@ export { filtroByDefault,
          sanitizeString,
          setLocalStorageWithExpiry,
          getLocalStorageWithExpiry,
-         formatHighlight
+         formatHighlight,
+         validateSearchParamsVTD,
+         createSearchParamsObj
 };

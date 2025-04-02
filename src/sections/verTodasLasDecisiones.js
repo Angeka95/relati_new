@@ -1,19 +1,18 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
+import { Container, Grid, Alert, Box, Button } from '@mui/material';
 import SearchBar from '../components/searchBar.js';
 import Filter from '../components/filter.js';
-import ListCardSearch from '../components/listCardSearchAIResults.js';
-import DOMPurify from 'dompurify';
-import { Container, Grid, Alert, Box, Button } from '@mui/material';
+import ListCardSearch from '../components/listCardSearchVTDResults.js';
+import LinearWithValueLabel from '../components/linearProgress.js'; 
 import buscadorService from '../services/buscador.js';
-import LinearWithValueLabel from '../components/linearProgress.js';  
 import Context from '../context/context.js';
-import { filtroByDefault, removeFragmentoInString, getOpcionesAutocompletar, obtenerPalabrasFromArrayObject, validarfiltroJurisprudencial, sanitizeString } from '../helpers/utils.js';
+import { filtroByDefault, getOpcionesAutocompletar, validarfiltroJurisprudencial, validateSearchParamsVTD } from '../helpers/utils.js';
+import dataResults from '../data_results/dataResVerTodasLasDecisiones.js';
 import '../App.css';
 
 export default function VerTodasLasDecisiones() {
 
-  const navigate = useNavigate();
   const [searchParams] = useSearchParams();
 
   const [selectedFilters, setSelectedFilters] = useState([]);
@@ -53,67 +52,16 @@ export default function VerTodasLasDecisiones() {
         buscadorService
           .getAllResults(page, per_page)
           .then(response => {
-              console.log("response", response);
               if((response.status_info.status === 200) && (response.data.data.length > 0)) {
                     let objPagination = Object.assign({}, response.data);
                     delete objPagination.data;
                     objPagination["per_page"] = Number(objPagination["per_page"]);
                     setPagination(objPagination);
-                    const newDatos = response.data.data.map((i, k) => { 
-                        let item = i._source;
-                        let newItem = {
-                            id: k + 1,
-                            score: i._score,
-                            fecha: item.fecha_documento,
-                            ficha_id: item.ficha_id,
-                            providencia_id: item.providencia_id,
-                            sala: (item.sala_seccion !== null) ? item.sala_seccion : "",
-                            salaOSeccion: (item.sala_seccion !== null) ? item.sala_seccion : "",
-                            nombreDecision: (item.nombre_providencia !== null) ? item.nombre_providencia : "",
-                            procedimiento: (item.procedimiento !== null ) ? item.procedimiento : "",
-                            expediente: (item.expediente !== null) ? item.expediente : "", 
-                            departamento: (item.departamento !== null ) ? item.departamento : "",
-                            magistrado: (item.autor !== null) ? item.autor : "", 
-                            municipio:  (item.municipio !== null ) ? item.municipio : "",
-                            delito: (item.delito !== null ) ? item.delito : "",
-                            anioHechos: (item.anio_hechos !== null ) ? item.anio_hechos : "",
-                            tipo: (item.tipo_documento !== null) ? item.tipo_documento : "", 
-                            radicado: (item.radicado_documento !== null) ? item.radicado_documento : "",
-                            compareciente: (item.compareciente !== null ) ? item.compareciente : "",
-                            tipoSujeto: (item.tipo_compareciente !== null ) ? item.tipo_compareciente : "",
-                            accionadoVinculado: (item.accionadoVinculado !== null ) ? item.accionadoVinculado : "",
-                            palabrasClaves: (item.palabras_clave !== null ) ? item.palabras_clave : "",
-                            hechos: (item.hechos_antecedentes !== null) ? item.hechos_antecedentes : "", 
-                            problemasJuridicos: (item.problema_juridico !== null) ? item.problema_juridico : "",
-                            reglas: (item.reglas_juridicas !== null) ? item.reglas_juridicas : "",
-                            aplicacionCasoConcreto: (item.analisis_caso_concreto !== null) ? item.analisis_caso_concreto : "", 
-                            resuelve:  (item.resuelve !== null ) ? item.resuelve : "",
-                            documentosAsociados: (item.anexos.length > 0) ? item.anexos[0].nombre : "", 
-                            documentosAsociadosLink:  (item.anexos.length > 0) ? item.anexos[0].hipervinculo : "", 
-                            enfoquesDiferenciales: (item.enfoque !== null ) ? item.enfoque : "",
-                            notasRelatoria: "", 
-                            hipervinculo:   (item.hipervinculo !== null ) ? `https://relatoria.jep.gov.co/${item.hipervinculo}` : "", 
-                            hipervinculoFichaJuris: "",
-                            estadoFichaJuris: false,
-                            extractoBusqueda: (item.sintesis !== null ) ? sanitizeString(item.sintesis) : "",
-                            caso: (item.macrocaso !== null ) ? item.macrocaso : "",
-                            autocompletarBuscador: "",
-                            estado_id: (item.estado_id > 0) ? item.estado_id : "",
-                            conclusion_resuelve: (item.conclusion_resuelve !== null) ? item.conclusion_resuelve : "", 
-                        };
-                        newItem["departamentoNombre"] = newItem.departamento;
-                        newItem["procedimientos"] = newItem.procedimiento; 
-                        newItem["anio"] = newItem.anioHechos;
-                        newItem["comparecientes"] = newItem.tipoSujeto;
-                        newItem["delitos"] = newItem.delito;
-                        newItem["hipervinculoFichaJuris"] = ((newItem.ficha_id !== null ) && ( newItem.estado_id === 14 )) ? `https://relatoria.jep.gov.co/downloadfichaext/${newItem.ficha_id}` : " ";
-                        newItem["autocompletarBuscador"] = { id: newItem.id, title: `${newItem.salaOSeccion} ${newItem.nombreDecision} ${newItem.departamento} ${newItem.delito} ${newItem.procedimiento} ${newItem.compareciente} ${newItem.magistrado}`};  
-                        return newItem;
-                  });
-                  setDatos(newDatos);
-                  setSearchOptions(getOpcionesAutocompletar(newDatos));
-                  newMessage["message"] = `${response.status_info.reason}`;
-                  newMessage["classname"] = 'success';
+                    const newDatos = dataResults( response.data.data );
+                    setDatos(newDatos);
+                    setSearchOptions(getOpcionesAutocompletar(newDatos));
+                    newMessage["message"] = `${response.status_info.reason}`;
+                    newMessage["classname"] = 'success';
               } else if(response.status_info.status === 500) {
                   newMessage["message"] = `${response.status_info.reason}`;
                   newMessage["classname"] = 'error';
@@ -132,11 +80,49 @@ export default function VerTodasLasDecisiones() {
         });
   };
   
+  const getAllResultsByFilter = (searchParamsObj) => {
+    let newMessage = {}; 
+    buscadorService
+      .getAllResultsByFilter(searchParamsObj)
+      .then(response => {
+          if((response.status_info.status === 200) && (response.data.length > 0)) {
+                const newDatos = dataResults( response.data);
+                setDatos(newDatos);
+                setSearchOptions(getOpcionesAutocompletar(newDatos));
+                newMessage["message"] = `${response.status_info.reason}`;
+                newMessage["classname"] = 'success';
+          } else if(response.status_info.status === 500) {
+              newMessage["message"] = `${response.status_info.reason}`;
+              newMessage["classname"] = 'error';
+          } else {
+            newMessage["message"] = `${response.status_info.reason}`;
+            newMessage["classname"] = 'warning';
+          }
+          handleMessage(newMessage);
+      }
+    )
+    .catch(error => { 
+        console.log("falla de la promesa");
+        newMessage["message"] = `${error}`;
+        newMessage["classname"] = 'error';
+        handleMessage(newMessage);
+    });
+};
+  
   useEffect(() => {
+  console.log("search params", searchParams.entries());
+  const searchParamsObj = Object.fromEntries(searchParams.entries());
+  console.log("paramsObj", searchParamsObj);
+  console.log("Hay props", validateSearchParamsVTD(searchParamsObj));
     if(datos.length === 0){
-      getAllResults(stringParamPage, stringParamPerPage);
-      setFiltroJurisprudencial(filtroByDefault);
-    } 
+      if(searchParamsObj.hasOwnProperty('string') && (validateSearchParamsVTD(searchParamsObj) === true)) { 
+        console.log("entra a results by filter, tiene string")
+        getAllResultsByFilter(searchParamsObj);
+      } else {
+        getAllResults(stringParamPage, stringParamPerPage);
+        setFiltroJurisprudencial(filtroByDefault);
+      }
+    }  
   }, []);
 
   return (
