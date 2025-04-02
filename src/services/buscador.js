@@ -29,15 +29,52 @@ const getAllResults = (page, per_page) => {
       } else {
         status_info = { "status": 204, "reason": "La consulta no esta disponible por el momento.(Elastic Search)." } 
       }
-      console.log("Servicio",{ "data": data, "status_info": status_info } );
+      //console.log("Servicio",{ "data": data, "status_info": status_info } );
       return { "data": data, "status_info": status_info };
     }
   }).catch(error => {
     return { "data": {}, "status_info": { "status": 500, "reason": "Lo sentimos, algo salió mal. Parece que hubo un problema en nuestro servidor. Estamos trabajando para solucionarlo. Por favor, inténtalo de nuevo más tarde." } };
   });
   
-}
+};
 
+const getAllResultsByFilter = (searchParamsObj) => {
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${process.env.REACT_APP_API_ACCESS_TOKEN}`,
+      'user': process.env.REACT_APP_API_USER,
+      'password': process.env.REACT_APP_API_PASS
+    },
+    params: {  }
+  };
+  const searchParamsString = new URLSearchParams(searchParamsObj).toString();
+  console.log("sar param string", searchParamsString);
+  /*const request =  axios.get(`https://relatoria.jep.gov.co/searchin?string=&procedimiento=&sala_seccion=&anio_hechos=2014|2018&delito=&dpto=DEPARTAMENTO CAUCA|DEPARTAMENTO TOLIMA&macrocaso=&tipo_compareciente=FARC-EP`, config);*/
+  const request =  axios.get(`https://relatoria.jep.gov.co/searchin?${searchParamsString}`, config);
+  return request.then(response => { 
+    if((response.data.status !== undefined) || (response.data.status === 401) || (response.data.status === 403)) {
+      return { "data": [], "status_info": { "status": response.data.status, "reason": response.data.reason }};
+    } else {
+      let data = {};
+      let status_info = {};
+      if(response.data.hasOwnProperty('data')) {
+        data = response.data;
+        status_info = { "status": 200, "reason": "La consulta se ha realizado satisfactoriamente." };
+        if(data.data.hits.hits.length === 0){
+          status_info = { "status": 200, "reason": "No se encontraron resultados." };
+        } 
+      } else {
+        status_info = { "status": 204, "reason": "La consulta no esta disponible por el momento.(Elastic Search)." } 
+      }
+      //console.log("Servicio",{ "data": data.data.hits.hits, "status_info": status_info } );
+      return { "data": data.data.hits.hits, "status_info": status_info };
+    }
+  }).catch(error => {
+    return { "data": {}, "status_info": { "status": 500, "reason": "Lo sentimos, algo salió mal. Parece que hubo un problema en nuestro servidor. Estamos trabajando para solucionarlo. Por favor, inténtalo de nuevo más tarde." } };
+  });
+  
+};
 
 const getSearchQData = (string) => {
   const config = {
@@ -92,4 +129,4 @@ const getSearchQDataTest = () => {
   });
 };
 
-export default { getAllResults, getSearchQData, getSearchQDataTest };
+export default { getAllResults, getAllResultsByFilter, getSearchQData, getSearchQDataTest };
