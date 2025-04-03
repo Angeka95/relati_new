@@ -11,6 +11,8 @@ import { validarfiltroJurisprudencial } from '../helpers/utils.js';
 import CloseIcon from '@mui/icons-material/Close';
 
 export default function Select_field({ datos_filtros, label, id, selectedData, setSelectedData, isDisabled }) {
+
+console.log("label", label, "selectedData", selectedData);
     
   const [selectedValues, setSelectedValues] = useState([]);
   
