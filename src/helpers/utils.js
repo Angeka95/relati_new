@@ -627,6 +627,39 @@ const createSearchParamsObj = (filtroJurisprudencial, stringInnerQuery) => {
     return newObj;
 }
 
+/**
+ * createSelectedFiltersVTD()
+ * Funcionalidad que crea un objeto de filtroJurisprudencialVTD recibiendo como parametro un objeto de tipo searchParams
+ * Parametros de entrada:
+ * - searchParamsObj: el objeto que contiene los filtros de busqueda
+ * Salida:
+ * - Obtiene un objeto de tipo filtroJurisprudencial para luego ser actualizado en el contextProvider
+ * Aplicación:
+ * - src/sections/verTodasLasDecisiones.js
+*/
+
+const createSelectedFiltersVTD = (searchParamsObj) => { 
+
+    let dptos = searchParamsObj["dpto"].split("|");
+    dptos = dptos.map((item)=> {
+        return item.replace("DEPARTAMENTO ", "");
+    });
+   
+let newObj = { 
+      departamentos: (searchParamsObj["dpto"].length > 0) ? dptos : [],
+      anios:  (searchParamsObj["anio_hechos"].length > 0) ? searchParamsObj["anio_hechos"].split("|") : [],
+      salas:  (searchParamsObj["sala_seccion"].length > 0) ? searchParamsObj["sala_seccion"].split("|") : [],
+      delitos:  (searchParamsObj["delito"].length > 0) ? searchParamsObj["delito"].split("|") : [],
+      macrocasos:  (searchParamsObj["macrocaso"].length > 0) ? searchParamsObj["macrocaso"].split("|") : [],
+      comparecientes:  (searchParamsObj["tipo_compareciente"].length > 0) ? searchParamsObj["tipo_compareciente"].split("|") : [],
+      procedimientos:  (searchParamsObj["procedimiento"].length > 0) ? searchParamsObj["procedimiento"].split("|") : [],
+};
+   
+   console.log(newObj)
+   
+   return newObj;
+}
+
 export { filtroByDefault, 
          truncateWithEllipsis, 
          obtenerAnio, 
@@ -653,5 +686,6 @@ export { filtroByDefault,
          getLocalStorageWithExpiry,
          formatHighlight,
          validateSearchParamsVTD,
-         createSearchParamsObj
+         createSearchParamsObj,
+         createSelectedFiltersVTD 
 };

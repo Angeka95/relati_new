@@ -5,6 +5,7 @@ import CardActions from '@mui/material/CardActions';
 import Button from '@mui/material/Button';
 import '../App.css';
 import React, { useState, useEffect, useContext } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { FormControl, InputLabel, Select, MenuItem } from '@mui/material';
 import SelectField from '../components/selectField.js';
 import FilterListIcon from '@mui/icons-material/FilterList';
@@ -15,7 +16,7 @@ import datos_anios from '../data/data_anios.js';
 import { datos_macrocaso } from '../data/datos_macrocaso.js';
 import datos_sala_seccion from '../data/datos_sala_seccion.js';
 import Context from '../context/context';
-import { validarfiltroJurisprudencial, generarArrayDeObjetosNombreCampoValor } from '../helpers/utils.js';
+import { validarfiltroJurisprudencial, generarArrayDeObjetosNombreCampoValor, validateSearchParamsVTD, createSelectedFiltersVTD } from '../helpers/utils.js';
 import mapaJurisprudencialService from '../services/mapa_jurisprudencial.js';
 
 export default function Filter({ setSelectedFilters, isFilterFloat, isShowingFilter, selectedData, isSearchAdvance }) {
@@ -37,6 +38,8 @@ export default function Filter({ setSelectedFilters, isFilterFloat, isShowingFil
   const [datos_delito, setDatosDelito] = useState([]);
   const [datos_compareciente, setDatosCompareciente] = useState([]);
   const [datos_procedimiento, setDatosProcedimiento] = useState([]);
+  
+  const [searchParams] = useSearchParams();
   
   //Funcion que hace el llamado para traer la data de departamentos
   const getDepartamentos = () => {
@@ -104,13 +107,13 @@ export default function Filter({ setSelectedFilters, isFilterFloat, isShowingFil
   
     setSelectedFilters(
       [
-        ...selectedDataFilter1,
-        ...selectedDataFilter2,
-        ...selectedDataFilter3,
-        ...selectedDataFilter4,
-        ...selectedDataFilter5,
-        ...selectedDataFilter6,
-        ...selectedDataFilter7,
+        ...selectedDataFilter1, //Salas
+        ...selectedDataFilter2, //Anios
+        ...selectedDataFilter3, //Departamentos
+        ...selectedDataFilter4, //Delitos
+        ...selectedDataFilter5, //Macrocasos
+        ...selectedDataFilter6, //Comparecientes
+        ...selectedDataFilter7, //Procedimientos
       ]
     );
 
@@ -138,7 +141,10 @@ export default function Filter({ setSelectedFilters, isFilterFloat, isShowingFil
   }, [verTodasDecisiones, busqueda]);
 
   useEffect(() => {
+    const searchParamsObj = Object.fromEntries(searchParams.entries());
+  
     if(!validarfiltroJurisprudencial(filtroJurisprudencial)) { 
+       console.log("entra si hay valores");
       //console.log("datos en filter 3", selectedDataFilter3);
       let updateSelectedFilters = [...new Set([
           ...selectedDataFilter1,
@@ -161,13 +167,25 @@ export default function Filter({ setSelectedFilters, isFilterFloat, isShowingFil
       } 
       //console.log("updateselectedfilters", updateSelectedFilters);
       setSelectedFilters(updateSelectedFilters);
+    } else if (validateSearchParamsVTD(searchParamsObj)) {
+      console.log("aqui fue searchParamsObj", searchParamsObj);
+      const newSelectedFilters = createSelectedFiltersVTD(searchParamsObj);
+      setSelectedDataFilter1(newSelectedFilters["salas"]);
+      setSelectedDataFilter2(newSelectedFilters["anios"]);
+      setSelectedDataFilter3(newSelectedFilters["departamentos"]);
+      setSelectedDataFilter4(newSelectedFilters["delitos"]);
+      setSelectedDataFilter5(newSelectedFilters["macrocasos"]);
+      setSelectedDataFilter6(newSelectedFilters["comparecientes"]);
+      setSelectedDataFilter7(newSelectedFilters["procedimientos"]);
     } else {
+      console.log("entra en caso de que no haya valores");
         setSelectedDataFilter1([]);
         setSelectedDataFilter2([]);
         setSelectedDataFilter3([]);
         setSelectedDataFilter4([]);
         setSelectedDataFilter5([]);
         setSelectedDataFilter6([]);
+        setSelectedDataFilter7([]);
     }
   }, [filtroJurisprudencial]);
 

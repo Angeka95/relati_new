@@ -7,7 +7,7 @@ import ListCardSearch from '../components/listCardSearchVTDResults.js';
 import LinearWithValueLabel from '../components/linearProgress.js'; 
 import buscadorService from '../services/buscador.js';
 import Context from '../context/context.js';
-import { filtroByDefault, getOpcionesAutocompletar, validarfiltroJurisprudencial, validateSearchParamsVTD } from '../helpers/utils.js';
+import { filtroByDefault, getOpcionesAutocompletar, validarfiltroJurisprudencial, validateSearchParamsVTD, createSelectedFiltersVTD } from '../helpers/utils.js';
 import dataResults from '../data_results/dataResVerTodasLasDecisiones.js';
 import '../App.css';
 
@@ -110,15 +110,19 @@ export default function VerTodasLasDecisiones() {
 };
   
   useEffect(() => {
-  const searchParamsObj = Object.fromEntries(searchParams.entries());
-    if(datos.length === 0){
-      if(validateSearchParamsVTD(searchParamsObj)) { 
+    const searchParamsObj = Object.fromEntries(searchParams.entries());
+    setFiltroJurisprudencial(filtroByDefault);
+    if (datos.length === 0) {
+      if (validateSearchParamsVTD(searchParamsObj)) {
+        /*if (validarfiltroJurisprudencial(filtroJurisprudencial)) {
+          const updateSelectedFilters = createSelectedFiltersVTD(searchParamsObj);
+          setSelectedFilters(updateSelectedFilters);
+        }*/
         getAllResultsByFilter(searchParamsObj);
       } else {
         getAllResults(stringParamPage, stringParamPerPage);
-        setFiltroJurisprudencial(filtroByDefault);
       }
-    }  
+    }
   }, []);
 
   return (
