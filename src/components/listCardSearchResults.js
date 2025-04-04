@@ -15,7 +15,7 @@ import Context from '../context/context';
 import FilterShort from './filterShort';
 import LinearWithValueLabel from '../components/linearProgress.js';
 import tesauroService from './../services/tesauro.js';
-import { obtenerPalabrasFromArrayObject, getOpcionesAutocompletar, sanitizeString } from '../helpers/utils.js';
+import { sanitizeString } from '../helpers/utils.js';
 import '../App.css';
 
 export default function Card({ selectedFilters, isListSmall, selectedTerm, isLargeResult, isExternalFilters }) {
@@ -370,9 +370,9 @@ export default function Card({ selectedFilters, isListSmall, selectedTerm, isLar
                         )}
     
     
-                        {busqueda && (
+                        {/*busqueda && (
                             <h4 >Está buscando por <span className="text_bolder">{busqueda}</span> </h4>
-                        )}
+                        )*/}
     
                         {!selectedTerm && !isExternalFilters && selectedFilters.length === 0 && (
                             <h4 className="text_diabled">(Aún no ha agregado ningún filtro a su búsqueda)</h4>
