@@ -22,9 +22,8 @@ import EnfoqueGenero from './sections/enfoqueGenero';
 import VerTodasLasDecisiones from './sections/verTodasLasDecisiones';
 import TestServices from './sections/testServices';
 import Error from './sections/error';
-
 import { BrowserRouter as Router, Route, Routes,  useLocation } from 'react-router-dom';
-
+import MaintenanceWrapper from './components/ManteinanceWrapper';
 
 function App() {
 
@@ -34,8 +33,9 @@ function App() {
         <ContextProvider>
           
         <Router>
+        
+        <MaintenanceWrapper />
         <Menu />
-
         <BreadcrumbWrapper />
        
         <Routes>
