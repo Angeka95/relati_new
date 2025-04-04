@@ -585,13 +585,13 @@ const formatHighlight = (highlight) => {
 
 const validateSearchParamsVTD = (searchParamsObj) => { 
     return ((Object.values(searchParamsObj).some(value => value !== null || value !== undefined || value !== "")) && 
-    ( searchParamsObj.hasOwnProperty('string') || 
-      searchParamsObj.hasOwnProperty('procedimiento') ||   
-      searchParamsObj.hasOwnProperty('sala_seccion') ||
-      searchParamsObj.hasOwnProperty('anio_hechos') ||
-      searchParamsObj.hasOwnProperty('delito') ||   
-      searchParamsObj.hasOwnProperty('dpto') ||
-      searchParamsObj.hasOwnProperty('macrocaso') ||
+    ( searchParamsObj.hasOwnProperty('string') && 
+      searchParamsObj.hasOwnProperty('procedimiento') &&   
+      searchParamsObj.hasOwnProperty('sala_seccion') &&
+      searchParamsObj.hasOwnProperty('anio_hechos') &&
+      searchParamsObj.hasOwnProperty('delito') &&   
+      searchParamsObj.hasOwnProperty('dpto') &&
+      searchParamsObj.hasOwnProperty('macrocaso') &&
       searchParamsObj.hasOwnProperty('tipo_compareciente') 
     ));
 }

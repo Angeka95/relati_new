@@ -12,10 +12,8 @@ import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { useCleanLocalStorageVars } from '../hooks/useCleanLocalStorageVars';
 
-
 export default function MenuBar() {
 
-    
     const [openDrawer, setOpenDrawer] = useState(false);  // Para abrir/cerrar el Drawer / version mobile
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('md')); // Detecta si es un dispositivo móvil
@@ -27,8 +25,6 @@ export default function MenuBar() {
     const handleCloseDrawer = () => {
       setOpenDrawer(false);  // Cierra el drawer
     };
-
-    
 
 // Estado para manejar si el menú está expandido o no
   const [anchor, setAnchor] = useState(null);
@@ -88,7 +84,7 @@ export default function MenuBar() {
       }
     }
   },[]);
-
+  
   const [openSubMenu, setOpenSubMenu] = useState({
     sobreRelatoria: false,
     publicaciones: false,
@@ -103,7 +99,7 @@ export default function MenuBar() {
       [menu]: !prevState[menu]
     }));
   };
-
+  
   // Hook personalizado para limpiar variables en storage
   useCleanLocalStorageVars();
 

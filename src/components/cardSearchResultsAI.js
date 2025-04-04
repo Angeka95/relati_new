@@ -400,7 +400,7 @@ export default function CardSearch({ datos, hiddenAnalisisJuridico = false }) {
                            {((typeof recurso.detalle === 'string' ) && (recurso.detalle.trim() !== '')) && (
                              <p className="text_space_min">• Detalle: <span className="text_bolder"> {recurso.detalle}</span></p>
                            )}
-                           {((typeof recurso.resuelve[0].nombre === 'string' ) && (recurso.resuelve[0].nombre.trim() !== '')) && (
+                           {((recurso.resuelve.length > 0 ) && (typeof recurso.resuelve[0].nombre === 'string' ) && (recurso.resuelve[0].nombre.trim() !== '')) && (
                              <p className="text_space_min">• Resuelve: <span className="text_bolder"> {recurso.resuelve[0].nombre}</span></p>
                            )}
                          </div>
