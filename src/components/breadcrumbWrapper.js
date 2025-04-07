@@ -17,6 +17,7 @@ export default function BreadcrumbWrapper() {
       '/glosario',
       '/preguntas-frecuentes',
       '/acerca-de-nosotros',
+      '/red-terminos'
     ];
   
     // Mapa de rutas a etiquetas
@@ -31,6 +32,7 @@ export default function BreadcrumbWrapper() {
       '/glosario': 'Glosario',
       '/preguntas-frecuentes': 'Preguntas Frecuentes',
       '/acerca-de-nosotros': 'Acerca de Nosotros',
+      '/red-terminos': 'Red Términos'
     };
 
     const items = [];
@@ -41,6 +43,10 @@ export default function BreadcrumbWrapper() {
 
     if (location.pathname === '/suscripcion') {
       items.push({ label: 'Boletines', path: '/boletines' });
+    }
+
+    else if (location.pathname === '/red-terminos') {
+      items.push({ label: 'Tesauro', path: '/tesauro' });
     }
 
     items.push({ label: breadcrumbItems[location.pathname], path: location.pathname });

@@ -5,6 +5,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import ListCardSearch from '../components/listCardSearchResults.js';
 import LinearWithValueLabel from '../components/linearProgress.js';  
 import '../App.css';
+import { Link } from 'react-router-dom';
 
 export default function Tesauro() {
    
@@ -217,8 +218,23 @@ export default function Tesauro() {
                                 )}
                     </Grid>
                 </Grid>
+
             </Container>
+            
             }
+
+            <Box className= " margin_bottom_xl margin_top_m"> 
+                <div className="cta">
+                    <Container > 
+                        <div className="cta_container"> 
+                            <h6 className="text_bolder cta_text">Explore las relaciones de los términos del Tesauro... </h6> 
+                            <Link to="/red-terminos">
+                            <Button className="button_primary ">Ver Red de Términos</Button>
+                            </Link>
+                        </div>
+                    </Container>
+                </div>
+                </Box>
         </>
     );
 }
