@@ -24,6 +24,7 @@ import TestServices from './sections/testServices';
 import Error from './sections/error';
 import { BrowserRouter as Router, Route, Routes,  useLocation } from 'react-router-dom';
 import MaintenanceWrapper from './components/ManteinanceWrapper';
+import RedTerminos from './sections/redTerminos';
 
 function App() {
 
@@ -56,6 +57,7 @@ function App() {
           <Route path="/enfoqueGenero" element={<EnfoqueGenero/>} />
           <Route path="/testServices" element={<TestServices/>} />
           <Route path="/ver-todas-las-decisiones" element={<VerTodasLasDecisiones/>} />
+          <Route path="/red-terminos" element={<RedTerminos/>} />
           <Route path="/error" element={<Error/>} />
 
           

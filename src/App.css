@@ -1790,7 +1790,7 @@ controlodares carrusel  */
 }
 
 .cta_container .button_primary {
-  width: 200px;
+  width: auto;
   height: 50px;
   background-color: #98C438;
   color: #fff;
@@ -2945,6 +2945,15 @@ a, .breadcrumb-item:hover {
 }
 
 /* FIN NOVEDADES */
+
+/* RED NEURONAL DE TERMINOS */
+
+.cta_red_container{
+  margin-top: 80px;
+
+}
+
+/* FIN RED NEURONAL DE TERMINOS */
 
 /*\ FOOTER  */
 
