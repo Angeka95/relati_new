@@ -43,6 +43,7 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
         if(!validarfiltroJurisprudencial(filtroJurisprudencial)) { 
             let newMessage = { message: "", classname: "" }; 
             let datosFiltrados = [...datos];
+            setPage(1);
             setMessage({ message: "", classname: "" });
             if(filtroJurisprudencial.departamentos.length > 0){
                 datosFiltrados = datosFiltrados.filter( item => { 
@@ -227,6 +228,7 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
         //console.log("filtro jurs", filtroJurisprudencial);
         let newMessage = { message: "", classname: "" }; 
         let newArrDatos = [];
+        setPage(1);
         setDatos([]);
         setMessage({ message: "", classname: "" });
         if(valueSearchBarInner !== ""){
@@ -253,6 +255,7 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
     };
         
     const deshacerBusqueda = (e) => {
+        setPage(1);
         setDatos([]);
         setMessage({ message: "", classname: "" });
         searchBarForInnerResultsInputRef.current.clear(); 
