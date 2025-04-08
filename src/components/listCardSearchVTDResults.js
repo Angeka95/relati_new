@@ -151,6 +151,7 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
         //console.log("filtro jurs", filtroJurisprudencial);
         let newMessage = { message: "", classname: "" }; 
         let newArrDatos = [];
+        setPage(1)
         setDatos([]);
         setMessage({ message: "", classname: "" });
         if(valueSearchBarInner !== ""){
@@ -177,6 +178,7 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
     };
         
     const deshacerBusqueda = (e) => {
+        setPage(1)
         setDatos([]);
         setMessage({ message: "", classname: "" });
         searchBarForInnerResultsInputRef.current.clear(); 
