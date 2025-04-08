@@ -105,6 +105,7 @@ export default function Card({ datosMapa, datosOriginalesMapa, searchDocsOptions
     useEffect(() => {
         if(!validarfiltroJurisprudencial(filtroJurisprudencial)) {
             let datosFiltrados = datos;
+            setPage(1);
             if(filtroJurisprudencial.departamentos.length > 0){
                 datosFiltrados = datosFiltrados.filter( item => {
                     return filtroJurisprudencial.departamentos.includes(item.departamentoNombre);
@@ -175,6 +176,7 @@ export default function Card({ datosMapa, datosOriginalesMapa, searchDocsOptions
      const handlerInnerSearch = (valueSearchBarInner) => {
          let newMessage = { message: "", classname: "" }; 
          let newArrDatos = [];
+         setPage(1);
          setDatos([]);
          setMessage({ message: "", classname: "" });
          if(valueSearchBarInner !== ""){
@@ -201,6 +203,7 @@ export default function Card({ datosMapa, datosOriginalesMapa, searchDocsOptions
      };
          
      const deshacerBusqueda = (e) => {
+         setPage(1);
          setDatos([]);
          setMessage({ message: "", classname: "" });
          searchBarForInnerResultsInputRef.current.clear(); 
