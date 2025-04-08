@@ -116,6 +116,7 @@ export default function Card({ datosTramite, selectedFilters, isListSmall, selec
      const handlerInnerSearch = (valueSearchBarInner) => {
          let newMessage = { message: "", classname: "" }; 
          let newArrDatos = [];
+         setPage(1);
          setDatos([]);
          setMessage({ message: "", classname: "" });
          if(valueSearchBarInner !== ""){
@@ -142,6 +143,7 @@ export default function Card({ datosTramite, selectedFilters, isListSmall, selec
      };
          
      const deshacerBusqueda = (e) => {
+         setPage(1)
          setDatos([]);
          setMessage({ message: "", classname: "" });
          searchBarForInnerResultsInputRef.current.clear(); 
