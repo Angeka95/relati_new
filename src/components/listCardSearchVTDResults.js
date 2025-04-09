@@ -3,7 +3,7 @@ import { Grid, Stack, Pagination, PaginationItem, List, ListItem, Button, Box, C
 import { SpaceGrid, WrapGrid, SpaceBetweenGrid, Width100Grid, NoneGrid, JustMapGrid, JustMapNoneGrid } from './listCardSearch/gridComponents.js';
 import Context from '../context/context.js';
 import CardSearch from './cardSearchResultsAI.js';
-import SearchBarForInnerResults from './searchBarForInnerResults.js';
+import SearchBarForInnerResultsVTD from './searchBarForInnerResultsVTD.js';
 import FilterShort from './filterShort.js';
 import LinearWithValueLabel from '../components/linearProgress.js';  
 import ButtonDownloadXLS from './buttonDownloadXLS.js';
@@ -188,6 +188,23 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
         }, 800); 
     }
     
+    // Estas funciones permiten hacer la consulta a la API para ver todas las decisiones
+    // y redireccionar a la vista de ver todas las decisiones
+    
+    const handlerInnerSearchVTD = (valueSearchBarInner) => {
+        console.log("Debe redireccionar a ver todas las decisiones pero con parametros de busqueda");
+        const stringQueryInner = valueSearchBarInner;
+        const params = new URLSearchParams(createSearchParamsObj(filtroJurisprudencial, stringQueryInner));
+        window.location.href = `/ver-todas-las-decisiones?${params.toString()}`;
+    };
+    
+    const deshacerBusquedaVTD = (e) => {
+        setPage(1);
+        searchBarForInnerResultsInputRef.current.clear(); 
+        console.log("Debe redireccionar a ver todas las decisiones");
+        window.location.href = `/ver-todas-las-decisiones`;
+    }
+    
     // Fin de manipula el valor de busqueda que viene desde SearchBarForInnerResults y en valor
         
      if(datosBusqueda.length > 0) {
@@ -295,8 +312,7 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
                                 </Grid>
 
                                 <Grid item  className="justify_end_partial" xs={12} sm={12} md={(isListSmall ? 12 : 6)} lg={(isListSmall ? 12 : 6)} xl={(isListSmall ? 12 : 6) }>
-                                    {/*<SearchBarSmall searchOptions={searchDocsOptions} handlerSetSelectedOption={handlerSetSelectedDoc}> </SearchBarSmall>*/}
-                                    <SearchBarForInnerResults handlerInnerSearch={handlerInnerSearch} handlerReset={deshacerBusqueda} ref={searchBarForInnerResultsInputRef}></SearchBarForInnerResults>
+                                    <SearchBarForInnerResultsVTD handlerInnerSearch={handlerInnerSearchVTD} handlerReset={deshacerBusquedaVTD} ref={searchBarForInnerResultsInputRef}></SearchBarForInnerResultsVTD>
                                 </Grid>
                             </SpaceBetweenGrid>
 
