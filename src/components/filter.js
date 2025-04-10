@@ -118,9 +118,9 @@ export default function Filter({ setSelectedFilters, isFilterFloat, isShowingFil
     );
 
     setFiltroJurisprudencial({
-      departamentos: [...selectedDataFilter3],
-      anios: [...selectedDataFilter2],
       salas: [...selectedDataFilter1],
+      anios: [...selectedDataFilter2],
+      departamentos: [...selectedDataFilter3],
       delitos: [...selectedDataFilter4],
       macrocasos: [...selectedDataFilter5],
       comparecientes: [...selectedDataFilter6],
@@ -168,17 +168,17 @@ export default function Filter({ setSelectedFilters, isFilterFloat, isShowingFil
       //console.log("updateselectedfilters", updateSelectedFilters);
       setSelectedFilters(updateSelectedFilters);
     } else if (validateSearchParamsVTD(searchParamsObj)) {
-      console.log("aqui fue searchParamsObj", searchParamsObj);
-      const newSelectedFilters = createSelectedFiltersVTD(searchParamsObj);
-      setSelectedDataFilter1(newSelectedFilters["salas"]);
-      setSelectedDataFilter2(newSelectedFilters["anios"]);
-      setSelectedDataFilter3(newSelectedFilters["departamentos"]);
-      setSelectedDataFilter4(newSelectedFilters["delitos"]);
-      setSelectedDataFilter5(newSelectedFilters["macrocasos"]);
-      setSelectedDataFilter6(newSelectedFilters["comparecientes"]);
-      setSelectedDataFilter7(newSelectedFilters["procedimientos"]);
+        const newSelectedFilters = createSelectedFiltersVTD(searchParamsObj);
+        //console.log("Verificando los filtros seleccionados", newSelectedFilters);
+        setSelectedDataFilter1(newSelectedFilters["salas"]);
+        setSelectedDataFilter2(newSelectedFilters["anios"]);
+        setSelectedDataFilter3(newSelectedFilters["departamentos"]);
+        setSelectedDataFilter4(newSelectedFilters["delitos"]);
+        setSelectedDataFilter5(newSelectedFilters["macrocasos"]);
+        setSelectedDataFilter6(newSelectedFilters["comparecientes"]);
+        setSelectedDataFilter7(newSelectedFilters["procedimientos"]);
     } else {
-      console.log("entra en caso de que no haya valores");
+        //console.log("Los componentes por cada criterio de filtrado quedan vacios");
         setSelectedDataFilter1([]);
         setSelectedDataFilter2([]);
         setSelectedDataFilter3([]);

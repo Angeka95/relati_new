@@ -655,7 +655,7 @@ let newObj = {
       procedimientos:  (searchParamsObj["procedimiento"].length > 0) ? searchParamsObj["procedimiento"].split("|") : [],
 };
    
-   console.log(newObj)
+   //console.log("Crea a partir de createSelectedFiltersVTD", newObj)
    
    return newObj;
 }
