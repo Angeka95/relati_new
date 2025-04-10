@@ -405,6 +405,13 @@ export default function CardSearch({ datos, hiddenAnalisisJuridico = false }) {
                            )}
                          </div>
                        )))}
+                       {((datos["recursos"][0]["ficha_id"] !== null )) && (
+                        <CustomGrid className="justify_center">
+                        <a href={`https://relatoria.jep.gov.co/downloadfichaext/${datos["recursos"][0]["ficha_id"]}`} target='_blank' rel="noreferrer">
+                          <Button startIcon={<FileDownloadOutlinedIcon/>} className="button_secondary margin_xs" >Ver más detalles</Button>
+                        </a> 
+                        </CustomGrid>
+                        )}
                      </div>
                    )}
                 </div>
