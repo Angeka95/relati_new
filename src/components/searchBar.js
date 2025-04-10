@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext, useRef } from 'react';
+import { Link } from 'react-router-dom'; 
 import Context from '../context/context';
 import { getLocalStorageWithExpiry } from '../helpers/utils.js';
 import { Button, Switch, FormControlLabel, Grid, Alert, TextField, Stack, Autocomplete } from '@mui/material';
@@ -133,6 +134,16 @@ export default function Search({ isSearchAdvance, isSearchMain }) {
               <Button onClick={search} className="searchAIButton autocomplete_button_responsive button_primary"><SearchIcon /></Button>
             </ShowGrid>
           </div>
+          {!isSearchAdvance && (
+            <NoneGrid>
+              <Button className="light_white text_blue autocomplete_button_help button_terciary">?</Button>
+            </NoneGrid>
+          )}
+          {isSearchAdvance && (
+            <Link to="/busqueda-avanzada"> 
+            <Button className="autocomplete_button_advance primary_blue text_white button_secondary_border">Búsqueda Avanzada</Button>
+            </Link> 
+          )}
         </SpaceBottom>
         {(messageSearch.message.trim() !== '') && 
             <Alert variant="outlined" severity={messageSearch.classname} className='margin_top_m'>

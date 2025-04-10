@@ -23,7 +23,7 @@ const BusquedaAvanzada = ( ) => {
             </Grid>
           </div>    
     </Container>
-    <ResultadosBusquedaAV />
+    {/*<ResultadosBusquedaAV />*/}
     </>
   ); 
 };

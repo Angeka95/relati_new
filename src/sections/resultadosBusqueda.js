@@ -241,7 +241,7 @@ const handleMessage = (newMessage) => {
               <p></p>
             </Grid>
             <Grid item xs={12} sm={12} md={8} lg={8} xl={8} >
-              <SearchBar/>
+              <SearchBar isSearchAdvance={true}/>
             </Grid>
           </Grid>
           <Grid container spacing={2}>
