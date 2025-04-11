@@ -10,9 +10,10 @@ const getAllResultsBusquedaAV = (searchParamsObj) => {
     },
     params: {  }
   };
-  //const searchParamsString = new URLSearchParams(searchParamsObj).toString();
-  const request =  axios.get(`https://relatoria.jep.gov.co/searchadv?tipo_documento=Resolución&anio=2022&sala_seccion=S - Sala de Definición de Situaciones Jurídicas&frase_exacta=sometimiento&todas_palabras=acta formal`, config);
-  //const request =  axios.get(`https://relatoria.jep.gov.co/searchin?${searchParamsString}`, config);
+  let newSearchParamsObj = Object.assign({}, searchParamsObj);
+  delete newSearchParamsObj.advanced_search;
+  const searchParamsString = new URLSearchParams(newSearchParamsObj).toString();
+  const request =  axios.get(`https://relatoria.jep.gov.co/searchadv?${searchParamsString}`, config);
   return request.then(response => { 
     if((response.data.status !== undefined) || (response.data.status === 401) || (response.data.status === 403)) {
       return { "data": [], "status_info": { "status": response.data.status, "reason": response.data.reason }};
@@ -28,7 +29,6 @@ const getAllResultsBusquedaAV = (searchParamsObj) => {
       } else {
         status_info = { "status": 204, "reason": "La consulta no esta disponible por el momento.(Elastic Search)." } 
       }
-      //console.log("Servicio",{ "data": data.hits, "status_info": status_info } );
       return { "data": data.hits, "status_info": status_info };
     }
   }).catch(error => {

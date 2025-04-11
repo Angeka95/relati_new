@@ -660,6 +660,32 @@ let newObj = {
    return newObj;
 }
 
+/**
+ * validateSearchParamsBusquedaAV()
+ * Funcionalidad que valida los datos de un objeto de tipo searchParams provenientes de React Router desde busqueda avanzada. Si el objeto no esta vacio y contiene alguna de las propiedades retorna True.
+ * Parametros de entrada:
+ * - searchParamsObj: el objeto searchParams proveniente de React Router
+ * Salida:
+ * - Obtiene un valor de tipo boolean true o false. True en caso de que el objeto no contenga propiedades vacias
+ * Aplicación:
+ * - resultadosBusqueda.js
+*/
+
+const validateSearchParamsBusquedaAV = (searchParamsObj) => { 
+    let valor = ((Object.values(searchParamsObj).some(value => value !== null || value !== undefined || value !== "")) && 
+    (   searchParamsObj.hasOwnProperty('advanced_search') && 
+        searchParamsObj.hasOwnProperty('alguna_palabra') &&
+        searchParamsObj.hasOwnProperty('anio') &&
+        searchParamsObj.hasOwnProperty('frase_exacta') &&
+        searchParamsObj.hasOwnProperty('ninguna_palabra') &&
+        searchParamsObj.hasOwnProperty('sala_seccion') &&
+        searchParamsObj.hasOwnProperty('tipo_documento') &&   
+        searchParamsObj.hasOwnProperty('todas_palabras')   
+    ));
+    console.log("Busqueda avanzada val campos", valor);
+    return valor;
+}
+
 export { filtroByDefault, 
          truncateWithEllipsis, 
          obtenerAnio, 
@@ -687,5 +713,6 @@ export { filtroByDefault,
          formatHighlight,
          validateSearchParamsVTD,
          createSearchParamsObj,
-         createSelectedFiltersVTD 
+         createSelectedFiltersVTD,
+         validateSearchParamsBusquedaAV 
 };

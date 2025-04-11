@@ -10,7 +10,7 @@ import LinearWithValueLabel from '../components/linearProgress.js';
 import SearchBar from '../components/searchBar.js'
 import buscadorService from '../services/buscador.js';
 import busquedaAvanzadaService from '../services/busqueda_avanzada.js';
-import { filtroByDefault, validarfiltroJurisprudencial, getOpcionesAutocompletar, setLocalStorageWithExpiry, getLocalStorageWithExpiry } from '../helpers/utils.js';
+import { filtroByDefault, validarfiltroJurisprudencial, getOpcionesAutocompletar, setLocalStorageWithExpiry, getLocalStorageWithExpiry, validateSearchParamsBusquedaAV } from '../helpers/utils.js';
 import dataResults from '../data_results/dataResBusqueda.js';
 import '../App.css';
 
@@ -74,10 +74,10 @@ export default function SearchResults() {
   };
 
   // Esta funcion obtiene los resultados de busqueda por buscador avanzando
-  const getResultadosBuscadorAV = () => {
+  const getResultadosBuscadorAV = (searchParamsObj) => {
       let newMessage = {}; 
       busquedaAvanzadaService
-        .getAllResultsBusquedaAV({})
+        .getAllResultsBusquedaAV(searchParamsObj)
         .then(response => {
               if((response.status_info.status === 200) && (response.data.length > 0)) {
                 const newDatos = dataResults(response.data);
@@ -125,6 +125,36 @@ export default function SearchResults() {
     } 
   },[]);
   
+  // Este useEffect valida si no hay parametros de busqueda
+  // Previamente valida si los parametros provienen de una busqueda avanzada con validateSearchParamsBusquedaAV
+  // Si se cumple, obtiene los resultados de busqueda avanzada
+  // En caso de que no se cumpla, procede a la busqueda sencilla
+  // Al validar si el stringParam es nulo o vacio
+  // Si se cumple, limpia los valores del localStorage: stringQueryLs y dataFromQueryLs
+  // Si se cumple tambien redirige a la pagina principal
+  // Si no se cumple, es decir hay un valor en el parametro string, se establece el stringQuery con el valor del stringParam
+  useEffect(() => {
+    const searchParamsObj = Object.fromEntries(searchParams.entries());
+    if(validateSearchParamsBusquedaAV(searchParamsObj)){ 
+        getResultadosBuscadorAV(searchParamsObj);
+        setLocalStorageWithExpiry('stringQueryLs', '', ttl);
+        setLocalStorageWithExpiry('dataFromQueryLs', '', ttl);
+    } else if ((stringParam === "") || (stringParam === null) || (stringParam === "null")) {
+      let newMessage = {};
+      newMessage["message"] = `No se puede realizar la solicitud.`;
+      newMessage["classname"] = 'error';
+      handleMessage(newMessage);
+      setDatos([]);
+      setLocalStorageWithExpiry('stringQueryLs', '', ttl);
+      setLocalStorageWithExpiry('dataFromQueryLs', '', ttl);
+      navigate('/');
+    } else {
+      if(stringQuery === ""){
+        setStringQuery(stringParam);
+      } 
+    }
+  }, [stringQuery, stringParam ]);
+
   // Este useEffect almacena la cadena de consulta en el localStorage
   // Los datos obtenidos a partir de la cadena de consulta se almacenan en localStorage
   // Si el stringQuery recien ingresado es el mismo que esta en localStorage.stringQueryLs toma los datos almacenados del sesionStorage 
@@ -145,27 +175,6 @@ export default function SearchResults() {
       }
     }
   },[stringQuery]);
-  
-  // Este useEffect valida si no hay parametros de busqueda
-  // Si se cumple, limpia los valores del localStorage: stringQueryLs y dataFromQueryLs
-  // Si se cumple tambien redirige a la pagina principal
-  // Si no se cumple, se establece el stringQuery con el valor del stringParam
-  useEffect(() => {
-    if ((stringParam === "") || (stringParam === null) || (stringParam === "null")) {
-      let newMessage = {};
-      newMessage["message"] = `No se puede realizar la solicitud.`;
-      newMessage["classname"] = 'error';
-      handleMessage(newMessage);
-      setDatos([]);
-      setLocalStorageWithExpiry('stringQueryLs', '', ttl);
-      setLocalStorageWithExpiry('dataFromQueryLs', '', ttl);
-      navigate('/');
-    } else {
-      if(stringQuery === ""){
-        setStringQuery(stringParam);
-      } 
-    }
-  }, [stringQuery, stringParam ]);
   
   // Si el filtroJurisprudencial como variable de contexto es un objeto vacio, tambien se limpia el estado de selectedFilters
   useEffect(() => {
@@ -211,7 +220,7 @@ export default function SearchResults() {
         </Container>      
         :  
         <Container className="margin_bottom_m">
-          <Grid container spacing={2}>
+          <Grid container spacing={2} sx={{ mb: 5 }}>
             <Grid item xs={12} sm={12} md={4} lg={4} xl={4} >
               <p></p>
             </Grid>
