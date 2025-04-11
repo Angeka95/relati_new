@@ -28,7 +28,7 @@ export default function SearchResults() {
   const [searchOptions, setSearchOptions] = useState([]);
   const [stringQueryLs, setStringQueryLs] = useState("");
 
-  const { ttl } = useContext(Context);
+  const { ttl } = useContext(Context); // Variable de contexto determina el tiempo de expiracion de una varaiable localStorage
   const { filtroJurisprudencial, setFiltroJurisprudencial } = useContext(Context);
   const { estadoVerTodasDecisiones, setEstadoVerTodasDecisiones } = useContext(Context);
 

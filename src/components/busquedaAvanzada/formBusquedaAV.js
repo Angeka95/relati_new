@@ -7,15 +7,16 @@ import ExpandLessOutlinedIcon from '@mui/icons-material/ExpandLessOutlined';
 import ExpandMoreOutlinedIcon from '@mui/icons-material/ExpandMoreOutlined';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import SearchIcon from '@mui/icons-material/Search';
-import FilterShort from '../../components/filterShort.js';
+import FilterShort from './filterShort.js';
+import { validateSearchParamsBusquedaAV, createSearchParamsObj } from '../../helpers/utils.js';
 import '../../App.css';
-
 
 const FormBusquedaAV = () => {
     
   const navigate = useNavigate();
 
   const { setBusqueda, setVerTodasDecisiones } = useContext(Context);
+  const { filtroBusquedaAvanzada } = useContext(Context);
 
   const [busquedaAvanzada, setBusquedaAvanzada] = useState('');
   const [value, setValue] = useState('');
@@ -108,11 +109,29 @@ const FormBusquedaAV = () => {
     setter(event.target.value);
   };
 
+
+  // Handler que actualiza el objeto objBusquedaAvanzada y convierte el objeto en cadena para proceder a la consulta 
   const handleSearch = () => {
-    setBusqueda(cadenaBusqueda);
-    setVerTodasDecisiones(false);
-    navigate('/resultados-busqueda');
-};
+
+    let newObjBusquedaAvanzada = { 
+      advanced_search: true,
+      frase_exacta: value,
+      todas_palabras: value2,
+      alguna_palabra: value3,
+      ninguna_palabra: value4,
+      anio: filtroBusquedaAvanzada.anio.join(','),
+      sala_seccion: filtroBusquedaAvanzada.sala_seccion.join(','),
+      tipo_documento: filtroBusquedaAvanzada.tipo_documento.join(',')
+    };
+
+    if(validateSearchParamsBusquedaAV(newObjBusquedaAvanzada)){
+      const params = new URLSearchParams(newObjBusquedaAvanzada);
+      //console.log("Valor busqueda avanzada es", newObjBusquedaAvanzada);
+      //console.log("Valor params", params.toString());
+      navigate(`/resultados-busqueda?${params.toString()}`);
+    } 
+
+  };
 
   // Boton help 
   const [infoHelp, setInfoHelp] = useState(false);
@@ -265,7 +284,7 @@ const FormBusquedaAV = () => {
               </div>
             </div>
           </Grid>
-          <Grid xs={12} sm={12} md={8} lg={8} xl={8}>
+          <Grid item xs={12} sm={12} md={8} lg={8} xl={8}>
             {(selectedFilters.length === 0 && busquedaAvanzada.length === 0) && (
               <h5 className="text_diabled text_center margin_top_m">(Aún no ha agregado ningún parámetro a su búsqueda)</h5>
             )}

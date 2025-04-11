@@ -14,6 +14,16 @@ const filtroByDefault = {
     procedimientos: []
 }; 
 
+/** 
+ * filtroBusquedaAvanzadaByDefault
+ * Objeto inicial que almacena las opciones seleccionadas por el usuario en el filtro de busqueda avanzada
+*/
+const filtroBusquedaAvanzadaByDefault = {
+    tipo_documento: [],
+    anio: [],
+    sala_seccion: []
+}; 
+
 /**
  * truncateWithEllipsis()
  * Funcionalidad para truncar con Ellipsis
@@ -682,11 +692,11 @@ const validateSearchParamsBusquedaAV = (searchParamsObj) => {
         searchParamsObj.hasOwnProperty('tipo_documento') &&   
         searchParamsObj.hasOwnProperty('todas_palabras')   
     ));
-    console.log("Busqueda avanzada val campos", valor);
     return valor;
 }
 
 export { filtroByDefault, 
+         filtroBusquedaAvanzadaByDefault,
          truncateWithEllipsis, 
          obtenerAnio, 
          obtenerPalabrasFromArrayObject, 
