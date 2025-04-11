@@ -1,100 +1,52 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import SearchBar from '../components/searchBar.js';
-import Filter from '../components/filter.js';
-import ListCardSearch from '../components/listCardSearchAIResults.js';
-import { Container, Grid, Alert, Button, Box } from '@mui/material';
-import buscadorService from '../services/buscador.js';
-import LinearWithValueLabel from '../components/linearProgress.js';  
 import Context from '../context/context.js';
 import { useCleanLocalStorageVars } from '../hooks/useCleanLocalStorageVars.js';
-import { filtroByDefault, validarfiltroJurisprudencial, sanitizeString, getOpcionesAutocompletar, setLocalStorageWithExpiry, getLocalStorageWithExpiry, formatHighlight } from '../helpers/utils.js';
+import { Container, Grid, Alert, Button, Box } from '@mui/material';
+import Filter from '../components/filter.js';
+import ListCardSearch from '../components/listCardSearchAIResults.js';
+import LinearWithValueLabel from '../components/linearProgress.js';
+import SearchBar from '../components/searchBar.js'
+import buscadorService from '../services/buscador.js';
+import busquedaAvanzadaService from '../services/busqueda_avanzada.js';
+import { filtroByDefault, validarfiltroJurisprudencial, getOpcionesAutocompletar, setLocalStorageWithExpiry, getLocalStorageWithExpiry } from '../helpers/utils.js';
+import dataResults from '../data_results/dataResBusqueda.js';
 import '../App.css';
 
 export default function SearchResults() {
 
   const navigate = useNavigate();
+  
   const [searchParams] = useSearchParams();
+  const stringParam = decodeURIComponent(searchParams.get('string'));
 
-  const [selectedFilters, setSelectedFilters] = useState([]);
-  const [message, setMessage] = useState({ message: "", classname: "" });
   const [datos, setDatos] = useState([]);
+  const [message, setMessage] = useState({ message: "", classname: "" });
+  const [selectedFilters, setSelectedFilters] = useState([]);
+  const [stringQuery, setStringQuery] = useState("");
   const [searchOptions, setSearchOptions] = useState([]);
+  const [stringQueryLs, setStringQueryLs] = useState("");
 
   const { ttl } = useContext(Context);
   const { filtroJurisprudencial, setFiltroJurisprudencial } = useContext(Context);
   const { estadoVerTodasDecisiones, setEstadoVerTodasDecisiones } = useContext(Context);
-  const [stringQuery, setStringQuery] = useState("");
-  
-  const [stringQueryLs, setStringQueryLs] = useState("");
-  
-  const [openModal, setOpenModal] = useState(false);
-  const handleOpenModal = () => setOpenModal(true);
-  const handleCloseModal = () => setOpenModal(false);
 
-  const stringParam = decodeURIComponent(searchParams.get('string'));
-  
+  // Esta funcion permite configurar el mensaje de error o exito en variable message
+  const handleMessage = (newMessage) => {
+    setTimeout(function(){ 
+        setMessage(newMessage);
+    }, 3000);
+  };
+
+  // Esta funcion obtiene los resultados de busqueda por buscador normal al AI 
   const getResultadosBuscadorAI = (string) => {
     let newMessage = {}; 
     buscadorService
       .getSearchQData(string)
-      //.getSearchQDataTest()
       .then(response => {
           if((response.status_info.status === 200) && (response.data.length > 0)) {
-                const newDatos = response.data.map((i, k) => { 
-                    let item = i._source;
-                    let newItem = {
-                        id: k + 1,
-                        score: i._score,
-                        fecha: item.fecha_documento,
-                        ficha_id: item.ficha_id,
-                        providencia_id: item.providencia_id,
-                        sala: (item.sala_seccion !== null) ? item.sala_seccion : "",
-                        salaOSeccion: (item.sala_seccion !== null) ? item.sala_seccion : "",
-                        nombreDecision: (item.nombre_providencia !== null) ? item.nombre_providencia : "",
-                        procedimiento: (item.procedimiento !== null ) ? item.procedimiento : "",
-                        expediente: (item.expediente !== null) ? item.expediente : "", 
-                        departamento: (item.departamento !== null ) ? item.departamento : "",
-                        magistrado: (item.autor !== null) ? item.autor : "", 
-                        municipio:  (item.municipio !== null ) ? item.municipio : "",
-                        delito: (item.delito !== null ) ? item.delito : "",
-                        anioHechos: (item.anio_hechos !== null ) ? item.anio_hechos : "",
-                        tipo: (item.tipo_documento !== null) ? item.tipo_documento : "", 
-                        radicado: (item.radicado_documento !== null) ? item.radicado_documento : "",
-                        compareciente: (item.compareciente !== null ) ? item.compareciente : "",
-                        tipoSujeto: (item.tipo_compareciente !== null ) ? item.tipo_compareciente : "",
-                        accionadoVinculado: (item.accionadoVinculado !== null ) ? item.accionadoVinculado : "",
-                        palabrasClaves: (item.palabras_clave !== null ) ? item.palabras_clave : "",
-                        hechos: (item.hechos_antecedentes !== null) ? item.hechos_antecedentes : "", 
-                        problemasJuridicos: (item.problema_juridico !== null) ? item.problema_juridico : "",
-                        reglas: (item.reglas_juridicas !== null) ? item.reglas_juridicas : "",
-                        aplicacionCasoConcreto: (item.analisis_caso_concreto !== null) ? item.analisis_caso_concreto : "", 
-                        resuelve:  (item.resuelve !== null ) ? item.resuelve : "",
-                        documentosAsociados: (item.anexos.length > 0) ? item.anexos[0].nombre : "", 
-                        documentosAsociadosLink:  (item.anexos.length > 0) ? item.anexos[0].hipervinculo : "", 
-                        enfoquesDiferenciales: (item.enfoque !== null ) ? item.enfoque : "",
-                        notasRelatoria: "", 
-                        hipervinculo:   (item.hipervinculo !== null ) ? `https://relatoria.jep.gov.co/${item.hipervinculo}` : "", 
-                        hipervinculoFichaJuris: "",
-                        estadoFichaJuris: false,
-                        extractoBusqueda: (item.sintesis !== null ) ? sanitizeString(item.sintesis) : "",
-                        caso: (item.macrocaso !== null ) ? item.macrocaso : "",
-                        autocompletarBuscador: "",
-                        estado_id: (item.estado_id > 0) ? item.estado_id : "",
-                        conclusion_resuelve: (item.conclusion_resuelve !== null) ? item.conclusion_resuelve : "", 
-                        highlight: (i?.highlight ) ? formatHighlight(i.highlight) : "",
-                        anexos: (item.anexos.length > 0) ? item.anexos : "",
-                        recursos: (item.recursos.length > 0) ? item.recursos : "", 
-                    };
-                    newItem["departamentoNombre"] = newItem.departamento;
-                    newItem["procedimientos"] = newItem.procedimiento; 
-                    newItem["anio"] = newItem.anioHechos;
-                    newItem["comparecientes"] = newItem.tipoSujeto;
-                    newItem["delitos"] = newItem.delito;
-                    newItem["hipervinculoFichaJuris"] = ((newItem.ficha_id !== null ) && ( newItem.estado_id === 14 )) ? `https://relatoria.jep.gov.co/downloadfichaext/${newItem.ficha_id}` : " ";
-                    newItem["autocompletarBuscador"] = { id: newItem.id, title: `${newItem.salaOSeccion} ${newItem.nombreDecision} ${newItem.departamento} ${newItem.delito} ${newItem.procedimiento} ${newItem.compareciente} ${newItem.magistrado} ${newItem.anioHechos} `};  
-                    return newItem;
-              });
+              const newDatos = dataResults(response.data);
               setDatos(newDatos);
               setSearchOptions(getOpcionesAutocompletar(newDatos));
               setLocalStorageWithExpiry('dataFromQueryLs', JSON.stringify(newDatos), ttl);
@@ -119,17 +71,50 @@ export default function SearchResults() {
         newMessage["classname"] = 'error';
         handleMessage(newMessage);
     });
-};
+  };
 
-const handleMessage = (newMessage) => {
-  handleOpenModal();
-  setTimeout(function(){ 
-      setMessage(newMessage);
-  }, 3000);
-  /*setTimeout(() => {
-      setMessage({ message: "", classname: "" }); 
-  }, 6000);*/
-};
+  // Esta funcion obtiene los resultados de busqueda por buscador avanzando
+  const getResultadosBuscadorAV = () => {
+      let newMessage = {}; 
+      busquedaAvanzadaService
+        .getAllResultsBusquedaAV({})
+        .then(response => {
+              if((response.status_info.status === 200) && (response.data.length > 0)) {
+                const newDatos = dataResults(response.data);
+                setDatos(newDatos);
+                setSearchOptions(getOpcionesAutocompletar(newDatos));
+                newMessage["message"] = `${response.status_info.reason}`;
+                newMessage["classname"] = 'success';
+              } else if(response.status_info.status === 500) {
+                newMessage["message"] = `${response.status_info.reason}`;
+                newMessage["classname"] = 'error';
+              } else {
+                newMessage["message"] = `${response.status_info.reason}`;
+                newMessage["classname"] = 'warning';
+              }
+              handleMessage(newMessage); 
+          }
+        )
+        .catch(error => { 
+          newMessage["message"] = `${error}`;
+          newMessage["classname"] = 'error';
+          handleMessage(newMessage);
+        });
+  }
+
+  /* useEffects */
+
+  // Si no hay datos en la consulta, se establece el filtro jurisprudencial por defecto
+  useEffect(() => {
+    if(datos.length === 0){
+        setFiltroJurisprudencial(filtroByDefault);
+    } 
+  }, []);
+
+  // Este useEffect cambia el estado de contexto estadoVerTodasDecisiones a false
+  useEffect(()=>{
+    setEstadoVerTodasDecisiones(false);
+  },[]);
   
   // Si la seccion /resultados-busqueda no cuenta con ningun parametro, lo envia al home
   useEffect(() => {
@@ -140,11 +125,10 @@ const handleMessage = (newMessage) => {
     } 
   },[]);
   
-  /* Este useEffect almacena la cadena de consulta en el localStorage
-     Los datos obtenidos a partir de la cadena de consulta se almacenan en localStorage
-     Si el stringQuery recien ingresado es el mismo que esta en localStorage.stringQueryLs toma los datos almacenados del sesionStorage 
-     En caso contrario, una consulta diferente procede a obtener nuevos registros.
-  */
+  // Este useEffect almacena la cadena de consulta en el localStorage
+  // Los datos obtenidos a partir de la cadena de consulta se almacenan en localStorage
+  // Si el stringQuery recien ingresado es el mismo que esta en localStorage.stringQueryLs toma los datos almacenados del sesionStorage 
+  // En caso contrario, una consulta diferente procede a obtener nuevos registros.
   useEffect(()=>{
     if (!localStorage.hasOwnProperty('stringQueryLs')) {
       setLocalStorageWithExpiry('stringQueryLs', '', ttl);
@@ -162,13 +146,10 @@ const handleMessage = (newMessage) => {
     }
   },[stringQuery]);
   
-  // Limpian las variables LocalStorage almacenadas despues de cierto tiempo
-  useCleanLocalStorageVars();
-  
-  useEffect(()=>{
-      setEstadoVerTodasDecisiones(false);
-  },[]);
-    
+  // Este useEffect valida si no hay parametros de busqueda
+  // Si se cumple, limpia los valores del localStorage: stringQueryLs y dataFromQueryLs
+  // Si se cumple tambien redirige a la pagina principal
+  // Si no se cumple, se establece el stringQuery con el valor del stringParam
   useEffect(() => {
     if ((stringParam === "") || (stringParam === null) || (stringParam === "null")) {
       let newMessage = {};
@@ -178,7 +159,6 @@ const handleMessage = (newMessage) => {
       setDatos([]);
       setLocalStorageWithExpiry('stringQueryLs', '', ttl);
       setLocalStorageWithExpiry('dataFromQueryLs', '', ttl);
-      //setTimeout(() => navigate('/'), 3000);
       navigate('/');
     } else {
       if(stringQuery === ""){
@@ -187,20 +167,15 @@ const handleMessage = (newMessage) => {
     }
   }, [stringQuery, stringParam ]);
   
-  useEffect(() => {
-    if(datos.length === 0){
-        setFiltroJurisprudencial(filtroByDefault);
-    } 
-  }, []);
-  
-  // Valida filtroJurisprudencial si esta vacio, el selectedFilters queda vacio
+  // Si el filtroJurisprudencial como variable de contexto es un objeto vacio, tambien se limpia el estado de selectedFilters
   useEffect(() => {
     if(validarfiltroJurisprudencial(filtroJurisprudencial)){ 
         setSelectedFilters([]);
     } 
   }, [filtroJurisprudencial]);
 
-  //return(<></>);
+  // Esta funcion limpia las variables LocalStorage almacenadas despues de cierto tiempo
+  useCleanLocalStorageVars();
 
   return (
     <>
@@ -212,7 +187,7 @@ const handleMessage = (newMessage) => {
             <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
               <>
               <p>Buscando por: <strong>"{stringParam}"</strong></p>
-              { (message.message === "") ?
+              {(message.message === "") ?
                 <>
                 <LinearWithValueLabel processingMessages={["Procesando solicitud...", "Preparando respuesta..."]}></LinearWithValueLabel> 
                 </> 
