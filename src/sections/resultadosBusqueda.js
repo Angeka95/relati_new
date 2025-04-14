@@ -199,7 +199,7 @@ export default function SearchResults() {
             <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
               <>
               {(validateSearchParamsBusquedaAV(paramsBusquedaAV) === true) ? 
-                <p>Busqueda avanzada por <strong>"{formattingSearchParamsBusquedaAV(paramsBusquedaAV)}"</strong></p>
+                <p>Búsqueda avanzada por <strong>"{formattingSearchParamsBusquedaAV(paramsBusquedaAV)}"</strong></p>
               :
                 <p>Buscando por: <strong>"{stringQuery}"</strong></p>
               }

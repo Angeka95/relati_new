@@ -286,7 +286,7 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
                         }
 
                         {(validateSearchParamsBusquedaAV(paramsBusquedaAV) === true) &&
-                            <h4 >Busqueda avanzada por <span className="text_bolder">"{formattingSearchParamsBusquedaAV(paramsBusquedaAV)}"</span></h4>
+                            <h4 >Búsqueda avanzada por <span className="text_bolder">"{formattingSearchParamsBusquedaAV(paramsBusquedaAV)}"</span></h4>
                         }
     
                         {selectedTerm && (
