@@ -22,12 +22,12 @@ import ExpandLessOutlinedIcon from '@mui/icons-material/ExpandLessOutlined';
 import ExpandMoreOutlinedIcon from '@mui/icons-material/ExpandMoreOutlined';
 import FilterShort from './filterShort.js';
 import FilterListIcon from '@mui/icons-material/FilterList';
-import { filtroByDefault, validarfiltroJurisprudencial, getOpcionesAutocompletar, getDecisionesIDsToExport } from '../helpers/utils.js';
+import { filtroByDefault, validarfiltroJurisprudencial, getOpcionesAutocompletar, getDecisionesIDsToExport, validateSearchParamsBusquedaAV, formattingSearchParamsBusquedaAV  } from '../helpers/utils.js';
 import { macrocasos } from '../data/datos_macrocaso.js';
 import LinearWithValueLabel from '../components/linearProgress.js';  
 import ButtonDownloadXLS from './buttonDownloadXLS.js';
 
-export default function Card({ datosBusqueda, searchOptions, selectedFilters, isListSmall, selectedTerm, isLargeResult, isExternalFilters, customPagination = {} }) {  
+export default function Card({ datosBusqueda, searchOptions, selectedFilters, isListSmall, selectedTerm, isLargeResult, isExternalFilters, customPagination = {}, paramsBusquedaAV = null }) {  
        
     const [datos, setDatos] = useState(datosBusqueda);
     const [datosOriginales, setDatosOriginales] = useState(datosBusqueda);
@@ -281,19 +281,22 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
                             <h4 className="text_diabled">Cuando ingrese una búsqueda verá los resultados aquí</h4>
                         )}
     
-    
-                        {!isExternalFilters && !selectedTerm && verTodasDecisiones && (
+                        {(!isExternalFilters && !selectedTerm && verTodasDecisiones && paramsBusquedaAV === null ) && 
                             <h4 >Está buscando por <span className="text_bolder">"Todas las decisiones"</span> </h4>
-                        )}
+                        }
+
+                        {(validateSearchParamsBusquedaAV(paramsBusquedaAV) === true) &&
+                            <h4 >Busqueda avanzada por <span className="text_bolder">"{formattingSearchParamsBusquedaAV(paramsBusquedaAV)}"</span></h4>
+                        }
     
                         {selectedTerm && (
                             <h4 >Está buscando por <span className="text_bolder">"{selectedTerm}"</span> </h4>
             
                         )}
     
-                        {/*busqueda && (
+                        {busqueda && (
                             <h4 >Está buscando por <span className="text_bolder">{busqueda}</span> </h4>
-                        )*/}
+                        )}
     
                         {!selectedTerm && !isExternalFilters && selectedFilters.length === 0 && (
                             <h4 className="text_diabled">(Aún no ha agregado ningún filtro a su búsqueda)</h4>

@@ -10,7 +10,7 @@ import LinearWithValueLabel from '../components/linearProgress.js';
 import SearchBar from '../components/searchBar.js'
 import buscadorService from '../services/buscador.js';
 import busquedaAvanzadaService from '../services/busqueda_avanzada.js';
-import { filtroByDefault, validarfiltroJurisprudencial, getOpcionesAutocompletar, setLocalStorageWithExpiry, getLocalStorageWithExpiry, validateSearchParamsBusquedaAV } from '../helpers/utils.js';
+import { filtroByDefault, validarfiltroJurisprudencial, getOpcionesAutocompletar, setLocalStorageWithExpiry, getLocalStorageWithExpiry, validateSearchParamsBusquedaAV, formattingSearchParamsBusquedaAV } from '../helpers/utils.js';
 import dataResults from '../data_results/dataResBusqueda.js';
 import '../App.css';
 
@@ -27,6 +27,7 @@ export default function SearchResults() {
   const [stringQuery, setStringQuery] = useState("");
   const [searchOptions, setSearchOptions] = useState([]);
   const [stringQueryLs, setStringQueryLs] = useState("");
+  const [paramsBusquedaAV, setParamsBusquedaAV] = useState({});
 
   const { ttl } = useContext(Context); // Variable de contexto determina el tiempo de expiracion de una varaiable localStorage
   const { filtroJurisprudencial, setFiltroJurisprudencial } = useContext(Context);
@@ -136,6 +137,8 @@ export default function SearchResults() {
   useEffect(() => {
     const searchParamsObj = Object.fromEntries(searchParams.entries());
     if(validateSearchParamsBusquedaAV(searchParamsObj)){ 
+        console.log("objeto busqueda avanzada", searchParamsObj);
+        setParamsBusquedaAV(searchParamsObj);
         getResultadosBuscadorAV(searchParamsObj);
         setLocalStorageWithExpiry('stringQueryLs', '', ttl);
         setLocalStorageWithExpiry('dataFromQueryLs', '', ttl);
@@ -195,7 +198,11 @@ export default function SearchResults() {
           <Grid container spacing={2}>
             <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
               <>
-              <p>Buscando por: <strong>"{stringParam}"</strong></p>
+              {(validateSearchParamsBusquedaAV(paramsBusquedaAV) === true) ? 
+                <p>Busqueda avanzada por <strong>"{formattingSearchParamsBusquedaAV(paramsBusquedaAV)}"</strong></p>
+              :
+                <p>Buscando por: <strong>"{stringQuery}"</strong></p>
+              }
               {(message.message === "") ?
                 <>
                 <LinearWithValueLabel processingMessages={["Procesando solicitud...", "Preparando respuesta..."]}></LinearWithValueLabel> 
@@ -233,7 +240,7 @@ export default function SearchResults() {
               <Filter setSelectedFilters={setSelectedFilters}></Filter>
             </Grid>
             <Grid item xs={12} sm={12} md={8} lg={8} xl={8}>
-                <ListCardSearch datosBusqueda={datos} selectedTerm={stringQuery} searchOptions={searchOptions} selectedFilters={selectedFilters}></ListCardSearch>
+                <ListCardSearch datosBusqueda={datos} selectedTerm={stringQuery} searchOptions={searchOptions} selectedFilters={selectedFilters} isExternalFilters={false} paramsBusquedaAV={paramsBusquedaAV}></ListCardSearch>
             </Grid>
           </Grid>
         </Container>

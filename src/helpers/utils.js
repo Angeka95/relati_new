@@ -695,6 +695,64 @@ const validateSearchParamsBusquedaAV = (searchParamsObj) => {
     return valor;
 }
 
+/**
+ * formattingSearchParamsBusquedaAV()
+ * Funcionalidad que da formato a los datos de un objeto de tipo searchParams provenientes de React Router desde busqueda avanzada.
+ * Parametros de entrada:
+ * - searchParamsObj: el objeto searchParams proveniente de React Router
+ * Salida:
+ * - Obtiene una array con label y valores de busqueda
+ * Aplicación:
+ * - resultadosBusqueda.js
+*/
+
+const formattingSearchParamsBusquedaAV = (searchParamsObj) => { 
+    let newArray = [];
+    let etiqueta = [];
+    let newObj = Object.assign({}, searchParamsObj);
+    delete newObj.advanced_search;
+    const etiquetas = ["Alguna palabra", "Frase exacta", "Ninguna palabra", "Todas las palabras", "Tipo de documento", "Sala/Sección", "Año"];
+
+    const noVacio = (valor) =>
+        valor !== "" && valor !== null && valor !== undefined && valor.length > 0;
+      
+    const objetoFiltrado = Object.fromEntries(
+        Object.entries(newObj).filter(([_, valor]) => noVacio(valor))
+    );
+    Object.entries(objetoFiltrado).forEach(([clave, valor], index) => { 
+        if (Array.isArray(valor)) {
+            valor = valor.join(', ');
+        }
+        switch(clave){
+            case "alguna_palabra":
+                etiqueta = etiquetas[0];
+            break;
+            case "frase_exacta":
+                etiqueta = etiquetas[1];
+            break;
+            case "ninguna_palabra":
+                etiqueta = etiquetas[2];
+            break;
+            case "todas_palabras":
+                etiqueta = etiquetas[3];
+            break;
+            case "tipo_documento":
+                etiqueta = etiquetas[4];
+            break;
+            case "sala_seccion":
+                etiqueta = etiquetas[5];
+            break;
+            case "anio":
+                etiqueta = etiquetas[6];
+            break;
+            default:
+            break;
+        }
+        newArray.push(`${etiqueta}: ${valor}`);
+    });
+    return newArray.join(", ");
+}
+
 export { filtroByDefault, 
          filtroBusquedaAvanzadaByDefault,
          truncateWithEllipsis, 
@@ -724,5 +782,6 @@ export { filtroByDefault,
          validateSearchParamsVTD,
          createSearchParamsObj,
          createSelectedFiltersVTD,
-         validateSearchParamsBusquedaAV 
+         validateSearchParamsBusquedaAV,
+         formattingSearchParamsBusquedaAV
 };
