@@ -137,7 +137,6 @@ export default function SearchResults() {
   useEffect(() => {
     const searchParamsObj = Object.fromEntries(searchParams.entries());
     if(validateSearchParamsBusquedaAV(searchParamsObj)){ 
-        console.log("objeto busqueda avanzada", searchParamsObj);
         setParamsBusquedaAV(searchParamsObj);
         getResultadosBuscadorAV(searchParamsObj);
         setLocalStorageWithExpiry('stringQueryLs', '', ttl);

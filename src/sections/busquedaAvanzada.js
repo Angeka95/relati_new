@@ -1,7 +1,6 @@
 import React from 'react';
 import { Container, Grid, Button, Box, Chip } from '@mui/material';
 import FormBusquedaAV from '../components/busquedaAvanzada/formBusquedaAV.js';
-import ResultadosBusquedaAV from '../components/busquedaAvanzada/resultadosBusquedaAV.js';
 import '../App.css';
 
 const BusquedaAvanzada = ( ) => {
@@ -23,7 +22,6 @@ const BusquedaAvanzada = ( ) => {
             </Grid>
           </div>    
     </Container>
-    {/*<ResultadosBusquedaAV />*/}
     </>
   ); 
 };

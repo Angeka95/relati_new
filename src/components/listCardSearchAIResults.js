@@ -294,10 +294,6 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
             
                         )}
     
-                        {busqueda && (
-                            <h4 >Está buscando por <span className="text_bolder">{busqueda}</span> </h4>
-                        )}
-    
                         {!selectedTerm && !isExternalFilters && selectedFilters.length === 0 && (
                             <h4 className="text_diabled">(Aún no ha agregado ningún filtro a su búsqueda)</h4>
                         )}

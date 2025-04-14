@@ -109,8 +109,8 @@ export default function Search({ isSearchAdvance, isSearchMain }) {
     <div className="justify_center">
       <Stack className={isSearchAdvance ? ('autocomplete_bar_search_nomargin') : 'autocomplete_bar_search'} >
         <SpaceBottom>
-          {(isSearchMain || !isSearchAdvance) && (
-            <FormControlLabel control={<Switch checked={estadoVerTodasDecisiones} onChange={handleChange} />} label="ver todas las decisiones" className="switch_search" />)
+          {/*(isSearchMain || !isSearchAdvance) && (*/
+            <FormControlLabel control={<Switch checked={estadoVerTodasDecisiones} onChange={handleChange} />} label="ver todas las decisiones" className="switch_search" />/*)*/
           }
           <div className="autocomplete_search">
             <Autocomplete style={{ color: 'black' }} className="autocomplete_search_field margin_top_s z-index_front text_black"
