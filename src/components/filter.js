@@ -4,7 +4,7 @@ import Box from '@mui/material/Box';
 import CardActions from '@mui/material/CardActions';
 import Button from '@mui/material/Button';
 import '../App.css';
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, useRef } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { FormControl, InputLabel, Select, MenuItem } from '@mui/material';
 import SelectField from '../components/selectField.js';
@@ -39,6 +39,9 @@ export default function Filter({ setSelectedFilters, isFilterFloat, isShowingFil
   const [datos_delito, setDatosDelito] = useState([]);
   const [datos_compareciente, setDatosCompareciente] = useState([]);
   const [datos_procedimiento, setDatosProcedimiento] = useState([]);
+
+  // Manipula el valor de busqueda que viene desde SearchBarForInnerResults y en valor
+  const searchBarForInnerResultsInputRef = useRef(null);
   
   const [searchParams] = useSearchParams();
   
@@ -144,6 +147,7 @@ export default function Filter({ setSelectedFilters, isFilterFloat, isShowingFil
   useEffect(() => {
     const searchParamsObj = Object.fromEntries(searchParams.entries());
   
+  
     if(!validarfiltroJurisprudencial(filtroJurisprudencial)) { 
        console.log("entra si hay valores");
       //console.log("datos en filter 3", selectedDataFilter3);
@@ -189,6 +193,11 @@ export default function Filter({ setSelectedFilters, isFilterFloat, isShowingFil
         setSelectedDataFilter7([]);
     }
   }, [filtroJurisprudencial]);
+
+   // deshacerBusquedaVTD reestablece la busqueda y redirecciona a ver todas las decisiones
+   const deshacerBusquedaVTD = (e) => {
+    window.location.href = `/ver-todas-las-decisiones`;
+  }
 
   const JustFilterFloatNoneGrid = styled(Grid)(({ theme }) => ({
 
@@ -248,6 +257,12 @@ export default function Filter({ setSelectedFilters, isFilterFloat, isShowingFil
         <div className="justify_center width_100 margin_top_s">
           <Button disabled={isFilterDisabled} className="button_primary margin_xs " onClick={applyFilters}>Aplicar filtros</Button>
         </div>
+        {(isVTD === true) && (
+          <div className="justify_center width_100 margin_top_m">
+            <Button variant="outlined" className='autocomplete_bar_inner_search_undo_results margin_right_0' size="small" onClick={deshacerBusquedaVTD}>Reestablecer resultados</Button>
+          </div>
+        )}
+        
       </CardContent>
 
     </Card>

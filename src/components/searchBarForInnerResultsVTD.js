@@ -58,7 +58,7 @@ const SearchBarForInnerResultsVTD = forwardRef(( props, ref ) => {
         <Button className="autocomplete_button_small button_primary z-index_front" onClick={()=>handlerInnerSearch(valueSearchBar)} ><SearchIcon /></Button>
       </Stack>
       <Box>
-        <Button variant="outlined" className='autocomplete_bar_inner_search_undo_results' size="small" onClick={() => handlerReset()}>Reestablecer resultados</Button>
+        <Button variant="outlined" className='autocomplete_bar_inner_search_undo_results margin_right_s' size="small" onClick={() => handlerReset()}>Reestablecer resultados</Button>
       </Box>
     </div>
   ); 

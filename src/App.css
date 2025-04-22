@@ -447,6 +447,10 @@ h6 {
   margin-left: 10px !important;
 }
 
+.margin_right_0 {
+  margin-right: 0 !important;
+}
+
 .margin_right_m{
   margin-right: 30px !important;
 }
@@ -880,7 +884,6 @@ h6 {
   font-weight: 600 !important; 
   text-transform: unset !important;
   border: 1px solid #98C438 !important; 
-  margin-right: 1rem !important;
 }
 
 .autocomplete_bar_inner_search_undo_results:hover {

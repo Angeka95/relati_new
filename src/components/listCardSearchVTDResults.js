@@ -68,7 +68,6 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
     const deshacerBusquedaVTD = (e) => {
         setPage(1);
         searchBarForInnerResultsInputRef.current.clear(); 
-        console.log("Debe redireccionar a ver todas las decisiones");
         window.location.href = `/ver-todas-las-decisiones`;
     }
     
