@@ -23,13 +23,27 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
     const [datosToExport, setDatosToExport] = useState("");
     const [valorBuscadorEnResultados, setValorBuscadorEnResultados] = useState("");
     const [message, setMessage] = useState({ message: "", classname: "" });
+
+    const [isButtonSorterEnabled, setIsButtonSorterEnabled] = useState(false);
+    const [showFilter, setShowFilter] = useState(false);
+    const [externalFilters, setExternalFilters] = useState([]);
+    const [currentData, setCurrentData] = useState([]);
     
     const { filtroJurisprudencial, setFiltroJurisprudencial } = useContext(Context);
+    const { filtroJurisprudencialVTD, setFiltroJurisprudencialVTD } = useContext(Context);
+    const { verTodasDecisiones, busqueda } = useContext(Context);
 
+    // Manipula el valor de busqueda que viene desde SearchBarForInnerResults y en valor
+    const searchBarForInnerResultsInputRef = useRef(null);
+
+    // Este useEffect establece la carga de datos.
+    // Si filtroJurisprudencial esta vacio, se establecen los datos Originales
+    // En caso contrario, procede a realizar la busqueda por medio de los parametros que el usuario defina por medio del filtro o cadena de texto
     useEffect(() => {
         if(!validarfiltroJurisprudencial(filtroJurisprudencial)) { 
-            const stringQueryInner = "";
+            const stringQueryInner = searchBarForInnerResultsInputRef.current.getValue();
             const params = new URLSearchParams(createSearchParamsObj(filtroJurisprudencial, stringQueryInner));
+            //console.log(params.toString());
             window.location.href = `/ver-todas-las-decisiones?${params.toString()}`;
         } else {
             setDatos(datosOriginales);
@@ -37,27 +51,39 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
         }
     }, [filtroJurisprudencial]);
 
-    const { verTodasDecisiones, busqueda } = useContext(Context);
-
-    if (!selectedFilters) {
-        selectedFilters = [];
+    // Estas funciones permiten hacer la consulta a la API para ver todas las decisiones
+    // y redireccionar a la vista de ver todas las decisiones
+    
+    // handlerInnerSearchVTD realiza la busqueda para proceder a obtener todas las decisiones
+    const handlerInnerSearchVTD = (valueSearchBarInner) => {
+        console.log("Debe redireccionar a ver todas las decisiones pero con parametros de busqueda");
+        console.log("filtro juris VTD", filtroJurisprudencialVTD, "stringQueryInner", valueSearchBarInner);
+        const stringQueryInner = valueSearchBarInner;
+        const params = new URLSearchParams(createSearchParamsObj(filtroJurisprudencialVTD, stringQueryInner));
+        console.log(params.toString());
+        window.location.href = `/ver-todas-las-decisiones?${params.toString()}`;
+    };
+    
+    // deshacerBusquedaVTD reestablece la busqueda y redirecciona a ver todas las decisiones
+    const deshacerBusquedaVTD = (e) => {
+        setPage(1);
+        searchBarForInnerResultsInputRef.current.clear(); 
+        console.log("Debe redireccionar a ver todas las decisiones");
+        window.location.href = `/ver-todas-las-decisiones`;
     }
-    const [isButtonSorterEnabled, setIsButtonSorterEnabled] = useState(false);
+    
+    // Fin de manipula el valor de busqueda que viene desde SearchBarForInnerResults parametrizados
+
+    /*if (!selectedFilters) {
+        selectedFilters = [];
+    }*/
+
+    // Funciones de ordenacion
 
     // Estado del Boton ordenar 
     const toggleButton = () => {
         setIsButtonSorterEnabled(prev => !prev);
     };
-
-    const [showFilter, setShowFilter] = useState(false);
-
-    const handleFilter = () => {
-      setShowFilter(!showFilter);
-    };
-
-    const [externalFilters, setExternalFilters] = useState([]);
-
-    const [currentData, setCurrentData] = useState([]);
 
     // Función para ordenar en orden ascendente por fecha
     const sortAscByDate = () => {
@@ -95,8 +121,9 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
         setDatosToExport(getDecisionesIDsToExport(sortedDatos, "providencia_id"));
     };
 
+    // Fin de funciones de ordenacion
 
-    // Paginado
+    // Funciones de paginacion
     const [page, setPage] = useState(1);
     const [itemsPerPage, setitemsPerPage] = React.useState(10);
     const handleChange = (event, value) => {
@@ -116,22 +143,15 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
         window.location.href = `/ver-todas-las-decisiones?${params.toString()}`;
     }
 
-    useEffect(() => {
-        if(datos.length > 0){
-            getCurrentData();
-            setDatosToExport(getDecisionesIDsToExport(datos, "providencia_id"));
-        }
-    }, [page, itemsPerPage, datos]);
-
     const getCurrentData = (items = 0) => {
         if (items === 0) {
             items = itemsPerPage;
         }
-    
         const startIndex = (page - 1) * items;
         setCurrentData(datos.slice(startIndex, startIndex + items));
-     
     }
+
+    // Fin funciones de paginacion
 
     const handleChange2 = (event) => {
         setitemsPerPage(event.target.value);
@@ -142,11 +162,10 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
         const params = new URLSearchParams({ page: encodeURIComponent(customPagination.current_page), per_page: encodeURIComponent(value.props.value) });
         window.location.href = `/ver-todas-las-decisiones?${params.toString()}`;
     }
-    
-    // Manipula el valor de busqueda que viene desde SearchBarForInnerResults y en valor
-    
-    const searchBarForInnerResultsInputRef = useRef(null);
+
+    // Estas funciones permiten hacer la consulta sobre los datos retornados sin parametrizacion
             
+    // handlerInnerSearch es una funcion que permite filtrar por medio de una cadena de texto dada los resultados de busqueda a a partir de los resultados obtenidos
     const handlerInnerSearch = (valueSearchBarInner) => {
         //console.log("filtro jurs", filtroJurisprudencial);
         let newMessage = { message: "", classname: "" }; 
@@ -176,7 +195,9 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
             setMessage(newMessage);
         }, 800); 
     };
-        
+    
+    // deshacerBusqueda es una funcion simple que permite reestaurar los valores originales de la busqueda generada
+    // a diferencia de deshacerBusquedaVTD que redirecciona a ver todas las decisiones
     const deshacerBusqueda = (e) => {
         setPage(1)
         setDatos([]);
@@ -187,26 +208,18 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
             setFiltroJurisprudencial(filtroByDefault);
         }, 800); 
     }
-    
-    // Estas funciones permiten hacer la consulta a la API para ver todas las decisiones
-    // y redireccionar a la vista de ver todas las decisiones
-    
-    const handlerInnerSearchVTD = (valueSearchBarInner) => {
-        console.log("Debe redireccionar a ver todas las decisiones pero con parametros de busqueda");
-        const stringQueryInner = valueSearchBarInner;
-        const params = new URLSearchParams(createSearchParamsObj(filtroJurisprudencial, stringQueryInner));
-        window.location.href = `/ver-todas-las-decisiones?${params.toString()}`;
-    };
-    
-    const deshacerBusquedaVTD = (e) => {
-        setPage(1);
-        searchBarForInnerResultsInputRef.current.clear(); 
-        console.log("Debe redireccionar a ver todas las decisiones");
-        window.location.href = `/ver-todas-las-decisiones`;
-    }
-    
-    // Fin de manipula el valor de busqueda que viene desde SearchBarForInnerResults y en valor
-        
+
+    // Fin de funciones para hacer la consulta sobre los datos retornados sin parametrizacion
+
+    // Este useEffect permite obtener el listado de IDs a partir de los datos resultantes y preparalos para ser exportados en un archivo de Excel
+    useEffect(() => {
+        if(datos.length > 0){
+            getCurrentData();
+            setDatosToExport(getDecisionesIDsToExport(datos, "providencia_id"));
+        }
+    }, [page, itemsPerPage, datos]);
+
+    // JSX
      if(datosBusqueda.length > 0) {
         return (
             <Stack>

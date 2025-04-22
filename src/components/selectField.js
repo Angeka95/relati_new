@@ -10,15 +10,70 @@ import { FormControl, InputLabel, Select, MenuItem, OutlinedInput, Chip, Checkbo
 import { validarfiltroJurisprudencial } from '../helpers/utils.js';
 import CloseIcon from '@mui/icons-material/Close';
 
-export default function Select_field({ datos_filtros, label, id, selectedData, setSelectedData, isDisabled }) {
-    
+export default function Select_field({ datos_filtros, label, id, selectedData, setSelectedData, isDisabled, isVTD = false }) {
+
   const [selectedValues, setSelectedValues] = useState([]);
   
-  const { filtroJurisprudencial } = useContext(Context);
+  const { filtroJurisprudencial, setFiltroJurisprudencial } = useContext(Context);
+  const { filtroJurisprudencialVTD, setFiltroJurisprudencialVTD } = useContext(Context);
   
   useEffect(()=>{
     setSelectedValues([...selectedData]);
   },[selectedData]);
+
+  // Este useEffect solo aplica en Ver Todas Decisiones
+  // Se actualiza el valor de filtroJurisprudencialVTD cuando se selecciona un valor en el select
+  useEffect(()=>{
+    //console.log("Valor filtro jurisprudencia VTD", filtroJurisprudencialVTD, "eventtarget", selectedValues);
+    if(isVTD === true){
+      switch(label){
+        case "Sala o Sección":
+          setFiltroJurisprudencialVTD({
+            ...filtroJurisprudencialVTD,
+            salas: selectedValues
+          });
+          break;
+        case "Año de los hechos":
+          setFiltroJurisprudencialVTD({
+            ...filtroJurisprudencialVTD,
+            anios: selectedValues
+          });
+        break;
+        case "Departamento":
+          setFiltroJurisprudencialVTD({
+            ...filtroJurisprudencialVTD,
+            departamentos: selectedValues
+          });
+        break;
+        case "Delito":
+          setFiltroJurisprudencialVTD({
+            ...filtroJurisprudencialVTD,
+            delitos: selectedValues
+          });
+        break;
+        case "Macrocasos":
+          setFiltroJurisprudencialVTD({
+            ...filtroJurisprudencialVTD,
+            macrocasos: selectedValues
+          });
+        break;
+        case "Compareciente":
+          setFiltroJurisprudencialVTD({
+            ...filtroJurisprudencialVTD,
+            comparecientes: selectedValues
+          });
+        break;
+        case "Procedimiento":
+          setFiltroJurisprudencialVTD({
+            ...filtroJurisprudencialVTD,
+            procedimientos: selectedValues
+          });
+        break;
+        default:
+          break;
+      }
+    }
+  },[selectedValues]);
   
   
   useEffect(()=>{
@@ -27,13 +82,13 @@ export default function Select_field({ datos_filtros, label, id, selectedData, s
     }
   },[filtroJurisprudencial]);
   
-  
+  // Toma el valor seleccionado y lo guarda en el estado de SelectField
   const handleChange = (event) => {
     setSelectedValues(event.target.value);
     setSelectedData(event.target.value);
   };
 
-  const handleDelete = (value) => {
+  const handleDelete = (value) => {  
     setSelectedValues((prevItems) => prevItems.filter(item => item !== value));
     setSelectedData((prevItems) => prevItems.filter(item => item !== value));
   };

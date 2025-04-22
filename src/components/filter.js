@@ -19,10 +19,11 @@ import Context from '../context/context';
 import { validarfiltroJurisprudencial, generarArrayDeObjetosNombreCampoValor, validateSearchParamsVTD, createSelectedFiltersVTD } from '../helpers/utils.js';
 import mapaJurisprudencialService from '../services/mapa_jurisprudencial.js';
 
-export default function Filter({ setSelectedFilters, isFilterFloat, isShowingFilter, selectedData, isSearchAdvance }) {
+export default function Filter({ setSelectedFilters, isFilterFloat, isShowingFilter, selectedData, isSearchAdvance, isVTD = false }) {
   // Estado para controlar si el botón está habilitado o deshabilitado
   const { verTodasDecisiones, busqueda } = useContext(Context);
   const { filtroJurisprudencial, setFiltroJurisprudencial } = useContext(Context);
+  const { filtroJurisprudencialVTD, setFiltroJurisprudencialVTD } = useContext(Context);
   const [ listaDptosJurisprudencial, setListaDptosJurisprudencial ] = useState([]);
   const [isButtonEnabled, setIsButtonEnabled] = useState(true);
   const [selectedDataFilter1, setSelectedDataFilter1] = useState([]);
@@ -55,20 +56,21 @@ export default function Filter({ setSelectedFilters, isFilterFloat, isShowingFil
         .catch(error => console.log(error));
   };
   
+  // Este useEffect se encarga de obtener los departamentos al cargar el componente
   useEffect(() => {
     if(listaDptosJurisprudencial.length === 0){
         getDepartamentos();
     } 
   }, [listaDptosJurisprudencial]);
   
+  // Este useEffect se encarga de actualizar el filtro de departamentos provenientes de filtroJurisprudencial
   useEffect(() => {
-    //if(selectedDataFilter3.length === 0){
-        setSelectedDataFilter3([...filtroJurisprudencial.departamentos]);
-    /*} else {
-      setSelectedDataFilter3([]);
-    }*/
+      setSelectedDataFilter3([...filtroJurisprudencial.departamentos]);
   }, [filtroJurisprudencial, setSelectedDataFilter3]);
 
+
+  // Esta funcion obtiene datos desde el servicio documentoService, getDetailsDocument
+  // Obtiene delitos, comparecientes y procedimientos
   const getDataFromDocumento = () => {
     documentoService
         .getDetailsDocument()
@@ -88,6 +90,7 @@ export default function Filter({ setSelectedFilters, isFilterFloat, isShowingFil
         .catch(error => console.log(error));
   };
 
+  // Este useEffect se encarga de obtener los datos desde el servicio documentoService al cargar el componente
   useEffect(() => {
     getDataFromDocumento();
   }, []);
@@ -97,36 +100,34 @@ export default function Filter({ setSelectedFilters, isFilterFloat, isShowingFil
     setIsButtonEnabled(prev => !prev);
   };
 
+  // applyFilters es la función que se ejecuta al hacer clic en el botón "Aplicar filtros"
+  // Se encarga de aplicar los filtros seleccionados y actualizar el estado de selectedFilters
   const applyFilters = () => {
-    //console.log("Filtro mapa juris", filtroJurisprudencial);
-    //console.log("Deptos ", selectedDataFilter3);
-
-    /*if(filtroJurisprudencial.departamentos.length === 1){
-      setSelectedDataFilter3([...filtroJurisprudencial.departamentos]);
-    }*/
-  
-    setSelectedFilters(
-      [
-        ...selectedDataFilter1, //Salas
-        ...selectedDataFilter2, //Anios
-        ...selectedDataFilter3, //Departamentos
-        ...selectedDataFilter4, //Delitos
-        ...selectedDataFilter5, //Macrocasos
-        ...selectedDataFilter6, //Comparecientes
-        ...selectedDataFilter7, //Procedimientos
-      ]
-    );
-
-    setFiltroJurisprudencial({
-      salas: [...selectedDataFilter1],
-      anios: [...selectedDataFilter2],
-      departamentos: [...selectedDataFilter3],
-      delitos: [...selectedDataFilter4],
-      macrocasos: [...selectedDataFilter5],
-      comparecientes: [...selectedDataFilter6],
-      procedimientos: [...selectedDataFilter7]
-    });
-        
+    if(isVTD === true){ 
+      console.log("filtroJurisprudencialVTD", filtroJurisprudencialVTD);
+      setFiltroJurisprudencial(filtroJurisprudencialVTD);
+    } else {
+      setSelectedFilters(
+        [
+          ...selectedDataFilter1, //Salas
+          ...selectedDataFilter2, //Anios
+          ...selectedDataFilter3, //Departamentos
+          ...selectedDataFilter4, //Delitos
+          ...selectedDataFilter5, //Macrocasos
+          ...selectedDataFilter6, //Comparecientes
+          ...selectedDataFilter7, //Procedimientos
+        ]
+      );
+      setFiltroJurisprudencial({
+        salas: [...selectedDataFilter1],
+        anios: [...selectedDataFilter2],
+        departamentos: [...selectedDataFilter3],
+        delitos: [...selectedDataFilter4],
+        macrocasos: [...selectedDataFilter5],
+        comparecientes: [...selectedDataFilter6],
+        procedimientos: [...selectedDataFilter7]
+      });
+    }    
   };
 
   useEffect(() => {
@@ -205,15 +206,15 @@ export default function Filter({ setSelectedFilters, isFilterFloat, isShowingFil
             <h3> <FilterListIcon /> Filtrar </h3>
           </div>
         </JustFilterFloatNoneGrid>
-
+        
         <SelectField isDisabled={isFilterDisabled} datos_filtros={datos_sala_seccion} selectedData={selectedDataFilter1} setSelectedData={setSelectedDataFilter1}
-          label='Sala o Sección' id='sala'></SelectField>
+          label='Sala o Sección' id='sala' isVTD={isVTD}></SelectField>
         <SelectField isDisabled={isFilterDisabled} datos_filtros={datos_anios} selectedData={selectedDataFilter2} setSelectedData={setSelectedDataFilter2}
-          label='Año de los hechos' id='anio'></SelectField>
+          label='Año de los hechos' id='anio' isVTD={isVTD}></SelectField>
         <SelectField isDisabled={isFilterDisabled} datos_filtros={listaDptosJurisprudencial} selectedData={selectedDataFilter3} setSelectedData={setSelectedDataFilter3}
-          label='Departamento' id='departamento'></SelectField>
+          label='Departamento' id='departamento'  isVTD={isVTD}></SelectField>
         <SelectField isDisabled={isFilterDisabled} datos_filtros={datos_delito} selectedData={selectedDataFilter4} setSelectedData={setSelectedDataFilter4}
-          label='Delito' id='delito'></SelectField>
+          label='Delito' id='delito'  isVTD={isVTD}></SelectField>
         <div className='justify_center'>
           {isButtonEnabled && (
             <Button className="link_primary text_lowercase" onClick={toggleButton}> ver más filtros
@@ -224,11 +225,11 @@ export default function Filter({ setSelectedFilters, isFilterFloat, isShowingFil
             <div className="width_100 text_center">
 
               <SelectField isDisabled={isFilterDisabled} datos_filtros={datos_macrocaso} selectedData={selectedDataFilter5} setSelectedData={setSelectedDataFilter5}
-                label='Macrocasos' id='macrocasos'></SelectField>
+                label='Macrocasos' id='macrocasos' isVTD={isVTD}></SelectField>
               <SelectField isDisabled={isFilterDisabled} datos_filtros={datos_compareciente} selectedData={selectedDataFilter6} setSelectedData={setSelectedDataFilter6}
-                label='Compareciente' id='compareciente'></SelectField>
+                label='Compareciente' id='compareciente' isVTD={isVTD}></SelectField>
               <SelectField isDisabled={isFilterDisabled} datos_filtros={datos_procedimiento} selectedData={selectedDataFilter7} setSelectedData={setSelectedDataFilter7}
-                label='Procedimiento' id='procedimiento'></SelectField>
+                label='Procedimiento' id='procedimiento' isVTD={isVTD}></SelectField>
 
               <Button
                 className="link_primary text_lowercase"

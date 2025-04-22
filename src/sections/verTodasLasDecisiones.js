@@ -42,9 +42,6 @@ export default function VerTodasLasDecisiones() {
           handleCloseModal();
           setMessage(newMessage);
       }, 3000);
-      /*setTimeout(() => {
-          setMessage({ message: "", classname: "" }); 
-      }, 6000);*/
   }
   
   const getAllResults = (page, per_page) => {
@@ -169,7 +166,7 @@ export default function VerTodasLasDecisiones() {
           </Grid>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
-              <Filter setSelectedFilters={setSelectedFilters}></Filter> 
+              <Filter setSelectedFilters={setSelectedFilters} isVTD={true}></Filter> 
             </Grid>
             <Grid item xs={12} sm={12} md={8} lg={8} xl={8}>
                 <ListCardSearch datosBusqueda={datos} selectedTerm={stringQuery} searchOptions={searchOptions} selectedFilters={selectedFilters} customPagination={pagination}></ListCardSearch>
