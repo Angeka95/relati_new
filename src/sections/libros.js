@@ -12,9 +12,9 @@ export default function Libros() {
     const libros = [
         {
             id : 1,
-            pdf: 'https://relatoria.jep.gov.co/documentos/libros/TOMO_1_Las-SENIT-1-2-3.pdf', 
+            pdf: `${process.env.REACT_APP_API_SERVER_DOMAIN}/documentos/libros/TOMO_1_Las-SENIT-1-2-3.pdf`, 
             fecha: "2024-01", 
-            qr: 'https://relatoria.jep.gov.co/img/libros/qr-tomo-1.png', 
+            qr: `${process.env.REACT_APP_API_SERVER_DOMAIN}/img/libros/qr-tomo-1.png`, 
             title: ` Tomo I </br>
             Las Sentencias Interpretativas - SENIT 1, 2 Y 3`,
             text:`Las Sentencias Interpretativas (SENIT) son providencias que buscan: </br>
@@ -31,18 +31,18 @@ export default function Libros() {
                 <strong> • Revisar y supervisar beneficios provisionales de los exmiembros </strong></br> 
                 <strong> • Régimen de notificaciones, comunicaciones y recursos de los trámites ordinarios ante la JEP.</strong></br> 
                 `, 
-            cover: 'https://relatoria.jep.gov.co/img/libros/TOMO_1_Las-SENIT-1-2-3.jpg'
+            cover: `${process.env.REACT_APP_API_SERVER_DOMAIN}/img/libros/TOMO_1_Las-SENIT-1-2-3.jpg`
          },
          {
             id : 2,
-            pdf: 'https://relatoria.jep.gov.co/documentos/libros/Tomo_2_lineamientos_analisis_tematico.pdf', 
+            pdf: `${process.env.REACT_APP_API_SERVER_DOMAIN}/documentos/libros/Tomo_2_lineamientos_analisis_tematico.pdf`, 
             fecha: "2024-01", 
-            qr: 'https://relatoria.jep.gov.co/img/libros/qr-tomo-2.jpeg', 
+            qr: `${process.env.REACT_APP_API_SERVER_DOMAIN}/img/libros/qr-tomo-2.jpeg`, 
             title: `Tomo II </br>
             Lineamientos para el análisis temático de las decisiones de la JEP: reflexiones desde la teoría jurídica y la práctica judicial`,
             text:`Es un libro orientado a público jurídico o académico con interés en el desarrollo de las temáticas de la Jurisdicción Especial para la Paz. Se ha estructurado de la siguiente forma:</br> En un primer apartado se explica de manera detallada el fundamento teórico y conceptual de la metodología, para entender, primero, el rol del juez dentro del derecho para el establecimiento de reglas y subreglas jurídicas a través del precedente y, segundo, cómo esto fundamenta la necesidad del levantamiento de líneas jurisprudenciales.</br> Posteriormente, en el segundo apartado se explican cada uno de los pasos contemplados dentro de la metodología, junto con algunos ejemplos de su aplicabilidad.  </br> Por último, se incorporan dos anexos para la comprensión de la creación del Banco de decisiones y la elaboración del documento analítico, que hacen parte de los resultados esperados dentro del desarrollo de las líneas jurisprudenciales. 
                 `, 
-            cover: 'https://relatoria.jep.gov.co/img/libros/portada_tomo_II.jpg'
+            cover:`${process.env.REACT_APP_API_SERVER_DOMAIN}/img/libros/portada_tomo_II.jpg`
          },
     
     
@@ -96,8 +96,8 @@ export default function Libros() {
                     </div>
                 </div> 
                 <div className="book_container justify_center d-flex flex-wrap " > 
-                    <a href="https://relatoria.jep.gov.co/documentos/libros/CODIGO_JURISDICCION_ESPECIAL_PAZ_1A_ED.pdf" target="_blank" rel="noreferrer" className="justify_center">
-                    <img className="cover_container" src="https://relatoria.jep.gov.co/img/libros/portada_codigo_JEP_c.png"/> 
+                    <a href={`${process.env.REACT_APP_API_SERVER_DOMAIN}/documentos/libros/CODIGO_JURISDICCION_ESPECIAL_PAZ_1A_ED.pdf`} target="_blank" rel="noreferrer" className="justify_center">
+                    <img className="cover_container" src={`${process.env.REACT_APP_API_SERVER_DOMAIN}/img/libros/portada_codigo_JEP_c.png`}/> 
                     </a>
                 
                     

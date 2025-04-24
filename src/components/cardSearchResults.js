@@ -324,7 +324,7 @@ export default function CardSearch({ datos, hiddenAnalisisJuridico = false }) {
             {isDocumentosAsociadosExpanded && (
                 <div className="margin_top_s">
                   {((typeof datos.documentosAsociados === 'string' ) && (datos.documentosAsociados.trim() !== '')) && (
-                  <p className="text_space_min text_justify">{/*• Documentos asociados: */} <span className="text_bolder"><a href={`https://relatoria.jep.gov.co/${datos.documentosAsociadosLink}`} target="_blank" rel="noreferrer">{datos.documentosAsociados}</a></span> </p>
+                  <p className="text_space_min text_justify">{/*• Documentos asociados: */} <span className="text_bolder"><a href={`${process.env.REACT_APP_API_SERVER_DOMAIN}/${datos.documentosAsociadosLink}`} target="_blank" rel="noreferrer">{datos.documentosAsociados}</a></span> </p>
                   )}
                 </div>
               )}

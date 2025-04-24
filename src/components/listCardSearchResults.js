@@ -61,14 +61,14 @@ export default function Card({ selectedFilters, isListSmall, selectedTerm, isLar
                             documentosAsociados:  (item.anexos.length > 0) ? item.anexos[0].nombre : "", 
                             documentosAsociadosLink:  (item.anexos.length > 0) ? item.anexos[0].hipervinculo : "", 
                             notasRelatoria: (item.notas.length > 0 )? "" : "", 
-                            hipervinculo:  `https://relatoria.jep.gov.co/${item.hipervinculo}`,
+                            hipervinculo:  `${process.env.REACT_APP_API_SERVER_DOMAIN}/${item.hipervinculo}`,
                             hipervinculoFichaJuris: "",
                             estadoFichaJuris: "",
                             estado_id: (item.estado_id > 0) ? item.estado_id : "",
                             extractoBusqueda: (item.sintesis !== null ) ? sanitizeString(item.sintesis) : "",
                             conclusion_resuelve: ((item.conclusion_resuelve !== null) && (item.hasOwnProperty("conclusion_resuelve"))) ? item.conclusion_resuelve : ""
                         };
-                        newItem["hipervinculoFichaJuris"] = ((newItem.ficha_id !== null ) && ( newItem.estado_id === 14 )) ? `https://relatoria.jep.gov.co/downloadfichaext/${newItem.ficha_id}` : " ";
+                        newItem["hipervinculoFichaJuris"] = ((newItem.ficha_id !== null ) && ( newItem.estado_id === 14 )) ? `${process.env.REACT_APP_API_SERVER_DOMAIN}/downloadfichaext/${newItem.ficha_id}` : " ";
                         newItem["comparecientes"] = newItem.tipoSujeto;
                         newItem["autocompletarBuscador"] = { id: newItem.id, title: `${newItem.salaOSeccion} ${newItem.delito} ${newItem.procedimiento} ${newItem.compareciente} ${newItem.tipoSujeto} ${newItem.departamento} ${newItem.nombreDecision} ${newItem.magistrado}  ${newItem.palabrasClaves}`}; 
                         return newItem;

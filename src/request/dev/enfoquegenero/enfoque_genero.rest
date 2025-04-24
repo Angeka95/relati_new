@@ -1,4 +1,4 @@
-https://relatoria.jep.gov.co/getdocenfoquegenero HTTP/1.1
+{{$dotenv REACT_APP_API_SERVER_DOMAIN}}/getdocenfoquegenero HTTP/1.1
 user: {{$dotenv REACT_APP_API_USER}}
 password: {{$dotenv REACT_APP_API_PASS}}
 Authorization: Bearer {{$dotenv REACT_APP_API_ACCESS_TOKEN}}

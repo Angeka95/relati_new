@@ -82,7 +82,7 @@ export default function EnfoqueGenero() {
                             documentosAsociadosLink:  (item.hasOwnProperty("anexos") && (item.anexos.length > 0)) ? item.anexos[0].hipervinculo : "", 
                             enfoquesDiferenciales: (item.hasOwnProperty("enfoque") && (item.enfoque !== null )) ? item.enfoque : "",
                             notasRelatoria: "", 
-                            hipervinculo:   (item.hipervinculo !== null ) ? `https://relatoria.jep.gov.co/${item.hipervinculo}` : "", 
+                            hipervinculo:   (item.hipervinculo !== null ) ? `${process.env.REACT_APP_API_SERVER_DOMAIN}/${item.hipervinculo}` : "", 
                             hipervinculoFichaJuris: "",
                             estadoFichaJuris: false,
                             extractoBusqueda:  ((item.getfichas.length > 0 ) && (item.getfichas[0].sintesis_titulo !== null))  ?  sanitizeString(item.getfichas[0].sintesis_titulo) : "",
@@ -98,7 +98,7 @@ export default function EnfoqueGenero() {
                         newItem["comparecientes"] = newItem.tipoSujeto;
                         newItem["delitos"] = newItem.delito;
                         newItem["hechos"] =  DOMPurify.sanitize(newItem.analisis, { ALLOWED_TAGS: [] });
-                        newItem["hipervinculoFichaJuris"] = ((newItem.providencia_id !== null) && ( newItem.estado_id === 14 )) ? `https://relatoria.jep.gov.co/downloadfichaext/${newItem.providencia_id}` : " ";
+                        newItem["hipervinculoFichaJuris"] = ((newItem.providencia_id !== null) && ( newItem.estado_id === 14 )) ? `${process.env.REACT_APP_API_SERVER_DOMAIN}/downloadfichaext/${newItem.providencia_id}` : " ";
                         newItem["autocompletarBuscador"] = { id: newItem.id, title: `${newItem.salaOSeccion} ${newItem.nombreDecision} ${newItem.departamento} ${newItem.delito} ${newItem.procedimiento} ${newItem.compareciente} ${newItem.magistrado}`};  
                         return newItem;
                   });

@@ -50,7 +50,7 @@ export default function Mapa() {
                             departamentoId: (item.departamento_ext.length > 0) ? item.departamento_ext[0].id : "",
                             providencia: (item.departamento_ext.length > 0) ? item.departamento_ext[0].providencia_id : "",
                             departamentoNombre: removeFragmentoInString("DEPARTAMENTO", item.departamento_ext[0].nombre_dpto),
-                            hipervinculo:   (item.hipervinculo !== null ) ? `https://relatoria.jep.gov.co/${item.hipervinculo}` : "",
+                            hipervinculo:   (item.hipervinculo !== null ) ? `${process.env.REACT_APP_API_SERVER_DOMAIN}/${item.hipervinculo}` : "",
                             comparecientes: (item.hasOwnProperty("tipopeti")) && (item.tipopeti.length > 0 )? obtenerPalabrasFromArrayObject(item.tipopeti, "tipo", null, false) : "",
                             delitos: (item.hasOwnProperty("delitos")) && (item.delitos.length > 0 )? obtenerPalabrasFromArrayObject(item.delitos, "delito", null, false) : "",
                             procedimientos: (item.hasOwnProperty("actuacion")) && (item.actuacion.length > 0 )? obtenerPalabrasFromArrayObject(item.actuacion, "actuacion", null, false) : "",

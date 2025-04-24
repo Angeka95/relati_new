@@ -51,8 +51,8 @@ export default function Home() {
               caso: ((item.hasOwnProperty("casopro") && (item.casopro.length > 0 ))) ? obtenerPalabrasFromArrayObject(item.casopro, "caso", null, false) : "", 
               resuelve: ((item.hasOwnProperty("getfichas")) && (item.getfichas.length > 0 ))? obtenerPalabrasFromArrayObject(item.getfichas[0].resuelve, "descripcion", null, false) : "",
               delitos: ((item.hasOwnProperty("delitos")) && (item.delitos.length > 0 ))? obtenerPalabrasFromArrayObject(item.delitos, "delito", null, true) : "",
-              hipervinculo:  `https://relatoria.jep.gov.co/${item.hipervinculo}`,
-              hipervinculoFichaJuris: ((item.hasOwnProperty("getfichas")) && (item.getfichas.length > 0 ) && (item.getfichas[0].estado_id === 14)) ? `https://relatoria.jep.gov.co/downloadfichaext/${item.getfichas[0].id}` : "",
+              hipervinculo:  `${process.env.REACT_APP_API_SERVER_DOMAIN}/${item.hipervinculo}`,
+              hipervinculoFichaJuris: ((item.hasOwnProperty("getfichas")) && (item.getfichas.length > 0 ) && (item.getfichas[0].estado_id === 14)) ? `${process.env.REACT_APP_API_SERVER_DOMAIN}/downloadfichaext/${item.getfichas[0].id}` : "",
               estadoFichaJuris: ((item.hasOwnProperty("getfichas")) && (item.getfichas.length > 0 ) && (item.getfichas[0].estado_id !== null))  ?  item.getfichas[0].estado_id : "",
           }
         });
@@ -93,14 +93,14 @@ export default function Home() {
                             idioma : item.idioma,
                             nombre : item.providencias.nombre,
                             nombreWithExt : `${item.providencias.nombre}.pdf`,
-                            pdf:  `https://relatoria.jep.gov.co/${item.providencias.hipervinculo}`,
+                            pdf:  `${process.env.REACT_APP_API_SERVER_DOMAIN}/${item.providencias.hipervinculo}`,
                             fecha: item.anio, 
-                            facebook: `https://www.facebook.com/sharer.php?u=https://relatoria.jep.gov.co/${item.providencias.hipervinculo}`,
+                            facebook: `https://www.facebook.com/sharer.php?u=${process.env.REACT_APP_API_SERVER_DOMAIN}/${item.providencias.hipervinculo}`,
                             twitter: `https://twitter.com/intent/tweet?text=${item.providencias.nombre}&url=${item.providencias.hipervinculo}`,
                             mail: true,  
-                            versionIngles: `https://relatoria.jep.gov.co/documentos/providencias/17/23/en/boletin_eng_diciembre_2022.pdf`,
+                            versionIngles: `${process.env.REACT_APP_API_SERVER_DOMAIN}/documentos/providencias/17/23/en/boletin_eng_diciembre_2022.pdf`,
                             esEspecial: true, 
-                            imagenPortada: (item.imagen !== null) ? `https://relatoria.jep.gov.co/${item.imagen}` : ``
+                            imagenPortada: (item.imagen !== null) ? `${process.env.REACT_APP_API_SERVER_DOMAIN}/${item.imagen}` : ``
                         };
                         boletin["anioMes"] = boletin["titulo"].split(" ")[2].concat("-01");       
                         return boletin;
@@ -299,25 +299,25 @@ export default function Home() {
               titulo: "JEP lanza el libro: ",
               descripcion: "‘Código de la Jurisdicción Especial para la Paz’",
               urlImagen: "https://pbs.twimg.com/media/FsUUOfdXoAAxiKZ.jpg",
-              link: "https://relatoria.jep.gov.co/"
+              link: `${process.env.REACT_APP_API_SERVER_DOMAIN}/`
             },
             {
               titulo: " título 2",
               descripcion: "descripción 2",
               urlImagen: "https://upload.wikimedia.org/wikipedia/commons/9/9c/LogoJEP.jpg",
-              link: "https://relatoria.jep.gov.co/"
+              link: `${process.env.REACT_APP_API_SERVER_DOMAIN}/`
             },
             {
                 titulo: " título 3",
                 descripcion: "descripción 3",
                 urlImagen: "https://pbs.twimg.com/media/FsUUOfdXoAAxiKZ.jpg",
-                link: "https://relatoria.jep.gov.co/"
+                link: `${process.env.REACT_APP_API_SERVER_DOMAIN}/`
               },
             {
                 titulo: " título 4",
                 descripcion: "descripción 4",
                 urlImagen: "https://upload.wikimedia.org/wikipedia/commons/9/9c/LogoJEP.jpg",
-                link: "https://relatoria.jep.gov.co/"
+                link: `${process.env.REACT_APP_API_SERVER_DOMAIN}/`
             },
      
           ];
@@ -354,21 +354,21 @@ export default function Home() {
           const libros = [
             {
                 id : 1,
-                pdf: 'https://relatoria.jep.gov.co/documentos/libros/CODIGO_JURISDICCION_ESPECIAL_PAZ_1A_ED.pdf', 
+                pdf: '${process.env.REACT_APP_API_SERVER_DOMAIN}/documentos/libros/CODIGO_JURISDICCION_ESPECIAL_PAZ_1A_ED.pdf', 
                 fecha: "2025-01", 
-                imagenPortada: 'https://relatoria.jep.gov.co/img/libros/portada_codigo_JEP_c.png'
+                imagenPortada: `${process.env.REACT_APP_API_SERVER_DOMAIN}/img/libros/portada_codigo_JEP_c.png`
              },
             {
                 id : 2,
-                pdf: 'https://relatoria.jep.gov.co/documentos/libros/TOMO_1_Las-SENIT-1-2-3.pdf', 
+                pdf: '${process.env.REACT_APP_API_SERVER_DOMAIN}/documentos/libros/TOMO_1_Las-SENIT-1-2-3.pdf', 
                 fecha: "2024-01", 
-                imagenPortada: 'https://relatoria.jep.gov.co/img/libros/TOMO_1_Las-SENIT-1-2-3.jpg'
+                imagenPortada: `${process.env.REACT_APP_API_SERVER_DOMAIN}/img/libros/TOMO_1_Las-SENIT-1-2-3.jpg`
              },
              {
                 id : 3,
-                pdf: 'https://relatoria.jep.gov.co/documentos/libros/Tomo_2_lineamientos_analisis_tematico.pdf', 
+                pdf: '${process.env.REACT_APP_API_SERVER_DOMAIN}/documentos/libros/Tomo_2_lineamientos_analisis_tematico.pdf', 
                 fecha: "2024-01", 
-                imagenPortada: 'https://relatoria.jep.gov.co/img/libros/portada_tomo_II.jpg'
+                imagenPortada: `${process.env.REACT_APP_API_SERVER_DOMAIN}/img/libros/portada_tomo_II.jpg`
              },
 
         
@@ -685,16 +685,16 @@ export default function Home() {
                                 
                                 {isOpen && (
                                 <div  className="margin_top_s"> 
-                                    <p>• <a target="_blank" rel="noreferrer" className="link_secondary text_capitalize " href="https://relatoria.jep.gov.co/documentos/providencias/14/13/Concepto_comisi%C3%B3n-g%C3%A9nero_04-mayo-2022.pdf">  Concepto comisión de género (04 de Mayo de 2022) </a></p>
-                                    <p>• <a target="_blank" rel="noreferrer"  className="link_secondary text_capitalize" href="https://relatoria.jep.gov.co/documentos/providencias/14/13/Concepto_comisi%C3%B3n-g%C3%A9nero_28-febrero-2022.pdf">  Concepto comisión de género (28 de Febrero de 2022) </a></p>
-                                    <p>• <a target="_blank" rel="noreferrer" className="link_secondary text_capitalize" href="https://relatoria.jep.gov.co/documentos/providencias/14/13/Concepto_comisi%C3%B3n-g%C3%A9nero_24-enero-2022.pdf">  Concepto comisión de género (24 de enero de 2022) </a></p>
-                                    <p>• <a target="_blank" rel="noreferrer" className="link_secondary text_capitalize" href="https://relatoria.jep.gov.co/documentos/providencias/14/13/Concepto_comisi%C3%B3n-g%C3%A9nero_02-diciembre-2021.pdf">  Concepto comisión de género (02 de Diciembre de 2021) </a></p>
-                                    <p>• <a target="_blank" rel="noreferrer" className="link_secondary text_capitalize" href="https://relatoria.jep.gov.co/documentos/providencias/14/13/Concepto_comisi%C3%B3n-g%C3%A9nero_22-septiembre-2021.pdf">  Concepto comisión de género (22 de Septiembre de 2021) </a></p>
-                                    <p>• <a target="_blank" rel="noreferrer" className="link_secondary text_capitalize" href="https://relatoria.jep.gov.co/documentos/providencias/14/13/Concepto_comisi%C3%B3n-g%C3%A9nero_14-julio-2021.pdf">  Concepto comisión de género (14 de Julio de 2021) </a></p>
-                                    <p>• <a target="_blank" rel="noreferrer" className="link_secondary text_capitalize" href="https://relatoria.jep.gov.co/documentos/providencias/14/13/Concepto_comisi%C3%B3n-g%C3%A9nero_22-diciembre-2020.pdf">  Concepto comisión de género (22 de Diciembre de 2020) </a></p>
-                                    <p>• <a target="_blank" rel="noreferrer" className="link_secondary text_capitalize" href="https://relatoria.jep.gov.co/documentos/providencias/14/13/Concepto_comisi%C3%B3n-g%C3%A9nero_03-septiembre-2020.pdf">  Concepto comisión de género (03 de Septiembre de 2020) </a></p>
-                                    <p>• <a target="_blank" rel="noreferrer" className="link_secondary text_capitalize" href="https://relatoria.jep.gov.co/documentos/providencias/14/13/Concepto_comisi%C3%B3n-g%C3%A9nero_19-mayo-2020.pdf">  Concepto comisión de género (19 de Mayo de 2020) </a></p>
-                                    <p>• <a target="_blank" rel="noreferrer" className="link_secondary text_capitalize" href="https://relatoria.jep.gov.co/documentos/providencias/14/13/Concepto_comisi%C3%B3n-g%C3%A9nero_02-diciembre-2019.pdf">  Concepto comisión de género (02 de Diciembre de 2019) </a></p>
+                                    <p>• <a target="_blank" rel="noreferrer" className="link_secondary text_capitalize " href={`${process.env.REACT_APP_API_SERVER_DOMAIN}/documentos/providencias/14/13/Concepto_comisi%C3%B3n-g%C3%A9nero_04-mayo-2022.pdf`}>  Concepto comisión de género (04 de Mayo de 2022) </a></p>
+                                    <p>• <a target="_blank" rel="noreferrer"  className="link_secondary text_capitalize" href={`${process.env.REACT_APP_API_SERVER_DOMAIN}/documentos/providencias/14/13/Concepto_comisi%C3%B3n-g%C3%A9nero_28-febrero-2022`}>  Concepto comisión de género (28 de Febrero de 2022) </a></p>
+                                    <p>• <a target="_blank" rel="noreferrer" className="link_secondary text_capitalize" href={`${process.env.REACT_APP_API_SERVER_DOMAIN}/documentos/providencias/14/13/Concepto_comisi%C3%B3n-g%C3%A9nero_24-enero-2022`}>  Concepto comisión de género (24 de enero de 2022) </a></p>
+                                    <p>• <a target="_blank" rel="noreferrer" className="link_secondary text_capitalize" href={`${process.env.REACT_APP_API_SERVER_DOMAIN}/documentos/providencias/14/13/Concepto_comisi%C3%B3n-g%C3%A9nero_02-diciembre-2021`}>  Concepto comisión de género (02 de Diciembre de 2021) </a></p>
+                                    <p>• <a target="_blank" rel="noreferrer" className="link_secondary text_capitalize" href={`${process.env.REACT_APP_API_SERVER_DOMAIN}/documentos/providencias/14/13/Concepto_comisi%C3%B3n-g%C3%A9nero_22-septiembre-2021`}>  Concepto comisión de género (22 de Septiembre de 2021) </a></p>
+                                    <p>• <a target="_blank" rel="noreferrer" className="link_secondary text_capitalize" href={`${process.env.REACT_APP_API_SERVER_DOMAIN}/documentos/providencias/14/13/Concepto_comisi%C3%B3n-g%C3%A9nero_14-julio-2021`}>  Concepto comisión de género (14 de Julio de 2021) </a></p>
+                                    <p>• <a target="_blank" rel="noreferrer" className="link_secondary text_capitalize" href={`${process.env.REACT_APP_API_SERVER_DOMAIN}/documentos/providencias/14/13/Concepto_comisi%C3%B3n-g%C3%A9nero_22-diciembre-2020`}>  Concepto comisión de género (22 de Diciembre de 2020) </a></p>
+                                    <p>• <a target="_blank" rel="noreferrer" className="link_secondary text_capitalize" href={`${process.env.REACT_APP_API_SERVER_DOMAIN}/documentos/providencias/14/13/Concepto_comisi%C3%B3n-g%C3%A9nero_03-septiembre-2020`}>  Concepto comisión de género (03 de Septiembre de 2020) </a></p>
+                                    <p>• <a target="_blank" rel="noreferrer" className="link_secondary text_capitalize" href={`${process.env.REACT_APP_API_SERVER_DOMAIN}/documentos/providencias/14/13/Concepto_comisi%C3%B3n-g%C3%A9nero_19-mayo-2020`}>  Concepto comisión de género (19 de Mayo de 2020) </a></p>
+                                    <p>• <a target="_blank" rel="noreferrer" className="link_secondary text_capitalize" href={`${process.env.REACT_APP_API_SERVER_DOMAIN}/documentos/providencias/14/13/Concepto_comisi%C3%B3n-g%C3%A9nero_02-diciembre-2019`}>  Concepto comisión de género (02 de Diciembre de 2019) </a></p>
 
                                 </div>
                                  )}
@@ -702,7 +702,7 @@ export default function Home() {
                             </li>
 
                             <li> 
-                                <a className="link_secondary text_capitalize cursor_pointer" href="https://relatoria.jep.gov.co/documentos/providencias/15/11/Protocolo-001_comision-etnico-racial_05-junio-2019.docx">
+                                <a className="link_secondary text_capitalize cursor_pointer" href="${process.env.REACT_APP_API_SERVER_DOMAIN}/documentos/providencias/15/11/Protocolo-001_comision-etnico-racial_05-junio-2019.docx">
                                 Comisión de Étnica y Racial
                                 </a>
                                 
