@@ -10,7 +10,8 @@ const getStatusRelatiAppxMantenimiento = () => {
     },
     params: { }
   };
-  const request =  axios.get('https://relatoria.jep.gov.co/getappstate', config);
+
+  const request =  axios.get(`${process.env.REACT_APP_API_SERVER_DOMAIN}/getappstate`, config);
   return request.then(response => { 
     if((response.data.status !== undefined) || (response.data.status === 401) || (response.data.status === 403)) {
       return { "data": [{ "enabled": true }], "status_info": { "status": response.data.status, "reason": response.data.reason }};

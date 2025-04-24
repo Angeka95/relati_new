@@ -8,7 +8,7 @@ const postSuscription = (objNewSuscription) => {
       'password': process.env.REACT_APP_API_PASS
     }
   };
-  const request =  axios.post('https://relatoria.jep.gov.co/suscripcionboletines', objNewSuscription, config);
+  const request =  axios.post(`${process.env.REACT_APP_API_SERVER_DOMAIN}/suscripcionboletines`, objNewSuscription, config);
   return request.then(response => { 
     if((response.data.status === 400) || (response.data.status === 401) || (response.data.status === 403)) {
       return { "data": response.data.reason, "status_info": { "status": response.data.status, "reason": response.data.reason }};
@@ -28,7 +28,7 @@ const sendBoletin = (objNewSuscription) => {
       'password': process.env.REACT_APP_API_PASS
     }
   };
-  const request =  axios.post('https://relatoria.jep.gov.co/sendmailboletin', objNewSuscription, config);
+  const request =  axios.post(`${process.env.REACT_APP_API_SERVER_DOMAIN}/sendmailboletin`, objNewSuscription, config);
   return request.then(response => { 
     if((response.data.status === 400) || (response.data.status === 401) || (response.data.status === 403) || (response.data.status === 202)) {
       return { "data": response.data.reason, "status_info": { "status": response.data.status, "reason": response.data.reason }};
@@ -50,7 +50,7 @@ const getBoletinDetail = (id) => {
     },
     params: { id: id }
   };
-  const request =  axios.get('https://relatoria.jep.gov.co/searchdata', config);
+  const request =  axios.get(`${process.env.REACT_APP_API_SERVER_DOMAIN}/searchdata`, config);
   return request.then(response => { 
     if((response.data.status !== undefined) || (response.data.status === 401) || (response.data.status === 403)) {
       return { "data": [], "status_info": { "status": response.data.status, "reason": response.data.reason }};
@@ -72,7 +72,7 @@ const getBoletinesByYear = (anio) => {
     },
     params: { }
   };
-  const request =  axios.get('https://relatoria.jep.gov.co/getboletines', config);
+  const request =  axios.get(`${process.env.REACT_APP_API_SERVER_DOMAIN}/getboletines`, config);
   return request.then(response => { 
     if((response.data.status !== undefined) || (response.data.status === 401) || (response.data.status === 403)) {
       return { "data": [], "status_info": { "status": response.data.status, "reason": response.data.reason }};
@@ -95,7 +95,7 @@ const getBoletinesAnios = () => {
     },
     params: { }
   };
-  const request =  axios.get('https://relatoria.jep.gov.co/getboletines', config);
+  const request =  axios.get(`${process.env.REACT_APP_API_SERVER_DOMAIN}/getboletines`, config);
   return request.then(response => { 
     if((response.data.status !== undefined) || (response.data.status === 401) || (response.data.status === 403)) {
       return { "data": [], "status_info": { "status": response.data.status, "reason": response.data.reason }};
@@ -117,7 +117,7 @@ const getBoletinesAniosEspeciales = () => {
     },
     params: { }
   };
-  const request =  axios.get('https://relatoria.jep.gov.co/getboletines', config);
+  const request =  axios.get(`${process.env.REACT_APP_API_SERVER_DOMAIN}/getboletines`, config);
   return request.then(response => { 
     if((response.data.status !== undefined) || (response.data.status === 401) || (response.data.status === 403)) {
       return { "data": [], "status_info": { "status": response.data.status, "reason": response.data.reason }};

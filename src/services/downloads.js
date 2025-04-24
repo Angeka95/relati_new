@@ -20,7 +20,7 @@ const getDownloadResultsXLS = async ( stringURL, stringParams ) => {
   };
 };
 /*
-"https://relatoria.jep.gov.co/downloadresult_t?procedimiento=ACCIÓN DE TUTELA&sala_seccion&anio_hechos=2002&delito&dpto=ANTIOQUIA|QUINDÍO&macrocaso&tipo_compareciente=FARC-EP"
+"${process.env.REACT_APP_API_SERVER_DOMAIN}/downloadresult_t?procedimiento=ACCIÓN DE TUTELA&sala_seccion&anio_hechos=2002&delito&dpto=ANTIOQUIA|QUINDÍO&macrocaso&tipo_compareciente=FARC-EP"
 */
 const getDownloadResultsXLST = async ( stringURL, stringParams ) => {
   try {
