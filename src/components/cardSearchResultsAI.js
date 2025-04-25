@@ -14,6 +14,7 @@ import ExpandLessOutlinedIcon from '@mui/icons-material/ExpandLessOutlined';
 import ExpandMoreOutlinedIcon from '@mui/icons-material/ExpandMoreOutlined';
 import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
 import StringToHtml from './cardSearchResults/stringToHtml';
+import { useDownloadFicha } from '../hooks/useDownloadFicha';
 
 export default function CardSearch({ datos, hiddenAnalisisJuridico = false }) {
   const { busqueda } = useContext(Context);
@@ -134,6 +135,9 @@ export default function CardSearch({ datos, hiddenAnalisisJuridico = false }) {
     }
   };
 
+  // Funcion proveniente del hook personalizado useDownloadFicha
+  const countDownloadedFichaBtn  = useDownloadFicha();
+
   const card = (
     <React.Fragment>
 
@@ -175,8 +179,8 @@ export default function CardSearch({ datos, hiddenAnalisisJuridico = false }) {
           :
           <>
             {((typeof datos.hipervinculoFichaJuris === 'string' ) && (datos.hipervinculoFichaJuris.trim() !== '')) && (
-              <a href={datos.hipervinculoFichaJuris} target='_blank' rel="noreferrer">
-                <Button className="button_secondary margin_xs card_size_small"  startIcon={<FileDownloadOutlinedIcon/>}>Descargar ficha</Button>
+              <a href={datos.hipervinculoFichaJuris} target='_blank' rel="noreferrer" onClick={(event) => { countDownloadedFichaBtn(event, datos.ficha_id, datos.hipervinculoFichaJuris)}}>
+                <Button className="button_secondary margin_xs card_size_small" startIcon={<FileDownloadOutlinedIcon/>}>Descargar ficha</Button>
               </a> 
             )}
           </>

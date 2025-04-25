@@ -8,7 +8,7 @@ import '../App.css';
 import { Container, Grid } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import Context from '../context/context';
-
+import { useDownloadFicha } from '../hooks/useDownloadFicha';
 
 export default function CardSearch({ datos, tipo }) {
   const { busqueda, verTodasDecisiones } = useContext(Context);
@@ -34,6 +34,9 @@ export default function CardSearch({ datos, tipo }) {
       justifyContent: 'center'
     },
   }));
+
+  // Funcion proveniente del hook personalizado useDownloadFicha
+  const countDownloadedFichaBtn  = useDownloadFicha();
 
   const card = (
     <React.Fragment>

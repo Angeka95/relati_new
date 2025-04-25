@@ -4,6 +4,7 @@ import '../App.css';
 import { Box, Container, Grid, Button, List, ListItem } from '@mui/material';
 import Context from '../context/context';
 import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
+import { useDownloadFicha } from '../hooks/useDownloadFicha';
 
 export default function CardDecision({ decisiones }) {
 
@@ -15,7 +16,8 @@ export default function CardDecision({ decisiones }) {
         setVerMasDecisionesRecientes(verMasDecisionesRecientes + 1);
     };
 
-
+    // Funcion proveniente del hook personalizado useDownloadFicha
+    const countDownloadedFichaBtn  = useDownloadFicha();
 
     return (
         <div className="margin_bottom_l card_medium  wrap masonry-item">
@@ -61,7 +63,7 @@ export default function CardDecision({ decisiones }) {
                         
                         <div className="width_100 justify_end margin_top_m margin_bottom_m">
                             {((typeof decisiones.hipervinculoFichaJuris === 'string' ) && (decisiones.hipervinculoFichaJuris.trim() !== '')) && (
-                                <a href={decisiones.hipervinculoFichaJuris} target='_blank' rel="noreferrer">
+                                <a href={decisiones.hipervinculoFichaJuris} target='_blank' rel="noreferrer" onClick={(event) => { countDownloadedFichaBtn(event, decisiones.ficha_id, decisiones.hipervinculoFichaJuris)}}>
                                     <Button className="button_secondary margin_xs"  startIcon={<FileDownloadOutlinedIcon/>}>Ver Ficha</Button>
                                 </a> 
                             )}
