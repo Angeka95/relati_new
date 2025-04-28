@@ -14,7 +14,7 @@ import ExpandLessOutlinedIcon from '@mui/icons-material/ExpandLessOutlined';
 import ExpandMoreOutlinedIcon from '@mui/icons-material/ExpandMoreOutlined';
 import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
 import StringToHtml from './cardSearchResults/stringToHtml';
-import { useDownloadFicha } from '../hooks/useDownloadFicha';
+import { useDownloadResource } from '../hooks/useDownloadResource';
 
 export default function CardSearch({ datos, hiddenAnalisisJuridico = false }) {
   const { busqueda } = useContext(Context);
@@ -110,8 +110,8 @@ export default function CardSearch({ datos, hiddenAnalisisJuridico = false }) {
     setIsButtonInfoSpecificEnabled(prev => !prev);
   };
 
-  // Funcion proveniente del hook personalizado useDownloadFicha
-  const countDownloadedFichaBtn  = useDownloadFicha();
+  // Funcion proveniente del hook personalizado useDownloadResource
+  const countDownloadedBtn  = useDownloadResource();
 
   const card = (
     <React.Fragment>
@@ -137,7 +137,7 @@ export default function CardSearch({ datos, hiddenAnalisisJuridico = false }) {
       
         </Tabs>
         {((typeof datos.hipervinculoFichaJuris === 'string' ) && (datos.hipervinculoFichaJuris.trim() !== '')) && (
-              <a href={datos.hipervinculoFichaJuris} target='_blank' rel="noreferrer" onClick={(event) => { countDownloadedFichaBtn(event, datos.ficha_id, datos.hipervinculoFichaJuris)}}>
+              <a href={datos.hipervinculoFichaJuris} target='_blank' rel="noreferrer" onClick={(event) => { countDownloadedBtn(event, datos.providencia_id, datos.hipervinculoFichaJuris)}}>
                 <Button className="button_secondary margin_xs card_size_small"  startIcon={<FileDownloadOutlinedIcon/>}>Descargar ficha</Button>
               </a> 
         )}
@@ -398,7 +398,7 @@ export default function CardSearch({ datos, hiddenAnalisisJuridico = false }) {
 
           <CustomGrid className="justify_center">
             {((typeof datos.hipervinculo === 'string' ) && (datos.hipervinculo.trim() !== '')) && (
-              <a href={datos.hipervinculo} target='_blank' rel="noreferrer">
+              <a href={datos.hipervinculo} target='_blank' rel="noreferrer" onClick={(event) => { countDownloadedBtn(event, datos.providencia_id, datos.hipervinculo)}}>
                 <Button startIcon={<FileDownloadOutlinedIcon/>} className="button_primary margin_xs " >Descargar decisión</Button>
               </a> 
             )}

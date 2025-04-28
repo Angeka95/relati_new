@@ -2,14 +2,14 @@ import React, {useCallback} from 'react';
 
 import aplicacion from '../services/aplicacion';
 
-export function useDownloadFicha() {
+export function useDownloadResource() {
 
   // Funcion que cuenta el numero de descargas de la ficha
   // Retorna solo valor true
-  const countDownloadedFichaBtn =  useCallback((event, ficha_ID, linkFicha) => {
+  const countDownloadedBtn =  useCallback((event, resource_ID, resource_link) => {
     event.preventDefault();
     aplicacion
-      .countDownloadedFicha(ficha_ID)
+      .countDownloadedFicha(resource_ID)
       .then(response => {
           console.log('Downloaded');
       }
@@ -18,10 +18,10 @@ export function useDownloadFicha() {
       console.error(error);
     });
     setTimeout(() => {
-      window.open(linkFicha, '_blank');
+      window.open(resource_link, '_blank');
     }, 1000);
   }, []);
 
-  return countDownloadedFichaBtn;
+  return countDownloadedBtn;
 
 };
