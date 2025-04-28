@@ -19,7 +19,7 @@ import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
 import ThumbDownOffAltIcon from '@mui/icons-material/ThumbDownOffAlt';
 import Snackbar from '@mui/material/Snackbar';
-import { useDownloadFicha } from '../hooks/useDownloadFicha';
+import { useDownloadResource } from '../hooks/useDownloadResource';
 
 export default function CardSearch({ datos, hiddenAnalisisJuridico = false }) {
   const { busqueda } = useContext(Context);
@@ -159,9 +159,8 @@ export default function CardSearch({ datos, hiddenAnalisisJuridico = false }) {
     setOpen(false);
   };
 
-
-  // Funcion proveniente del hook personalizado useDownloadFicha
-  const countDownloadedFichaBtn  = useDownloadFicha();
+  // Funcion proveniente del hook personalizado useDownloadResource
+  const countDownloadedBtn  = useDownloadResource();
 
 
   const card = (
@@ -252,7 +251,7 @@ export default function CardSearch({ datos, hiddenAnalisisJuridico = false }) {
           :
           <>
             {((typeof datos.hipervinculoFichaJuris === 'string' ) && (datos.hipervinculoFichaJuris.trim() !== '')) && (
-              <a href={datos.hipervinculoFichaJuris} target='_blank' rel="noreferrer" onClick={(event) => { countDownloadedFichaBtn(event, datos.ficha_id, datos.hipervinculoFichaJuris)}}>
+              <a href={datos.hipervinculoFichaJuris} target='_blank' rel="noreferrer" onClick={(event) => { countDownloadedBtn(event, datos.providencia_id, datos.hipervinculoFichaJuris)}}>
                 <Button className="button_secondary margin_xs card_size_small" startIcon={<FileDownloadOutlinedIcon/>}>Descargar ficha</Button>
               </a> 
             )}
@@ -613,7 +612,7 @@ export default function CardSearch({ datos, hiddenAnalisisJuridico = false }) {
         <div className="card_search_button_spacing">
           <CustomGrid className="justify_center">
             {((typeof datos.hipervinculo === 'string' ) && (datos.hipervinculo.trim() !== '')) && (
-              <a href={datos.hipervinculo} target='_blank' rel="noreferrer">
+              <a href={datos.hipervinculo} target='_blank' rel="noreferrer" onClick={(event) => { countDownloadedBtn(event, datos.providencia_id, datos.hipervinculo)}}>
                 <Button startIcon={<FileDownloadOutlinedIcon/>} className="button_primary margin_xs " >Descargar decisión</Button>
               </a> 
             )}

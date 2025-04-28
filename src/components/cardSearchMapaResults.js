@@ -8,7 +8,7 @@ import '../App.css';
 import { Container, Grid } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import Context from '../context/context';
-import { useDownloadFicha } from '../hooks/useDownloadFicha';
+import { useDownloadResource } from '../hooks/useDownloadResource';
 
 export default function CardSearch({ datos, tipo }) {
   const { busqueda, verTodasDecisiones } = useContext(Context);
@@ -35,8 +35,8 @@ export default function CardSearch({ datos, tipo }) {
     },
   }));
 
-  // Funcion proveniente del hook personalizado useDownloadFicha
-  const countDownloadedFichaBtn  = useDownloadFicha();
+  // Funcion proveniente del hook personalizado useDownloadResource
+  const countDownloadedBtn  = useDownloadResource();
 
   const card = (
     <React.Fragment>
@@ -110,7 +110,7 @@ export default function CardSearch({ datos, tipo }) {
 
           <CustomGrid>
             {((typeof datos.hipervinculo === 'string' ) && (datos.hipervinculo.trim() !== '')) && (
-              <a href={datos.hipervinculo} target='_blank' rel="noreferrer">
+              <a href={datos.hipervinculo} target='_blank' rel="noreferrer" onClick={(event) => { countDownloadedBtn(event, datos.providencia_id, datos.hipervinculo)}}>
                 <Button className="button_primary margin_xs" >Descargar Decisión</Button>
               </a> 
             )}
