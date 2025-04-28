@@ -13,7 +13,7 @@ const getAllResults = (page, per_page) => {
     params: {  }
   };
   
-  const request =  axios.get(`https://relatoria.jep.gov.co/getlistdoc?page=${page}&per_page=${per_page}`, config);
+  const request =  axios.get(`${process.env.REACT_APP_API_SERVER_DOMAIN}/getlistdoc?page=${page}&per_page=${per_page}`, config);
   return request.then(response => { 
     if((response.data.status !== undefined) || (response.data.status === 401) || (response.data.status === 403)) {
       return { "data": [], "status_info": { "status": response.data.status, "reason": response.data.reason }};
@@ -49,8 +49,8 @@ const getAllResultsByFilter = (searchParamsObj) => {
     params: {  }
   };
   const searchParamsString = new URLSearchParams(searchParamsObj).toString();
-  /*const request =  axios.get(`https://relatoria.jep.gov.co/searchin?string=&procedimiento=&sala_seccion=&anio_hechos=2014|2018&delito=&dpto=DEPARTAMENTO CAUCA|DEPARTAMENTO TOLIMA&macrocaso=&tipo_compareciente=FARC-EP`, config);*/
-  const request =  axios.get(`https://relatoria.jep.gov.co/searchin?${searchParamsString}`, config);
+  /*const request =  axios.get(`${process.env.REACT_APP_API_SERVER_DOMAIN}/searchin?string=&procedimiento=&sala_seccion=&anio_hechos=2014|2018&delito=&dpto=DEPARTAMENTO CAUCA|DEPARTAMENTO TOLIMA&macrocaso=&tipo_compareciente=FARC-EP`, config);*/
+  const request =  axios.get(`${process.env.REACT_APP_API_SERVER_DOMAIN}/searchin?${searchParamsString}`, config);
   return request.then(response => { 
     if((response.data.status !== undefined) || (response.data.status === 401) || (response.data.status === 403)) {
       return { "data": [], "status_info": { "status": response.data.status, "reason": response.data.reason }};
@@ -85,7 +85,7 @@ const getSearchQData = (string) => {
     },
     params: { string: string }
   };
-  const request =  axios.get('https://relatoria.jep.gov.co/searchqdata', config);
+  const request =  axios.get(`${process.env.REACT_APP_API_SERVER_DOMAIN}/searchqdata`, config);
   return request.then(response => { 
     if((response.data.status !== undefined) || (response.data.status === 401) || (response.data.status === 403)) {
       return { "data": [], "status_info": { "status": response.data.status, "reason": response.data.reason }};
@@ -119,7 +119,7 @@ const getSearchQDataTest = () => {
     },
     params: { }
   };
-  const request =  axios.get('https://relatoria.jep.gov.co/getdepartamento', config);
+  const request =  axios.get(`${process.env.REACT_APP_API_SERVER_DOMAIN}/getdepartamento`, config);
   return request.then(response => { 
     let status_info = { "status": 200, "reason": "La consulta se ha realizado satisfactoriamente." };
     return { "data": datos_resultados_AI_test, "status_info": status_info };

@@ -10,7 +10,7 @@ const getMacrocasos = () => {
     },
     params: { }
   };
-  const request =  axios.get('https://relatoria.jep.gov.co/getmacrocaso', config);
+  const request =  axios.get(`${process.env.REACT_APP_API_SERVER_DOMAIN}/getmacrocaso`, config);
   return request.then(response => { 
     if((response.data.status !== undefined) || (response.data.status === 401) || (response.data.status === 403)) {
       return { "data": [], "status_info": { "status": response.data.status, "reason": response.data.reason }};
@@ -31,7 +31,7 @@ const getCasosXTramite = (caso) => {
     },
     params: { }
   };
-  const request =  axios.get('https://relatoria.jep.gov.co/casosalatramite', config);
+  const request =  axios.get(`${process.env.REACT_APP_API_SERVER_DOMAIN}/casosalatramite`, config);
   return request.then(response => { 
     if((response.data.status !== undefined) || (response.data.status === 401) || (response.data.status === 403)) {
       return { "data": [], "status_info": { "status": response.data.status, "reason": response.data.reason }};
@@ -61,7 +61,7 @@ const getBoletinesMacrocaso = (macrocaso) => {
     },
     params: { macrocaso: macrocaso }
   };
-  const request =  axios.get('https://relatoria.jep.gov.co/getboletinesmacrocaso', config);
+  const request =  axios.get(`${process.env.REACT_APP_API_SERVER_DOMAIN}/getboletinesmacrocaso`, config);
   return request.then(response => { 
     if((response.data.status !== undefined) || (response.data.status === 401) || (response.data.status === 403)) {
       return { "data": [], "status_info": { "status": response.data.status, "reason": response.data.reason }};
@@ -84,7 +84,7 @@ const getDetailedMacrocasos = () => {
     },
     params: { }
   };
-  const request =  axios.get('https://relatoria.jep.gov.co/detailsmacrocasos', config);
+  const request =  axios.get(`${process.env.REACT_APP_API_SERVER_DOMAIN}/detailsmacrocasos`, config);
   return request.then(response => { 
     if((response.data.status !== undefined) || (response.data.status === 401) || (response.data.status === 403)) {
       return { "data": [], "status_info": { "status": response.data.status, "reason": response.data.reason }};
@@ -107,7 +107,7 @@ const getHitosMacrocasos = () => {
     },
     params: { }
   };
-  const request =  axios.get('https://relatoria.jep.gov.co/itosmacrocasos', config);
+  const request =  axios.get(`${process.env.REACT_APP_API_SERVER_DOMAIN}/itosmacrocasos`, config);
   return request.then(response => {
     if((response.data.status !== undefined) || (response.data.status === 401) || (response.data.status === 403)) {
       return { "data": [], "status_info": { "status": response.data.status, "reason": response.data.reason }};

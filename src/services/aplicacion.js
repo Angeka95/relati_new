@@ -10,7 +10,8 @@ const getStatusRelatiAppxMantenimiento = () => {
     },
     params: { }
   };
-  const request =  axios.get('https://relatoria.jep.gov.co/getappstate', config);
+
+  const request =  axios.get(`${process.env.REACT_APP_API_SERVER_DOMAIN}/getappstate`, config);
   return request.then(response => { 
     if((response.data.status !== undefined) || (response.data.status === 401) || (response.data.status === 403)) {
       return { "data": [{ "enabled": true }], "status_info": { "status": response.data.status, "reason": response.data.reason }};
@@ -42,4 +43,24 @@ const getStatusRelatiAppxMantenimiento = () => {
 
 }
 
-export default { getStatusRelatiAppxMantenimiento }
+const countDownloadedFicha = ( ficha_ID ) => {
+  const config = {
+    headers: {
+      'Authorization': `Bearer ${process.env.REACT_APP_API_ACCESS_TOKEN}`,
+      'user': process.env.REACT_APP_API_USER,
+      'password': process.env.REACT_APP_API_PASS
+    }
+  };
+  const request =  axios.get(`${process.env.REACT_APP_API_SERVER_DOMAIN}/incrementdownloadcount?providencia_id=${ficha_ID}`, config);
+  return request.then(response => { 
+    if((response.data.status !== undefined) || (response.data.status === 401) || (response.data.status === 403)) {
+      return { "data": false, "status_info": { "status": response.data.status, "reason": response.data.reason }};
+    } else {
+      return { "data": response.data.confirm, "status_info": { "status": 200, "reason": "OK" } };
+    }
+  }).catch(error => { 
+    return { "data": false, "status_info": { "status": error.response.data.status, "reason": error.response.data.reason } };
+  });
+};
+
+export default { getStatusRelatiAppxMantenimiento, countDownloadedFicha }

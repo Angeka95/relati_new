@@ -32,20 +32,21 @@ export default function SearchResults() {
                         idioma : item.idioma,
                         nombre : item.providencias.nombre,
                         nombreWithExt : `${item.providencias.nombre}.pdf`,
-                        pdf:  `https://relatoria.jep.gov.co/${item.providencias.hipervinculo}`,
+                        pdf:  ` ${process.env.REACT_APP_API_SERVER_DOMAIN}/${item.providencias.hipervinculo}`,
                         fecha: item.anio, 
-                        facebook: `https://www.facebook.com/sharer.php?u=https://relatoria.jep.gov.co/${item.providencias.hipervinculo}`,
+                        facebook: `https://www.facebook.com/sharer.php?u=${process.env.REACT_APP_API_SERVER_DOMAIN}/${item.providencias.hipervinculo}`,
                         twitter: `https://twitter.com/intent/tweet?text=${item.providencias.nombre}&url=${item.providencias.hipervinculo}`,
                         mail: true,  
-                        versionIngles: (item.idioma !== "Español") ? `https://relatoria.jep.gov.co/${item.providencias.hipervinculo}` : '',
+                        versionIngles: (item.idioma !== "Español") ? `${process.env.REACT_APP_API_SERVER_DOMAIN}/${item.providencias.hipervinculo}` : '',
                         esEspecial: true, 
-                        imagenPortada: (item.imagen !== null) ? `https://relatoria.jep.gov.co/${item.imagen}` : ``,
+                        imagenPortada: (item.imagen !== null) ? `${process.env.REACT_APP_API_SERVER_DOMAIN}/${item.imagen}` : ``,
                         palabrasClave: (item.palabras.length > 0 )? obtenerPalabrasFromArrayObject(item.palabras, "palabra") : "",
                         tema: (item.temas.length > 0 )? obtenerPalabrasFromArrayObject(item.temas, "tema") : "",
                         rango: (item.providencias_asociadas.length > 0 )? formatDateToMonthYear(item.providencias_asociadas[0].fecha_providencia) : "",
                         }
                     });
                     setBoletines(arrBoletines);
+
                     setMessage(`Success: ${response.status_info.status}. ${response.status_info.reason}`);
                 } else {
                     setMessage(`Error: ${response.status_info.status}. ${response.status_info.reason}`);
@@ -67,14 +68,14 @@ export default function SearchResults() {
                       idioma : item.idioma,
                       nombre : item.providencias.nombre,
                       nombreWithExt : `${item.providencias.nombre}.pdf`,
-                      pdf:  `https://relatoria.jep.gov.co/${item.providencias.hipervinculo}`,
+                      pdf:  `${process.env.REACT_APP_API_SERVER_DOMAIN}/${item.providencias.hipervinculo}`,
                       fecha: item.anio, 
-                      facebook: `https://www.facebook.com/sharer.php?u=https://relatoria.jep.gov.co/${item.providencias.hipervinculo}`,
+                      facebook: `https://www.facebook.com/sharer.php?u=${process.env.REACT_APP_API_SERVER_DOMAIN}/${item.providencias.hipervinculo}`,
                       twitter: `https://twitter.com/intent/tweet?text=${item.providencias.nombre}&url=${item.providencias.hipervinculo}`,
                       mail: true,  
-                      versionIngles: (item.idioma !== "Español") ? `https://relatoria.jep.gov.co/${item.providencias.hipervinculo}` : '',
+                      versionIngles: (item.idioma !== "Español") ? `${process.env.REACT_APP_API_SERVER_DOMAIN}/${item.providencias.hipervinculo}` : '',
                       esEspecial: true, 
-                      imagenPortada: (item.imagen !== null) ? `https://relatoria.jep.gov.co/${item.imagen}` : ``,
+                      imagenPortada: (item.imagen !== null) ? `${process.env.REACT_APP_API_SERVER_DOMAIN}/${item.imagen}` : ``,
                       palabrasClave: (item.palabras.length > 0 )? obtenerPalabrasFromArrayObject(item.palabras, "palabra") : "",
                       tema: (item.temas.length > 0 )? obtenerPalabrasFromArrayObject(item.temas, "tema") : "",
                       rango: (item.providencias_asociadas.length > 0 )? formatDateToMonthYear(item.providencias_asociadas[0].fecha_providencia) : "",

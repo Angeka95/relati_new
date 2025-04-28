@@ -10,7 +10,7 @@ const getProvidencias = () => {
     },
     params: { }
   };
-  const request =  axios.get('https://relatoria.jep.gov.co/getprovimapa', config);
+  const request =  axios.get(`${process.env.REACT_APP_API_SERVER_DOMAIN}/getprovimapa`, config);
   return request.then(response => { 
     if((response.data.status !== undefined) || (response.data.status === 401) || (response.data.status === 403)) {
       return { "data": [], "status_info": { "status": response.data.status, "reason": response.data.reason }};
@@ -32,7 +32,7 @@ const getMapaDptos = () => {
     },
     params: { }
   };
-  const request =  axios.get('https://relatoria.jep.gov.co/initmap', config);
+  const request =  axios.get(`${process.env.REACT_APP_API_SERVER_DOMAIN}/initmap`, config);
   return request.then(response => { 
     if((response.data.status !== undefined) || (response.data.status === 401) || (response.data.status === 403)) {
       return { "data": [], "status_info": { "status": response.data.status, "reason": response.data.reason }};
@@ -64,7 +64,7 @@ const getDepartamentos = () => {
     },
     params: { }
   };
-  const request =  axios.get('https://relatoria.jep.gov.co/getdepartamento', config);
+  const request =  axios.get(`${process.env.REACT_APP_API_SERVER_DOMAIN}/getdepartamento`, config);
   return request.then(response => { 
     if((response.data.status !== undefined) || (response.data.status === 401) || (response.data.status === 403)) {
       return { "data": [], "status_info": { "status": response.data.status, "reason": response.data.reason }};
@@ -85,7 +85,7 @@ const getDetailsGraph = (paramsURL) => {
     },
     params: { }
   };
-  const request =  axios.get(`https://relatoria.jep.gov.co/detailsgraph?${paramsURL}`, config);
+  const request =  axios.get(`${process.env.REACT_APP_API_SERVER_DOMAIN}/detailsgraph?${paramsURL}`, config);
   return request.then(response => { 
     if((response.data.status !== undefined) || (response.data.status === 401) || (response.data.status === 403)) {
       return { "data": [], "status_info": { "status": response.data.status, "reason": response.data.reason }};

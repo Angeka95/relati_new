@@ -427,7 +427,7 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
                     <div className="justify_end">    
                         { ((datos.length > 0) && (datosToExport !== null)) && 
                             <ButtonDownloadXLS 
-                                stringURL={`https://relatoria.jep.gov.co/downloadresult`}
+                                stringURL={`${process.env.REACT_APP_API_SERVER_DOMAIN}/downloadresult`}
                                 stringParams={`idpro=${datosToExport}`}
                                 datosToExport={datosToExport}
                                 filename="resultados.xlsx"

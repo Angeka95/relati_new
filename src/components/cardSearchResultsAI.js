@@ -19,6 +19,7 @@ import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
 import ThumbDownOffAltIcon from '@mui/icons-material/ThumbDownOffAlt';
 import Snackbar from '@mui/material/Snackbar';
+import { useDownloadFicha } from '../hooks/useDownloadFicha';
 
 export default function CardSearch({ datos, hiddenAnalisisJuridico = false }) {
   const { busqueda } = useContext(Context);
@@ -31,68 +32,7 @@ export default function CardSearch({ datos, hiddenAnalisisJuridico = false }) {
 
   const [isButtonExtractEnabled, setIsButtonExtractEnabled] = useState(false);
   const [isButtonHighlightEnabled, setIsButtonHighlightEnabled] = useState(false);
-  
-  // Temporal datos recurso
-  /* const objTemporal = {
-    "recursos": [
-      {
-        providencia: "Auto_TP-SA-1610_14-febrero-2024",
-        detalle: "Providencia que decide recurso",
-        enlace: "documentos/providencias/7/1/Auto_TP-SA-1610_14-febrero-2024.pdf",
-        tipo: "Apelación",
-        resuelve: [
-          {
-            nombre: "Revoca",
-            semaforo: "https://relatoria.jep.gov.co/images/semaforo/rojo.png"
-          }
-        ]
-      }
-    ],
-    "anexos": [
-      {
-        nombre: "Anexo-1_Auto_SRVR-125_02-julio-2021",
-        hipervinculo: "/documentos/providencias/1/20/Anexo-1_Auto_SRVR-125_02-julio-2021.pdf",
-        tipo_documento: "Anexo-Auto",
-        descripcion: "En el Anexo 1 de esta providencia se incluye la lista de las 120 víctimas con sus nombres y apellidos, lugar y fecha de su retención y asesinato (o intento de asesinato), los nombres de los comparecientes que confesaron haber participado en los hechos y las otras fuentes que le permitieron a la Sala alcanzar el estándar de apreciación de bases suficientes para afirmar en este momento procesal que estos hechos son ciertos."
-      },
-      {
-        nombre: "Anexo-2_Auto_SRVR-125_02-Julio-2021",
-        hipervinculo: "documentos/providencias/1/20/Anexo-2_Auto_SRVR-125_02-Julio-2021.pdf",
-        tipo_documento: "Anexo-Auto",
-        descripcion: "En el anexo 2 de esta providencia se incluye la lista de las versiones voluntarias realizadas en el marco del subcaso 03 (Catatumbo). Se relacionan las fechas de las diligencias, los lugares dónde se llevaron a cabo, los nombres de los versionados, su rango y la unidad militar a la que pertenecían."
-      },
-      {
-        nombre: "AV_Dr-Oscar-Parra_Auto_SRVR-125_02-julio-2021",
-        hipervinculo: "/documentos/providencias/1/4/AV_Dr-Oscar-Parra_Auto_SRVR-125_02-julio-2021.docx",
-        tipo_documento: "Aclaración de Voto de Auto",
-        descripcion: ""
-      },
-      {
-        nombre: "AV_Dra-Lily-Rueda_Dra-Julieta-Lemaitre_Auto_SRVR-125_02-julio-2021",
-        hipervinculo: "documentos/providencias/1/4/AV_Dra-Lily-Rueda_Dra-Julieta-Lemaitre_Auto_SRVR-125_02-julio-2021.docx",
-        tipo_documento: "Aclaración de Voto de Auto",
-        descripcion: ""
-      },
-      {
-        nombre: "AV_Dra-Belkis-Izquierdo_SRVR-125_02-julio-2021",
-        hipervinculo: "documentos/providencias/1/4/AV_Dra-Belkis-Izquierdo_SRVR-125_02-julio-2021.pdf",
-        tipo_documento: "Aclaración de Voto de Auto",
-        descripcion: ""
-      }
-    ]
-  };
-  
-  const objTemporal_ = {
-    "recursos": [
-    ],
-    "anexos": [
-    ]
-  };
-  
-  datos = { ...datos, ...objTemporal }; */
-  
-  // Fin Temporal datos recurso
-  
+
   // Estado del boton extracto 
   const toggleButtonExtract = () => {
     setIsButtonExtractEnabled(prev => !prev);
@@ -201,6 +141,7 @@ export default function CardSearch({ datos, hiddenAnalisisJuridico = false }) {
     }
   };
 
+
   // Snackbar Feedback Card
 
   const [open, setOpen] = useState(false);
@@ -217,6 +158,10 @@ export default function CardSearch({ datos, hiddenAnalisisJuridico = false }) {
     }
     setOpen(false);
   };
+
+
+  // Funcion proveniente del hook personalizado useDownloadFicha
+  const countDownloadedFichaBtn  = useDownloadFicha();
 
 
   const card = (
@@ -307,8 +252,8 @@ export default function CardSearch({ datos, hiddenAnalisisJuridico = false }) {
           :
           <>
             {((typeof datos.hipervinculoFichaJuris === 'string' ) && (datos.hipervinculoFichaJuris.trim() !== '')) && (
-              <a href={datos.hipervinculoFichaJuris} target='_blank' rel="noreferrer">
-                <Button className="button_secondary margin_xs card_size_small"  startIcon={<FileDownloadOutlinedIcon/>}>Descargar ficha</Button>
+              <a href={datos.hipervinculoFichaJuris} target='_blank' rel="noreferrer" onClick={(event) => { countDownloadedFichaBtn(event, datos.ficha_id, datos.hipervinculoFichaJuris)}}>
+                <Button className="button_secondary margin_xs card_size_small" startIcon={<FileDownloadOutlinedIcon/>}>Descargar ficha</Button>
               </a> 
             )}
           </>
@@ -458,7 +403,7 @@ export default function CardSearch({ datos, hiddenAnalisisJuridico = false }) {
                            <p className="text_space_min text_justify">
                             • Providencia: &nbsp;
                             <span className="text_bolder">
-                              <a href={`https://relatoria.jep.gov.co/${recurso.enlace}`} target="_blank" rel="noreferrer">{recurso.providencia}</a>
+                              <a href={`${process.env.REACT_APP_API_SERVER_DOMAIN}/${recurso.enlace}`} target="_blank" rel="noreferrer">{recurso.providencia}</a>
                             </span>
                             {/*((typeof recurso.resuelve[0].semaforo === 'string' ) && (recurso.resuelve[0].semaforo.trim() !== '')) && (
                                      <span className="semaforo" style={{ backgroundImage: `url(${recurso.resuelve[0].semaforo})`}}> </span>
@@ -478,7 +423,7 @@ export default function CardSearch({ datos, hiddenAnalisisJuridico = false }) {
                        )))}
                        {((datos["recursos"][0]["ficha_id"] !== null )) && (
                         <CustomGrid className="justify_center">
-                        <a href={`https://relatoria.jep.gov.co/downloadfichaext/${datos["recursos"][0]["ficha_id"]}`} target='_blank' rel="noreferrer">
+                        <a href={`${process.env.REACT_APP_API_SERVER_DOMAIN}/downloadfichaext/${datos["recursos"][0]["ficha_id"]}`} target='_blank' rel="noreferrer">
                           <Button startIcon={<FileDownloadOutlinedIcon/>} className="button_secondary margin_xs" >Ver más detalles</Button>
                         </a> 
                         </CustomGrid>
@@ -499,7 +444,7 @@ export default function CardSearch({ datos, hiddenAnalisisJuridico = false }) {
                         <div className="margin_top_s" style={{ paddingTop: "1rem", paddingBottom: "1rem" }}>                       
                           {(datos.anexos.map((anexo, index) => (
                             <div key={index}>
-                              <p className="text_space_min text_justify">• Providencia: &nbsp;<span className="text_bolder"><a href={`https://relatoria.jep.gov.co/${anexo.hipervinculo}`} target="_blank" rel="noreferrer">{anexo.nombre}</a></span></p>
+                              <p className="text_space_min text_justify">• Providencia: &nbsp;<span className="text_bolder"><a href={`${process.env.REACT_APP_API_SERVER_DOMAIN}/${anexo.hipervinculo}`} target="_blank" rel="noreferrer">{anexo.nombre}</a></span></p>
                               {((typeof anexo.tipo_documento === 'string' ) && (anexo.tipo_documento.trim() !== '')) && (
                                 <p className="text_space_min">• Tipo de documento: <span className="text_bolder"> {anexo.tipo_documento}</span></p>
                               )}
@@ -616,7 +561,7 @@ export default function CardSearch({ datos, hiddenAnalisisJuridico = false }) {
             {isDocumentosAsociadosExpanded && (
                 <div className="margin_top_s">
                   {((typeof datos.documentosAsociados === 'string' ) && (datos.documentosAsociados.trim() !== '')) && (
-                  <p className="text_space_min text_justify"> <span className="text_bolder"><a href={`https://relatoria.jep.gov.co/${datos.documentosAsociadosLink}`} target="_blank" rel="noreferrer">{datos.documentosAsociados}</a></span> </p>
+                  <p className="text_space_min text_justify"> <span className="text_bolder"><a href={`${process.env.REACT_APP_API_SERVER_DOMAIN}/${datos.documentosAsociadosLink}`} target="_blank" rel="noreferrer">{datos.documentosAsociados}</a></span> </p>
                   )}
                 </div>
               )}

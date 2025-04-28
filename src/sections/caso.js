@@ -108,14 +108,14 @@ export default function Caso() {
                     idioma : item.idioma,
                     nombre : item.providencias.nombre,
                     nombreWithExt : `${item.providencias.nombre}.pdf`,
-                    pdf:  `https://relatoria.jep.gov.co/${item.providencias.hipervinculo}`,
+                    pdf:  `${process.env.REACT_APP_API_SERVER_DOMAIN}/${item.providencias.hipervinculo}`,
                     fecha: item.anio, 
-                    facebook: `https://www.facebook.com/sharer.php?u=https://relatoria.jep.gov.co/${item.providencias.hipervinculo}`,
+                    facebook: `https://www.facebook.com/sharer.php?u=${process.env.REACT_APP_API_SERVER_DOMAIN}/${item.providencias.hipervinculo}`,
                     twitter: `https://twitter.com/intent/tweet?text=${item.providencias.nombre}&url=${item.providencias.hipervinculo}`,
                     mail: true,  
-                    versionIngles: `https://relatoria.jep.gov.co/documentos/providencias/17/23/en/boletin_eng_diciembre_2022.pdf`,
+                    versionIngles: `${process.env.REACT_APP_API_SERVER_DOMAIN}/documentos/providencias/17/23/en/boletin_eng_diciembre_2022.pdf`,
                     esEspecial: true, 
-                    imagenPortada: (item.imagen !== null) ? `https://relatoria.jep.gov.co/${item.imagen}` : ``
+                    imagenPortada: (item.imagen !== null) ? `${process.env.REACT_APP_API_SERVER_DOMAIN}/${item.imagen}` : ``
                     };
                     boletin["anioMes"] = boletin["titulo"].split(" ")[2].concat("-01");     
                   return boletin;

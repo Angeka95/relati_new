@@ -192,7 +192,7 @@ export default function MenuBar() {
                     </Link>
                 </Menu>
 
-              <Button component="a"  className=" text_blue menu_text margin_left_xs text_center"  href="https://relatoria.jep.gov.co/concurso" target="_blank" rel="noreferrer">Concurso Universitario</Button>
+              <Button component="a"  className=" text_blue menu_text margin_left_xs text_center"  href={`${process.env.REACT_APP_API_SERVER_DOMAIN}/concurso`} target="_blank" rel="noreferrer">Concurso Universitario</Button>
               </div>
 
               <img src={Escudo} className="logo_escudo_min margin_left_s" >
@@ -281,7 +281,7 @@ export default function MenuBar() {
             </Collapse>
 
             {/* ListItem principal: "Concurso Universitario" */}
-            <ListItem  button component={Link} to="https://relatoria.jep.gov.co/concurso">
+            <ListItem  button component={Link} to={`${process.env.REACT_APP_API_SERVER_DOMAIN}/concurso`}>
               <ListItemText primary="Concurso Universitario" />
             </ListItem>
             

@@ -13,7 +13,7 @@ const getAllResultsBusquedaAV = (searchParamsObj) => {
   let newSearchParamsObj = Object.assign({}, searchParamsObj);
   delete newSearchParamsObj.advanced_search;
   const searchParamsString = new URLSearchParams(newSearchParamsObj).toString();
-  const request =  axios.get(`https://relatoria.jep.gov.co/searchadv?${searchParamsString}`, config);
+  const request =  axios.get(`${process.env.REACT_APP_API_SERVER_DOMAIN}/searchadv?${searchParamsString}`, config);
   return request.then(response => { 
     if((response.data.status !== undefined) || (response.data.status === 401) || (response.data.status === 403)) {
       return { "data": [], "status_info": { "status": response.data.status, "reason": response.data.reason }};

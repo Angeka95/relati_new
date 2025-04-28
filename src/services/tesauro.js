@@ -11,7 +11,7 @@ const getTermsByLetter = (letter) => {
     },
     params: { letter: letter }
   };
-  const request =  axios.get('https://relatoria.jep.gov.co/geterms', config);
+  const request =  axios.get(`${process.env.REACT_APP_API_SERVER_DOMAIN}/geterms`, config);
   return request.then(response => {
     if((response.data.status !== undefined) || (response.data.status === 401) || (response.data.status === 403)) {
       return { "data": [], "status_info": { "status": response.data.status, "reason": response.data.reason } };
@@ -46,7 +46,7 @@ const getDocsByTerm = (term) => {
     },
     params: { search: term }
   };
-  const request =  axios.get('https://relatoria.jep.gov.co/getdocbytesauro', config);
+  const request =  axios.get(`${process.env.REACT_APP_API_SERVER_DOMAIN}/getdocbytesauro`, config);
   return request.then(response => { 
     if((response.data.status !== undefined) || (response.data.status === 401) || (response.data.status === 403)) {
       return { "data": [], "status_info": { "status": response.data.status, "reason": response.data.reason }};
@@ -68,7 +68,7 @@ const getDocsByTermAI = (term) => {
     },
     params: { search: term.toUpperCase() }
   };
-  const request =  axios.get('https://relatoria.jep.gov.co/getdocbytesauro', config);
+  const request =  axios.get(`${process.env.REACT_APP_API_SERVER_DOMAIN}/getdocbytesauro`, config);
   return request.then(response => { 
     if((response.data.status !== undefined) || (response.data.status === 401) || (response.data.status === 403)) {
       return { "data": [], "status_info": { "status": response.data.status, "reason": response.data.reason }};

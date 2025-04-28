@@ -10,7 +10,7 @@ const getEnfoqueGeneroData = () => {
     },
     params: { }
   };
-  const request =  axios.get('https://relatoria.jep.gov.co/getdocenfoquegenero', config);
+  const request =  axios.get(`${process.env.REACT_APP_API_SERVER_DOMAIN}/getdocenfoquegenero`, config);
   return request.then(response => { 
     if((typeof response.status === "undefined") || (response.status === 401) || (response.status === 403)) {
       return { "data": [], 

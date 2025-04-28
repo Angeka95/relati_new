@@ -17,6 +17,8 @@ import StringToHtml from './cardSearchResults/stringToHtml';
 import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
 import ThumbDownOffAltIcon from '@mui/icons-material/ThumbDownOffAlt';
 import Snackbar from '@mui/material/Snackbar';
+import { useDownloadFicha } from '../hooks/useDownloadFicha';
+
 
 export default function CardSearch({ datos, hiddenAnalisisJuridico = false }) {
   const { busqueda } = useContext(Context);
@@ -131,6 +133,10 @@ export default function CardSearch({ datos, hiddenAnalisisJuridico = false }) {
   };
 
 
+  // Funcion proveniente del hook personalizado useDownloadFicha
+  const countDownloadedFichaBtn  = useDownloadFicha();
+
+
   const card = (
     <React.Fragment>
       { <div >
@@ -204,7 +210,7 @@ export default function CardSearch({ datos, hiddenAnalisisJuridico = false }) {
       
         </Tabs>
         {((typeof datos.hipervinculoFichaJuris === 'string' ) && (datos.hipervinculoFichaJuris.trim() !== '')) && (
-              <a href={datos.hipervinculoFichaJuris} target='_blank' rel="noreferrer">
+              <a href={datos.hipervinculoFichaJuris} target='_blank' rel="noreferrer" onClick={(event) => { countDownloadedFichaBtn(event, datos.ficha_id, datos.hipervinculoFichaJuris)}}>
                 <Button className="button_secondary margin_xs card_size_small"  startIcon={<FileDownloadOutlinedIcon/>}>Descargar ficha</Button>
               </a> 
         )}
@@ -395,7 +401,7 @@ export default function CardSearch({ datos, hiddenAnalisisJuridico = false }) {
             {isDocumentosAsociadosExpanded && (
                 <div className="margin_top_s">
                   {((typeof datos.documentosAsociados === 'string' ) && (datos.documentosAsociados.trim() !== '')) && (
-                  <p className="text_space_min text_justify">{/*• Documentos asociados: */} <span className="text_bolder"><a href={`https://relatoria.jep.gov.co/${datos.documentosAsociadosLink}`} target="_blank" rel="noreferrer">{datos.documentosAsociados}</a></span> </p>
+                  <p className="text_space_min text_justify">{/*• Documentos asociados: */} <span className="text_bolder"><a href={`${process.env.REACT_APP_API_SERVER_DOMAIN}/${datos.documentosAsociadosLink}`} target="_blank" rel="noreferrer">{datos.documentosAsociados}</a></span> </p>
                   )}
                 </div>
               )}
