@@ -5,7 +5,7 @@ import Box from '@mui/material/Box';
 import CardActions from '@mui/material/CardActions';
 import Button from '@mui/material/Button';
 import '../App.css';
-import { Container, Grid, Tooltip, Divider } from '@mui/material';
+import { Container, Grid, Tooltip, Divider, Alert } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import Context from '../context/context';
 import Tabs from '@mui/material/Tabs';
@@ -14,6 +14,11 @@ import ExpandLessOutlinedIcon from '@mui/icons-material/ExpandLessOutlined';
 import ExpandMoreOutlinedIcon from '@mui/icons-material/ExpandMoreOutlined';
 import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
 import StringToHtml from './cardSearchResults/stringToHtml';
+import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
+import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
+import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
+import ThumbDownOffAltIcon from '@mui/icons-material/ThumbDownOffAlt';
+import Snackbar from '@mui/material/Snackbar';
 import { useDownloadFicha } from '../hooks/useDownloadFicha';
 
 export default function CardSearch({ datos, hiddenAnalisisJuridico = false }) {
@@ -52,6 +57,7 @@ export default function CardSearch({ datos, hiddenAnalisisJuridico = false }) {
   const handleChangeTabCard = (event, newValue) => {
     setValue(newValue);
   };
+
   
   // Acordiones en card 
 
@@ -135,11 +141,78 @@ export default function CardSearch({ datos, hiddenAnalisisJuridico = false }) {
     }
   };
 
+
+  // Snackbar Feedback Card
+
+  const [open, setOpen] = useState(false);
+  const [selected, setSelected] = useState(null);
+
+  const handleClick = (type) => {
+    setSelected(type);
+    setOpen(true);
+  };
+
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpen(false);
+  };
+
+
   // Funcion proveniente del hook personalizado useDownloadFicha
   const countDownloadedFichaBtn  = useDownloadFicha();
 
+
   const card = (
     <React.Fragment>
+          { <div >
+                <div className="width_100 ">
+                    <div className="feedback_float  display_flex flex_wrap">
+                       <p className="feedback_text">¿Fue útil esta decisión? </p> 
+                        <div className="width_50  justify_end"> 
+                          <Tooltip title="Si">
+                          <a
+                            href="#"
+                            className={`feedback_button feedback_approve ${selected === 'like' ? 'feedback_check' : ''}`}
+                            onClick={(e) => {
+                              e.preventDefault(); 
+                              handleClick('like');
+                            }}
+                          >     <ThumbUpOffAltIcon className="feedback_icon" />
+                           </a>
+                          </Tooltip> 
+                          <Tooltip title="No">
+                          <a
+                            href="#"
+                            className={`feedback_button feedback_disapprove ${selected === 'unlike' ? 'feedback_check_thumbdown' : ''}`}
+                            onClick={(f) => {
+                              f.preventDefault(); 
+                              handleClick('unlike');
+                            }}
+                          >     <ThumbDownOffAltIcon className="feedback_icon" />
+                           </a>
+
+                       
+                          </Tooltip>
+
+                          <Snackbar
+                            open={open}
+                            autoHideDuration={3000}
+                            onClose={handleClose}
+                            anchorOrigin={{ vertical: 'bottom', horizontal: 'center',  color: '#fff' }}
+                          >
+                              <Alert onClose={handleClose} severity="success" className="snackbar_feedback">
+                              Su respuesta ha sido registrada. ¡Gracias por contribuir!
+                          </Alert>
+                        </Snackbar>
+                        </div>
+
+
+                    </div>
+
+                </div>
+          </div>  }
 
       <CardContent className="card_container">
       {((typeof datos.nombreDecision === 'string' ) && (datos.nombreDecision.trim() !== '')) && (
