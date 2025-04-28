@@ -37,6 +37,7 @@ export default function Card({ selectedFilters, isListSmall, selectedTerm, isLar
                             id: k + 1,
                             score: i._score,
                             fecha:  (item.fecha_documento !== null ) ? item.fecha_documento : "",
+                            providencia_id: item.providencia_id,
                             ficha_id: item.ficha_id,
                             asunto: "",
                             salaOSeccion: item.sala_seccion,

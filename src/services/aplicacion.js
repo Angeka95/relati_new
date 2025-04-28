@@ -43,7 +43,7 @@ const getStatusRelatiAppxMantenimiento = () => {
 
 }
 
-const countDownloadedFicha = ( ficha_ID ) => {
+const countDownloadedFicha = ( providencia_id ) => {
   const config = {
     headers: {
       'Authorization': `Bearer ${process.env.REACT_APP_API_ACCESS_TOKEN}`,
@@ -51,7 +51,7 @@ const countDownloadedFicha = ( ficha_ID ) => {
       'password': process.env.REACT_APP_API_PASS
     }
   };
-  const request =  axios.get(`${process.env.REACT_APP_API_SERVER_DOMAIN}/incrementdownloadcount?providencia_id=${ficha_ID}`, config);
+  const request =  axios.get(`${process.env.REACT_APP_API_SERVER_DOMAIN}/incrementdownloadcount?providencia_id=${providencia_id}`, config);
   return request.then(response => { 
     if((response.data.status !== undefined) || (response.data.status === 401) || (response.data.status === 403)) {
       return { "data": false, "status_info": { "status": response.data.status, "reason": response.data.reason }};
@@ -63,4 +63,36 @@ const countDownloadedFicha = ( ficha_ID ) => {
   });
 };
 
-export default { getStatusRelatiAppxMantenimiento, countDownloadedFicha }
+const getLikeDislike = ( providencia_id, type ) => {
+  const config = {
+    headers: {
+      'Authorization': `Bearer ${process.env.REACT_APP_API_ACCESS_TOKEN}`,
+      'user': process.env.REACT_APP_API_USER,
+      'password': process.env.REACT_APP_API_PASS
+    }
+  };
+  let query = '';
+  switch(type) {
+    case 'like':
+        query = `like=true`;
+        break;
+    case 'unlike':
+        query = `dislike=true`;
+        break;
+    default:
+        query = `like=true`;
+        break;
+  } 
+  const request =  axios.get(`${process.env.REACT_APP_API_SERVER_DOMAIN}/savedocumentreactions?providencia_id=${providencia_id}&${query}`, config);
+  return request.then(response => { 
+    if((response.data.status !== undefined) || (response.data.status === 401) || (response.data.status === 403)) {
+      return { "data": false, "status_info": { "status": response.data.status, "reason": response.data.reason }};
+    } else {
+      return { "data": response.data.confirm, "status_info": { "status": 200, "reason": "OK" } };
+    }
+  }).catch(error => { 
+    return { "data": false, "status_info": { "status": error.response.data.status, "reason": error.response.data.reason } };
+  });
+};
+
+export default { getStatusRelatiAppxMantenimiento, countDownloadedFicha, getLikeDislike }

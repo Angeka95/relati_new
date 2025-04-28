@@ -8,6 +8,9 @@ import '../App.css';
 import { Container, Grid } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import Context from '../context/context';
+import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
+import ThumbDownOffAltIcon from '@mui/icons-material/ThumbDownOffAlt';
+import LikeDislike from './cardSearchResults/likeDislike';
 import { useDownloadResource } from '../hooks/useDownloadResource';
 
 export default function CardSearch({ datos, tipo }) {
@@ -40,7 +43,7 @@ export default function CardSearch({ datos, tipo }) {
 
   const card = (
     <React.Fragment>
-
+      <LikeDislike providenciaId={datos.id}/>
       <CardContent className="card_container">
         {((typeof datos.fecha === 'string' ) && (datos.fecha.trim() !== '')) && (
           <p className="text_uppercase justify_end_spacing text_spacing text_space_min">{datos.fecha}</p>

@@ -4,6 +4,7 @@ import '../App.css';
 import { Box, Container, Grid, Button, List, ListItem } from '@mui/material';
 import Context from '../context/context';
 import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
+import LikeDislike from './cardSearchResults/likeDislike';
 import { useDownloadResource } from '../hooks/useDownloadResource';
 
 export default function CardDecision({ decisiones }) {
@@ -21,12 +22,10 @@ export default function CardDecision({ decisiones }) {
 
     return (
         <div className="margin_bottom_l card_medium  wrap masonry-item">
-
-
-
+           
             <div key={decisiones.id} className=" width_100 card-content">
-
-
+               
+                <LikeDislike providenciaId={decisiones.id}/>
                 {((typeof decisiones.nombreDecision === 'string' ) && (decisiones.nombreDecision.trim() !== '')) && (
                     <div className="justify_center margin_bottom_s"> 
                     <p className="text_bolder text_space_min">{decisiones.nombreDecision}</p>
