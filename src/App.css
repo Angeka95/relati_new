@@ -906,7 +906,7 @@ h6 {
 
 
 .card_search_results {
-  margin: 20px 1%;
+  margin: 30px 1%;
   padding: 10px 20px 20px 10px;
   border-radius: 4;
   border: #fff !important;
@@ -972,7 +972,7 @@ h6 {
   margin-top: 8px;
 }
 
-.css-1aquho2-MuiTabs-indicator{
+.css-1aquho2-MuiTabs-indicator, .css-ttwr4n{
   background-color: #98C438 !important;
 }
 
@@ -3170,6 +3170,97 @@ color: rgb(219, 0, 69);
 
 /* fin error */
 
+
+/* Feedback Card  */
+
+.feedback_float {
+  z-index: 3;
+  background-color: #eff3f8;
+  color: #007CAE;
+  position: absolute;
+  top: 0px;
+  right: 44px;
+  min-width: 180px;
+  width: 220px;
+  height: 28px;
+  text-align: center;
+  font-weight: 600;
+  padding: 0 2px;
+  
+  font-size: 0.8em;
+
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10px;
+}
+
+
+.feedback_button{
+  background-color: #fff;
+  width: 22px;
+  height: 22px;
+  min-width: 22px;
+  min-height: 22px;
+  margin: 5px 5px 0px 5px;
+
+  border-radius: 50px;
+  color: #fff !important;
+  display: flex;
+  justify-content: center;
+}
+
+.feedback_icon{
+  font-size: 1.2rem !important;
+}
+
+
+
+.feedback_approve{
+  color: #98C438!important;
+ 
+}
+
+.feedback_disapprove{
+  color: red !important;
+}
+
+.feedback_approve:hover{
+  color: #fff !important;
+  background-color: #98C438;
+}
+
+.feedback_disapprove:hover{
+  color: #fff !important;
+  background-color: red !important;
+}
+
+.feedback_float_button:hover{
+  color: #fff !important;
+  -webkit-transition: all 1s ease;
+  transition: all 1s ease;
+}
+
+.feedback_text{
+  width: 100%;
+  padding-top: 4px;
+}
+
+.feedback_check{
+  background-color: #98C438;
+  color: #fff !important;
+}
+
+.feedback_check_thumbdown{
+  background-color: red;
+  color: #fff !important;
+}
+
+.snackbar_feedback{
+  width: 100%;
+  background-color: #eff3f8 !important;
+  color: #007CAE !important;
+}
+
+/* Fin  Card  */
 
 /*--------------------------------------------------------------------*/
 /*--------------------------------------------------------------------*/
