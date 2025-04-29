@@ -45,6 +45,7 @@ export default function DecisionesSalaTribunal({caso}) {
         const newArray = arrData.map(item => {
           let newItem = {
               id: item.id,
+              providencia_id: item.id,
               fecha: item.fecha_providencia,
               asunto: item.asuntocaso,
               salaOSeccion: item.despacho.nombre,

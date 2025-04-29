@@ -3216,11 +3216,13 @@ color: rgb(219, 0, 69);
 
 .feedback_approve{
   color: #98C438!important;
+  cursor: pointer;
  
 }
 
 .feedback_disapprove{
   color: red !important;
+  cursor: pointer;
 }
 
 .feedback_approve:hover{

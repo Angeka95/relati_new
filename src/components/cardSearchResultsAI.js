@@ -168,7 +168,7 @@ export default function CardSearch({ datos, hiddenAnalisisJuridico = false }) {
         {( validarAnexosRecursos() === true ) ?             
           <>
             {((typeof datos.hipervinculoFichaJuris === 'string' ) && (datos.hipervinculoFichaJuris.trim() !== '')) && (
-              <Tooltip title="Descargar ficha">
+              <Tooltip title="Descargar ficha" onClick={(event) => { countDownloadedBtn(event, datos.providencia_id, datos.hipervinculoFichaJuris)}}>
               <a href={datos.hipervinculoFichaJuris} target='_blank' rel="noreferrer">
                 <Button className="button_secondary margin_xs card_size_small btn_xs_descargar"  startIcon={<FileDownloadOutlinedIcon/>}></Button>
               </a> 
