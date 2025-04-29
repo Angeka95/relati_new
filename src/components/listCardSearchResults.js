@@ -15,7 +15,7 @@ import Context from '../context/context';
 import FilterShort from './filterShort';
 import LinearWithValueLabel from '../components/linearProgress.js';
 import tesauroService from './../services/tesauro.js';
-import { sanitizeString } from '../helpers/utils.js';
+import { sanitizeString, formatHighlight } from './../helpers/utils.js';
 import '../App.css';
 
 export default function Card({ selectedFilters, isListSmall, selectedTerm, isLargeResult, isExternalFilters }) {
@@ -66,7 +66,7 @@ export default function Card({ selectedFilters, isListSmall, selectedTerm, isLar
                             hipervinculoFichaJuris: "",
                             estadoFichaJuris: "",
                             estado_id: (item.estado_id > 0) ? item.estado_id : "",
-                            extractoBusqueda: (item.sintesis !== null ) ? sanitizeString(item.sintesis) : "",
+                            extractoBusqueda: (i?.highlight ) ? formatHighlight(i.highlight) : "",
                             conclusion_resuelve: ((item.conclusion_resuelve !== null) && (item.hasOwnProperty("conclusion_resuelve"))) ? item.conclusion_resuelve : ""
                         };
                         newItem["hipervinculoFichaJuris"] = ((newItem.ficha_id !== null ) && ( newItem.estado_id === 14 )) ? `${process.env.REACT_APP_API_SERVER_DOMAIN}/downloadfichaext/${newItem.ficha_id}` : " ";
