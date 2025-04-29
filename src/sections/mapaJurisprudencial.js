@@ -61,6 +61,7 @@ export default function Mapa() {
                         };
                         itemProvidencia["asuntoNombreCaso"] = `${item.asuntocaso} ${item.nombre}`;
                         itemProvidencia["palabrasClave"] = `${itemProvidencia["delitos"]}, ${itemProvidencia["comparecientes"]}, ${itemProvidencia["procedimientos"]}`;
+                        itemProvidencia["hipervinculoFichaJuris"] = ((item.getfichas.length > 0) && (item.getfichas[0].id !== null ) && ( item.getfichas[0].estado_id === 14 )) ? `${process.env.REACT_APP_API_SERVER_DOMAIN}/downloadfichaext/${item.getfichas[0].id}` : " ";
                         itemProvidencia["autocompletarBuscador"] = { id: itemProvidencia.id, title: `${itemProvidencia.sala} ${itemProvidencia.departamentoNombre} ${itemProvidencia.asuntoNombre} ${itemProvidencia.palabrasClave}`};
                         return itemProvidencia;
                     });

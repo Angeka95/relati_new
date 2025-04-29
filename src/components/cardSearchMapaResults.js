@@ -7,6 +7,7 @@ import Button from '@mui/material/Button';
 import '../App.css';
 import { Container, Grid } from '@mui/material';
 import { styled } from '@mui/material/styles';
+import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
 import Context from '../context/context';
 import LikeDislike from './cardSearchResults/likeDislike';
 import { useDownloadResource } from '../hooks/useDownloadResource';
@@ -110,6 +111,11 @@ export default function CardSearch({ datos, tipo }) {
         <div className="card_search_button_spacing">
 
           <CustomGrid>
+            {((typeof datos.hipervinculoFichaJuris === 'string' ) && (datos.hipervinculoFichaJuris.trim() !== '')) && (
+              <a href={datos.hipervinculoFichaJuris} target='_blank' rel="noreferrer" onClick={(event) => { countDownloadedBtn(event, datos.providencia_id, datos.hipervinculoFichaJuris)}}>
+                <Button className="button_secondary margin_xs card_size_small">Ver ficha</Button>
+              </a> 
+            )}
             {((typeof datos.hipervinculo === 'string' ) && (datos.hipervinculo.trim() !== '')) && (
               <a href={datos.hipervinculo} target='_blank' rel="noreferrer" onClick={(event) => { countDownloadedBtn(event, datos.providencia_id, datos.hipervinculo)}}>
                 <Button className="button_primary margin_xs" >Descargar Decisión</Button>
