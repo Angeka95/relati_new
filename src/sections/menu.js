@@ -1,6 +1,6 @@
 import '../App.css';
 import React, { useState, useEffect } from 'react';
-import { AppBar,  Collapse, Toolbar, Typography, Button, Drawer, List, ListItem, ListItemText, IconButton, Divider, Menu, MenuItem } from '@mui/material';
+import { AppBar,  Collapse, Toolbar, Typography, Button, Drawer, List, ListItem, ListItemText, IconButton, Divider, Menu, MenuItem, Box } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';  
 import { useTheme } from '@mui/material/styles';
 import { useMediaQuery } from '@mui/material';
@@ -133,17 +133,17 @@ export default function MenuBar() {
                     'aria-labelledby': 'basic-button',
                     }}
                 >
-                    <Link to="/acerca-de-nosotros">
+                    <Link to="/acerca-de-nosotros" onClick={handleClose}>
                         <MenuItem className="text_decoration_none text_black menu_text" >Acerca de Nosotros</MenuItem>
                     </Link>
-                    <Link to="/glosario">
+                    <Link to="/glosario" onClick={handleClose}>
                         <MenuItem className="text_decoration_none text_black menu_text" >Glosario</MenuItem>
                     </Link>
-                    <Link to="/preguntas-frecuentes">
+                    <Link to="/preguntas-frecuentes" onClick={handleClose}>
                         <MenuItem className="text_decoration_none text_black menu_text" >Preguntas Frecuentes</MenuItem>
                     </Link>
                 </Menu>
-              <Button  className=" text_black menu_text text_center"  onClick={handleToggleMenu2} startIcon={anchor ? <ExpandLessIcon /> : <ExpandMoreIcon />} >Nuestras Publicaciones</Button>
+              <Button  className=" text_black menu_text text_center"  onClick={handleToggleMenu2} startIcon={anchor2 ? <ExpandLessIcon /> : <ExpandMoreIcon />} >Nuestras Publicaciones</Button>
               <Menu
                     id="basic-menu2"
                     anchorEl={anchor2}
@@ -153,10 +153,10 @@ export default function MenuBar() {
                     'aria-labelledby': 'menu',
                     }}
                 >
-                    <Link to="/boletines">
+                    <Link to="/boletines" onClick={handleClose2}>
                         <MenuItem className="text_decoration_none text_black menu_text " >Boletines</MenuItem>
                     </Link>
-                    <Link to="/libros">
+                    <Link to="/libros" onClick={handleClose2}>
                         <MenuItem className="text_decoration_none text_black menu_text " >Libros</MenuItem>
                     </Link>
                   
@@ -167,7 +167,7 @@ export default function MenuBar() {
                     </Link> */}
                 </Menu>
              
-                    <Button  className=" text_black menu_text text_center" onClick={handleToggleMenu3} startIcon={anchor ? <ExpandLessIcon /> : <ExpandMoreIcon />} >Análisis Jurisprudencial</Button>
+                    <Button  className=" text_black menu_text text_center" onClick={handleToggleMenu3} startIcon={anchor3 ? <ExpandLessIcon /> : <ExpandMoreIcon />} >Análisis Jurisprudencial</Button>
            
               <Menu
                     id="basic-menu2"
@@ -178,21 +178,26 @@ export default function MenuBar() {
                     'aria-labelledby': 'menu',
                     }}
                 >
-                    <Link to="/tesauro">
+                    <Link to="/tesauro" onClick={handleClose3}>
                         <MenuItem className="text_decoration_none text_black menu_text" >Tesauro</MenuItem>
                     </Link>
-                    <Link to="/mapa-jurisprudencial">
+                    <Link to="/mapa-jurisprudencial" onClick={handleClose3}>
                         <MenuItem className="text_decoration_none text_black menu_text" >Mapa Jurisprudencial</MenuItem>
                     </Link>
                      
-                        <MenuItem onClick={scrollToSection} className="text_decoration_none text_black menu_text" >Macrocasos</MenuItem>
+                        {/* <MenuItem onClick={scrollToSection} className="text_decoration_none text_black menu_text" >Macrocasos</MenuItem> */}
                         
-                    <Link to="/analisis-tematico">
+                    <Link to="/analisis-tematico" onClick={handleClose3}>
                         <MenuItem className="text_decoration_none text_black menu_text " >Análisis Temático</MenuItem>
                     </Link>
                 </Menu>
 
+                <Button component="a"  className="text_black menu_text margin_left_xs text_center"  onClick={scrollToSection} target="_blank" rel="noreferrer">Macrocasos</Button>
+
+                
+
               <Button component="a"  className=" text_blue menu_text margin_left_xs text_center"  href={`${process.env.REACT_APP_API_SERVER_DOMAIN}/concurso`} target="_blank" rel="noreferrer">Concurso Universitario</Button>
+              
               </div>
 
               <img src={Escudo} className="logo_escudo_min margin_left_s" >
@@ -226,6 +231,9 @@ export default function MenuBar() {
             {/* ListItem principal: "Sobre la Relatoría" */}
             <ListItem button onClick={() => toggleSubMenu('sobreRelatoria')}>
               <ListItemText primary="Sobre la Relatoría" />
+              <Box sx={{ marginLeft: 'auto' }}>
+                  {openSubMenu.sobreRelatoria ? <ExpandLessIcon /> : <ExpandMoreIcon />} 
+                </Box>
             </ListItem>
             <Collapse in={openSubMenu.sobreRelatoria} timeout="auto" unmountOnExit>
               <List component="div" disablePadding>
@@ -242,11 +250,18 @@ export default function MenuBar() {
             </Collapse>
 
             {/* ListItem principal: "Nuestras Publicaciones" */}
+
+            {/* <Button  className=" text_black menu_text text_center"  onClick={handleToggleMenu2} startIcon={anchor ? <ExpandLessIcon /> : <ExpandMoreIcon />} >Nuestras Publicaciones</Button> */}
+
             <ListItem button onClick={() => toggleSubMenu('publicaciones')}>
+              
               <ListItemText primary="Nuestras Publicaciones" />
+              <Box sx={{ marginLeft: 'auto' }}>
+                  {openSubMenu.publicaciones ? <ExpandLessIcon /> : <ExpandMoreIcon />} 
+                </Box>
             </ListItem>
-            <Collapse in={openSubMenu.publicaciones} timeout="auto" unmountOnExit>
-              <List component="div" disablePadding>
+            <Collapse in={openSubMenu.publicaciones} timeout="auto" unmountOnExit >
+              <List component="div" disablePadding >
                 <ListItem button component={Link} to="/boletines">
                   <ListItemText primary="Boletines" />
                 </ListItem>
@@ -262,6 +277,9 @@ export default function MenuBar() {
             {/* ListItem principal: "Análisis Jurisprudencial" */}
             <ListItem button onClick={() => toggleSubMenu('analisis')}>
               <ListItemText primary="Análisis Jurisprudencial" />
+              <Box sx={{ marginLeft: 'auto' }}>
+                  {openSubMenu.analisis ? <ExpandLessIcon /> : <ExpandMoreIcon />} 
+                </Box>
             </ListItem>
             <Collapse in={openSubMenu.analisis} timeout="auto" unmountOnExit>
               <List component="div" disablePadding>
@@ -271,14 +289,18 @@ export default function MenuBar() {
                 <ListItem button component={Link} to="/mapa-jurisprudencial">
                   <ListItemText primary="Mapa Jurisprudencial" />
                 </ListItem>
-                <ListItem button component={Link} to="/macrocasos">
+                {/* <ListItem button component={Link} to="/macrocasos">
                   <ListItemText primary="Macrocasos" />
-                </ListItem>
+                </ListItem> */}
                 <ListItem button component={Link} to="/analisis-tematico">
                   <ListItemText primary="Análisis Temático" />
                 </ListItem>
               </List>
             </Collapse>
+
+            <ListItem  button onClick={scrollToSection}>
+              <ListItemText primary="Macrocasos" />
+            </ListItem>
 
             {/* ListItem principal: "Concurso Universitario" */}
             <ListItem  button component={Link} to={`${process.env.REACT_APP_API_SERVER_DOMAIN}/concurso`}>
