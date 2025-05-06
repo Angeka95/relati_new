@@ -52,7 +52,6 @@ const getCasosXTramite = (caso) => {
 };
 
 const getBoletinesMacrocaso = (macrocaso) => {
-
   const config = {
     headers: {
       'Authorization': `Bearer ${process.env.REACT_APP_API_ACCESS_TOKEN}`,

@@ -131,8 +131,9 @@ export default function Caso() {
   };
 
   useEffect(() => {
-    if(caso !== null){
+    if((caso !== null) && ( caso.macrocaso !== undefined)){
       if(boletinesMacrocaso.length === 0){
+        console.log("Caso: ", caso.macrocaso);
         getBoletinesMacrocaso(caso.macrocaso);
       } 
     }
