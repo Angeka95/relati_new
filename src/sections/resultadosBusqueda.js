@@ -213,9 +213,15 @@ export default function SearchResults() {
                 </Alert>
                 { ((message.classname === "error") || (message.classname === "warning")) && 
                   <Box sx={{ px: 0, my: 2, display: 'flex', justifyContent: 'center' }}>
-                  <a href="/" target='_self' rel="noreferrer">
+                  {( searchParams.get('advanced_search') === "true") ? 
+                  <a href="/busqueda-avanzada" target='_self' rel="noreferrer">
                       <Button className="button_primary margin_xs card_size_small">Realiza una nueva búsqueda</Button>
                   </a> 
+                  :
+                  <a href="/" target='_self' rel="noreferrer">
+                      <Button className="button_primary margin_xs card_size_small">Realiza una nueva búsqueda</Button>
+                  </a>
+                  }
                   </Box>
                 }
                 </>
