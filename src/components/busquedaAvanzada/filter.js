@@ -17,7 +17,7 @@ export default function Filter({ setSelectedFilters, isFilterFloat, isShowingFil
   const [isFilterDisabled, setIsFilterDisabled] = useState(false);
 
   const [selectedDataFilter1, setSelectedDataFilter1] = useState([]); //Tipo Documento
-  const [selectedDataFilter2, setSelectedDataFilter2] = useState([]); //Anios
+  const [selectedDataFilter2, setSelectedDataFilter2] = useState([]); //Anios providencia
   const [selectedDataFilter3, setSelectedDataFilter3] = useState([]); //Sala seccion
 
   const { filtroBusquedaAvanzada, setFiltroBusquedaAvanzada } = useContext(Context);
@@ -61,7 +61,7 @@ export default function Filter({ setSelectedFilters, isFilterFloat, isShowingFil
         <SelectField isDisabled={isFilterDisabled} datos_filtros={datos_tipo_documento} selectedData={selectedDataFilter1} setSelectedData={setSelectedDataFilter1}
           label='Tipo de Documento' id='tipo_documento'></SelectField>
         <SelectField isDisabled={isFilterDisabled} datos_filtros={datos_anios} selectedData={selectedDataFilter2} setSelectedData={setSelectedDataFilter2}
-          label='Año de los hechos' id='anio'></SelectField>
+          label='Año de la providencia' id='anio'></SelectField>
         <SelectField isDisabled={isFilterDisabled} datos_filtros={datos_sala_seccion} selectedData={selectedDataFilter3} setSelectedData={setSelectedDataFilter3} label='Sala o Sección' id='sala'></SelectField>
         <div className="justify_center width_100 margin_top_s">
           <Button disabled={isFilterDisabled} className="button_primary margin_xs " onClick={applyFilters}>Aplicar filtros</Button>
