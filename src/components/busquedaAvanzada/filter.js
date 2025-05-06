@@ -61,7 +61,7 @@ export default function Filter({ setSelectedFilters, isFilterFloat, isShowingFil
         <SelectField isDisabled={isFilterDisabled} datos_filtros={datos_tipo_documento} selectedData={selectedDataFilter1} setSelectedData={setSelectedDataFilter1}
           label='Tipo de Documento' id='tipo_documento'></SelectField>
         <SelectField isDisabled={isFilterDisabled} datos_filtros={datos_anios} selectedData={selectedDataFilter2} setSelectedData={setSelectedDataFilter2}
-          label='Año de la providencia' id='anio'></SelectField>
+          label='Años de los hechos por providencia' id='anio'></SelectField>
         <SelectField isDisabled={isFilterDisabled} datos_filtros={datos_sala_seccion} selectedData={selectedDataFilter3} setSelectedData={setSelectedDataFilter3} label='Sala o Sección' id='sala'></SelectField>
         <div className="justify_center width_100 margin_top_s">
           <Button disabled={isFilterDisabled} className="button_primary margin_xs " onClick={applyFilters}>Aplicar filtros</Button>
