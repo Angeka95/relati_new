@@ -22,7 +22,9 @@ const getMacrocasos = () => {
   });
 };
 
-const getCasosXTramite = (caso) => {
+
+// getCasosXTramite recibe el tipo de caso y el tipo de tramite si es sala o tribunal
+const getCasosXTramite = (caso, tipoTramite) => {
   const config = {
     headers: {
       'Authorization': `Bearer ${process.env.REACT_APP_API_ACCESS_TOKEN}`,
@@ -31,20 +33,16 @@ const getCasosXTramite = (caso) => {
     },
     params: { }
   };
-  const request =  axios.get(`${process.env.REACT_APP_API_SERVER_DOMAIN}/casosalatramite`, config);
+  const request =  axios.get(`${process.env.REACT_APP_API_SERVER_DOMAIN}/casosalatramite?tipo=${tipoTramite}`, config);
   return request.then(response => { 
     if((response.data.status !== undefined) || (response.data.status === 401) || (response.data.status === 403)) {
       return { "data": [], "status_info": { "status": response.data.status, "reason": response.data.reason }};
     } else {
-      let dataSala = [];
-      let dataTribunal = [];
-      if(response.data[0]["tramite_sala"].length > 0 ){
-        dataSala = response.data[0]["tramite_sala"].filter(item => ((item.casopro[0].caso === caso) && (item.detalle_caso !== null)));
+      let data = [];
+      if(response.data.length > 0 ){
+        data = response.data.filter(item => ((item.casopro[0].caso === caso) && (item.detalle_caso !== null)));
       }
-      if(response.data[1]["tramite_tribunal"].length > 0 ){
-        dataTribunal = response.data[1]["tramite_tribunal"].filter(item => ((item.casopro[0].caso === caso) && (item.detalle_caso !== null)));
-      }
-      return { "data": [{ casosSala: dataSala, casosTribunal: dataTribunal }], "status_info": { "status": 200, "reason": "OK" } };
+      return { "data": data, "status_info": { "status": 200, "reason": "OK" } };
     }
   }).catch(error => { 
     return { "data": [], "status_info": { "status": error.response.data.status, "reason": error.response.data.reason } };

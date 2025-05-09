@@ -186,7 +186,7 @@ export default function SearchResults() {
   }, [filtroJurisprudencial]);
 
   // Esta funcion limpia las variables LocalStorage almacenadas despues de cierto tiempo
-  useCleanLocalStorageVars();
+  useCleanLocalStorageVars('dataFromQueryLs', ttl);
 
   return (
     <>

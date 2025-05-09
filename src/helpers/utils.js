@@ -530,7 +530,9 @@ const setLocalStorageWithExpiry = (key, value, ttl) => {
 */
 
 const getLocalStorageWithExpiry = (key) => {
+
     const itemStr = localStorage.getItem(key);
+
     if (!itemStr) return null;
   
     const item = JSON.parse(itemStr);
@@ -540,6 +542,7 @@ const getLocalStorageWithExpiry = (key) => {
       localStorage.removeItem(key);
       return null;
     }*/
+   
     return item.value;
 };
 

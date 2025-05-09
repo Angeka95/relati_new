@@ -15,6 +15,7 @@ const ContextProvider = ({ children }) => {
   const [filtroJurisprudencial, setFiltroJurisprudencial] = useState(filtroByDefault);
   const [filtroJurisprudencialVTD, setFiltroJurisprudencialVTD] = useState(filtroByDefault);  // Filtro para solo Ver Todas Decisiones
   const [ttl] = useState(60000); // Variable define el tiempo para eliminar variables de localStorage
+  const [ttlMCD] = useState(1800000); // Variable define el tiempo para eliminar variables de localStorage para Macrocasos Decisiones
   const [ filtroBusquedaAvanzada, setFiltroBusquedaAvanzada ] = useState(filtroBusquedaAvanzadaByDefault); 
 
   return (
@@ -34,6 +35,7 @@ const ContextProvider = ({ children }) => {
                estadoVerTodasDecisiones,
                setEstadoVerTodasDecisiones,
                ttl,
+               ttlMCD,
                filtroBusquedaAvanzada,
                setFiltroBusquedaAvanzada,
                filtroJurisprudencialVTD, 
