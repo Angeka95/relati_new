@@ -56,10 +56,10 @@ export default function DecisionesSalaTribunal({caso}) {
                     const data = dataResults( response.data );
                     if(tipoTramite === "sala") {
                         setDatosSala(data);
-                        setLocalStorageWithExpiry('dataDecisionesS', JSON.stringify(data), ttlMCD);
+                       
                     } else if(tipoTramite === "tribunal") {
                         setDatosTribunal(data);
-                        setLocalStorageWithExpiry('dataDecisionesT', JSON.stringify(data), ttlMCD);
+                 
                     }
                     newMessage = { message: `${response.status_info.reason}`, classname: "success" };
                 } else {
@@ -81,20 +81,41 @@ export default function DecisionesSalaTribunal({caso}) {
     // si no tiene datos, llama a la funcion getCasos para obtener los datos
     // y los guarda en el localStorage
     useEffect(() => {
-        if (!localStorage.hasOwnProperty('dataDecisionesS') && !localStorage.hasOwnProperty('dataDecisionesT')) {
-            setLocalStorageWithExpiry('dataDecisionesS', '', ttlMCD);
-            setLocalStorageWithExpiry('dataDecisionesT', '', ttlMCD);
-        } else {
-            let localStorageDataS = getLocalStorageWithExpiry('dataDecisionesS');
-            let localStorageDataT = getLocalStorageWithExpiry('dataDecisionesT');
-            if((localStorageDataS.length > 0) && (localStorageDataT.length > 0 )) {
-                setDatosSala(JSON.parse(localStorageDataS));
-                setDatosTribunal(JSON.parse(localStorageDataT));
-            } else if((caso !== null) && (caso.nombre !== undefined) ) {
+        if (
+            (datosSala.length === 0) && 
+            (datosTribunal.length === 0) && 
+            (caso !== null) && 
+            (caso.nombre !== undefined)){
+                console.log("cargando los datos si datosSala y datosTribunal son 0")
                 getCasos(caso.nombre, "sala"); // Invoca la funcionalidad getCasos y obtiene las decisiones tipo de tramite Sala
                 getCasos(caso.nombre, "tribunal"); // Invoca la funcionalidad getCasos y obtiene las decisiones tipo de tramite Tribunal
+        } else if(datosSala.length > 0 && datosTribunal.length > 0) {
+            if((!localStorage.hasOwnProperty('dataDecisionesS')) &&
+               (!localStorage.hasOwnProperty('dataDecisionesT'))){
+                setLocalStorageWithExpiry('dataDecisionesS', JSON.stringify(datosSala), ttlMCD);
+                setLocalStorageWithExpiry('dataDecisionesT', JSON.stringify(datosTribunal), ttlMCD);
+            } else {
+                console.log("Existen datos en el localStorage");
+                let localStorageDataS = getLocalStorageWithExpiry('dataDecisionesS');
+                let localStorageDataT = getLocalStorageWithExpiry('dataDecisionesT');
+                setDatosSala(JSON.parse(localStorageDataS));
+                setDatosTribunal(JSON.parse(localStorageDataT)); 
             }
-        }    
+        }
+    }, [datosSala, datosTribunal]);  
+
+    useEffect(() => {
+        if ((localStorage.hasOwnProperty('dataDecisionesS')) &&
+            (localStorage.hasOwnProperty('dataDecisionesT'))) {
+            
+        } else if ( (datosSala.length === 0) && 
+                    (datosTribunal.length === 0) && 
+                    (caso !== null) && 
+                    (caso.nombre !== undefined)){
+                        console.log("cargando los datos si datosSala y datosTribunal son 0")
+                        getCasos(caso.nombre, "sala"); // Invoca la funcionalidad getCasos y obtiene las decisiones tipo de tramite Sala
+                        getCasos(caso.nombre, "tribunal"); // Invoca la funcionalidad getCasos y obtiene las decisiones tipo de tramite Tribunal
+        } 
     }, [caso]);
     
     useEffect(() => {
