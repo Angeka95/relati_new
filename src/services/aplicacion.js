@@ -74,15 +74,16 @@ const getLikeDislike = ( providencia_id, type ) => {
   let query = '';
   switch(type) {
     case 'like':
-        query = `like=true`;
+        query = `query=consulta%20hecha%20por%20usuario&like=true`;
         break;
     case 'unlike':
-        query = `dislike=true`;
+        query = `query=consulta%20hecha%20por%20usuario&dislike=true`;
         break;
     default:
-        query = `like=true`;
+        query = `query=consulta%20hecha%20por%20usuario&like=true`;
         break;
   } 
+  console.log(`${process.env.REACT_APP_API_SERVER_DOMAIN}/savedocumentreactions?providencia_id=${providencia_id}&${query}`)
   const request =  axios.get(`${process.env.REACT_APP_API_SERVER_DOMAIN}/savedocumentreactions?providencia_id=${providencia_id}&${query}`, config);
   return request.then(response => { 
     if((response.data.status !== undefined) || (response.data.status === 401) || (response.data.status === 403)) {
