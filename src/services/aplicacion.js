@@ -63,7 +63,7 @@ const countDownloadedFicha = ( providencia_id ) => {
   });
 };
 
-const getLikeDislike = ( providencia_id, type ) => {
+const getLikeDislike = ( providencia_id, type, stringQuery= "" ) => {
   const config = {
     headers: {
       'Authorization': `Bearer ${process.env.REACT_APP_API_ACCESS_TOKEN}`,
@@ -72,18 +72,23 @@ const getLikeDislike = ( providencia_id, type ) => {
     }
   };
   let query = '';
+  if(stringQuery.length > 0) {
+    query = `query=${stringQuery}`;
+  } else {
+    query = `query=`;
+  }
   switch(type) {
     case 'like':
-        query = `query=consulta%20hecha%20por%20usuario&like=true`;
+        query = query + `&like=true`;
         break;
     case 'unlike':
-        query = `query=consulta%20hecha%20por%20usuario&dislike=true`;
+        query = query + `&dislike=true`;
         break;
     default:
-        query = `query=consulta%20hecha%20por%20usuario&like=true`;
+        query = query + `&like=true`;
         break;
   } 
-  console.log(`${process.env.REACT_APP_API_SERVER_DOMAIN}/savedocumentreactions?providencia_id=${providencia_id}&${query}`)
+  //console.log(`${process.env.REACT_APP_API_SERVER_DOMAIN}/savedocumentreactions?providencia_id=${providencia_id}&${query}`)
   const request =  axios.get(`${process.env.REACT_APP_API_SERVER_DOMAIN}/savedocumentreactions?providencia_id=${providencia_id}&${query}`, config);
   return request.then(response => { 
     if((response.data.status !== undefined) || (response.data.status === 401) || (response.data.status === 403)) {

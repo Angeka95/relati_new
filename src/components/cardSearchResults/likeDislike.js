@@ -1,6 +1,7 @@
 import React from 'react';
 import { useState, useEffect, useRef, useContext } from 'react';
 import aplicacion from '../../services/aplicacion';
+import { useSearchParams } from 'react-router-dom';
 import { Container, Grid, Tooltip, Alert } from '@mui/material';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
@@ -11,13 +12,25 @@ import Snackbar from '@mui/material/Snackbar';
 import '../../App.css';
 
 const LikeDislike = ({providenciaId}) => {
-
+  
+  const [searchParams] = useSearchParams();
+  
+  let stringQuery = "";
+  
+  if(searchParams.get('string')) {
+    stringQuery = searchParams.get('string');
+  } else if(searchParams.get('frase_exacta')) {
+    stringQuery = searchParams.get('frase_exacta');
+  } else {
+    stringQuery = ""
+  }
+  
   const [open, setOpen] = useState(false);
   const [selected, setSelected] = useState(null);
 
   const handleService = (providenciaId, type) => {
     aplicacion
-        .getLikeDislike(providenciaId, type)
+        .getLikeDislike(providenciaId, type, stringQuery)
         .then(response => {
             console.log(type);
         })
