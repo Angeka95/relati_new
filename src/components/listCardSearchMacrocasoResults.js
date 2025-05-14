@@ -24,7 +24,7 @@ import LinearWithValueLabel from '../components/linearProgress.js';
 import { validarfiltroJurisprudencial, getOpcionesAutocompletar } from '../helpers/utils.js';
 
 export default function Card({ datosTramite, selectedFilters, isListSmall, selectedTerm, isLargeResult, isExternalFilters }) {
-    
+    console.log("selected term", selectedTerm);
     const [datos, setDatos] = useState([]);
     const [datosOriginales, setDatosOriginales] = useState([]);
     const [message, setMessage] = useState({ message: "", classname: "" });

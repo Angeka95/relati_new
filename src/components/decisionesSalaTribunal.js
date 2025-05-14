@@ -102,7 +102,7 @@ export default function DecisionesSalaTribunal({caso}) {
                 setDatosTribunal(JSON.parse(localStorageDataT)); 
             }
         }
-    }, [datosSala, datosTribunal]);  
+    }, []);  
 
     useEffect(() => {
         if ((localStorage.hasOwnProperty('dataDecisionesS')) &&
