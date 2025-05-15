@@ -25,7 +25,7 @@ export default function CardDecision({ decisiones }) {
            
             <div key={decisiones.id} className=" width_100 card-content">
                
-                <LikeDislike providenciaId={decisiones.id}/>
+                {/*<LikeDislike providenciaId={decisiones.id}/> */}
                 {((typeof decisiones.nombreDecision === 'string' ) && (decisiones.nombreDecision.trim() !== '')) && (
                     <div className="justify_center margin_bottom_s"> 
                     <p className="text_bolder text_space_min">{decisiones.nombreDecision}</p>

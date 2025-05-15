@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext, useRef } from 'react';
 import { Grid, Stack, Pagination, PaginationItem, List, ListItem, Button, Box, Chip, Alert, MenuItem, FormControl, Select } from '@mui/material';
 import { SpaceGrid, WrapGrid, SpaceBetweenGrid, Width100Grid, NoneGrid, JustMapGrid, JustMapNoneGrid } from './listCardSearch/gridComponents.js';
 import Context from '../context/context.js';
-import CardSearch from './cardSearchResultsAI.js';
+import CardSearch from './cardSearchResultsVTD.js';
 import SearchBarForInnerResultsVTD from './searchBarForInnerResultsVTD.js';
 import FilterShort from './filterShort.js';
 import LinearWithValueLabel from '../components/linearProgress.js';  

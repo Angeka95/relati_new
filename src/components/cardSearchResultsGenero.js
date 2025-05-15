@@ -43,7 +43,7 @@ export default function CardSearch({ datos, tipo }) {
 
   const card = (
     <React.Fragment>
-      <LikeDislike providenciaId={datos.id}/>
+      {/*<LikeDislike providenciaId={datos.id}/>*/}
       <CardContent className="card_container">
         {((typeof datos.fecha === 'string' ) && (datos.fecha.trim() !== '')) && (
           <p className="text_uppercase justify_end_spacing text_spacing text_space_min">{datos.fecha}</p>

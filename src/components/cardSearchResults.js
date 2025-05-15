@@ -118,7 +118,7 @@ export default function CardSearch({ datos, hiddenAnalisisJuridico = false }) {
 
   const card = (
     <React.Fragment>
-      <LikeDislike providenciaId={datos.providencia_id}/>
+      {/*<LikeDislike providenciaId={datos.providencia_id}/>*/}
       <CardContent className="card_container">
       {((typeof datos.nombreDecision === 'string' ) && (datos.nombreDecision.trim() !== '')) && (
         <p className="text_bolder justify_center text_space_min">{datos.nombreDecision}</p>  
