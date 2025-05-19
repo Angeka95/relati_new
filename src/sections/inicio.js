@@ -22,7 +22,7 @@ import inithomeService from '../services/inithome.js';
 import { documentosSentencias } from '../data/data_inicio.js';
 import LinearWithValueLabel from '../components/linearProgress.js';
 import { obtenerPalabrasFromArrayObject } from '../helpers/utils.js';
-
+import DocumentosComisionGenero from '../components/documentosComisionGenero.js';
 import useSearchAIEnterKey from '../hooks/useSearchAIEnterKey.js';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
@@ -684,7 +684,8 @@ export default function Home() {
                                 </a>
                                 
                                 {isOpen && (
-                                <div  className="margin_top_s"> 
+                                <>
+                                {/*<div  className="margin_top_s"> 
                                     <p>• <a target="_blank" rel="noreferrer" className="link_secondary text_capitalize " href={`${process.env.REACT_APP_API_SERVER_DOMAIN}/documentos/providencias/14/13/Concepto_comisi%C3%B3n-g%C3%A9nero_04-mayo-2022.pdf`}>  Concepto comisión de género (04 de Mayo de 2022) </a></p>
                                     <p>• <a target="_blank" rel="noreferrer"  className="link_secondary text_capitalize" href={`${process.env.REACT_APP_API_SERVER_DOMAIN}/documentos/providencias/14/13/Concepto_comisi%C3%B3n-g%C3%A9nero_28-febrero-2022`}>  Concepto comisión de género (28 de Febrero de 2022) </a></p>
                                     <p>• <a target="_blank" rel="noreferrer" className="link_secondary text_capitalize" href={`${process.env.REACT_APP_API_SERVER_DOMAIN}/documentos/providencias/14/13/Concepto_comisi%C3%B3n-g%C3%A9nero_24-enero-2022`}>  Concepto comisión de género (24 de enero de 2022) </a></p>
@@ -695,18 +696,18 @@ export default function Home() {
                                     <p>• <a target="_blank" rel="noreferrer" className="link_secondary text_capitalize" href={`${process.env.REACT_APP_API_SERVER_DOMAIN}/documentos/providencias/14/13/Concepto_comisi%C3%B3n-g%C3%A9nero_03-septiembre-2020`}>  Concepto comisión de género (03 de Septiembre de 2020) </a></p>
                                     <p>• <a target="_blank" rel="noreferrer" className="link_secondary text_capitalize" href={`${process.env.REACT_APP_API_SERVER_DOMAIN}/documentos/providencias/14/13/Concepto_comisi%C3%B3n-g%C3%A9nero_19-mayo-2020`}>  Concepto comisión de género (19 de Mayo de 2020) </a></p>
                                     <p>• <a target="_blank" rel="noreferrer" className="link_secondary text_capitalize" href={`${process.env.REACT_APP_API_SERVER_DOMAIN}/documentos/providencias/14/13/Concepto_comisi%C3%B3n-g%C3%A9nero_02-diciembre-2019`}>  Concepto comisión de género (02 de Diciembre de 2019) </a></p>
-
                                 </div>
-                                 )}
-
+                                 }
+                                */}
+                                <DocumentosComisionGenero />
+                                </>
+                                )}
                             </li>
 
                             <li> 
-                                <a className="link_secondary text_capitalize cursor_pointer" href="${process.env.REACT_APP_API_SERVER_DOMAIN}/documentos/providencias/15/11/Protocolo-001_comision-etnico-racial_05-junio-2019.docx">
+                                <a className="link_secondary text_capitalize cursor_pointer" href="https://relatoria.jep.gov.co/documentos/providencias/15/11/Protocolo-001_comision-etnico-racial_05-junio-2019.docx">
                                 Comisión de Étnica y Racial
                                 </a>
-                                
-
                             </li>
 
                             {/* {documentosAdicionales.map((adicional) => (
