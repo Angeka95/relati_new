@@ -246,7 +246,7 @@ export default function Card({ datosTramite, selectedFilters, isListSmall, selec
         }
     }));
 
-
+    if(datosTramite.length > 0 ){
         return (
             <Stack>
                 <div className=  {isListSmall ? ('text_results_search', 'no-spacing') :  ('text_results_search','margin_search') } >
@@ -401,7 +401,7 @@ export default function Card({ datosTramite, selectedFilters, isListSmall, selec
     
                         <div className="separator width_100"></div>
                         {/* Lista de resultados */}
-                        {(datos.length > 0 ) && (
+                        {(datos.length > 0 ) ? 
                             <>
                             <SpaceGrid className="justify_end">
         
@@ -444,11 +444,28 @@ export default function Card({ datosTramite, selectedFilters, isListSmall, selec
         
                             </SpaceGrid>
                             </>
-                        )}
+                        :
+
+                                <>
+                                { ((message.classname === "error") || (message.classname === "warning")) && 
+                                  <>
+                                  <Alert variant="outlined" severity={message.classname}>
+                                  {message.message}
+                                  </Alert>
+                                  <Box sx={{ px: 0, my: 2, display: 'flex', justifyContent: 'center' }}>
+                                    <Button className="button_primary margin_xs card_size_small" target='_self' rel="noreferrer" onClick={deshacerBusqueda}>Deshacer búsqueda</Button>
+                                  </Box>
+                                  </>
+                                }
+                                </>
+                        }
                         {/* Lista de resultados */}
                     </>
             </Stack>
     
         );
-     
+    } else {
+        <>
+        </>
+    }
 }

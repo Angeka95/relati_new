@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { Container, Box, AppBar, Tabs, Tab, Select, MenuItem, Chip, FormControl, InputLabel } from '@mui/material';
+import React, { useState, useEffect, useContext, useRef } from 'react';
+import { Container, Box, AppBar, Tabs, Tab, Select, MenuItem, Chip, FormControl, InputLabel, Alert, Button } from '@mui/material';
 import DOMPurify from 'dompurify';
 import Context from '../context/context.js';
 import { useCleanLocalStorageVars } from './../hooks/useCleanLocalStorageVars.js';
@@ -45,7 +45,6 @@ export default function DecisionesSalaTribunal({caso}) {
     const [selectedtipoDecisionShow, setSelectedtipoDecisionShow] = useState(true);
     const [noResults, setNoResults] = useState(false);
 
-
     const { ttlMCD } = useContext(Context); // Variable de contexto determina el tiempo de expiracion de una varaiable localStorage
 
     // Obtiene decisiones por caso y tipo de tramite sala y tribunal
@@ -56,14 +55,14 @@ export default function DecisionesSalaTribunal({caso}) {
             .then(response => {
                 if((response.status_info.status === 200) && (response.data.length > 0)) {
                     const newData = dataResults( response.data );
-                    if (newData.length === 0) {
-                        setNoResults(true);
-                    }
+                    setNoResults(false);
                     setDatos(newData);
                     setSelectedtipoDecisionShow(true);
                     newMessage = { message: `${response.status_info.reason}`, classname: "success" };
                 } else {
-                    newMessage = { message: `${response.status_info.reason}`, classname: "error" };
+                    setNoResults(true);
+                    setDatos([]);
+                    newMessage = { message: `No se encontraron resultados`, classname: "error" };
                 }
                 setMessage(newMessage);
             }
@@ -86,8 +85,8 @@ export default function DecisionesSalaTribunal({caso}) {
             setTimeout(() => {
                 getCasos(caso.nombre, selectedTipoTramite, selectedtipoDecision);
             }, 1500);
-       }
-    },  [datos, selectedtipoDecision, selectedTipoTramite])  
+       } 
+    },  [datos, selectedtipoDecision, selectedTipoTramite, noResults])  
           
     const handleChangeTabCaso = (event, newValue) => {
         setNoResults(false);
@@ -117,8 +116,15 @@ export default function DecisionesSalaTribunal({caso}) {
         setSelectedtipoDecisionShow(true);
         setSelectedtipoDecision(event.target.value);
     };
-      
-     
+    
+    const restaurarFiltro = (e) => {
+         setNoResults(false);
+         setDatos([]);
+         setSelectedtipoDecisionShow(true);
+         setSelectedtipoDecision([]);
+         setMessage({ message: "", classname: "" });
+     };
+       
     return (
         <Container >
             <>
@@ -175,15 +181,29 @@ export default function DecisionesSalaTribunal({caso}) {
                                             </Select>
                                         </FormControl>
                                         )}
+                                        {(selectedtipoDecision.length > 0) && (datos.length > 0 ) && (
+                                            <div className='width_100'>
+                                                <ListCardSearch datosTramite={datos} isExternalFilters={false} selectedTerm={selectedtipoDecision} />
+                                            </div>
+                                        )}
                                         {((selectedtipoDecision.length > 0) && (datos.length === 0 ) && (noResults === false)) && (
                                         <>
                                             <LinearWithValueLabel processingMessages={["Procesando solicitud...", "Preparando respuestas..."]}></LinearWithValueLabel> 
                                         </> 
                                         )}
                                         {((selectedtipoDecision.length > 0) && (datos.length === 0 ) && (noResults === true)) && (
-                                            <>
-                                                No se encontraron resultados.
-                                            </> 
+                                        <>
+                                            { ((message.classname === "error") || (message.classname === "warning")) && 
+                                              <>
+                                              <Alert className='width_100' variant="outlined" severity={message.classname}>
+                                              {message.message}
+                                              </Alert>
+                                              <Box sx={{ px: 0, my: 2, display: 'flex', justifyContent: 'center' }}>
+                                                <Button className="button_primary margin_xs card_size_small" target='_self' rel="noreferrer" onClick={restaurarFiltro}>Intentar nuevamente</Button>
+                                              </Box>
+                                              </>
+                                            }
+                                        </> 
                                         )}
                                     </div>
                                 </div>
@@ -239,7 +259,16 @@ export default function DecisionesSalaTribunal({caso}) {
                                     )}
                                     {((selectedtipoDecision.length > 0) && (datos.length === 0 ) && (noResults === true)) && (
                                         <>
-                                            No se encontraron resultados.
+                                            { ((message.classname === "error") || (message.classname === "warning")) && 
+                                              <>
+                                              <Alert className='width_100' variant="outlined" severity={message.classname}>
+                                              {message.message}
+                                              </Alert>
+                                              <Box sx={{ px: 0, my: 2, display: 'flex', justifyContent: 'center' }}>
+                                                <Button className="button_primary margin_xs card_size_small" target='_self' rel="noreferrer" onClick={restaurarFiltro}>Intentar nuevamente</Button>
+                                              </Box>
+                                              </>
+                                            }
                                         </> 
                                     )}
                                 </div>
@@ -255,4 +284,5 @@ export default function DecisionesSalaTribunal({caso}) {
             </>
         </Container>
     );
+    
 }
