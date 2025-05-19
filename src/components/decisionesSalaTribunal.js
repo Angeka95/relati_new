@@ -43,6 +43,7 @@ export default function DecisionesSalaTribunal({caso}) {
     const [selectedTipoTramite, setSelectedTipoTramite] = useState("sala");
     const [selectedtipoDecision, setSelectedtipoDecision] = useState([]);
     const [selectedtipoDecisionShow, setSelectedtipoDecisionShow] = useState(true);
+    const [noResults, setNoResults] = useState(false);
 
 
     const { ttlMCD } = useContext(Context); // Variable de contexto determina el tiempo de expiracion de una varaiable localStorage
@@ -55,6 +56,9 @@ export default function DecisionesSalaTribunal({caso}) {
             .then(response => {
                 if((response.status_info.status === 200) && (response.data.length > 0)) {
                     const newData = dataResults( response.data );
+                    if (newData.length === 0) {
+                        setNoResults(true);
+                    }
                     setDatos(newData);
                     setSelectedtipoDecisionShow(true);
                     newMessage = { message: `${response.status_info.reason}`, classname: "success" };
@@ -78,6 +82,7 @@ export default function DecisionesSalaTribunal({caso}) {
     
     useEffect(() => {
        if((datos.length === 0) && (caso !== undefined) && (selectedtipoDecision.length > 0)){
+            setSelectedtipoDecisionShow(false);
             setTimeout(() => {
                 getCasos(caso.nombre, selectedTipoTramite, selectedtipoDecision);
             }, 1500);
@@ -85,6 +90,7 @@ export default function DecisionesSalaTribunal({caso}) {
     },  [datos, selectedtipoDecision, selectedTipoTramite])  
           
     const handleChangeTabCaso = (event, newValue) => {
+        setNoResults(false);
         setSelectedtipoDecision([]);
         setDatos([]);
         setSelectedtipoDecisionShow(true);
@@ -106,8 +112,9 @@ export default function DecisionesSalaTribunal({caso}) {
     };
     
     const handleSelectChange = (event) => {
+        setNoResults(false);
         setDatos([]);
-        setSelectedtipoDecisionShow(false);
+        setSelectedtipoDecisionShow(true);
         setSelectedtipoDecision(event.target.value);
     };
       
@@ -168,14 +175,14 @@ export default function DecisionesSalaTribunal({caso}) {
                                             </Select>
                                         </FormControl>
                                         )}
-                                        {(selectedtipoDecision.length > 0) && (datos.length > 0 ) && (
-                                            <div className='width_100'>
-                                                <ListCardSearch datosTramite={datos} isExternalFilters={false} selectedTerm={selectedtipoDecision} />
-                                            </div>
+                                        {((selectedtipoDecision.length > 0) && (datos.length === 0 ) && (noResults === false)) && (
+                                        <>
+                                            <LinearWithValueLabel processingMessages={["Procesando solicitud...", "Preparando respuestas..."]}></LinearWithValueLabel> 
+                                        </> 
                                         )}
-                                        {(selectedtipoDecision.length > 0) && (datos.length === 0 ) && (
+                                        {((selectedtipoDecision.length > 0) && (datos.length === 0 ) && (noResults === true)) && (
                                             <>
-                                                <LinearWithValueLabel processingMessages={["Procesando solicitud...", "Preparando respuestas..."]}></LinearWithValueLabel> 
+                                                No se encontraron resultados.
                                             </> 
                                         )}
                                     </div>
@@ -225,9 +232,14 @@ export default function DecisionesSalaTribunal({caso}) {
                                             <ListCardSearch datosTramite={datos} isExternalFilters={false} selectedTerm={selectedtipoDecision} />
                                         </div>
                                     )}
-                                    {(selectedtipoDecision.length > 0) && (datos.length === 0 ) && (
+                                    {((selectedtipoDecision.length > 0) && (datos.length === 0 ) && (noResults === false)) && (
                                         <>
                                             <LinearWithValueLabel processingMessages={["Procesando solicitud...", "Preparando respuestas..."]}></LinearWithValueLabel> 
+                                        </> 
+                                    )}
+                                    {((selectedtipoDecision.length > 0) && (datos.length === 0 ) && (noResults === true)) && (
+                                        <>
+                                            No se encontraron resultados.
                                         </> 
                                     )}
                                 </div>
