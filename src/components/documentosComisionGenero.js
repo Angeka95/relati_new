@@ -8,6 +8,56 @@ const DocumentosComisionGenero = () => {
   
       const documentos = [
       {
+        "nombre": "Concepto comisión de género (04 de Mayo de 2022)",
+        "href": `${process.env.REACT_APP_API_SERVER_DOMAIN}/documentos/providencias/14/13/Concepto_comisi%C3%B3n-g%C3%A9nero_04-mayo-2022.pdf`,
+        "fecha": "04/05/2022"
+      },
+      {
+        "nombre": "Concepto comisión de género (28 de Febrero de 2022)",
+        "href": `${process.env.REACT_APP_API_SERVER_DOMAIN}/documentos/providencias/14/13/Concepto_comisi%C3%B3n-g%C3%A9nero_28-febrero-2022`,
+        "fecha": "28/02/2022"
+      },
+      {
+        "nombre": "Concepto comisión de género (24 de enero de 2022)",
+        "href": `${process.env.REACT_APP_API_SERVER_DOMAIN}/documentos/providencias/14/13/Concepto_comisi%C3%B3n-g%C3%A9nero_24-enero-2022`,
+        "fecha": "24/01/2022"
+      },
+      {
+        "nombre": "Concepto comisión de género (02 de Diciembre de 2021)",
+        "href": `${process.env.REACT_APP_API_SERVER_DOMAIN}/documentos/providencias/14/13/Concepto_comisi%C3%B3n-g%C3%A9nero_02-diciembre-2021`,
+        "fecha": "02/12/2021"
+      },
+      {
+        "nombre": "Concepto comisión de género (22 de Septiembre de 2021)",
+        "href": `${process.env.REACT_APP_API_SERVER_DOMAIN}/documentos/providencias/14/13/Concepto_comisi%C3%B3n-g%C3%A9nero_22-septiembre-2021`,
+        fecha: "22/09/2021"
+      },
+      {
+        "nombre": "Concepto comisión de género (14 de Julio de 2021)",
+        "href": `${process.env.REACT_APP_API_SERVER_DOMAIN}/documentos/providencias/14/13/Concepto_comisi%C3%B3n-g%C3%A9nero_14-julio-2021`,
+        "fecha": "14/07/2021"
+      },
+      {
+        "nombre": "Concepto comisión de género (22 de Diciembre de 2020)",
+        "href": `${process.env.REACT_APP_API_SERVER_DOMAIN}/documentos/providencias/14/13/Concepto_comisi%C3%B3n-g%C3%A9nero_22-diciembre-2020`,
+        "fecha": "22/12/2020"
+      },
+      {
+        "nombre": "Concepto comisión de género (03 de Septiembre de 2020)",
+        "href": `${process.env.REACT_APP_API_SERVER_DOMAIN}/documentos/providencias/14/13/Concepto_comisi%C3%B3n-g%C3%A9nero_03-septiembre-2020`,
+        "fecha": "03/09/2020"
+      },
+      {
+        "nombre": "Concepto comisión de género (19 de Mayo de 2020)",
+        "href": `${process.env.REACT_APP_API_SERVER_DOMAIN}/documentos/providencias/14/13/Concepto_comisi%C3%B3n-g%C3%A9nero_19-mayo-2020`,
+        "fecha": "19/05/2020"
+      },
+      {
+        "nombre": "Concepto comisión de género (02 de Diciembre de 2019)",
+        "href": `${process.env.REACT_APP_API_SERVER_DOMAIN}/documentos/providencias/14/13/Concepto_comisi%C3%B3n-g%C3%A9nero_02-diciembre-2019`,
+        "fecha": "02/12/2019"
+      },
+      {
         "nombre": "Concepto Comisión Género (25 De Junio De 2018)",
         "href": "https://relatoria.jep.gov.co/documentos/providencias/14/13/Concepto_comisión-genero_25-junio-2018.pdf",
         "fecha": "25/06/2018"
