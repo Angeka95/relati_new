@@ -24,7 +24,7 @@ import LinearWithValueLabel from '../components/linearProgress.js';
 import { validarfiltroJurisprudencial, getOpcionesAutocompletar } from '../helpers/utils.js';
 
 export default function Card({ datosTramite, selectedFilters, isListSmall, selectedTerm, isLargeResult, isExternalFilters }) {
-    console.log("selected term", selectedTerm);
+
     const [datos, setDatos] = useState([]);
     const [datosOriginales, setDatosOriginales] = useState([]);
     const [message, setMessage] = useState({ message: "", classname: "" });
@@ -82,17 +82,16 @@ export default function Card({ datosTramite, selectedFilters, isListSmall, selec
 
     const startIndexPage = Math.ceil(page * itemsPerPage + 1 - itemsPerPage);
 
-    useEffect(() => {
-        if(datos.length > 0) {
-            getCurrentData();
-        } else {
-            setDatos(datosTramite);
+   useEffect(() => {
+        if(datosTramite.length > 0){
+            setDatos(datosTramite)
             setDatosOriginales(datosTramite);
         }
-    }, [page, itemsPerPage, datos, datosTramite]);
+        if(datos.length > 0){
+            getCurrentData();
+        }
+    }, [datos, datosTramite]); 
     
-
-
     const getCurrentData = (items = 0) => {
         if (items === 0) {
             items = itemsPerPage;
@@ -247,22 +246,7 @@ export default function Card({ datosTramite, selectedFilters, isListSmall, selec
         }
     }));
 
-    if(datos.length === 0){
-        return(<>
-            { (message.message === "") ?
-                <>
-                <LinearWithValueLabel processingMessages={["Procesando solicitud...", "Preparando respuesta..."]}></LinearWithValueLabel> 
-                </> 
-                :
-                    <div style={{ paddingBottom: '2rem' }}>
-                    <Alert variant="outlined" severity={message.classname} >
-                        {message.message}
-                    </Alert>
-                    </div> 
-            } 
-            </>
-        )
-    } else {
+
         return (
             <Stack>
                 <div className=  {isListSmall ? ('text_results_search', 'no-spacing') :  ('text_results_search','margin_search') } >
@@ -417,7 +401,7 @@ export default function Card({ datosTramite, selectedFilters, isListSmall, selec
     
                         <div className="separator width_100"></div>
                         {/* Lista de resultados */}
-                        {(datos.length > 0 ) ?
+                        {(datos.length > 0 ) && (
                             <>
                             <SpaceGrid className="justify_end">
         
@@ -460,32 +444,11 @@ export default function Card({ datosTramite, selectedFilters, isListSmall, selec
         
                             </SpaceGrid>
                             </>
-                        : 
-                            <>
-                            { (message.message === "") ?
-                                <>
-                                <LinearWithValueLabel processingMessages={["Procesando solicitud...", "Preparando respuesta..."]}></LinearWithValueLabel> 
-                                </> 
-                                :
-                                <>
-                                { ((message.classname === "error") || (message.classname === "warning")) && 
-                                  <>
-                                  <Alert variant="outlined" severity={message.classname}>
-                                  {message.message}
-                                  </Alert>
-                                  <Box sx={{ px: 0, my: 2, display: 'flex', justifyContent: 'center' }}>
-                                    <Button className="button_primary margin_xs card_size_small" target='_self' rel="noreferrer" onClick={deshacerBusqueda}>Deshacer búsqueda</Button>
-                                  </Box>
-                                  </>
-                                }
-                                </>
-                            }
-                            </>
-                        }
+                        )}
                         {/* Lista de resultados */}
                     </>
             </Stack>
     
         );
-     } 
+     
 }

@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 import Context from './context';
 import { filtroByDefault, filtroBusquedaAvanzadaByDefault } from '../helpers/utils.js';
 
-
 const ContextProvider = ({ children }) => {
   // Estado que se va a compartir a través del contexto
   const [verTodasDecisiones, setVerTodasDecisiones] = useState(true);

@@ -120,4 +120,28 @@ const getHitosMacrocasos = () => {
 
 };
 
-export default { getMacrocasos, getCasosXTramite, getBoletinesMacrocaso, getDetailedMacrocasos, getHitosMacrocasos }
+const getFilterCasoSalaTribunal = (caso, tipoTramite, tiposDecisiones) => {
+  const config = {
+    headers: {
+      'Authorization': `Bearer ${process.env.REACT_APP_API_ACCESS_TOKEN}`,
+      'user': process.env.REACT_APP_API_USER,
+      'password': process.env.REACT_APP_API_PASS
+    },
+    params: { }
+  };
+  const stringTiposDecisiones = tiposDecisiones.map(encodeURIComponent).join(',');
+  const request =  axios.get(`${process.env.REACT_APP_API_SERVER_DOMAIN}/filtercaso?salatramite=${tipoTramite}&caso=${caso}&tipo=${stringTiposDecisiones}`, config);
+  return request.then(response => {
+    if((response.status !== 200) || (response.status === 401) || (response.status === 403)) {
+      return { "data": [], "status_info": { "status": response.status, "reason": response.statusText }};
+    } else {
+      return { "data": response.data, "status_info": { "status": 200, "reason": "OK" } };
+    }
+  }).catch(error => { 
+    return { "data": [], "status_info": { "status": error.response.data.status, "reason": error.response.data.reason } };
+  });
+
+};
+
+export default { getMacrocasos, getCasosXTramite, getBoletinesMacrocaso, getDetailedMacrocasos, getHitosMacrocasos, getFilterCasoSalaTribunal }
+
