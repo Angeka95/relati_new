@@ -44,6 +44,23 @@ export default function Libros() {
                 `, 
             cover:`${process.env.REACT_APP_API_SERVER_DOMAIN}/img/libros/portada_tomo_II.jpg`
          },
+         {
+            id : 3,
+            pdf: `${process.env.REACT_APP_API_SERVER_DOMAIN}/documentos/libros/Tomo_3_Macrocasos.pdf`, 
+            fecha: "2025-05", 
+            qr: `${process.env.REACT_APP_API_SERVER_DOMAIN}/img/libros/QR_TOMO3.png`, 
+            title: `Tomo III </br>
+            Lineamientos para el análisis temático de las decisiones de la JEP: reflexiones desde la teoría jurídica y la práctica judicial`,
+            text:`Este tomo se centra en los macrocasos de la JEP, en donde diferentes autores de la entidad dan una perspectiva analítica de estas investigaciones judiciales, que se pueden agrupar en cuatro ejes temáticos: (i) el análisis contextual del proceso investigativo
+ de los macrocasos; (ii) la formulación de la jurisprudencia transicional en cada macrocaso; (iii) los principales avances y resultados en las investigaciones, al igual que sus retos estructurales y (iv) los conceptos esenciales en las investigaciones, como
+ el de máxima responsabilidad. 
+
+La JEP abrió 11 macrocasos con el fin de investigar quiénes fueron los máximos responsables y para satisfacer el derecho a la verdad justicia, reparación y garantías de no repetición de las víctimas. Un macrocaso agrupa una gran cantidad de casos en un patrón,
+ esto es, la repetición no accidental de una conducta delictiva similar en cuanto a su finalidad, modo de comisión y características de las víctimas. Es una figura novedosa en Colombia, que ayuda a estudiar conductas delictivas relacionadas con crímenes de
+ guerra y de lesa humanidad
+                `, 
+            cover:`${process.env.REACT_APP_API_SERVER_DOMAIN}/img/libros/portada_tomo3.jpeg`
+         },
     
     
     ]

@@ -2501,14 +2501,14 @@ padding: 0px 0% 0% 3%;
 
 .logo_escudo_min{ 
   width: 50px;
-  margin: 0px 40px;
+  margin: 0px 0px;
   min-width: 50px;
   min-height: 50px;
   max-height: 50px;
 }
 
 .menu_text{
-  font-size: 0.9rem !important;
+  font-size: 0.8rem !important;
   font-weight: 600 !important;
   min-width: 50px !important;
   max-width: 180px;
@@ -3346,6 +3346,13 @@ color: rgb(219, 0, 69);
     margin-right: 0%;
   }
 
+  .menu_text{
+    font-size: 0.7rem !important;
+    margin: 0px 1px !important;
+    line-height: .7rem !important;
+  }
+  
+
 
 
 }
@@ -3505,8 +3512,16 @@ color: rgb(219, 0, 69);
 .imagen_equipo_relatoria{
   max-width: 100%;
 }
+.menu_text{
+  font-size: 0.65rem !important;
+  margin: 0px 1px !important;
+  line-height: .7rem !important;
+}
 
 }
+
+
+
 
 @media (min-width: 600px) {
   .timeline {
