@@ -152,6 +152,11 @@ export default function Home() {
         window.scrollTo(0, 0);
     };
 
+    const goToEnfoqueGeneroPage = () => {
+        navigate('/enfoquegenero');
+        window.scrollTo(0, 0);
+    };
+
 
     /*const options = [
         { title: 'Competencia de la JEP' },
@@ -660,6 +665,12 @@ export default function Home() {
                     <div className="container_40 ">
                         <h2 className="text_bolder text_left">Documentos</h2>
                         <h5>Conozca los documentos de Sentencias Interpretativas y Comisiones de Género </h5>
+                        <div className="separator"> 
+                        </div> 
+                        <h5 className='margin_top_s margin_bottom_s'> Encuentre las decisiones de la JEP y actividad judicial basadas en enfoque de género </h5>
+                        <Button onClick={goToEnfoqueGeneroPage} className="button_primary " >
+                             Ver decisiones 
+                        </Button>
                     </div>
                     <div className="wrap container_60">
                         <ul>
