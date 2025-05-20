@@ -696,20 +696,6 @@ export default function Home() {
                                 
                                 {isOpen && (
                                 <>
-                                {/*<div  className="margin_top_s"> 
-                                    <p>• <a target="_blank" rel="noreferrer" className="link_secondary text_capitalize " href={`${process.env.REACT_APP_API_SERVER_DOMAIN}/documentos/providencias/14/13/Concepto_comisi%C3%B3n-g%C3%A9nero_04-mayo-2022.pdf`}>  Concepto comisión de género (04 de Mayo de 2022) </a></p>
-                                    <p>• <a target="_blank" rel="noreferrer"  className="link_secondary text_capitalize" href={`${process.env.REACT_APP_API_SERVER_DOMAIN}/documentos/providencias/14/13/Concepto_comisi%C3%B3n-g%C3%A9nero_28-febrero-2022`}>  Concepto comisión de género (28 de Febrero de 2022) </a></p>
-                                    <p>• <a target="_blank" rel="noreferrer" className="link_secondary text_capitalize" href={`${process.env.REACT_APP_API_SERVER_DOMAIN}/documentos/providencias/14/13/Concepto_comisi%C3%B3n-g%C3%A9nero_24-enero-2022`}>  Concepto comisión de género (24 de enero de 2022) </a></p>
-                                    <p>• <a target="_blank" rel="noreferrer" className="link_secondary text_capitalize" href={`${process.env.REACT_APP_API_SERVER_DOMAIN}/documentos/providencias/14/13/Concepto_comisi%C3%B3n-g%C3%A9nero_02-diciembre-2021`}>  Concepto comisión de género (02 de Diciembre de 2021) </a></p>
-                                    <p>• <a target="_blank" rel="noreferrer" className="link_secondary text_capitalize" href={`${process.env.REACT_APP_API_SERVER_DOMAIN}/documentos/providencias/14/13/Concepto_comisi%C3%B3n-g%C3%A9nero_22-septiembre-2021`}>  Concepto comisión de género (22 de Septiembre de 2021) </a></p>
-                                    <p>• <a target="_blank" rel="noreferrer" className="link_secondary text_capitalize" href={`${process.env.REACT_APP_API_SERVER_DOMAIN}/documentos/providencias/14/13/Concepto_comisi%C3%B3n-g%C3%A9nero_14-julio-2021`}>  Concepto comisión de género (14 de Julio de 2021) </a></p>
-                                    <p>• <a target="_blank" rel="noreferrer" className="link_secondary text_capitalize" href={`${process.env.REACT_APP_API_SERVER_DOMAIN}/documentos/providencias/14/13/Concepto_comisi%C3%B3n-g%C3%A9nero_22-diciembre-2020`}>  Concepto comisión de género (22 de Diciembre de 2020) </a></p>
-                                    <p>• <a target="_blank" rel="noreferrer" className="link_secondary text_capitalize" href={`${process.env.REACT_APP_API_SERVER_DOMAIN}/documentos/providencias/14/13/Concepto_comisi%C3%B3n-g%C3%A9nero_03-septiembre-2020`}>  Concepto comisión de género (03 de Septiembre de 2020) </a></p>
-                                    <p>• <a target="_blank" rel="noreferrer" className="link_secondary text_capitalize" href={`${process.env.REACT_APP_API_SERVER_DOMAIN}/documentos/providencias/14/13/Concepto_comisi%C3%B3n-g%C3%A9nero_19-mayo-2020`}>  Concepto comisión de género (19 de Mayo de 2020) </a></p>
-                                    <p>• <a target="_blank" rel="noreferrer" className="link_secondary text_capitalize" href={`${process.env.REACT_APP_API_SERVER_DOMAIN}/documentos/providencias/14/13/Concepto_comisi%C3%B3n-g%C3%A9nero_02-diciembre-2019`}>  Concepto comisión de género (02 de Diciembre de 2019) </a></p>
-                                </div>
-                                 }
-                                */}
                                 <DocumentosComisionGenero />
                                 </>
                                 )}

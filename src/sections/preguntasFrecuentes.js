@@ -49,8 +49,8 @@ export default function PreguntasFrecuentes() {
         {
 
             id: 7,
-            pregunta: '¿Por qué hay fichas jurisprudenciales sin problema jurídico y tesis?',
-            descripcion: 'Teniendo en cuenta que la Relatoría emplea dos niveles de titulación, encontrará unas fichas jurisprudenciales con un análisis más minucioso, más allá de los datos de identificación y la síntesis del caso. El criterio para esta diferenciación es la novedad jurídica o de innovación en las reglas de derecho para la resolución de cada caso concreto. En el primer nivel, además de los datos de identificación de la providencia o criterios del documento, resuelves, normas aplicables, y la sección de palabras clave, la Relatoría construye una síntesis del caso, notas de relatoría y enfoques diferenciales. La titulación en segundo nivel incluye, además de los campos que extraen en la titulación de primer nivel, una parte enfocada en los problemas jurídicos y las tesis jurisprudenciales.'
+            pregunta: '¿Qué metodología se utiliza para realizar la titulación?',
+            descripcion: 'La titulación realizada por la Relatoría General de la JEP ha tenido una constante evolución. Inicialmente, se basó en un análisis de dos niveles que agrupaba tanto los datos esenciales de las providencias como la síntesis de esta y una revisión general de problemas y reglas. Hoy en día, dicha titulación se ha complejizado y se realiza a partir de la metodología IRAC que, en su esencia, exige la identificación de los problemas jurídicos, las reglas jurídicas relevantes, la aplicación de dichas reglas a los casos concretos y las conclusiones de la administración de justicia sobre las cuales se desarrolla una providencia. La integración de esta metodología ha implicado un avance muy relevante para facilitar el procesamiento de la información, pero, sobre todo, para hacer cada vez más sencilla la búsqueda especializada de decisiones judiciales. Así las cosas, partiendo del método IRAC, se ha impulsado una mayor capacidad de clasificación, se han construido mejores herramientas de divulgación y se ha simplificado el análisis jurisprudencial.'
 
 
         },
