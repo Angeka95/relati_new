@@ -46,9 +46,9 @@ export default function Libros() {
          },
          {
             id : 3,
-            pdf: `${process.env.REACT_APP_API_SERVER_DOMAIN}/documentos/libros/Tomo_3_Macrocasos.pdf`, 
+            pdf: `${process.env.REACT_APP_API_SERVER_DOMAIN}/documentos/libros/Tomo_III_Macrocasos_versión_final.pdf`, 
             fecha: "2025-05", 
-            qr: `${process.env.REACT_APP_API_SERVER_DOMAIN}/img/libros/QR_TOMO3.png`, 
+            qr: `${process.env.REACT_APP_API_SERVER_DOMAIN}/img/libros/QR_TOMO_III.png`, 
             title: `Tomo III </br>
             Lineamientos para el análisis temático de las decisiones de la JEP: reflexiones desde la teoría jurídica y la práctica judicial`,
             text:`Este tomo se centra en los macrocasos de la JEP, en donde diferentes autores de la entidad dan una perspectiva analítica de estas investigaciones judiciales, que se pueden agrupar en cuatro ejes temáticos: (i) el análisis contextual del proceso investigativo

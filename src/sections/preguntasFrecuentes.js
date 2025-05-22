@@ -87,10 +87,10 @@ export default function PreguntasFrecuentes() {
                                             className="width_100 wrap justify_between"
                                             onClick={() => toggleExpansion(preguntaFrecuente.id)} // Alternar expansión
                                         >
-                                            <span className="text_bolder margin_right_s text_accordion_size">
+                                            <span className="text_bolder margin_right_s text_accordion_size cursor_pointer">
                                                 {preguntaFrecuente.pregunta}
                                             </span>
-                                            <div className="">
+                                            <div className="cursor_pointer">
                                                 <ExpandLessOutlinedIcon style={{
                                                     color: '98C438',
                                                     transform: expandedQuestionId === preguntaFrecuente.id ? 'rotate(180deg)' : 'rotate(0deg)',
