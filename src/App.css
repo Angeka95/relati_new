@@ -731,7 +731,7 @@ h6 {
 }
 
 .cursor_pointer{
-  cursor: pointer;
+  cursor: pointer !important;
 }
 
 /*END CONTAINER*/
