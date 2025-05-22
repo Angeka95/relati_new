@@ -603,6 +603,22 @@ h6 {
   width: 100% !important;
 }
 
+.width_95 {
+  width: 95% !important;
+}
+
+.width_90 {
+  width: 90% !important;
+}
+
+.width_80 {
+  width: 80% !important;
+}
+
+.width_70 {
+  width: 70% !important;
+}
+
 .width_50 {
   width: 50% !important;
 }
@@ -613,6 +629,22 @@ h6 {
 
 .width_30 {
   width: 30% !important;
+}
+
+.width_20 {
+  width: 20% !important;
+}
+
+.width_10 {
+  width: 10% !important;
+}
+
+.width_5 {
+  width: 5% !important;
+}
+
+.width_2 {
+  width: 2% !important;
 }
 
 .shadow {
@@ -684,6 +716,14 @@ h6 {
 
 .display_block{
   display: block
+}
+
+.f_wrap{
+  flex-wrap: wrap ;
+}
+
+.f_nowrap{
+  flex-wrap: nowrap ;
 }
 
 .z-index100{
@@ -1509,6 +1549,10 @@ h6 {
   scroll-behavior: smooth;
 
   scrollbar-gutter: stable both-edges;
+}
+
+.modal_spacing{ 
+  padding: 0px 20px !important;
 }
 
 
@@ -2600,6 +2644,7 @@ padding: 0px 0% 0% 3%;
   border-radius: 16px;
   box-shadow: 24px;
   padding: 24px 60px;
+  max-width: 90%;
 }
 
 .modal_title {
@@ -3273,6 +3318,63 @@ color: rgb(219, 0, 69);
 
 /* Fin  Card  */
 
+
+/* checkbox */
+
+.css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root.Mui-checked, .css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root.MuiCheckbox-indeterminate {
+  color: #007CAE !important;
+}
+
+.display_grid{
+  display: grid !important;
+}
+
+.columns {
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)) !important;                         
+}
+
+.MuiFormControlLabel-root {
+  display: block; 
+}
+
+.header_select{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.title_select{ 
+  width: 96%;
+} 
+
+.button_select{
+  width: 4%;
+}
+
+.scroll_modal{
+  width: 1000px;
+  max-height: 90%; 
+  overflow-y: auto; 
+  box-shadow: 0px 8px 16px rgba(57, 129, 195, 0.2);
+  border-radius: 20px; 
+  background-color: #fff;
+}
+
+
+/* Firefox */
+.scroll_modal {
+  scrollbar-width: thin;
+  scrollbar-color: #dedede transparent; /*Color del control deslizante del scroll y el fondo */
+
+  scroll-behavior: smooth;
+
+  scrollbar-gutter: stable both-edges;
+}
+
+
+
+/* fin checkbox */
+
 /*--------------------------------------------------------------------*/
 /*--------------------------------------------------------------------*/
 
@@ -3285,6 +3387,16 @@ color: rgb(219, 0, 69);
 
 }
 
+@media (max-width: 1300px) {
+  .modal_box{
+    max-height: 80%;
+    overflow-y: auto;
+  }
+  
+  }
+
+
+
 
 @media (max-width: 1130px) {
   .filter_justify_between {
@@ -3294,6 +3406,11 @@ color: rgb(219, 0, 69);
 
   .query_none{
     display: none !important;
+  }
+
+  .header_select{
+    justify-content: center;
+    flex-wrap: wrap;
   }
 }
 
@@ -3351,6 +3468,8 @@ color: rgb(219, 0, 69);
     margin: 0px 1px !important;
     line-height: .7rem !important;
   }
+
+
   
 
 
@@ -3384,6 +3503,11 @@ color: rgb(219, 0, 69);
 
 
 }
+@media (min-width: 1000px) {
+.display_none_desktop{
+  display: none !important;
+}
+}
 
 @media (max-width: 1000px) {
   .list_item_tesauro {
@@ -3396,6 +3520,12 @@ color: rgb(219, 0, 69);
   .scroll-container {
     max-width: 90%;
     margin: 0% 5% 0% 5%;
+
+  }
+
+  .scroll_modal {
+    max-width: 90%;
+    
 
   }
   .carousel_container{
@@ -3516,6 +3646,14 @@ color: rgb(219, 0, 69);
   font-size: 0.65rem !important;
   margin: 0px 1px !important;
   line-height: .7rem !important;
+}
+
+.width_100_mobile{
+  width:100% !important;
+}
+
+.display_none_mobile{
+  display: none !important;
 }
 
 }
