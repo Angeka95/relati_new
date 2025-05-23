@@ -79,8 +79,9 @@ export default function ButtonDownloadXLSCustom({ stringURL, stringParams, datos
         if (openModal) {
             
             const selectedOptions = optionsExcel.filter(option => checkedState[option.label]);
-            const predeterminatedValues = ["nombre_providencia", "estado_id", "departamento"];
-            const priorityValues = ["nombre_providencia", "estado_id", "anio_hechos", "departamento", "delito"];
+            const predeterminatedValues = ["tipo_documento", "fecha_documento", "sala_seccion", "enlace", "palabras_clave", "conclusion", "nombre_providencia"];
+            const priorityValues = ["tipo_documento", "fecha_documento", "sala_seccion", "enlace", "palabras_clave", "conclusion", "nombre_providencia"];
+            
             let selectedValues = [];
             
             if((selectedOptions.length > 0) && (selectedOptions.length < optionsExcel.length)){
