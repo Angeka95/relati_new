@@ -460,7 +460,7 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
                         { ((datos.length > 0) && (datosToExport !== null)) && 
                             <ButtonDownloadXLS 
                                 stringURL={`${process.env.REACT_APP_API_SERVER_DOMAIN}/downloadresult`}
-                                stringParams={`idpro=${datosToExport}`}
+                                stringParams={`idpro=${datosToExport}&columns=nombre_providencia`}
                                 datosToExport={datosToExport}
                                 filename="resultados.xlsx"
                                 requireService="no"

@@ -1,15 +1,46 @@
 import React, { useState , useEffect } from 'react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { getDownloadResultsXLS } from '../services/downloads.js';
 import { Modal, Box, Button, FormControlLabel, Checkbox,FormGroup,  } from '@mui/material';
 import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
 import CloseIcon from '@mui/icons-material/Close';
 import '../App.css';
 
-export default function ButtonDownloadXLSCustom() {
+export default function ButtonDownloadXLSCustom({ stringURL, stringParams, datosToExport, filename = 'archivo.xlsx'}) {
 
-    const optionsExcel = ["Accionado / vinculado", "Análisis caso concreto", "Año de los hechos", "Autor", "Compareciente", "Conclusión", "Delito", "Departamento", "Derecho fundamental", "Enfoque diferencial", "Enlace", "Expediente", "Fecha de providencia","Hechos / Antecedentes","Macrocaso asociado","Municipio","Nombre","Palabras clave","Problema jurídico","Procedimiento","Radicado","Reglas jurídicas","Resuelve","Sala / Sección","Síntesis", "Tipo de compareciente","Tipo de documento"]; 
+    const [downloadLink, setDownloadLink] = useState(null);
     
-    const initialState = optionsExcel.reduce((acc, option) => { acc[option] = true; return acc; }, {});
+    const optionsExcel = [
+        { label: "Accionado / vinculado", value: "accionado_vinculado" },
+        { label: "Análisis caso concreto", value: "analisis_caso_concreto" },
+        { label: "Año de los hechos", value: "anio_hechos" },
+        { label: "Autor", value: "autor" },
+        { label: "Compareciente", value: "compareciente" },
+        { label: "Conclusión", value: "conclusion_resuelve" },
+        { label: "Delito", value: "delito" },
+        { label: "Departamento", value: "departamento" },
+        { label: "Derecho fundamental", value: "derecho_fundamental" },
+        { label: "Enfoque diferencial", value: "enfoque" },
+        { label: "Enlace", value: "hipervinculo" },
+        { label: "Expediente", value: "expediente" },
+        { label: "Fecha de providencia", value: "fecha_documento" },
+        { label: "Hechos / Antecedentes", value: "hechos_antecedentes" },
+        { label: "Macrocaso asociado", value: "macrocaso" },
+        { label: "Municipio", value: "municipio" },
+        { label: "Nombre", value: "nombre_providencia" },
+        { label: "Palabras clave", value: "palabras_clave" },
+        { label: "Problema jurídico", value: "problema_juridico" },
+        { label: "Procedimiento", value: "procedimiento" },
+        { label: "Radicado", value: "radicado_documento" },
+        { label: "Reglas jurídicas", value: "reglas_juridicas" },
+        { label: "Resuelve", value: "resuelve" },
+        { label: "Sala / Sección", value: "sala_seccion" },
+        { label: "Síntesis", value: "sintesis" },
+        { label: "Tipo de compareciente", value: "tipo_compareciente" },
+        { label: "Tipo de documento", value: "tipo_documento" }
+    ];
+    
+    const initialState = optionsExcel.reduce((acc, option) => { acc[option.label] = true; return acc; }, {});
     
     const [checkedState, setCheckedState] = useState(initialState);
 
@@ -28,7 +59,7 @@ export default function ButtonDownloadXLSCustom() {
         setCheckedState((prevState) => {
           const newState = {};
           optionsExcel.forEach((option) => {
-            newState[option] = checked; 
+            newState[option.label] = checked; 
           });
           return newState; 
         });
@@ -37,11 +68,51 @@ export default function ButtonDownloadXLSCustom() {
     
     const handleChangeCheck = (event) => {
         const { name, checked } = event.target;
+       
         setCheckedState((prevState) => ({
           ...prevState,
           [name]: checked, 
         }));
     };
+    
+    useEffect(() => {
+        if (openModal) {
+            
+            const selectedOptions = optionsExcel.filter(option => checkedState[option.label]);
+            const predeterminatedValues = ["nombre_providencia", "estado_id", "departamento"];
+            const priorityValues = ["nombre_providencia", "estado_id", "anio_hechos", "departamento", "delito"];
+            let selectedValues = [];
+            
+            if((selectedOptions.length > 0) && (selectedOptions.length < optionsExcel.length)){
+              selectedValues = selectedOptions.map(option => option.value);
+              
+              // Ensure predeterminatedValues are included in selectedValues
+              predeterminatedValues.forEach((val) => {
+                  if (!selectedValues.includes(val)) {
+                      selectedValues.push(val);
+                  }
+              });
+            
+            } else if(selectedOptions.length === optionsExcel.length){
+                selectedValues = optionsExcel.map(option => option.value);
+                // Ensure predeterminatedValues are included in selectedValues
+                predeterminatedValues.forEach((option) => {
+                    if (!selectedValues.includes(option)) {
+                        selectedValues.push(option);
+                    }
+                });
+            } else if(selectedOptions.length === 0){
+                selectedValues = predeterminatedValues;
+            }
+          
+            const newSelectedValues = priorityValues.concat(selectedValues.filter(option => !priorityValues.includes(option)));
+            
+            const stringColumns = `columns=${newSelectedValues.join(',')}`;
+            setDownloadLink(`${stringURL}?${stringParams}&${stringColumns}`);
+        } else {
+            setDownloadLink(null);
+        }
+    }, [checkedState, openModal, stringParams]);
   
     return (
       <>
@@ -94,7 +165,7 @@ export default function ButtonDownloadXLSCustom() {
                   }}
                 />
                 <div className="width_100_mobile justify_center_mobile">
-                  <Button className="text_capitalize button_primary margin_bottom_s">
+                  <Button className="text_capitalize button_primary margin_bottom_s" href={downloadLink} download={filename} target="_blank" rel="noreferrer">
                     <FileDownloadOutlinedIcon />
                     Descargar Excel
                   </Button>
@@ -104,27 +175,18 @@ export default function ButtonDownloadXLSCustom() {
                 <FormGroup className="display_grid columns">
                   {optionsExcel.map((option) => (
                     <FormControlLabel
-                      key={option}
+                      key={option.value}
                       control={
                         <Checkbox
-                          checked={checkedState[option]}
+                          checked={checkedState[option.label]}
                           onChange={handleChangeCheck}
-                          name={option}
+                          name={option.label}
                         />
                       }
-                      label={option}
+                      label={option.label}
                     />
                   ))}
                 </FormGroup>
-              </div>
-              <div className="justify_center width_100 flex_nowrap">
-                {/* 
-                <Link to="/busqueda-avanzada">
-                  <Button className="text_capitalize button_primary margin_bottom_s">
-                    Búsqueda Avanzada
-                  </Button>
-                </Link> 
-                */}
               </div>
             </Box>
           </div>
