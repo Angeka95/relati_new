@@ -7,6 +7,7 @@ import SearchBarForInnerResultsVTD from './searchBarForInnerResultsVTD.js';
 import FilterShort from './filterShort.js';
 import LinearWithValueLabel from '../components/linearProgress.js';  
 import ButtonDownloadXLS from './buttonDownloadXLS.js';
+import ButtonDownloadXLSCustom from './buttonDownloadXLSCustom.js';
 import SortIcon from '@mui/icons-material/Sort';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
@@ -426,13 +427,21 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
                     }
                     <div className="justify_end">    
                         { ((datos.length > 0) && (datosToExport !== null)) && 
-                            <ButtonDownloadXLS 
+                            <>
+                                <ButtonDownloadXLSCustom
+                                    stringURL={`${process.env.REACT_APP_API_SERVER_DOMAIN}/downloadresult`}
+                                    stringParams={`idpro=${datosToExport}`}
+                                    datosToExport={datosToExport}
+                                    filename="resultados.xlsx"
+                                /> 
+                                {/*<ButtonDownloadXLS 
                                 stringURL={`${process.env.REACT_APP_API_SERVER_DOMAIN}/downloadresult`}
-                                stringParams={`idpro=${datosToExport}&columns=nombre_providencia`}
+                                stringParams={`idpro=${datosToExport}`}
                                 datosToExport={datosToExport}
                                 filename="resultados.xlsx"
                                 requireService="no"
-                            />
+                                />*/}
+                            </>
                         }
                     </div>
                     <div className="separator width_100"></div>

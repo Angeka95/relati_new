@@ -12,6 +12,7 @@ import CardSearch from './cardSearchResults.js';
 import SearchBarForInnerResults from './searchBarForInnerResults.js';
 import FilterShort from './filterShort.js';
 import ButtonDownloadXLS from './buttonDownloadXLS.js';
+import ButtonDownloadXLSCustom from './buttonDownloadXLSCustom.js';
 import LinearWithValueLabel from '../components/linearProgress.js';
 import '../App.css';
 
@@ -479,13 +480,21 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
                         </WrapGrid>
                         <div className="justify_end">
                             { (datosToExport !== null) && 
-                                <ButtonDownloadXLS 
+                                <>
+                                    <ButtonDownloadXLSCustom
+                                        stringURL={`${process.env.REACT_APP_API_SERVER_DOMAIN}/downloadresult`}
+                                        stringParams={`idpro=${datosToExport}`}
+                                        datosToExport={datosToExport}
+                                        filename="resultados.xlsx"
+                                    /> 
+                                    {/*<ButtonDownloadXLS 
                                     stringURL={`${process.env.REACT_APP_API_SERVER_DOMAIN}/downloadresult`}
-                                    stringParams={`idpro=${datosToExport}&columns=nombre`}
+                                    stringParams={`idpro=${datosToExport}`}
                                     datosToExport={datosToExport}
                                     filename="resultados.xlsx"
                                     requireService="no"
-                                />
+                                    />*/}
+                                </>
                             }
                         </div>
     
