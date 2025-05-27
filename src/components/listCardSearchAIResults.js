@@ -25,7 +25,7 @@ import FilterListIcon from '@mui/icons-material/FilterList';
 import { filtroByDefault, validarfiltroJurisprudencial, getOpcionesAutocompletar, getDecisionesIDsToExport, validateSearchParamsBusquedaAV, formattingSearchParamsBusquedaAV  } from '../helpers/utils.js';
 import { macrocasos } from '../data/datos_macrocaso.js';
 import LinearWithValueLabel from '../components/linearProgress.js';  
-import ButtonDownloadXLSCustom from './buttonDownloadXLSCustom.js';
+import ButtonDownloadZIPCustom from './buttonDownloadZIPCustom.js';
 import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
 
 export default function Card({ datosBusqueda, searchOptions, selectedFilters, isListSmall, selectedTerm, isLargeResult, isExternalFilters, customPagination = {}, paramsBusquedaAV = null }) {  
@@ -404,12 +404,12 @@ useEffect(() => {
                                                           
                                                           { ((datos.length > 0) && (datosToExport !== null)) && 
                                                                 <>
-                                                                    <ButtonDownloadXLSCustom
+                                                                    {<ButtonDownloadZIPCustom
                                                                         stringURL={`${process.env.REACT_APP_API_SERVER_DOMAIN}/downloadresult`}
                                                                         stringParams={`idpro=${datosToExport}`}
                                                                         datosToExport={datosToExport}
                                                                         filename="resultados.xlsx"
-                                                                    />    
+                                                                    />}    
                                                                 </>
                                                             }
                                                             <Button onClick={sortAscByDate} className='items_sorted '  >Exportar decisiones en ZIP</Button>
