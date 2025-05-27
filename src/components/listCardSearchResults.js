@@ -428,7 +428,7 @@ export default function Card({ selectedFilters, isListSmall, selectedTerm, isLar
                                                 <div className='filter_sort_container'>
                                                     <FilterShort setSelectedFilters={setExternalFilters}/>
                                                     <NoneGrid className='margin_left_s'>
-                                                        <Button className="button_function" startIcon={<SortIcon />} onClick={toggleButton}>Ordenar1
+                                                        <Button className="button_function" startIcon={<SortIcon />} onClick={toggleButton}>Ordenar
                                                         </Button>
                                                         {isButtonSorterEnabled && (
                                                             <div className='container_date_sorted'>

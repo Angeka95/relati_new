@@ -319,7 +319,7 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
                                         <div className='filter_sort_container'>
                                             <FilterShort setSelectedFilters={setExternalFilters} />
                                             <NoneGrid className='margin_left_s'>
-                                                <Button className="button_function" startIcon={<SortIcon />} onClick={toggleButton}>Ordenar5
+                                                <Button className="button_function" startIcon={<SortIcon />} onClick={toggleButton}>Ordenar
                                                 </Button>
                                                 {isButtonSorterEnabled && (
                                                     <div className='container_date_sorted'>
