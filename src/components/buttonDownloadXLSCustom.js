@@ -119,11 +119,11 @@ export default function ButtonDownloadXLSCustom({ stringURL, stringParams, datos
       <>
         <button
           type="button"
-          className=" vertical_align cursor_pointer"
+          className="link_primary vertical_align cursor_pointer"
           onClick={handleOpenModal}
-          style={{ background: 'none', border: 'none',  }}
+          style={{ background: 'none', border: 'none', padding: 0 }}
         >
-          
+          <FileDownloadOutlinedIcon />
           Reporte en Excel
         </button>
         <Modal open={openModal} onClose={handleCloseModal}>

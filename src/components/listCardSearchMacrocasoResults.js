@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext, useRef } from 'react';
-import '../App.css';
+
 import { Grid, Stack, Pagination, PaginationItem, List, ListItem, Button, Box, Chip, Alert } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
@@ -21,7 +21,9 @@ import FilterShort from './filterShort.js';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import SearchBarForInnerResults from './searchBarForInnerResults.js';
 import LinearWithValueLabel from '../components/linearProgress.js';
-import { validarfiltroJurisprudencial, getOpcionesAutocompletar } from '../helpers/utils.js';
+import ButtonDownloadXLSCustom from './buttonDownloadXLSCustom.js';
+import { validarfiltroJurisprudencial, getOpcionesAutocompletar, getDecisionesIDsToExport } from '../helpers/utils.js';
+import '../App.css';
 
 export default function Card({ datosTramite, selectedFilters, isListSmall, selectedTerm, isLargeResult, isExternalFilters }) {
 
@@ -59,6 +61,7 @@ export default function Card({ datosTramite, selectedFilters, isListSmall, selec
         setDatos(sortedDatos);
         getCurrentData();
         setIsButtonSorterEnabled(false);
+        setDatosToExport(getDecisionesIDsToExport(sortedDatos, "providencia_id"));
     };
 
     // Función para ordenar en orden descendente por fecha
@@ -67,6 +70,7 @@ export default function Card({ datosTramite, selectedFilters, isListSmall, selec
         setDatos(sortedDatos);
         getCurrentData();
         setIsButtonSorterEnabled(false);
+        setDatosToExport(getDecisionesIDsToExport(sortedDatos, "providencia_id"));
     };
 
 
@@ -90,6 +94,7 @@ export default function Card({ datosTramite, selectedFilters, isListSmall, selec
         } 
         if(datos.length > 0){
             getCurrentData();
+            setDatosToExport(getDecisionesIDsToExport(datos, "providencia_id"));
         }
     }, [page, itemsPerPage, datos, datosTramite]); 
     
@@ -400,6 +405,26 @@ export default function Card({ datosTramite, selectedFilters, isListSmall, selec
                             </div>
     
                         </WrapGrid>
+                        
+                        <div className="justify_end">
+                                { (datosToExport !== null) && 
+                                    <>
+                                        <ButtonDownloadXLSCustom
+                                            stringURL={`${process.env.REACT_APP_API_SERVER_DOMAIN}/downloadresult`}
+                                            stringParams={`idpro=${datosToExport}`}
+                                            datosToExport={datosToExport}
+                                            filename="resultados.xlsx"
+                                        /> 
+                                        {/*<ButtonDownloadXLS 
+                                        stringURL={`${process.env.REACT_APP_API_SERVER_DOMAIN}/downloadresult`}
+                                        stringParams={`idpro=${datosToExport}`}
+                                        datosToExport={datosToExport}
+                                        filename="resultados.xlsx"
+                                        requireService="no"
+                                        />*/}
+                                    </>
+                                }
+                        </div>
     
                         <div className="separator width_100"></div>
                         {/* Lista de resultados */}
