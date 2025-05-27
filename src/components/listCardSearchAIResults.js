@@ -26,6 +26,7 @@ import { filtroByDefault, validarfiltroJurisprudencial, getOpcionesAutocompletar
 import { macrocasos } from '../data/datos_macrocaso.js';
 import LinearWithValueLabel from '../components/linearProgress.js';  
 import ButtonDownloadXLSCustom from './buttonDownloadXLSCustom.js';
+import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
 
 export default function Card({ datosBusqueda, searchOptions, selectedFilters, isListSmall, selectedTerm, isLargeResult, isExternalFilters, customPagination = {}, paramsBusquedaAV = null }) {  
        
@@ -119,10 +120,31 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
         selectedFilters = [];
     }
     const [isButtonSorterEnabled, setIsButtonSorterEnabled] = useState(false);
+// boton descargar resultados
+const [isMobile, setIsMobile] = useState(window.innerWidth < 1000);
+
+
+useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 1000);
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
 
     // Estado del Boton ordenar 
     const toggleButton = () => {
         setIsButtonSorterEnabled(prev => !prev);
+    };
+
+    const [isButtonDownloadEnabled, setIsButtonDownloadEnabled] = useState(false);
+
+    // Estado del Boton ordenar 
+    const toggleButtonDownload = () => {
+        setIsButtonDownloadEnabled(prev => !prev);
     };
 
     const [showFilter, setShowFilter] = useState(false);
@@ -332,7 +354,7 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
                     <div>
                         <Grid container spacing={2}>
                             <SpaceBetweenGrid item xs={12} sm={12} md={12} lg={12} xl={12} >
-                                <Grid item xs={12} sm={12} md= {(isListSmall ? 12 : 6)} lg={(isListSmall ? 12 : 6)} xl={(isListSmall ? 12 : 6)}>
+                                <Grid item xs={12} sm={12} md= {(isListSmall ? 12 : 8)} lg={(isListSmall ? 12 : 8)} xl={(isListSmall ? 12 : 8)}>
                                     <JustMapGrid > 
                                         <h4 className="text_bolder"> Decisiones </h4> 
                                     </JustMapGrid>
@@ -340,11 +362,11 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
                                             <div className='filter_sort_container'>
                                                 <FilterShort setSelectedFilters={setExternalFilters}/>
                                                 <NoneGrid className='margin_left_s'>
-                                                    <Button className="button_function" startIcon={<SortIcon />} onClick={toggleButton}>Ordenar
+                                                    <Button className="button_function" startIcon={<SortIcon />} onClick={toggleButton}>Ordenarr
                                                     </Button>  
                                                     {isButtonSorterEnabled && (
                                                         <div className='container_date_sorted'>
-                                                          <Button onClick={sortDescByDate} className='items_sorted' endIcon={<ArrowUpwardIcon />} >Más recientes </Button>
+                                                          <Button onClick={sortDescByDate} className='items_sorted' endIcon={<ArrowUpwardIcon />} >Más recientess </Button>
                                                           <Button onClick={sortAscByDate} className='items_sorted' endIcon={<ArrowDownwardIcon />} >Más antiguos </Button>
                                                           <Button onClick={sortDescByScore} className='items_sorted' endIcon={<ArrowUpwardIcon />} >Mayor Relevancia </Button>
                                                           <Button onClick={sortAscByScore} className='items_sorted' endIcon={<ArrowDownwardIcon />} >Menor Relevancia </Button>
@@ -355,9 +377,12 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
                                         )}
 
                                         {!isExternalFilters && (
-                                            <NoneGrid>
+                                            <NoneGrid className="display_flex">
+                                                <div className=" position_relative"> 
                                               <Button className="button_function" startIcon={<SortIcon />} onClick={toggleButton}>Ordenar
                                               </Button>
+                                          
+                                                
                                               {isButtonSorterEnabled && (
                                                   <div className='container_date_sorted'>
                                                       <Button onClick={sortDescByDate} className='items_sorted' endIcon={<ArrowUpwardIcon />} >Más recientes </Button>
@@ -365,12 +390,38 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
                                                       <Button onClick={sortDescByScore} className='items_sorted' endIcon={<ArrowUpwardIcon />} >Mayor Relevancia </Button>
                                                       <Button onClick={sortAscByScore} className='items_sorted' endIcon={<ArrowDownwardIcon />} >Menor Relevancia </Button>
                                                   </div>
-                                              )}
+                                              )}</div>
+
+                                        <div className=" position_relative"> 
+                                             
+                                              <Button className="button_function button_download " startIcon={<FileDownloadOutlinedIcon />} onClick={toggleButtonDownload}>{isMobile ? 'Descargar' : 'Descargar resultados'}
+                                            </Button>
+                                                
+
+                                        {isButtonDownloadEnabled && (
+                                                        <div className='container_date_download position_float'>
+                                                         
+                                                          
+                                                          { ((datos.length > 0) && (datosToExport !== null)) && 
+                                                                <>
+                                                                    <ButtonDownloadXLSCustom
+                                                                        stringURL={`${process.env.REACT_APP_API_SERVER_DOMAIN}/downloadresult`}
+                                                                        stringParams={`idpro=${datosToExport}`}
+                                                                        datosToExport={datosToExport}
+                                                                        filename="resultados.xlsx"
+                                                                    />    
+                                                                </>
+                                                            }
+                                                            <Button onClick={sortAscByDate} className='items_sorted '  >Exportar decisiones en ZIP</Button>
+
+                                                        </div>
+                                                    )}</div>
+
                                             </NoneGrid>  
                                         )}
                                 </Grid>
 
-                                <Grid item  className="justify_end_partial" xs={12} sm={12} md={(isListSmall ? 12 : 6)} lg={(isListSmall ? 12 : 6)} xl={(isListSmall ? 12 : 6) }>
+                                <Grid item  className="justify_end_partial" xs={12} sm={12} md={(isListSmall ? 12 : 4)} lg={(isListSmall ? 12 : 4)} xl={(isListSmall ? 12 : 4) }>
                                     {/*<SearchBarSmall searchOptions={searchDocsOptions} handlerSetSelectedOption={handlerSetSelectedDoc}> </SearchBarSmall>*/}
                                     <SearchBarForInnerResults handlerInnerSearch={handlerInnerSearch} handlerReset={deshacerBusqueda} ref={searchBarForInnerResultsInputRef}></SearchBarForInnerResults>
                                 </Grid>
@@ -385,7 +436,7 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
                         {/* Paginacion para seccion resultados de busqueda */}
                         <WrapGrid item xs={12} sm={12} md={12} lg={12} xl={12} className="flex " >
                             <Width100Grid>
-                                <p className="margin_results_page">
+                                <p className="margin_results_page white_space_line">
                                     
                                     <span> {startIndexPage} </span> a
                                     <span> {endIndexPage} </span> de
@@ -397,7 +448,7 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
                             </NoneGrid>
                             <div>
                                 <Width100Grid className='width_100 flex '>
-                                <p className="margin_results_page">Resultados por página  </p>
+                                <p className="margin_results_page white_space_line">Resultados por página  </p>
                                     <Box sx={{ minWidth: 270 }}>
                                         <FormControl fullWidth>
                                             {/* <InputLabel id="demo-simple-select-label"></InputLabel> */}
@@ -472,18 +523,19 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
                         </WrapGrid>
                         </> 
                     }
-                    <div className="justify_end">    
+                    {/* <div className="justify_end">    
                         { ((datos.length > 0) && (datosToExport !== null)) && 
                             <>
+                               
                                 <ButtonDownloadXLSCustom
                                     stringURL={`${process.env.REACT_APP_API_SERVER_DOMAIN}/downloadresult`}
                                     stringParams={`idpro=${datosToExport}`}
                                     datosToExport={datosToExport}
                                     filename="resultados.xlsx"
-                                />   
+                                />    
                             </>
                         }
-                    </div>
+                    </div> */}
                     <div className="separator width_100"></div>
                     {/* Lista de resultados */}
                     {(datos.length > 0) ? 
