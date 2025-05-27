@@ -362,7 +362,7 @@ useEffect(() => {
                                             <div className='filter_sort_container'>
                                                 <FilterShort setSelectedFilters={setExternalFilters}/>
                                                 <NoneGrid className='margin_left_s'>
-                                                    <Button className="button_function" startIcon={<SortIcon />} onClick={toggleButton}>Ordenarr
+                                                    <Button className="button_function" startIcon={<SortIcon />} onClick={toggleButton}>Ordenar
                                                     </Button>  
                                                     {isButtonSorterEnabled && (
                                                         <div className='container_date_sorted'>
