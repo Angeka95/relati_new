@@ -13,6 +13,7 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import { filtroByDefault, validarfiltroJurisprudencial, getOpcionesAutocompletar, getDecisionesIDsToExport } from '../helpers/utils.js';
+import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
 import '../App.css';
 
 export default function Card({ datosBusqueda, searchOptions, selectedFilters, isListSmall, selectedTerm, isLargeResult, isExternalFilters, customPagination = {} }) {  
@@ -324,7 +325,7 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
                                             <div className='filter_sort_container'>
                                                 <FilterShort setSelectedFilters={setExternalFilters}/>
                                                 <NoneGrid className='margin_left_s'>
-                                                    <Button className="button_function" startIcon={<SortIcon />} onClick={toggleButton}>Ordenar
+                                                    <Button className="button_function" startIcon={<SortIcon />} onClick={toggleButton}>Ordenar1
                                                     </Button>  
                                                     {isButtonSorterEnabled && (
                                                         <div className='container_date_sorted'>
@@ -340,7 +341,7 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
 
                                         {!isExternalFilters && (
                                             <NoneGrid>
-                                              <Button className="button_function" startIcon={<SortIcon />} onClick={toggleButton}>Ordenar
+                                              <Button className="button_function" startIcon={<SortIcon />} onClick={toggleButton}>Ordenar4
                                               </Button>
                                               {isButtonSorterEnabled && (
                                                   <div className='container_date_sorted'>

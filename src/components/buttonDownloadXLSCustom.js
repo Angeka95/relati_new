@@ -119,12 +119,12 @@ export default function ButtonDownloadXLSCustom({ stringURL, stringParams, datos
       <>
         <button
           type="button"
-          className="link_primary vertical_align cursor_pointer"
+          className=" vertical_align cursor_pointer"
           onClick={handleOpenModal}
-          style={{ background: 'none', border: 'none', padding: 0 }}
+          style={{ background: 'none', border: 'none',  }}
         >
-          <FileDownloadOutlinedIcon />
-          Descargar reporte en Excel
+          
+          Reporte en Excel
         </button>
         <Modal open={openModal} onClose={handleCloseModal}>
           <div className="display_ flex justify_center margin_none">
@@ -137,7 +137,7 @@ export default function ButtonDownloadXLSCustom({ stringURL, stringParams, datos
                   <CloseIcon />
                 </Button>
                 <h3 className="text_center margin_top_s">
-                  Seleccione la información que contendrá el reporte_
+                  Seleccione la información que contendrá el reporte
                 </h3>
                 <div className="display_flex">
                   <Button

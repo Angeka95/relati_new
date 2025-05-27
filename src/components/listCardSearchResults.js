@@ -428,11 +428,11 @@ export default function Card({ selectedFilters, isListSmall, selectedTerm, isLar
                                                 <div className='filter_sort_container'>
                                                     <FilterShort setSelectedFilters={setExternalFilters}/>
                                                     <NoneGrid className='margin_left_s'>
-                                                        <Button className="button_function" startIcon={<SortIcon />} onClick={toggleButton}>Ordenar
+                                                        <Button className="button_function" startIcon={<SortIcon />} onClick={toggleButton}>Ordenar1
                                                         </Button>
                                                         {isButtonSorterEnabled && (
                                                             <div className='container_date_sorted'>
-                                                              <Button onClick={sortDescByDate} className='items_sorted' endIcon={<ArrowUpwardIcon />} >Más recientes </Button>
+                                                              <Button onClick={sortDescByDate} className='items_sorted' endIcon={<ArrowUpwardIcon />} >Más recientes1 </Button>
                                                               <Button onClick={sortAscByDate} className='items_sorted' endIcon={<ArrowDownwardIcon />} >Más antiguos </Button>
                                                               <Button onClick={sortDescByScore} className='items_sorted' endIcon={<ArrowUpwardIcon />} >Mayor Relevancia </Button>
                                                               <Button onClick={sortAscByScore} className='items_sorted' endIcon={<ArrowDownwardIcon />} >Menor Relevancia </Button>
