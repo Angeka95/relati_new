@@ -7,7 +7,8 @@ import ListCardSearch from '../components/listCardSearchMacrocasoResults.js';
 import LinearWithValueLabel from '../components/linearProgress.js';
 import macrocasoService from '../services/macrocaso.js';
 import {  setLocalStorageWithExpiry, getLocalStorageWithExpiry } from '../helpers/utils.js';
-import dataResults from '../data_results/dataResDecisionesSalaTribunal.js';
+//import dataResults from '../data_results/dataResDecisionesSalaTribunal.js';
+import dataResults from '../data_results/dataResBusqueda.js';
 
 export default function DecisionesSalaTribunal({caso}) {
 
@@ -158,28 +159,35 @@ export default function DecisionesSalaTribunal({caso}) {
                                 <div className="margin_bottom_l width_100">
                                     <div className="wrap width_100 display_flex justify_center">
                                         {(selectedtipoDecisionShow === true) && (
-                                        <FormControl className="input_caso ">
-                                            <InputLabel className="" id="multi-select-label">Tipo de Decisión</InputLabel>
-                                            <Select
-                                                labelId="multi-select-label"
-                                                multiple
-                                                value={selectedtipoDecision}
-                                                onChange={handleSelectChange}
-                                                renderValue={(selected) => (
-                                                <Box sx={{ display: 'flex', flexWrap: 'wrap' }}>
-                                                    {selected.map((value) => (
-                                                    <Chip key={value} label={value} sx={{ m: 0.5 }} />
+                                        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                                            <FormControl className="input_caso ">
+                                                <InputLabel className="" id="multi-select-label">Tipo de Decisión</InputLabel>
+                                                <Select
+                                                    labelId="multi-select-label"
+                                                    multiple
+                                                    value={selectedtipoDecision}
+                                                    onChange={handleSelectChange}
+                                                    renderValue={(selected) => (
+                                                    <Box sx={{ display: 'flex', flexWrap: 'wrap' }}>
+                                                        {selected.map((value) => (
+                                                        <Chip key={value} label={value} sx={{ m: 0.5 }} />
+                                                        ))}
+                                                    </Box>
+                                                    )}
+                                                >
+                                                    {tipoDecisionSala.map((option) => (
+                                                    <MenuItem key={option} value={option}>
+                                                        {option}
+                                                    </MenuItem>
                                                     ))}
+                                                </Select>
+                                            </FormControl>
+                                            {(datos.length > 0) && (
+                                                <Box sx={{ px: 0, my: 2, display: 'flex', justifyContent: 'center' }}>
+                                                    <Button className="button_primary margin_xs card_size_small" target='_self' rel="noreferrer" onClick={restaurarFiltro}>Deshacer opciones</Button>
                                                 </Box>
-                                                )}
-                                            >
-                                                {tipoDecisionSala.map((option) => (
-                                                <MenuItem key={option} value={option}>
-                                                    {option}
-                                                </MenuItem>
-                                                ))}
-                                            </Select>
-                                        </FormControl>
+                                            )}
+                                        </div>      
                                         )}
                                         {(selectedtipoDecision.length > 0) && (datos.length > 0 ) && (
                                             <div className='width_100'>
@@ -224,28 +232,35 @@ export default function DecisionesSalaTribunal({caso}) {
                                 <div className="margin_bottom_l width_100">
                                 <div className="wrap width_100 display_flex justify_center">
                                     {(selectedtipoDecisionShow === true) && (
-                                        <FormControl className="input_caso ">
-                                        <InputLabel className="" id="multi-select-label">Tipo de Decisión</InputLabel>
-                                        <Select
-                                            labelId="multi-select-label"
-                                            multiple
-                                            value={selectedtipoDecision}
-                                            onChange={handleSelectChange}
-                                            renderValue={(selected) => (
-                                            <Box sx={{ display: 'flex', flexWrap: 'wrap' }}>
-                                                {selected.map((value) => (
-                                                <Chip key={value} label={value} sx={{ m: 0.5 }} />
+                                        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                                            <FormControl className="input_caso ">
+                                            <InputLabel className="" id="multi-select-label">Tipo de Decisión</InputLabel>
+                                            <Select
+                                                labelId="multi-select-label"
+                                                multiple
+                                                value={selectedtipoDecision}
+                                                onChange={handleSelectChange}
+                                                renderValue={(selected) => (
+                                                <Box sx={{ display: 'flex', flexWrap: 'wrap' }}>
+                                                    {selected.map((value) => (
+                                                    <Chip key={value} label={value} sx={{ m: 0.5 }} />
+                                                    ))}
+                                                </Box>
+                                                )}
+                                            >
+                                                {tipoDecisionTribunal.map((option) => (
+                                                <MenuItem key={option} value={option}>
+                                                    {option}
+                                                </MenuItem>
                                                 ))}
-                                            </Box>
+                                            </Select>
+                                            </FormControl>
+                                            {(datos.length > 0) && (
+                                                <Box sx={{ px: 0, my: 2, display: 'flex', justifyContent: 'center' }}>
+                                                    <Button className="button_primary margin_xs card_size_small" target='_self' rel="noreferrer" onClick={restaurarFiltro}>Deshacer opciones</Button>
+                                                </Box>
                                             )}
-                                        >
-                                            {tipoDecisionTribunal.map((option) => (
-                                            <MenuItem key={option} value={option}>
-                                                {option}
-                                            </MenuItem>
-                                            ))}
-                                        </Select>
-                                        </FormControl>
+                                        </div>
                                     )}
                                     {(selectedtipoDecision.length > 0) && (datos.length > 0 ) && (
                                         <div className='width_100'>

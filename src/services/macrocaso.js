@@ -135,7 +135,18 @@ const getFilterCasoSalaTribunal = (caso, tipoTramite, tiposDecisiones) => {
     if((response.status !== 200) || (response.status === 401) || (response.status === 403)) {
       return { "data": [], "status_info": { "status": response.status, "reason": response.statusText }};
     } else {
-      return { "data": response.data, "status_info": { "status": 200, "reason": "OK" } };
+      let data = {};
+      let status_info = {};
+      if(response.data.hasOwnProperty('hits')) {
+        data = response.data;
+        status_info = { "status": 200, "reason": "La consulta se ha realizado satisfactoriamente." };
+        if(data.hits.hits.length === 0){
+          status_info = { "status": 200, "reason": "No se encontraron resultados." };
+        } 
+      } else {
+        status_info = { "status": 204, "reason": "La consulta no esta disponible por el momento.(Elastic Search)." } 
+      }
+      return { "data": data.hits.hits, "status_info": status_info };
     }
   }).catch(error => { 
     return { "data": [], "status_info": { "status": error.response.data.status, "reason": error.response.data.reason } };

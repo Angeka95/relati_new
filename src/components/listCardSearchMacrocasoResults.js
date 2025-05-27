@@ -28,6 +28,7 @@ export default function Card({ datosTramite, selectedFilters, isListSmall, selec
     const [datos, setDatos] = useState([]);
     const [datosOriginales, setDatosOriginales] = useState([]);
     const [message, setMessage] = useState({ message: "", classname: "" });
+    const [datosToExport, setDatosToExport] = useState("");
     const [valorBuscadorEnResultados, setValorBuscadorEnResultados] = useState("");
 
     const { verTodasDecisiones, busqueda } = useContext(Context);
@@ -83,14 +84,14 @@ export default function Card({ datosTramite, selectedFilters, isListSmall, selec
     const startIndexPage = Math.ceil(page * itemsPerPage + 1 - itemsPerPage);
 
    useEffect(() => {
-        if(datosTramite.length > 0){
+        if(datosTramite.length > 0 && datos.length === 0){
             setDatos(datosTramite)
             setDatosOriginales(datosTramite);
-        }
+        } 
         if(datos.length > 0){
             getCurrentData();
         }
-    }, [datos, datosTramite]); 
+    }, [page, itemsPerPage, datos, datosTramite]); 
     
     const getCurrentData = (items = 0) => {
         if (items === 0) {
@@ -113,6 +114,7 @@ export default function Card({ datosTramite, selectedFilters, isListSmall, selec
     const searchBarForInnerResultsInputRef = useRef(null);
                 
      const handlerInnerSearch = (valueSearchBarInner) => {
+         
          let newMessage = { message: "", classname: "" }; 
          let newArrDatos = [];
          setPage(1);
@@ -347,7 +349,7 @@ export default function Card({ datosTramite, selectedFilters, isListSmall, selec
                                     </Grid>
     
                                     <Grid item  className="justify_end_partial" xs={12} sm={12} md= {(isListSmall ? 12 : 6)} lg={(isListSmall ? 12 : 6)} xl={(isListSmall ? 12 : 6) }>    
-                                        <SearchBarForInnerResults handlerInnerSearch={handlerInnerSearch} handlerReset={deshacerBusqueda} ref={searchBarForInnerResultsInputRef}></SearchBarForInnerResults>
+                                        <SearchBarForInnerResults handlerInnerSearch={handlerInnerSearch} handlerReset={deshacerBusqueda} ref={searchBarForInnerResultsInputRef} />
                                     </Grid>
                                 </SpaceBetweenGrid>
     

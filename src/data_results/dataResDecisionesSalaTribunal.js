@@ -2,7 +2,9 @@ import DOMPurify from 'dompurify';
 import {  obtenerPalabrasFromArrayObject, sanitizeString } from './../helpers/utils.js';
 
 const dataResults = (data) => {
-const newArray = data.map(item => {
+console.log("dataResults", data[0]);
+const newArray = data.map((i, k) => {
+    let item = i._source;
     let newItem = {
             id: item.id,
             providencia_id: item.id,
@@ -38,7 +40,9 @@ const newArray = data.map(item => {
             caso: (item.caso !== null ) ? item.caso : "",
             subcaso: (item.casopro.length > 0 ) ? obtenerPalabrasFromArrayObject(item.casopro, "caso", null, false) : "",
             extractoBusqueda: ((item.getfichas.length > 0 ) && (item.getfichas[0].sintesis_descripcion !== null))  ?  sanitizeString(item.getfichas[0].sintesis_descripcion) : "",
-            conclusion_resuelve: ((item.conclusion_resuelve !== null) && (item.hasOwnProperty("conclusion_resuelve"))) ? item.conclusion_resuelve : ""
+            conclusion_resuelve: ((item.conclusion_resuelve !== null) && (item.hasOwnProperty("conclusion_resuelve"))) ? item.conclusion_resuelve : "",
+            // anexos: (item.anexos.length > 0) ? item.anexos : "",
+            //recursos: (item.recursos.length > 0) ? item.recursos : ""
         };
         newItem["hechos"] =  DOMPurify.sanitize(newItem.hechos, { ALLOWED_TAGS: [] });
         newItem["extractoBusqueda"] =  DOMPurify.sanitize(newItem.extractoBusqueda, { ALLOWED_TAGS: [] });
