@@ -192,7 +192,7 @@ export default function Home() {
 
 
     // Mostrar solo los primeros 6 casos, si `showAll` es false
-    const casesToDisplay = showAll ? macrocasos : macrocasos.slice(0, 6);
+    const casesToDisplay = showAll ? macrocasos : macrocasos.slice(0, 11);
 
     const handleSearch = (e) => {
         
@@ -376,6 +376,13 @@ export default function Home() {
                 imagenPortada: `${process.env.REACT_APP_API_SERVER_DOMAIN}/img/libros/portada_tomo_II.jpg`
              },
 
+             {
+                id : 4,
+                pdf: '${process.env.REACT_APP_API_SERVER_DOMAIN}/documentos/libros/Tomo_III_Macrocasos_versión_final.pdf', 
+                fecha: "2025-01", 
+                imagenPortada: `${process.env.REACT_APP_API_SERVER_DOMAIN}/img/libros/portada_tomo3.jpeg`
+             },
+
         
         
         ]
@@ -456,8 +463,8 @@ export default function Home() {
                             </img>
                         </div>
 
-                        <h5 className="text_white width_100 text_center">Plataforma de búsqueda simple y especializada <br></br>
-                            de las decisiones de la JEP</h5>
+                        <h5 className="text_white width_100 text_center text_bolder text_header">Plataforma de búsqueda simple y especializada <span className="display_header">
+                            de las decisiones de la Jurisdicción Especial para la Paz </span></h5>
 
                     </div>
 
@@ -554,112 +561,6 @@ export default function Home() {
 
             </Container>
 
-
-            <Container maxWidth="lg" disableGutters className="margin_top_xl margin_bottom_xl">
-            {( boletines.length === 0 ) ? 
-                    <LinearWithValueLabel></LinearWithValueLabel>
-                :
-                <div className="align_center carousel_main_container " >
-                    <div className="wrap text_carousel_container" >
-                        <h2 className="align_center text_bolder"> Boletines</h2>
-                        <h5 className=" align_center margin_top_s margin_bottom_m">Acceda al análisis de las decisiones más importantes de la JEP</h5>
-                        <Button onClick={goToBoletinesPage} className="button_primary "> Ver todos los boletines</Button>
-                    </div>
-                    <div className="carousel_container">
-
-                        <Carousel boletines={boletines} />
-
-                    </div>
-                </div>
-            }
-            </Container>
-
-            <Container className="space_top " id="seccion_caso">
-                <h2 className="justify_center text_bolder">Macrocasos</h2>
-                <h5 className="justify_center  align_center margin_top_s margin_bottom_m">Conozca las últimas decisiones de cada macrocaso</h5>
-
-
-                <div className="wrap transition_smooth">
-
-                    {casesToDisplay.map((caso) => (
-
-                        <div key={caso.id} className="card_small transition_smooth">
-                            <Link to={`/caso/${caso.id}`}  onClick={() => window.scrollTo(0, 0)}>
-                                <p className="text_center text_black" >  Caso
-                                    <span className="text_big display_block margin_top_s margin_bottom_s text_green text_bolder">  {caso.numeroCaso} </span>
-                                    {caso.nombreCaso}
-                                </p>
-                            </Link>
-                        </div>
-
-
-                    ))}
-                </div>
-
-                <div className="justify_center margin_top_m">
-                    {!showAll ? (
-                        <Button className="button_primary" onClick={handleSeeAllCases}>
-                            Ver todos los casos
-                        </Button>
-                    ) : (
-                        <Button className="button_primary" onClick={handleSeeLessCases}>
-                            Ver menos casos
-                        </Button>
-                    )}
-                </div>
-
-            </Container>
-
-            <Container maxWidth="lg" disableGutters className="margin_top_xl margin_bottom_xxl">
-            {( boletines.length === 0 ) ? 
-                    <LinearWithValueLabel></LinearWithValueLabel>
-                :
-                <div className="align_center carousel_main_container " >
-                    <div className="wrap text_carousel_container" >
-                        <h2 className="align_center text_bolder"> Libros</h2>
-                        <h5 className=" align_center margin_top_s margin_bottom_m">Explore nuestros libros que cuentan con la colaboración de magistradas, magistrados y profesionales de la JEP</h5>
-                        <Button onClick={goToLibrosPage} className="button_primary "> Ver todos los libros</Button>
-                    </div>
-                    <div className="carousel_container">
-
-                        <Carousel boletines={libros} />
-
-                    </div>
-                </div>
-            }
-            </Container>
-
-
-            <Container className="margin_top_xl ">
-                <h2 className="justify_center text_bolder text_center ">Podcast
-                    <br></br>Relatos de la JEP </h2>
-
-                <h5 className="justify_center  align_center margin_top_s margin_bottom_m">Escuche la historia detrás de cada decisión de la JEP</h5>
-                <div className="justify_center"> 
-                <iframe className="podcast_container shadow_smooth "
-                    src="https://open.spotify.com/embed/show/5hEeZojgIOkXfOkGxDDsiS?utm_source=generator&theme=0" width='100%' height='400px' frameBorder='0'>
-
-                </iframe>
-                {/*<iframe className="podcast_container shadow_smooth "
-                    src='https://widget.spreaker.com/player?show_id=5701029&theme=dark&playlist=show&playlist-continuous=true&chapters-image=true' width='100%' height='400px' frameBorder='0'>
-
-                </iframe>*/}    
-                </div>
-
-            </Container>
-            <Box className="secondary_blue section_blue width_100 margin_top_xl">
-                <div className="width_100 justify_center">
-                    <h1 className=" text_center text_white ">Mapa Jurisprudencial</h1>
-                </div>
-                <h5 className="width_100 text_center margin_bottom_m text_white text_bold title_description">Encuentre las decisiones de cada departamento (y municipio) colombiano navegando nuestro mapa interactivo</h5>
-                <div className="justify_center margin_top_m">
-
-                    <Button onClick={goToMapaJurispudencialPage} className="button_primary">Ver mapa</Button>
-                </div>
-
-
-            </Box>
-
             <Container xs={12} sm={12} md={8} lg={8} xl={8} className="margin_top_xl " >
                 <div className="wrap margin_bottom_xl">
                     <div className="container_40 ">
@@ -725,6 +626,114 @@ export default function Home() {
                     </div>
                 </div>
             </Container>
+
+
+            <Container maxWidth="lg" disableGutters className="margin_top_xl margin_bottom_xl">
+            {( boletines.length === 0 ) ? 
+                    <LinearWithValueLabel></LinearWithValueLabel>
+                :
+                <div className="align_center carousel_main_container " >
+                    <div className="wrap text_carousel_container" >
+                        <h2 className="align_center text_bolder"> Boletines</h2>
+                        <h5 className=" align_center margin_top_s margin_bottom_m">Acceda al análisis de las decisiones más importantes de la JEP</h5>
+                        <Button onClick={goToBoletinesPage} className="button_primary "> Ver todos los boletines</Button>
+                    </div>
+                    <div className="carousel_container">
+
+                        <Carousel boletines={boletines} />
+
+                    </div>
+                </div>
+            }
+            </Container>
+
+            <Container className="space_top " id="seccion_caso">
+                <h2 className="justify_center text_bolder">Macrocasos</h2>
+                <h5 className="justify_center  align_center margin_top_s margin_bottom_m text_center_mobile">Conozca las últimas decisiones de cada macrocaso</h5>
+
+
+                <div className="wrap transition_smooth">
+
+                    {casesToDisplay.map((caso) => (
+
+                        <div key={caso.id} className="card_small transition_smooth">
+                            <Link to={`/caso/${caso.id}`}  onClick={() => window.scrollTo(0, 0)}>
+                                <p className="text_center text_black" >  Caso
+                                    <span className="text_big display_block margin_top_s margin_bottom_s text_green text_bolder">  {caso.numeroCaso} </span>
+                                    {caso.nombreCaso}
+                                </p>
+                            </Link>
+                        </div>
+
+
+                    ))}
+                </div>
+
+                {/* <div className="justify_center margin_top_m">
+                    {!showAll ? (
+                        <Button className="button_primary" onClick={handleSeeAllCases}>
+                            Ver todos los casos
+                        </Button>
+                    ) : (
+                        <Button className="button_primary" onClick={handleSeeLessCases}>
+                            Ver menos casos
+                        </Button>
+                    )}
+                </div> */}
+
+            </Container>
+
+            <Container maxWidth="lg" disableGutters className="margin_top_xl margin_bottom_xxl">
+            {( boletines.length === 0 ) ? 
+                    <LinearWithValueLabel></LinearWithValueLabel>
+                :
+                <div className="align_center carousel_main_container " >
+                    <div className="wrap text_carousel_container" >
+                        <h2 className="align_center text_bolder"> Libros</h2>
+                        <h5 className=" align_center margin_top_s margin_bottom_m">Explore nuestros libros que cuentan con la colaboración de magistradas, magistrados y profesionales de la JEP</h5>
+                        <Button onClick={goToLibrosPage} className="button_primary "> Ver todos los libros</Button>
+                    </div>
+                    <div className="carousel_container">
+
+                        <Carousel boletines={libros} />
+
+                    </div>
+                </div>
+            }
+            </Container>
+
+
+            <Container className="margin_top_xl ">
+                <h2 className="justify_center text_bolder text_center ">Podcast
+                    <br></br>Relatos de la JEP </h2>
+
+                <h5 className="justify_center  align_center margin_top_s margin_bottom_m text_center_mobile">Escuche la historia detrás de cada decisión de la JEP</h5>
+                <div className="justify_center"> 
+                <iframe className="podcast_container shadow_smooth "
+                    src="https://open.spotify.com/embed/show/5hEeZojgIOkXfOkGxDDsiS?utm_source=generator&theme=0" width='100%' height='400px' frameBorder='0'>
+
+                </iframe>
+                {/*<iframe className="podcast_container shadow_smooth "
+                    src='https://widget.spreaker.com/player?show_id=5701029&theme=dark&playlist=show&playlist-continuous=true&chapters-image=true' width='100%' height='400px' frameBorder='0'>
+
+                </iframe>*/}    
+                </div>
+
+            </Container>
+            <Box className="secondary_blue section_blue width_100 margin_top_xl margin_bottom_s">
+                <div className="width_100 justify_center">
+                    <h1 className=" text_center text_white ">Mapa Jurisprudencial</h1>
+                </div>
+                <h5 className="width_100 text_center margin_bottom_m text_white text_bold title_description">Encuentre las decisiones de cada departamento (y municipio) colombiano navegando nuestro mapa interactivo</h5>
+                <div className="justify_center margin_top_m">
+
+                    <Button onClick={goToMapaJurispudencialPage} className="button_primary">Ver mapa</Button>
+                </div>
+
+
+            </Box>
+
+           
 
 
 

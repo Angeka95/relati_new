@@ -2415,6 +2415,13 @@ padding: 0px 0% 0% 3%;
   max-width: 280px;
 }
 
+.text_header{
+  padding: 0px 10px;
+}
+
+.display_header{
+  display: block;
+}
 
 .card_medium{
   width: 100%;
@@ -2458,7 +2465,7 @@ padding: 0px 0% 0% 3%;
 }
 
 .card_small{
-  width: 29%;
+  width: 20%;
   margin: 2%; 
   box-shadow: rgba(57, 129, 195, 0.2) 0px 8px 24px;
   padding: 2% 2% 1% 2%;
@@ -3688,6 +3695,14 @@ color: rgb(219, 0, 69);
   display: none !important;
 }
 
+.texto_ver_todas_las_decisiones {
+  top: 117px !important;
+}
+
+.display_header{
+  display: inline;
+}
+
 }
 
 
@@ -3861,6 +3876,8 @@ color: rgb(219, 0, 69);
   top: 67px;
   padding: 10px 1rem !important;
 }
+
+
 
 /* Responsive iframe */
 
