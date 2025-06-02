@@ -1,9 +1,11 @@
 import React, { useState , useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { getDownloadResultsXLS } from '../services/downloads.js';
+import { getDownloadResultsZIP } from '../services/downloads.js';
 import { Modal, Box, Button, FormControlLabel, Checkbox,FormGroup,  } from '@mui/material';
 import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
 import CloseIcon from '@mui/icons-material/Close';
+import LinearWithValueLabel from './linearProgress.js';
 import '../App.css';
 
 export default function ButtonDownloadZIPCustom({ stringURL, stringParams, datosToExport, filename = 'archivo.xlsx'}) {
@@ -43,11 +45,13 @@ export default function ButtonDownloadZIPCustom({ stringURL, stringParams, datos
     const initialState = optionsExcel.reduce((acc, option) => { acc[option.label] = true; return acc; }, {});
     
     const [checkedState, setCheckedState] = useState(initialState);
-
+    const [prepareDownload, setPrepareDownload] = useState(false);
+        
     // Modal Excel
     const [openModal, setOpenModal] = useState(false);
     const handleOpenModal = () => setOpenModal(true);
     const handleCloseModal = () => setOpenModal(false);
+
     
     const [checkedAll, setCheckedAll] = useState(true); 
     
@@ -74,6 +78,21 @@ export default function ButtonDownloadZIPCustom({ stringURL, stringParams, datos
           [name]: checked, 
         }));
     };
+    
+    // Al ejcutar el boton de descargar reporte, desaparece el formulario y muestra el contenedor de descarga
+    const handlePrepareDownload = (event) => {
+        event.preventDefault();
+        setPrepareDownload(true);
+        document.querySelector('.BDZ-download_container').classList.remove('hide');
+        document.querySelector('.BDZ-form_container').classList.add('hide');
+    };
+    
+    useEffect(() => {
+        if(prepareDownload) {
+          
+        }
+    }
+    , [prepareDownload]);
     
     useEffect(() => {
         if (openModal) {
@@ -117,14 +136,58 @@ export default function ButtonDownloadZIPCustom({ stringURL, stringParams, datos
   
     return (
       <>
+        <style jsx>
+        {`
+          .BDZ-main_container {
+            position: relative;
+          }
+          .BDZ-form_container{
+            display: block;
+            opacity: 100%;
+          }
+          .BDZ-form_container.hide {
+            opacity: 0;
+          }
+          .BDZ-download_container {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                z-index: 1000;
+                width: 100%;
+                height: 100%;
+                background-color: white;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+          }
+          .BDZ-download_container.hide {
+            display: none;
+          }
+          .BDZ-preloader {
+            display: none;
+          }
+          .BDZ-preloader.show {
+            display: block;
+            width: inherit;
+            height: auto;
+          }
+          .BDZ-download.show {
+            display: show;
+          }
+          .BDZ-download.hide {
+            display: none;
+          }
+        `}
+        </style>
         <button
           type="button"
           className=" vertical_align cursor_pointer"
           onClick={handleOpenModal}
-          style={{ background: 'none', border: 'none',  }}
+          style={{ background: 'none', border: 'none' }}
         >
-          
-          Reporte en Excel
+        Reporte en Excel
         </button>
         <Modal open={openModal} onClose={handleCloseModal}>
           <div className="display_ flex justify_center margin_none">
@@ -144,50 +207,76 @@ export default function ButtonDownloadZIPCustom({ stringURL, stringParams, datos
                     onClick={handleCloseModal}
                     className="modal_close_button display_none_mobile"
                   >
-                    <CloseIcon />
+                  <CloseIcon />
                   </Button>
                 </div>
               </div>
-              <div className="header_select margin_bottom_s margin_top_m">
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      className="text_bolder"
-                      checked={checkedAll}
-                      onChange={handleChangeSelectAll}
-                      color="primary"
-                    />
-                  }
-                  label="Seleccionar todo"
-                  sx={{
-                    "& .MuiFormControlLabel-label": {
-                      fontWeight: 600,
-                    },
-                  }}
-                />
-                <div className="width_100_mobile justify_center_mobile">
-                  <Button className="text_capitalize button_primary margin_bottom_s" href={downloadLink} download={filename} target="_blank" rel="noreferrer">
-                    <FileDownloadOutlinedIcon />
-                    Descargar Excel
-                  </Button>
+              <div className='BDZ-main_container'>
+                <div className='BDZ-download_container hide'>
+                   <>
+                    <div className="BDZ-preloader show">
+                      <LinearWithValueLabel  
+                        processingMessages={["Procesando datos...", "Generando archivo de descarga, espere por favor..."]}>
+                      </LinearWithValueLabel> 
+                    </div>
+                    <Button 
+                        className="BDZ-download hide text_capitalize button_primary margin_bottom_s" 
+                        href={downloadLink} 
+                        download={filename} 
+                        target="_blank" 
+                        rel="noreferrer"
+                        >
+                        <FileDownloadOutlinedIcon />
+                        Descargar ZIP
+                    </Button>
+                    <a className="link_primary vertical_align" href={void(0)} onClick={handleCloseModal} rel="noreferrer">
+                      Cerrar 
+                    </a>
+                   </> 
                 </div>
-              </div>
-              <div className="modal_double_border">
-                <FormGroup className="display_grid columns">
-                  {optionsExcel.map((option) => (
+                <div className='BDZ-form_container'>
+                  <div className="header_select margin_bottom_s margin_top_m">
                     <FormControlLabel
-                      key={option.value}
                       control={
                         <Checkbox
-                          checked={checkedState[option.label]}
-                          onChange={handleChangeCheck}
-                          name={option.label}
+                          className="text_bolder"
+                          checked={checkedAll}
+                          onChange={handleChangeSelectAll}
+                          color="primary"
                         />
                       }
-                      label={option.label}
+                      label="Seleccionar todo"
+                      sx={{
+                        "& .MuiFormControlLabel-label": {
+                          fontWeight: 600,
+                        },
+                      }}
                     />
-                  ))}
-                </FormGroup>
+                    <div className="width_100_mobile justify_center_mobile">
+                      <Button className="text_capitalize button_primary margin_bottom_s" href={void(0)} onClick={handlePrepareDownload} target="_self" rel="noreferrer">
+                        <FileDownloadOutlinedIcon />
+                        Descargar reporte
+                      </Button>
+                    </div>
+                  </div>
+                  <div className="modal_double_border margin_bottom_m">
+                    <FormGroup className="display_grid columns">
+                      {optionsExcel.map((option) => (
+                        <FormControlLabel
+                          key={option.value}
+                          control={
+                            <Checkbox
+                              checked={checkedState[option.label]}
+                              onChange={handleChangeCheck}
+                              name={option.label}
+                            />
+                          }
+                          label={option.label}
+                        />
+                      ))}
+                    </FormGroup>
+                  </div>
+                </div>
               </div>
             </Box>
           </div>
