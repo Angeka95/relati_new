@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useContext, useRef } from 'react';
-import '../App.css';
 import { Stack, Pagination, PaginationItem, List, ListItem, Button, Box, Chip, Alert } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
@@ -27,6 +26,8 @@ import { macrocasos } from '../data/datos_macrocaso.js';
 import LinearWithValueLabel from '../components/linearProgress.js';  
 import ButtonDownloadZIPCustom from './buttonDownloadZIPCustom.js';
 import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
+import ButtonDownloadDecisiones from './buttonDownloadDecisiones.js';
+import '../App.css';
 
 export default function Card({ datosBusqueda, searchOptions, selectedFilters, isListSmall, selectedTerm, isLargeResult, isExternalFilters, customPagination = {}, paramsBusquedaAV = null }) {  
        
@@ -120,31 +121,10 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
         selectedFilters = [];
     }
     const [isButtonSorterEnabled, setIsButtonSorterEnabled] = useState(false);
-// boton descargar resultados
-const [isMobile, setIsMobile] = useState(window.innerWidth < 1000);
-
-
-useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth < 1000);
-    };
-
-    window.addEventListener('resize', handleResize);
-
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
 
     // Estado del Boton ordenar 
     const toggleButton = () => {
         setIsButtonSorterEnabled(prev => !prev);
-    };
-
-    const [isButtonDownloadEnabled, setIsButtonDownloadEnabled] = useState(false);
-
-    // Estado del Boton ordenar 
-    const toggleButtonDownload = () => {
-        setIsButtonDownloadEnabled(prev => !prev);
     };
 
     const [showFilter, setShowFilter] = useState(false);
@@ -391,32 +371,12 @@ useEffect(() => {
                                                       <Button onClick={sortAscByScore} className='items_sorted' endIcon={<ArrowDownwardIcon />} >Menor Relevancia </Button>
                                                   </div>
                                               )}</div>
-
-                                        <div className=" position_relative"> 
-                                             
-                                              <Button className="button_function button_download " startIcon={<FileDownloadOutlinedIcon />} onClick={toggleButtonDownload}>{isMobile ? 'Descargar' : 'Descargar resultados'}
-                                            </Button>
-                                                
-
-                                        {isButtonDownloadEnabled && (
-                                                        <div className='container_date_download position_float'>
-                                                         
-                                                          
-                                                          { ((datos.length > 0) && (datosToExport !== null)) && 
-                                                                <>
-                                                                    {<ButtonDownloadZIPCustom
-                                                                        stringURL={`${process.env.REACT_APP_API_SERVER_DOMAIN}/downloadresult`}
-                                                                        stringParams={`idpro=${datosToExport}`}
-                                                                        datosToExport={datosToExport}
-                                                                        filename="resultados.xlsx"
-                                                                    />}    
-                                                                </>
-                                                            }
-                                                            <Button onClick={sortAscByDate} className='items_sorted '  >Exportar decisiones en ZIP</Button>
-
-                                                        </div>
-                                                    )}</div>
-
+                                            {<ButtonDownloadDecisiones
+                                                isButtonDownloadEnabled="false"
+                                                datos={datos}
+                                                datosToExport={datosToExport}
+                                                sortAscByDate={sortAscByDate}
+                                            />}
                                             </NoneGrid>  
                                         )}
                                 </Grid>

@@ -12,7 +12,8 @@ import CardSearch from './cardSearchResults.js';
 import SearchBarForInnerResults from './searchBarForInnerResults.js';
 import FilterShort from './filterShort.js';
 import ButtonDownloadXLS from './buttonDownloadXLS.js';
-import ButtonDownloadXLSCustom from './buttonDownloadXLSCustom.js';
+import ButtonDownloadXLSCustom from './buttonDownloadXLSCustom.js';  
+import ButtonDownloadDecisiones from './buttonDownloadDecisiones.js'; 
 import LinearWithValueLabel from '../components/linearProgress.js';
 import '../App.css';
 

@@ -8,7 +8,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import LinearWithValueLabel from './linearProgress.js';
 import '../App.css';
 
-export default function ButtonDownloadZIPCustom({ stringURL, stringParams, datosToExport, filename = 'archivo.xlsx'}) {
+export default function ButtonDownloadZIPCustom({ stringURL, stringParams, datosToExport, filename = 'archivo.xlsx', sortAscByDate = () => {} }) {
 
     const [downloadLink, setDownloadLink] = useState(null);
     
@@ -49,7 +49,10 @@ export default function ButtonDownloadZIPCustom({ stringURL, stringParams, datos
         
     // Modal Excel
     const [openModal, setOpenModal] = useState(false);
-    const handleOpenModal = () => setOpenModal(true);
+    const handleOpenModal = () => {
+      sortAscByDate();
+      setOpenModal(true);
+    }
     const handleCloseModal = () => setOpenModal(false);
 
     
@@ -183,11 +186,11 @@ export default function ButtonDownloadZIPCustom({ stringURL, stringParams, datos
         </style>
         <button
           type="button"
-          className=" vertical_align cursor_pointer"
+          className=" vertical_align cursor_pointer items_sorted"
           onClick={handleOpenModal}
           style={{ background: 'none', border: 'none' }}
         >
-        Reporte en Excel
+        Exportar decisiones en ZIP
         </button>
         <Modal open={openModal} onClose={handleCloseModal}>
           <div className="display_ flex justify_center margin_none">
@@ -200,7 +203,7 @@ export default function ButtonDownloadZIPCustom({ stringURL, stringParams, datos
                   <CloseIcon />
                 </Button>
                 <h3 className="text_center margin_top_s">
-                  Seleccione la información que contendrá el reporte
+                 Exportar decisiones en formato ZIP
                 </h3>
                 <div className="display_flex">
                   <Button
@@ -236,45 +239,12 @@ export default function ButtonDownloadZIPCustom({ stringURL, stringParams, datos
                 </div>
                 <div className='BDZ-form_container'>
                   <div className="header_select margin_bottom_s margin_top_m">
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                          className="text_bolder"
-                          checked={checkedAll}
-                          onChange={handleChangeSelectAll}
-                          color="primary"
-                        />
-                      }
-                      label="Seleccionar todo"
-                      sx={{
-                        "& .MuiFormControlLabel-label": {
-                          fontWeight: 600,
-                        },
-                      }}
-                    />
                     <div className="width_100_mobile justify_center_mobile">
                       <Button className="text_capitalize button_primary margin_bottom_s" href={void(0)} onClick={handlePrepareDownload} target="_self" rel="noreferrer">
                         <FileDownloadOutlinedIcon />
                         Descargar reporte
                       </Button>
                     </div>
-                  </div>
-                  <div className="modal_double_border margin_bottom_m">
-                    <FormGroup className="display_grid columns">
-                      {optionsExcel.map((option) => (
-                        <FormControlLabel
-                          key={option.value}
-                          control={
-                            <Checkbox
-                              checked={checkedState[option.label]}
-                              onChange={handleChangeCheck}
-                              name={option.label}
-                            />
-                          }
-                          label={option.label}
-                        />
-                      ))}
-                    </FormGroup>
                   </div>
                 </div>
               </div>

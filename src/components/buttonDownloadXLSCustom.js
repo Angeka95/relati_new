@@ -6,7 +6,7 @@ import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
 import CloseIcon from '@mui/icons-material/Close';
 import '../App.css';
 
-export default function ButtonDownloadXLSCustom({ stringURL, stringParams, datosToExport, filename = 'archivo.xlsx'}) {
+export default function ButtonDownloadXLSCustom({ stringURL, stringParams, datosToExport, filename = 'archivo.xlsx', decorated = true}) {
 
     const [downloadLink, setDownloadLink] = useState(null);
     
@@ -117,6 +117,7 @@ export default function ButtonDownloadXLSCustom({ stringURL, stringParams, datos
   
     return (
       <>
+      {(decorated === true) ? 
         <button
           type="button"
           className="link_primary vertical_align cursor_pointer"
@@ -126,6 +127,16 @@ export default function ButtonDownloadXLSCustom({ stringURL, stringParams, datos
           <FileDownloadOutlinedIcon />
           Reporte en Excel
         </button>
+      :
+        <button
+          type="button"
+          className=" vertical_align cursor_pointer"
+          onClick={handleOpenModal}
+          style={{ background: 'none', border: 'none' }}
+        >
+        Reporte en Excel
+        </button>
+      }
         <Modal open={openModal} onClose={handleCloseModal}>
           <div className="display_ flex justify_center margin_none">
             <Box className="modal_box justify-center modal_spacing scroll_modal">
