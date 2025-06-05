@@ -1579,7 +1579,7 @@ white-space: pre;
 }
 
 .modal_spacing{ 
-  padding: 0px 20px !important;
+  padding: 35px 20px !important;
 }
 
 
@@ -2684,9 +2684,13 @@ padding: 0px 0% 0% 3%;
 }
 
 .modal_close_button {
-  margin-top: 16px;
+  margin-top: 4px !important;
   font-size: 1.5rem !important;
   color: black !important;
+}
+
+.modal_close_button.justify_end {
+  justify-content: flex-end !important;
 }
 
 .modal_close_button:hover {
@@ -3366,6 +3370,7 @@ color: rgb(219, 0, 69);
 
 .header_select{
   width: 100%;
+  position: relative;
   display: flex;
   justify-content: space-between;
 }

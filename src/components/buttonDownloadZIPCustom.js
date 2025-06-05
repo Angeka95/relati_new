@@ -195,12 +195,12 @@ export default function ButtonDownloadZIPCustom({ stringURL, stringParams, datos
         <Modal open={openModal} onClose={handleCloseModal}>
           <div className="display_ flex justify_center margin_none">
             <Box className="modal_box justify-center modal_spacing scroll_modal">
-              <div className="header_select f_wrap margin_top_m margin_bottom_s justify_center_mobile">
+              <div className="header_select f_wrap margin_top_m_ margin_bottom_s justify_center_mobile">
                 <Button
                   onClick={handleCloseModal}
                   className="modal_close_button display_none_desktop"
                 >
-                  <CloseIcon />
+                <CloseIcon />
                 </Button>
                 <h3 className="text_center margin_top_s">
                  Exportar decisiones en formato ZIP
@@ -208,7 +208,7 @@ export default function ButtonDownloadZIPCustom({ stringURL, stringParams, datos
                 <div className="display_flex">
                   <Button
                     onClick={handleCloseModal}
-                    className="modal_close_button display_none_mobile"
+                    className="modal_close_button display_none_mobile justify_end"
                   >
                   <CloseIcon />
                   </Button>
