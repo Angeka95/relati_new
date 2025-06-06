@@ -2417,6 +2417,7 @@ padding: 0px 0% 0% 3%;
 
 .text_header{
   padding: 0px 10px;
+  margin-top: 10px;
 }
 
 .display_header{
@@ -3534,14 +3535,60 @@ color: rgb(219, 0, 69);
 
 .book_margin_mobile{
   margin: 0% 10%;
+  max-height: 450px;
+  overflow-y: auto;
+
 }
 
 .autocomplete_bar_search_small{
   min-width: 214px;
 }
 
+.text_header{
+  padding: 0px 40px;
+}
+
+.video_data {
+  width: 100%;
+}
+
+.video_frame, .video_image{
+  height: 300px;
+  width: 100% !important;
+  margin-bottom: 20px;
+}
+
+
+
+
 
 }
+
+@media (max-width: 900px) {
+.list_video {
+  margin-top: 40px;
+  width: 100%;
+} 
+
+.list_video_container{
+  flex-wrap: wrap;
+}
+
+.input_caso{
+  max-width: 250px !important;
+  min-width: 250px !important;
+}
+.title_recientes{
+  margin-top: 220px !important;
+}
+
+.margin_results_page{
+  min-width: 170px;
+  margin-left: 10%;
+}
+
+}
+
 @media (min-width: 1000px) {
 .display_none_desktop{
   display: none !important;

@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef, useContext } from 'react';
 import '../App.css';
-import LogoRelati from '../assets/images/logo_Relativ2.png';
+import LogoRelati from '../assets/images/logo_Relati.svg';
 import { Box, Container, Grid, Button, List, ListItem, Tooltip, Alert } from '@mui/material';
 
 import SearchBar from '../components/searchBar';
@@ -503,7 +503,7 @@ export default function Home() {
                                             Buscar
                                         </Button>
                                     {/*</Link>*/} 
-                                    <div className="texto_ver_todas_las_decisiones margin_bottom_m">
+                                    <div className="texto_ver_todas_las_decisiones margin_bottom_m text_center_mobile">
                                         <p>¿No encuentra lo que busca?  
                                         <Link to="ver-todas-las-decisiones" className="link_primary margin_left_xs"> 
                                         Ver todas las decisiones
@@ -530,7 +530,7 @@ export default function Home() {
             </Container>
             <Container xs={12} sm={12} md={12} lg={12} xl={12} className="margin_top_xlx">
             
-                <h2 className="text_bolder text_left padding_x">Decisiones recientes </h2>
+                <h2 className="text_bolder text_left padding_x text_center_mobile margin_top_m title_recientes">Decisiones recientes </h2>
 
                 <Masonry ref={masonryGridRef} breakpointCols={breakpointColumnsObj}
                     className="my-masonry-grid "

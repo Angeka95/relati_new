@@ -194,7 +194,7 @@ export default function Mapa() {
         
         <Container className="container_large">
         <h1 className="text_center margin_top_l">Mapa Jurisprudencial </h1>  
-        <p className="text_center">Encuentre las decisiones de la JEP y conozca la actividad judicial en el territorio Colombiano</p>
+        <h5 className="text_center">Encuentre las decisiones de la JEP y conozca la actividad judicial en el territorio Colombiano</h5>
         
         {( !isDatosMapaJurisprudencial ) && (
             <LinearWithValueLabel></LinearWithValueLabel>
