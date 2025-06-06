@@ -108,7 +108,7 @@ La JEP abrió 11 macrocasos con el fin de investigar quiénes fueron los máximo
                         <p className="text_center_mobile ">
                         Esta publicación electrónica, de acceso libre, es una guía práctica con la que se espera facilitar el estudio y/o conocimiento, por parte de un público amplio, sobre el desarrollo normativo, procesal y jurisprudencial de la Jurisdicción Especial para la Paz.
                         </p>
-                        <a href="https://xperta.legis.co/intermedia/intermedia_jep.html" target="_blank"  className="margin_top_s link_primary"> Saber más de esta publicación
+                        <a href="https://xperta.legis.co/intermedia/intermedia_jep.html" target="_blank"  className="margin_top_s link_primary  display_none_mobile"> Saber más de esta publicación
                         </a> 
                     </div>
                 </div> 

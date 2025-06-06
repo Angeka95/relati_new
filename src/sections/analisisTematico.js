@@ -142,7 +142,7 @@ En este sentido, los productos publicados acá dan cuenta de la secuencia lógic
         <div className="descripcion_nowrap margin_bottom_xl">
 
             <Container className="margin_top_l ">
-                <h1 className="justify_center text_bolder">Análisis Temático de Decisiones</h1>
+                <h1 className="justify_center text_center text_bolder">Análisis Temático de Decisiones</h1>
                 <h5 className="justify_center  align_center margin_top_s margin_bottom_m text_center">Consulte los análisis temáticos elaborados por la Relatoría General, los cuales se reflejan a través de productos que se elaboran continuamente en cumplimiento de las funciones asignadas a su cargo, conforme a lo dispuesto en el Reglamento General de la JEP. </h5>
                 <div className="margin_top_l margin_bottom_m">
                     <p>

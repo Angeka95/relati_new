@@ -153,7 +153,7 @@ export default function DecisionesSalaTribunal({caso}) {
                                 )}
                                 {selectedtipoDecision.length === 0 && (
                                 <>
-                                    <h5 className="width_100 text_center margin_m text_bolder">Seleccione tipo de decisión para ver las decisiones por Sala</h5>
+                                    <h5 className="width_100 text_center margin_top_m margin_bottom_s text_bolder ">Seleccione tipo de decisión para ver las decisiones por Sala</h5>
                                 </>
                                 )}
                                 <div className="margin_bottom_l width_100">
