@@ -1,6 +1,5 @@
 import React, { useState , useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { getDownloadResultsXLS } from '../services/downloads.js';
 import { getDownloadResultsZIP } from '../services/downloads.js';
 import { Modal, Box, Button, FormControlLabel, Checkbox,FormGroup,  } from '@mui/material';
 import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
@@ -8,46 +7,13 @@ import CloseIcon from '@mui/icons-material/Close';
 import LinearWithValueLabel from './linearProgress.js';
 import '../App.css';
 
-export default function ButtonDownloadZIPCustom({ stringURL, stringParams, datosToExport, filename = 'archivo.xlsx', sortAscByDate = () => {} }) {
+export default function ButtonDownloadZIPCustom({ stringURL, stringParams, filename = 'archivo.zip', sortAscByDate = () => {} }) {
 
     const [downloadLink, setDownloadLink] = useState(null);
-    
-    const optionsExcel = [
-        { label: "Accionado / vinculado", value: "accionado_vinculado" },
-        { label: "Análisis caso concreto", value: "analisis_caso_concreto" },
-        { label: "Año de los hechos", value: "anio_hechos" },
-        { label: "Autor", value: "autor" },
-        { label: "Compareciente", value: "compareciente" },
-        { label: "Conclusión", value: "conclusion_resuelve" },
-        { label: "Delito", value: "delito" },
-        { label: "Departamento", value: "departamento" },
-        { label: "Derecho fundamental", value: "derecho_fundamental" },
-        { label: "Enfoque diferencial", value: "enfoque" },
-        { label: "Enlace", value: "hipervinculo" },
-        { label: "Expediente", value: "expediente" },
-        { label: "Fecha de providencia", value: "fecha_documento" },
-        { label: "Hechos / Antecedentes", value: "hechos_antecedentes" },
-        { label: "Macrocaso asociado", value: "macrocaso" },
-        { label: "Municipio", value: "municipio" },
-        { label: "Nombre", value: "nombre_providencia" },
-        { label: "Palabras clave", value: "palabras_clave" },
-        { label: "Problema jurídico", value: "problema_juridico" },
-        { label: "Procedimiento", value: "procedimiento" },
-        { label: "Radicado", value: "radicado_documento" },
-        { label: "Reglas jurídicas", value: "reglas_juridicas" },
-        { label: "Resuelve", value: "resuelve" },
-        { label: "Sala / Sección", value: "sala_seccion" },
-        { label: "Síntesis", value: "sintesis" },
-        { label: "Tipo de compareciente", value: "tipo_compareciente" },
-        { label: "Tipo de documento", value: "tipo_documento" }
-    ];
-    
-    const initialState = optionsExcel.reduce((acc, option) => { acc[option.label] = true; return acc; }, {});
-    
-    const [checkedState, setCheckedState] = useState(initialState);
     const [prepareDownload, setPrepareDownload] = useState(false);
+    const [message, setMessage] = useState({ message: "", classname: "" });
         
-    // Modal Excel
+    // Modal 
     const [openModal, setOpenModal] = useState(false);
     const handleOpenModal = () => {
       sortAscByDate();
@@ -55,87 +21,48 @@ export default function ButtonDownloadZIPCustom({ stringURL, stringParams, datos
     }
     const handleCloseModal = () => setOpenModal(false);
 
-    
-    const [checkedAll, setCheckedAll] = useState(true); 
-    
-    const handleChangeSelectAll = (event) => {
-        
-        const { checked } = event.target;
-        setCheckedAll(checked); 
-          
-        setCheckedState((prevState) => {
-          const newState = {};
-          optionsExcel.forEach((option) => {
-            newState[option.label] = checked; 
-          });
-          return newState; 
-        });
-        
-    };
-    
-    const handleChangeCheck = (event) => {
-        const { name, checked } = event.target;
-       
-        setCheckedState((prevState) => ({
-          ...prevState,
-          [name]: checked, 
-        }));
-    };
-    
     // Al ejcutar el boton de descargar reporte, desaparece el formulario y muestra el contenedor de descarga
     const handlePrepareDownload = (event) => {
         event.preventDefault();
         setPrepareDownload(true);
         document.querySelector('.BDZ-download_container').classList.remove('hide');
         document.querySelector('.BDZ-form_container').classList.add('hide');
+        
     };
-    
+     
+    const getDownloadLink = async () => {
+      setMessage({ message: "", classname: "" });
+      
+      const newMessage = {};
+      
+      try {
+        const response = await getDownloadResultsZIP(stringURL, stringParams);
+        const urlBlob = window.URL.createObjectURL(new Blob([response.data]));
+        setDownloadLink(urlBlob);
+      } catch (err) {
+        console.error('Error al obtener el archivo de descarga:', err);
+        newMessage["message"] = `No se pudo generar el archivo de descarga.`;
+        newMessage["classname"] = 'error';
+        setMessage(newMessage);
+      } finally {
+        setPrepareDownload(false);
+      }
+  };  
+
     useEffect(() => {
         if(prepareDownload) {
-          
+          getDownloadLink();
         }
     }
     , [prepareDownload]);
     
     useEffect(() => {
         if (openModal) {
-            
-            const selectedOptions = optionsExcel.filter(option => checkedState[option.label]);
-            const predeterminatedValues = ["tipo_documento", "fecha_documento", "sala_seccion", "enlace", "palabras_clave", "conclusion", "nombre_providencia"];
-            const priorityValues = ["tipo_documento", "fecha_documento", "sala_seccion", "enlace", "palabras_clave", "conclusion", "nombre_providencia"];
-            
-            let selectedValues = [];
-            
-            if((selectedOptions.length > 0) && (selectedOptions.length < optionsExcel.length)){
-              selectedValues = selectedOptions.map(option => option.value);
-              
-              // Ensure predeterminatedValues are included in selectedValues
-              predeterminatedValues.forEach((val) => {
-                  if (!selectedValues.includes(val)) {
-                      selectedValues.push(val);
-                  }
-              });
-            
-            } else if(selectedOptions.length === optionsExcel.length){
-                selectedValues = optionsExcel.map(option => option.value);
-                // Ensure predeterminatedValues are included in selectedValues
-                predeterminatedValues.forEach((option) => {
-                    if (!selectedValues.includes(option)) {
-                        selectedValues.push(option);
-                    }
-                });
-            } else if(selectedOptions.length === 0){
-                selectedValues = predeterminatedValues;
-            }
-          
-            const newSelectedValues = priorityValues.concat(selectedValues.filter(option => !priorityValues.includes(option)));
-            
-            const stringColumns = `columns=${newSelectedValues.join(',')}`;
-            setDownloadLink(`${stringURL}?${stringParams}&${stringColumns}`);
+            setDownloadLink(`${stringURL}?${stringParams}`);
         } else {
             setDownloadLink(null);
         }
-    }, [checkedState, openModal, stringParams]);
+    }, [openModal, stringParams]);
   
     return (
       <>

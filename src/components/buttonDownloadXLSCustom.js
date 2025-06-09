@@ -1,6 +1,4 @@
 import React, { useState , useEffect } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
-import { getDownloadResultsXLS } from '../services/downloads.js';
 import { Modal, Box, Button, FormControlLabel, Checkbox,FormGroup,  } from '@mui/material';
 import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
 import CloseIcon from '@mui/icons-material/Close';

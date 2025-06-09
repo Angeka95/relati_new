@@ -372,7 +372,7 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
                                                   </div>
                                               )}</div>
                                             {<ButtonDownloadDecisiones
-                                                isButtonDownloadEnabled="false"
+                                                isButtonDownloadEnabled={false}
                                                 datos={datos}
                                                 datosToExport={datosToExport}
                                                 sortAscByDate={sortAscByDate}

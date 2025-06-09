@@ -1,14 +1,14 @@
 import React, { useState , useEffect } from 'react';
-import { Button, FormControlLabel, Checkbox,FormGroup,  } from '@mui/material';
+import { Button } from '@mui/material';
 import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
 import Divider from '@mui/material/Divider'; 
 import ButtonDownloadXLSCustom from './buttonDownloadXLSCustom.js';
 import ButtonDownloadZIPCustom from './buttonDownloadZIPCustom.js';
 import '../App.css';
 
-export default function ButtonDownloadDecisiones({isButtonDownloadEnabled = "false", datos, datosToExport, sortAscByDate}) {
+export default function ButtonDownloadDecisiones({isButtonDownloadEnabled = false, datos, datosToExport, sortAscByDate}) {
   
-    const [boolButtonDownloadEnabled, setBoolButtonDownloadEnabled] = useState((isButtonDownloadEnabled === "false") ? false : true);
+    const [boolButtonDownloadEnabled, setBoolButtonDownloadEnabled] = useState(false);
     const [isMobile, setIsMobile] = useState(window.innerWidth < 1000);
     
     useEffect(() => {
@@ -43,19 +43,17 @@ export default function ButtonDownloadDecisiones({isButtonDownloadEnabled = "fal
                               stringParams={`idpro=${datosToExport}`}
                               datosToExport={datosToExport}
                               filename="resultados.xlsx"
-                              decorated={false}
+                              decorated="false"
                           />
                           <Divider sx={{ marginTop: "0.5rem", marginBottom: "0.5rem"}}/>
                           <ButtonDownloadZIPCustom
-                              stringURL={`${process.env.REACT_APP_API_SERVER_DOMAIN}/downloadresult`}
-                              stringParams={`idpro=${datosToExport}`}
-                              datosToExport={datosToExport}
-                              filename="resultados.xlsx"
+                              stringURL={`${process.env.REACT_APP_API_SERVER_DOMAIN}/getdocumentszip`}
+                              stringParams={`providencias_id=${datosToExport}`}
+                              filename="resultados.zip"
                               sortAscByDate={sortAscByDate}
                           />     
                       </>
                   }
-                  {/*<Button onClick={sortAscByDate} className='items_sorted '>Exportar decisiones en ZIP</Button>*/}
               </div>
             )}           
         </div>
