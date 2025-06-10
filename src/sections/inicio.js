@@ -198,6 +198,28 @@ export default function Home() {
     }), [valAutoComplete]);
     
     /* Fin Autocompletar */
+    
+    /* Terminos Mas Buscados */
+    
+    const [terminosMasBuscados, setTerminosMasBuscados] = useState([]);
+    
+    const getTerminosMasBuscados = () => {
+        inithomeService
+            .getTerminosMasBuscados()
+            .then(response => {
+                setTerminosMasBuscados(response.data);
+             }
+            )
+            .catch(error => console.log(error));
+    }; 
+    
+    useEffect((() => {
+        if (terminosMasBuscados.length === 0 ) {
+            getTerminosMasBuscados();
+        }
+    }), [terminosMasBuscados])
+        
+    /* Fin Terminos Mas Buscados */
 
     const [showAll, setShowAll] = useState(false);
 
@@ -407,39 +429,6 @@ export default function Home() {
         
         ]
 
-        const masBuscados = [
-            {   id: 1,
-                termino : "lorem ipsum dolor "
-                
-            },
-            {
-                id: 2,
-                termino : "lorem ipsum dolor "
-              
-            },
-            {
-                id: 3,
-                termino : "lorem ipsum dolor "
-                
-            },
-            {
-                id: 4,
-                termino : "lorem ipsum dolor "
-                
-            },
-            {
-                id: 5,
-                termino : "lorem ipsum dolor "
-                
-            },
-
-        ]
-
-        const goToMasBuscado = () => {
-            navigate('/resultados-busqueda?string=lorem');
-            
-        };
-
     return (
         <div className="nowrap">
             {/* {isModalVisible && (
@@ -581,21 +570,19 @@ export default function Home() {
                 </div>
             </Container>
 
+            {(terminosMasBuscados !== null ) && ( 
             <Container xs={12} sm={12} md={12} lg={12} xl={12} className="margin_top_xlx">
             <h2 className="text_bolder text_left padding_x  margin_top_m title_mobile text_center_mobile">Términos más buscados</h2>
             <div className="margin_eje_xm">
-                {masBuscados.map(masBuscado => (
-                    <div key={masBuscado.id} className="width_100 "> 
-                     <Button onClick={goToMasBuscado} className="link_secondary text_capitalize text_left" startIcon={<SearchIcon />}>{masBuscado.termino} </Button> 
-                    
+                {terminosMasBuscados.map((item, k) => (
+                    <div key={k} className="width_100 "> 
+                     <Button className="link_secondary text_capitalize text_left" startIcon={<SearchIcon />} href={`/resultados-busqueda?string=${item.terminos.toUpperCase()}`}>{item.terminos.toUpperCase()}</Button> 
                     </div> 
-
                 ))}
-
             </div>
-            
-
             </Container>
+            )}
+            
             <Container xs={12} sm={12} md={12} lg={12} xl={12} className="margin_top_xl">
             
                 <h2 className="text_bolder text_left padding_x text_center_mobile  title_recientes">Decisiones recientes </h2>
