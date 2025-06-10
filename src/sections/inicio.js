@@ -2,7 +2,6 @@ import React, { useEffect, useState, useRef, useContext } from 'react';
 import '../App.css';
 import LogoRelati from '../assets/images/logo_Relati.svg';
 import { Box, Container, Grid, Button, List, ListItem, Tooltip, Alert } from '@mui/material';
-
 import SearchBar from '../components/searchBar';
 import Carousel from '../components/carousel';
 import CardDecision from '../components/cardDecision.js';
@@ -27,6 +26,7 @@ import useSearchAIEnterKey from '../hooks/useSearchAIEnterKey.js';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
+import buscadorService from '../services/buscador.js';
 
 
 export default function Home() {
@@ -158,24 +158,46 @@ export default function Home() {
     };
 
 
-    /*const options = [
-        { title: 'Competencia de la JEP' },
-        { title: 'Competencia y Jurisdicción' },
-        { title: 'Competencia de la Jurisdicción Ordinaria' },
-        { title: 'Competencia Temporal de la JEP' },
-        { title: 'Requisitos de la competencia' },
-        { title: 'Competencia de las Salas de Justicia' },
-
-    ];*/
-    const options = [];
-
+    /* Autocompletar */
+    
     const inputRef = useRef(null);
-
     const [valueBar, setValueBar] = useState('');
+    const [valAutoComplete, setValAutoComplete] = useState('');
+    const [options, setOptions] = useState([]);
+
+    // Captura el valor en el componente Autocomplete
     const updateSelectedValue = (event, value) => {
         setValueBar(value);
     };
-
+    
+    // Esta funcion adjunta al onChange de TextField permite obtener lista de opciones que el usuario pueda elegir
+    const executeAutoComplete = (event) => {
+        setValAutoComplete(event.target.value);
+    };
+    
+    const getListaBuscadorAutocompletar = (expresion) => {
+        buscadorService
+            .getBuscadorListaAutocompletar(expresion)
+            .then(response => {
+                let optionsAutocomplete = response.data.map(item => {
+                    return { title: item.value };
+                });
+                setOptions(optionsAutocomplete);
+             }
+            )
+            .catch(error => console.log(error));
+    }; 
+    
+    // Este Hook permite actualizar el valor de estado options cada vez que se cambia el valor del input
+    useEffect((() => {
+        if ((valAutoComplete !== null ) && (valAutoComplete.length >= 3)) {
+             setTimeout(() =>{ 
+                getListaBuscadorAutocompletar(valAutoComplete);
+             }, 1200);
+        }
+    }), [valAutoComplete]);
+    
+    /* Fin Autocompletar */
 
     const [showAll, setShowAll] = useState(false);
 
@@ -247,8 +269,6 @@ export default function Home() {
 
     const handleOpenModal = () => setOpenModal(true);
     const handleCloseModal = () => setOpenModal(false);
-
-
 
      // Docs Comision de Genero
    
@@ -420,7 +440,6 @@ export default function Home() {
             
         };
 
-
     return (
         <div className="nowrap">
             {/* {isModalVisible && (
@@ -525,9 +544,9 @@ export default function Home() {
                                             ...params.inputProps,
                                             maxLength: 400
                                             }} 
+                                            onChange={executeAutoComplete}
                                             />
                                         }
-
                                     />
                                     {/*<Button className="light_white text_blue autocomplete_button_help button_terciary query_none" onClick={handleOpenModal}>?</Button>*}
                                     {/*<ModalInfo openModal={openModal} handleCloseModal={handleCloseModal}> </ModalInfo>*/} 

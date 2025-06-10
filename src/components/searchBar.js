@@ -5,6 +5,7 @@ import { getLocalStorageWithExpiry } from '../helpers/utils.js';
 import { Button, Switch, FormControlLabel, Grid, Alert, TextField, Stack, Autocomplete } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import { styled } from '@mui/material/styles';
+import buscadorService from '../services/buscador.js';
 import '../App.css'
 
 export default function Search({ isSearchAdvance, isSearchMain }) {
@@ -73,6 +74,41 @@ export default function Search({ isSearchAdvance, isSearchMain }) {
       window.location.href = `/resultados-busqueda?${params.toString()}`;
     }
   },[estadoVerTodasDecisiones]);
+  
+  
+  /* Autocompletar */
+  
+  const [valAutoComplete, setValAutoComplete] = useState('');
+  const [options, setOptions] = useState([]);
+    
+  // Esta funcion adjunta al onChange de TextField permite obtener lista de opciones que el usuario pueda elegir
+  const executeAutoComplete = (event) => {
+      setValAutoComplete(event.target.value);
+  };
+  
+  const getListaBuscadorAutocompletar = (expresion) => {
+      buscadorService
+          .getBuscadorListaAutocompletar(expresion)
+          .then(response => {
+              let optionsAutocomplete = response.data.map(item => {
+                  return { title: item.value };
+              });
+              setOptions(optionsAutocomplete);
+           }
+          )
+          .catch(error => console.log(error));
+  }; 
+  
+  // Este Hook permite actualizar el valor de estado options cada vez que se cambia el valor del input
+  useEffect((() => {
+      if ((valAutoComplete !== null ) && (valAutoComplete.length >= 3)) {
+           setTimeout(() =>{ 
+              getListaBuscadorAutocompletar(valAutoComplete);
+           }, 1200);
+      }
+  }), [valAutoComplete]);
+      
+  /* Fin Autocompletar */
 
    // Grids personalizadas
 
@@ -118,12 +154,14 @@ export default function Search({ isSearchAdvance, isSearchMain }) {
               freeSolo
               value={valueBar}
               onChange={updateSelectedValue}
-              options={searchOptions.map((option) => option.title)}
+              options={options.map((option) => option.title)}
               renderInput={(params) => <TextField {...params} ref={inputRef} onKeyDown={keypressEnterResultadosBusqueda} placeholder="Busque por palabra clave, número de decisión, radicado...  " 
               inputProps={{
                 ...params.inputProps,
                 maxLength: 80
-              }} />}
+              }} 
+              onChange={executeAutoComplete}
+              />}
             />
             <NoneGrid>
               <Button onClick={search} className="searchAIButton autocomplete_button button_primary z-index100" startIcon={<SearchIcon />}>
@@ -155,5 +193,3 @@ export default function Search({ isSearchAdvance, isSearchMain }) {
     </>
   );
 }
-
-const searchOptions = [];

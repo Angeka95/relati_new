@@ -6,6 +6,7 @@ import mapaJurisprudencialService from '../services/mapa_jurisprudencial.js';
 import tesauroService from '../services/tesauro.js';
 import boletinesService from '../services/boletines.js';
 import busquedaAvanzadaService from '../services/busqueda_avanzada.js';
+import  buscadorService from '../services/buscador.js';
 
 export default function TestServices() {
     
@@ -43,6 +44,17 @@ export default function TestServices() {
         )
         .catch(error => console.log(error));
     }*/
+    
+    
+    const getListaBuscadorAutocompletar = () => {
+        buscadorService
+                .getBuscadorListaAutocompletar("")
+        .then(response => {
+            setDatos(JSON.stringify(response.data, null, 2));
+         }
+        )
+        .catch(error => console.log(error));
+    }
     
     const sendBoletinService = () => {
         const objToSend = {
@@ -99,8 +111,9 @@ export default function TestServices() {
        
     useEffect(() => {
         if(datos.length === 0){
-           //getTestService();
+            //getTestService();
             //testUtilsFunction();
+            getListaBuscadorAutocompletar()
         } 
     }, [datos]);
     

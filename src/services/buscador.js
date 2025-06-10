@@ -1,7 +1,6 @@
 import axios from 'axios';
 import datos_resultados_AI_test from '../data/data_busqueda_AI_test';
 
-
 const getAllResults = (page, per_page) => {
   const config = {
     headers: {
@@ -128,4 +127,23 @@ const getSearchQDataTest = () => {
   });
 };
 
-export default { getAllResults, getAllResultsByFilter, getSearchQData, getSearchQDataTest };
+// Este servicio  obtiene la lista de opciones de autocompletar para el buscador principal basado en Tesauro relatoria.jep.gov.co/autocompletesearch?search=corte
+const getBuscadorListaAutocompletar = (expression) => {
+  const config = {
+    headers: {
+      'Authorization': `Bearer ${process.env.REACT_APP_API_ACCESS_TOKEN}`,
+      'user': process.env.REACT_APP_API_USER,
+      'password': process.env.REACT_APP_API_PASS
+    },
+    params: { }
+  };
+  const request =  axios.get(`${process.env.REACT_APP_API_SERVER_DOMAIN}/autocompletesearch?search=${expression}`, config);
+  return request.then(response => { 
+    let status_info = { "status": 200, "reason": "La consulta se ha realizado satisfactoriamente." };
+    return { "data": response.data, "status_info": status_info };
+  }).catch(error => { 
+    return { "data": [], "status_info": { "status": 500, "reason": "Lo sentimos, algo salió mal. Parece que hubo un problema en nuestro servidor. Estamos trabajando para solucionarlo. Por favor, inténtalo de nuevo más tarde." } };
+  });
+};
+
+export default { getAllResults, getAllResultsByFilter, getSearchQData, getSearchQDataTest, getBuscadorListaAutocompletar };
