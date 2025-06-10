@@ -666,6 +666,11 @@ h6 {
   box-shadow: none !important;
 }
 
+.text_left {
+  text-align: left;
+}
+
+
 .text_center {
   text-align: center;
 }
@@ -717,6 +722,11 @@ h6 {
 
 .display_inline{
   display: inline !important;
+}
+
+
+.display_contents{
+  display: contents !important;
 }
 
 .display_block{
@@ -3579,6 +3589,10 @@ color: rgb(219, 0, 69);
   min-width: 250px !important;
 }
 .title_recientes{
+  margin-top: 40px !important;
+}
+
+.title_mobile{
   margin-top: 220px !important;
 }
 

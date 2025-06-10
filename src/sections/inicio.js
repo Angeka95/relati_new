@@ -387,6 +387,39 @@ export default function Home() {
         
         ]
 
+        const masBuscados = [
+            {   id: 1,
+                termino : "lorem ipsum dolor "
+                
+            },
+            {
+                id: 2,
+                termino : "lorem ipsum dolor "
+              
+            },
+            {
+                id: 3,
+                termino : "lorem ipsum dolor "
+                
+            },
+            {
+                id: 4,
+                termino : "lorem ipsum dolor "
+                
+            },
+            {
+                id: 5,
+                termino : "lorem ipsum dolor "
+                
+            },
+
+        ]
+
+        const goToMasBuscado = () => {
+            navigate('/resultados-busqueda?string=lorem');
+            
+        };
+
 
     return (
         <div className="nowrap">
@@ -528,9 +561,25 @@ export default function Home() {
                 }
                 </div>
             </Container>
+
             <Container xs={12} sm={12} md={12} lg={12} xl={12} className="margin_top_xlx">
+            <h2 className="text_bolder text_left padding_x  margin_top_m title_mobile text_center_mobile">Términos más buscados</h2>
+            <div className="margin_eje_xm">
+                {masBuscados.map(masBuscado => (
+                    <div key={masBuscado.id} className="width_100 "> 
+                     <Button onClick={goToMasBuscado} className="link_secondary text_capitalize text_left" startIcon={<SearchIcon />}>{masBuscado.termino} </Button> 
+                    
+                    </div> 
+
+                ))}
+
+            </div>
             
-                <h2 className="text_bolder text_left padding_x text_center_mobile margin_top_m title_recientes">Decisiones recientes </h2>
+
+            </Container>
+            <Container xs={12} sm={12} md={12} lg={12} xl={12} className="margin_top_xl">
+            
+                <h2 className="text_bolder text_left padding_x text_center_mobile  title_recientes">Decisiones recientes </h2>
 
                 <Masonry ref={masonryGridRef} breakpointCols={breakpointColumnsObj}
                     className="my-masonry-grid "
@@ -564,7 +613,7 @@ export default function Home() {
             <Container xs={12} sm={12} md={8} lg={8} xl={8} className="margin_top_xl " >
                 <div className="wrap margin_bottom_xl">
                     <div className="container_40 ">
-                        <h2 className="text_bolder text_left">Documentos</h2>
+                        <h2 className="text_bolder text_left text_center_mobile">Documentos</h2>
                         <h5>Conozca los documentos de Sentencias Interpretativas y Comisiones de Género </h5>
                         <div className="separator"> 
                         </div> 
