@@ -11,11 +11,13 @@ import '../App.css'
 export default function Search({ isSearchAdvance, isSearchMain }) {
 
   // referencia para poder acceder al valor escrito en el buscador
-  const inputRef = useRef(null);
+  const inputRef2 = useRef(null);
 
   // valor en el buscador 
   const [valueBar, setValueBar] = useState('');
   const [messageSearch, setMessageSearch] = useState({ message: "", classname: "" });
+  const [valAutoComplete, setValAutoComplete] = useState('');
+  const [options, setOptions] = useState([]);
   //const [verTodasDecisiones, setVerTodasDecisiones] = useState(false);
 
   // Trae el valor de la busqueda y del switch desde el contexto 
@@ -23,6 +25,7 @@ export default function Search({ isSearchAdvance, isSearchMain }) {
   const { estadoVerTodasDecisiones, setEstadoVerTodasDecisiones } = useContext(Context);
     
   const updateSelectedValue = (event, value) => {
+    console.log("valor auotc", event.target.value, value)
     setValueBar(event.target.value);
   };
 
@@ -31,7 +34,7 @@ export default function Search({ isSearchAdvance, isSearchMain }) {
   const search = () => {
 
     let message_ = { message: "", classname: "" };
-    let searchValue = inputRef.current.querySelector('input').value;
+    let searchValue = inputRef2.current.querySelector('input').value;
     
     if(searchValue.length === 0){
       message_ = { message: "Busque por palabra clave, número de decisión, radicado...", classname: "warning" };
@@ -75,40 +78,32 @@ export default function Search({ isSearchAdvance, isSearchMain }) {
     }
   },[estadoVerTodasDecisiones]);
   
-  
-  /* Autocompletar */
-  
-  const [valAutoComplete, setValAutoComplete] = useState('');
-  const [options, setOptions] = useState([]);
-    
-  // Esta funcion adjunta al onChange de TextField permite obtener lista de opciones que el usuario pueda elegir
   const executeAutoComplete = (event) => {
-      setValAutoComplete(event.target.value);
-  };
-  
-  const getListaBuscadorAutocompletar = (expresion) => {
-      buscadorService
-          .getBuscadorListaAutocompletar(expresion)
-          .then(response => {
-              let optionsAutocomplete = response.data.map(item => {
-                  return { title: item.value };
-              });
-              setOptions(optionsAutocomplete);
-           }
-          )
-          .catch(error => console.log(error));
-  }; 
-  
-  // Este Hook permite actualizar el valor de estado options cada vez que se cambia el valor del input
-  useEffect((() => {
-      if ((valAutoComplete !== null ) && (valAutoComplete.length >= 3)) {
-           setTimeout(() =>{ 
-              getListaBuscadorAutocompletar(valAutoComplete);
-           }, 1200);
-      }
-  }), [valAutoComplete]);
+  console.log("fasdfad", event.target.value);
+          setValAutoComplete(event.target.value);
+      };
       
-  /* Fin Autocompletar */
+      const getListaBuscadorAutocompletar = (expresion) => {
+          buscadorService
+              .getBuscadorListaAutocompletar(expresion)
+              .then(response => {
+                  let optionsAutocomplete = response.data.map(item => {
+                      return { title: item.value };
+                  });
+                  setOptions(optionsAutocomplete);
+               }
+              )
+              .catch(error => console.log(error));
+      }; 
+      
+      // Este Hook permite actualizar el valor de estado options cada vez que se cambia el valor del input
+      useEffect((() => {
+          if ((valAutoComplete !== null ) && (valAutoComplete.length >= 3)) {
+               setTimeout(() =>{ 
+                  getListaBuscadorAutocompletar(valAutoComplete);
+               }, 1200);
+          }
+      }), [valAutoComplete]);
 
    // Grids personalizadas
 
@@ -153,9 +148,10 @@ export default function Search({ isSearchAdvance, isSearchMain }) {
               id="free-solo-demo"
               freeSolo
               value={valueBar}
+              onKeyDown={keypressEnterResultadosBusqueda}
               onChange={updateSelectedValue}
               options={options.map((option) => option.title)}
-              renderInput={(params) => <TextField {...params} ref={inputRef} onKeyDown={keypressEnterResultadosBusqueda} placeholder="Busque por palabra clave, número de decisión, radicado...  " 
+              renderInput={(params) => <TextField {...params} ref={inputRef2}  placeholder="Busque por palabra clave, número de decisión, radicado...  " 
               inputProps={{
                 ...params.inputProps,
                 maxLength: 80
