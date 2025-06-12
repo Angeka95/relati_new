@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import DOMPurify from 'dompurify';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import enfoqueGeneroService from '../services/enfoque_genero.js';
-import { removeFragmentoInString, getOpcionesAutocompletar, obtenerPalabrasFromArrayObject, sanitizeString } from '../helpers/utils.js';
+import { removeFragmentoInString, getOpcionesAutocompletar, obtenerPalabrasFromArrayObject, sanitizeString, obtenerAnio } from '../helpers/utils.js';
 import { Container, Grid, Alert } from '@mui/material';
 import ListCardSearch from '../components/listCardSearchEnfoqueGenero.js';
 import LinearWithValueLabel from '../components/linearProgress.js';  
@@ -67,6 +67,7 @@ export default function EnfoqueGenero() {
                             municipio:  (item.municipio_ext.length > 0) ? removeFragmentoInString("MUNICIPIO", item.municipio_ext[0].nombre_muni) : "",
                             delito: (item.delitos.length > 0) ? obtenerPalabrasFromArrayObject(item.delitos, "delito", null, false) : "", 
                             anioHechos: (item.anio_hechos.length > 0) ? item.anio_hechos[0].anio : "",
+                            anioProvidencia: (item.fecha_providencia !== null ) ? obtenerAnio(item.fecha_providencia) : "",
                             tipo: (item.documento.length > 0) ? obtenerPalabrasFromArrayObject(item.documento, "nombre", null, false) : "", 
                             radicado: (item.radicado !== null) ? item.radicado : "",
                             compareciente:  ((item.getfichas.length > 0 ) && (item.getfichas[0].compareciente !== null))  ?  item.getfichas[0].compareciente : "", 
@@ -94,7 +95,7 @@ export default function EnfoqueGenero() {
                         };
                         newItem["departamentoNombre"] = newItem.departamento;
                         newItem["procedimientos"] = newItem.procedimiento; 
-                        newItem["anio"] = newItem.anioHechos;
+                        newItem["anio"] = newItem.anioProvidencia; 
                         newItem["comparecientes"] = newItem.tipoSujeto;
                         newItem["delitos"] = newItem.delito;
                         newItem["hechos"] =  DOMPurify.sanitize(newItem.analisis, { ALLOWED_TAGS: [] });
