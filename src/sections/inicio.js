@@ -198,6 +198,28 @@ export default function Home() {
     }), [valAutoComplete]);
     
     /* Fin Autocompletar */
+    
+    /* Terminos Mas Buscados */
+    
+    const [terminosMasBuscados, setTerminosMasBuscados] = useState([]);
+    
+    const getTerminosMasBuscados = () => {
+        inithomeService
+            .getTerminosMasBuscados()
+            .then(response => {
+                setTerminosMasBuscados(response.data);
+             }
+            )
+            .catch(error => console.log(error));
+    }; 
+    
+    useEffect((() => {
+        if (terminosMasBuscados.length === 0 ) {
+            getTerminosMasBuscados();
+        }
+    }), [terminosMasBuscados])
+        
+    /* Fin Terminos Mas Buscados */
 
     const [showAll, setShowAll] = useState(false);
 
@@ -406,7 +428,7 @@ export default function Home() {
         
         
         ]
-        
+
     return (
         <div className="nowrap">
             {/* {isModalVisible && (
@@ -489,11 +511,6 @@ export default function Home() {
 
                 </Box>
 
-            
-
-             
-
-
                 <div className="search_home">
                     <div className="search_size_">
                         <Container>
@@ -547,109 +564,119 @@ export default function Home() {
                 }
                 </div>
             </Container>
-            <Container xs={12} sm={12} md={12} lg={12} xl={12} className="margin_top_xlx">
+
             
-                <h2 className="text_bolder text_left padding_x text_center_mobile margin_top_m title_recientes">Decisiones recientes </h2>
-
-                <Masonry ref={masonryGridRef} breakpointCols={breakpointColumnsObj}
-                    className="my-masonry-grid "
-                >
-                    {/* <div className='masonry-grid'> */}
-                    {decisionesRecientes.map((decisiones, index) => (
-                        // <Grid item key={index} xs={12} sm={6} md={6} lg={6} xl={6} className="masonry-item">
-                        <CardDecision key={index} decisiones={decisiones}> </CardDecision>
-                        // </Grid>
-                    ))}
-                    {/* </div> */}
-                </Masonry>
-
-                {/* <div className="wrap ">
-
-
-                        {decisionesRecientes.map((decisiones) => (
-
-                            <CardDecision decisiones={decisiones}> </CardDecision>
-                        ))}
-
-
-
-
-
-
-                </div> */}
-
+            <Container xs={12} sm={12} md={12} lg={12} xl={12} className="margin_top_xlx">
+                <h2 className="text_bolder text_left padding_x  margin_top_m title_mobile text_center_mobile">Términos más buscados</h2>
+                {(terminosMasBuscados.length === 0 ) ?
+                        <LinearWithValueLabel></LinearWithValueLabel>
+                    :
+                    <>
+                        <div className="margin_eje_xm">
+                            {terminosMasBuscados.map((item, k) => (
+                                <div key={k} className="width_100 "> 
+                                 <Button className="link_secondary text_capitalize text_left" startIcon={<SearchIcon />} href={`/resultados-busqueda?string=${item.terminos.toUpperCase()}`}>{item.terminos.toUpperCase()}</Button> 
+                                </div> 
+                            ))}
+                        </div>
+                    </>
+                }
+            </Container>
+           
+            <Container xs={12} sm={12} md={12} lg={12} xl={12} className="margin_top_xl">
+                <h2 className="text_bolder text_left padding_x text_center_mobile  title_recientes">Decisiones recientes </h2>
+                {(terminosMasBuscados.length === 0 ) ?
+                        <LinearWithValueLabel></LinearWithValueLabel>
+                    :
+                        <Masonry ref={masonryGridRef} breakpointCols={breakpointColumnsObj} className="my-masonry-grid ">
+                            {/* <div className='masonry-grid'> */}
+                            {decisionesRecientes.map((decisiones, index) => (
+                                // <Grid item key={index} xs={12} sm={6} md={6} lg={6} xl={6} className="masonry-item">
+                                <CardDecision key={index} decisiones={decisiones}> </CardDecision>
+                                // </Grid>
+                            ))}
+                            {/* </div> */}
+                        </Masonry>
+                }
             </Container>
 
             <Container xs={12} sm={12} md={8} lg={8} xl={8} className="margin_top_xl " >
-                <div className="wrap margin_bottom_xl">
-                    <div className="container_40 ">
-                        <h2 className="text_bolder text_left">Documentos</h2>
-                        <h5>Conozca los documentos de Sentencias Interpretativas y Comisiones de Género </h5>
-                        <div className="separator"> 
-                        </div> 
-                        <h5 className='margin_top_s margin_bottom_s'> Encuentre las decisiones de la JEP y actividad judicial basadas en enfoque de género </h5>
-                        <Button onClick={goToEnfoqueGeneroPage} className="button_primary " >
-                             Ver decisiones 
-                        </Button>
-                    </div>
-                    <div className="wrap container_60">
-                        <ul>
-                            {documentosSentencias.map((adicional) => (
-                                <li key={adicional.id}>
-                                    <a target="_blank" rel="noreferrer" className="link_secondary text_capitalize" href={adicional.pdf} >
-                                        {adicional.nombreDocumento}
-                                    </a>
-
-                                </li>
-                            )
-
-                            )}
-                            
-                            <div className="separator_blue"> </div>
-                            <li> 
-                                <a className="link_secondary text_capitalize cursor_pointer" onClick={toggleContent}>
-                                
-                                Comisión de Género 
-                                {isOpen ? <ExpandLessOutlinedIcon /> : <ExpandMoreOutlinedIcon />}
-                                
-                                </a>
-                                
-                                {isOpen && (
-                                <>
-                                <DocumentosComisionGenero />
-                                </>
-                                )}
-                            </li>
-
-                            <li> 
-                                <a className="link_secondary text_capitalize cursor_pointer" href="https://relatoria.jep.gov.co/documentos/providencias/15/11/Protocolo-001_comision-etnico-racial_05-junio-2019.docx">
-                                Comisión de Étnica y Racial
-                                </a>
-                            </li>
-
-                            {/* {documentosAdicionales.map((adicional) => (
-                                <li key={adicional.id}>
-                                    <a target="_blank" rel="noreferrer" className="link_secondary text_capitalize" href={adicional.pdf}>
-                                        {adicional.nombreDocumento}
-                                    </a>
-
-                                </li>
-                            )
-
-                            )} */}
-
-                        </ul>
-
-
-
-                    </div>
-                </div>
+                {(terminosMasBuscados.length === 0 ) ?
+                        <div className="wrap margin_bottom_xl">
+                             <h2 className="text_bolder text_left padding_x text_center_mobile  title_recientes">Documentos</h2>
+                             <LinearWithValueLabel></LinearWithValueLabel>
+                        </div>
+                    :
+                        <div className="wrap margin_bottom_xl">
+                            <div className="container_40 ">
+                                <h2 className="text_bolder text_left text_center_mobile">Documentos</h2>
+                                <h5>Conozca los documentos de Sentencias Interpretativas y Comisiones de Género </h5>
+                                <div className="separator"> 
+                                </div> 
+                                <h5 className='margin_top_s margin_bottom_s'> Encuentre las decisiones de la JEP y actividad judicial basadas en enfoque de género </h5>
+                                <Button onClick={goToEnfoqueGeneroPage} className="button_primary " >
+                                     Ver decisiones 
+                                </Button>
+                            </div>
+                            <div className="wrap container_60">
+                                <ul>
+                                    {documentosSentencias.map((adicional) => (
+                                        <li key={adicional.id}>
+                                            <a target="_blank" rel="noreferrer" className="link_secondary text_capitalize" href={adicional.pdf} >
+                                                {adicional.nombreDocumento}
+                                            </a>
+        
+                                        </li>
+                                    )
+        
+                                    )}
+                                    
+                                    <div className="separator_blue"> </div>
+                                    <li> 
+                                        <a className="link_secondary text_capitalize cursor_pointer" onClick={toggleContent}>
+                                        
+                                        Comisión de Género 
+                                        {isOpen ? <ExpandLessOutlinedIcon /> : <ExpandMoreOutlinedIcon />}
+                                        
+                                        </a>
+                                        
+                                        {isOpen && (
+                                        <>
+                                        <DocumentosComisionGenero />
+                                        </>
+                                        )}
+                                    </li>
+        
+                                    <li> 
+                                        <a className="link_secondary text_capitalize cursor_pointer" href="https://relatoria.jep.gov.co/documentos/providencias/15/11/Protocolo-001_comision-etnico-racial_05-junio-2019.docx">
+                                        Comisión de Étnica y Racial
+                                        </a>
+                                    </li>
+        
+                                    {/* {documentosAdicionales.map((adicional) => (
+                                        <li key={adicional.id}>
+                                            <a target="_blank" rel="noreferrer" className="link_secondary text_capitalize" href={adicional.pdf}>
+                                                {adicional.nombreDocumento}
+                                            </a>
+        
+                                        </li>
+                                    )
+        
+                                    )} */}
+        
+                                </ul>
+                            </div>
+                        </div>
+                }        
             </Container>
 
 
             <Container maxWidth="lg" disableGutters className="margin_top_xl margin_bottom_xl">
             {( boletines.length === 0 ) ? 
-                    <LinearWithValueLabel></LinearWithValueLabel>
+                 <>
+                     <h2 className="text_bolder text_left padding_x text_center_mobile  title_recientes">Boletines</h2>
+                     <LinearWithValueLabel></LinearWithValueLabel>
+                </>
                 :
                 <div className="align_center carousel_main_container " >
                     <div className="wrap text_carousel_container" >
@@ -667,12 +694,16 @@ export default function Home() {
             </Container>
 
             <Container className="space_top " id="seccion_caso">
+                {( casesToDisplay.length === 0 ) ? 
+                    <>
+                      <h2 className="justify_center text_bolder">Macrocasos</h2>
+                      <LinearWithValueLabel></LinearWithValueLabel>
+                    </>
+                :    
+                <>
                 <h2 className="justify_center text_bolder">Macrocasos</h2>
                 <h5 className="justify_center  align_center margin_top_s margin_bottom_m text_center_mobile">Conozca las últimas decisiones de cada macrocaso</h5>
-
-
                 <div className="wrap transition_smooth">
-
                     {casesToDisplay.map((caso) => (
 
                         <div key={caso.id} className="card_small transition_smooth">
@@ -683,8 +714,6 @@ export default function Home() {
                                 </p>
                             </Link>
                         </div>
-
-
                     ))}
                 </div>
 
@@ -699,12 +728,16 @@ export default function Home() {
                         </Button>
                     )}
                 </div> */}
-
+                </>
+            }
             </Container>
 
             <Container maxWidth="lg" disableGutters className="margin_top_xl margin_bottom_xxl">
             {( boletines.length === 0 ) ? 
-                    <LinearWithValueLabel></LinearWithValueLabel>
+                    <>
+                     <h2 className="text_bolder text_left padding_x text_center_mobile  title_recientes">Libros</h2>
+                     <LinearWithValueLabel></LinearWithValueLabel>
+                    </>
                 :
                 <div className="align_center carousel_main_container " >
                     <div className="wrap text_carousel_container" >
@@ -737,8 +770,8 @@ export default function Home() {
 
                 </iframe>*/}    
                 </div>
-
             </Container>
+            
             <Box className="secondary_blue section_blue width_100 margin_top_xl margin_bottom_s">
                 <div className="width_100 justify_center">
                     <h1 className=" text_center text_white ">Mapa Jurisprudencial</h1>

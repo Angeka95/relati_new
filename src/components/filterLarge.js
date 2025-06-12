@@ -1,23 +1,19 @@
-import { Card, CardContent, Button, CardMedia } from '@mui/material';
-import { Container, Grid, Box, Chip } from '@mui/material';
-import { BuildTwoTone } from '@mui/icons-material';
+import React from 'react';
+import { useState, useEffect, useContext } from 'react';
+import Context from '../context/context.js';
+import Filter from './filter';
+import { Button, Grid, Box, Chip } from '@mui/material';
+import { styled } from '@mui/material/styles';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import ExpandLessOutlinedIcon from '@mui/icons-material/ExpandLessOutlined';
 import ExpandMoreOutlinedIcon from '@mui/icons-material/ExpandMoreOutlined';
-import Filter from './filter';
-import Context from '../context/context.js';
-import React, { useState, useEffect, useContext } from 'react';
-import { styled } from '@mui/material/styles';
 import { validarfiltroJurisprudencial } from '../helpers/utils.js';
 
 export default function FilterLarge() {
 
   const [selectedFilters, setSelectedFilters] = useState([]);
 
-
-  const ButtonFilter = () => {
-  }
-  
+  const ButtonFilter = () => {}
   const { filtroJurisprudencial, setFiltroJurisprudencial } = useContext(Context);
   const [showFilter, setShowFilter] = useState(false);
 
@@ -33,35 +29,29 @@ export default function FilterLarge() {
   }, [filtroJurisprudencial]);
 
   const SpaceBetweenGrid = styled(Grid)(({ theme }) => ({
-
     [theme.breakpoints.down('sm')]: {
       display: 'flex',
       justifyContent: 'center',
       flexWrap: 'wrap',
       textAlign: 'center',
       width: "100%",
-      textAlign: 'center',
       margin: '20px 0px 0px 0px',
     },
     [theme.breakpoints.up('sm')]: {
       margin: '0px 0px',
       display: 'flex',
-
     },
   }));
 
   return (
     <div>
-
       <div className={selectedFilters.length > 0 ? ("margin_bottom_s padding_none card_filter_large_active ") : ("margin_bottom_s padding_none card_filter_large")} >
-
         <div className="filter_justify_between vertical_align  ">
           <Box xs={12} sm={12} md={8} lg={8} xl={8}>
             {selectedFilters.length === 0 && (
               <h4 className="text_bolder text_center">Seleccione un filtro para mostrarle decisiones y datos limitados a su interés</h4>
             )}
             {selectedFilters.length > 0 && (
-
               <Box sx={{ marginBottom: '20px', display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
                 <h4 className="text_bolder">Mostrando decisiones y datos dinámicos de:</h4>
                 <div className="display_block">
@@ -72,14 +62,11 @@ export default function FilterLarge() {
                       }}
                       className="chip_select chip_select_large" key={value} label={value}
                     />
-
-
                   ))}
                 </div>
               </Box>
             )}
           </Box>
-
           <Box xs={12} sm={12} md={4} lg={4} xl={4}>
             <div className="position_relative ">
               <Button className={showFilter ? ("button_function_noradius button_filter_size") : ("button_function button_filter_size")}
@@ -88,26 +75,16 @@ export default function FilterLarge() {
                 onClick={handleFilter}>
                 {showFilter ? ('Filtrar') : 'Filtrar'}
               </Button>
-
               <div className="position_float">
                 <Filter isShowingFilter={showFilter} isFilterFloat={true} setSelectedFilters={setSelectedFilters} />
               </div>
             </div>
           </Box>
-
-
-
         </div>
-
-
       </div>
-
-
-
     </div>
-
-
   );
+  
 }
 
 

@@ -1,25 +1,21 @@
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import Box from '@mui/material/Box';
-import CardActions from '@mui/material/CardActions';
-import Button from '@mui/material/Button';
-import '../App.css';
-import React, { useState, useEffect, useContext, useRef } from 'react';
+import React from 'react';
+import { useState, useEffect, useContext, useRef } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { FormControl, InputLabel, Select, MenuItem } from '@mui/material';
-import SelectField from '../components/selectField.js';
+import Context from '../context/context';
+import { Card, CardContent, Button, Grid } from '@mui/material';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import { styled } from '@mui/material/styles';
-import { Container, Grid } from '@mui/material';
 import documentoService from '../services/documento.js';
+import mapaJurisprudencialService from '../services/mapa_jurisprudencial.js';
 import datos_anios from '../data/data_anios.js';
 import { datos_macrocaso } from '../data/datos_macrocaso.js';
 import datos_sala_seccion from '../data/datos_sala_seccion.js';
-import Context from '../context/context';
 import { validarfiltroJurisprudencial, generarArrayDeObjetosNombreCampoValor, validateSearchParamsVTD, createSelectedFiltersVTD } from '../helpers/utils.js';
-import mapaJurisprudencialService from '../services/mapa_jurisprudencial.js';
+import SelectField from '../components/selectField.js';
+import '../App.css';
 
 export default function Filter({ setSelectedFilters, isFilterFloat, isShowingFilter, selectedData, isSearchAdvance, isVTD = false }) {
+
   // Estado para controlar si el botón está habilitado o deshabilitado
   const { verTodasDecisiones, busqueda } = useContext(Context);
   const { filtroJurisprudencial, setFiltroJurisprudencial } = useContext(Context);
@@ -147,7 +143,6 @@ export default function Filter({ setSelectedFilters, isFilterFloat, isShowingFil
   useEffect(() => {
     const searchParamsObj = Object.fromEntries(searchParams.entries());
   
-  
     if(!validarfiltroJurisprudencial(filtroJurisprudencial)) { 
        console.log("entra si hay valores");
       //console.log("datos en filter 3", selectedDataFilter3);
@@ -207,7 +202,6 @@ export default function Filter({ setSelectedFilters, isFilterFloat, isShowingFil
   }));
 
   return (
- 
     <Card className={isFilterFloat ? (!isShowingFilter ? "card_filter_float_hidden" : "card_filter_float") : "card_filter"} >
       <CardContent>
         <JustFilterFloatNoneGrid>
@@ -215,11 +209,10 @@ export default function Filter({ setSelectedFilters, isFilterFloat, isShowingFil
             <h3> <FilterListIcon /> Filtrar </h3>
           </div>
         </JustFilterFloatNoneGrid>
-        
         <SelectField isDisabled={isFilterDisabled} datos_filtros={datos_sala_seccion} selectedData={selectedDataFilter1} setSelectedData={setSelectedDataFilter1}
           label='Sala o Sección' id='sala' isVTD={isVTD}></SelectField>
         <SelectField isDisabled={isFilterDisabled} datos_filtros={datos_anios} selectedData={selectedDataFilter2} setSelectedData={setSelectedDataFilter2}
-          label='Año de los hechos' id='anio' isVTD={isVTD}></SelectField>
+          label='Año de la providencia' id='anio' isVTD={isVTD}></SelectField>
         <SelectField isDisabled={isFilterDisabled} datos_filtros={listaDptosJurisprudencial} selectedData={selectedDataFilter3} setSelectedData={setSelectedDataFilter3}
           label='Departamento' id='departamento'  isVTD={isVTD}></SelectField>
         <SelectField isDisabled={isFilterDisabled} datos_filtros={datos_delito} selectedData={selectedDataFilter4} setSelectedData={setSelectedDataFilter4}
@@ -229,7 +222,6 @@ export default function Filter({ setSelectedFilters, isFilterFloat, isShowingFil
             <Button className="link_primary text_lowercase" onClick={toggleButton}> ver más filtros
             </Button>)
           }
-
           {!isButtonEnabled && (
             <div className="width_100 text_center">
 
@@ -249,11 +241,8 @@ export default function Filter({ setSelectedFilters, isFilterFloat, isShowingFil
 
             </div>
           )
-
           }
         </div>
-
-
         <div className="justify_center width_100 margin_top_s">
           <Button disabled={isFilterDisabled} className="button_primary margin_xs " onClick={applyFilters}>Aplicar filtros</Button>
         </div>
@@ -262,10 +251,8 @@ export default function Filter({ setSelectedFilters, isFilterFloat, isShowingFil
             <Button variant="outlined" className='autocomplete_bar_inner_search_undo_results margin_right_0' size="small" onClick={deshacerBusquedaVTD}>Reestablecer resultados</Button>
           </div>
         )}
-        
       </CardContent>
-
     </Card>
-
   );
+  
 }

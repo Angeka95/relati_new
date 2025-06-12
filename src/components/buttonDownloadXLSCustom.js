@@ -1,12 +1,10 @@
 import React, { useState , useEffect } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
-import { getDownloadResultsXLS } from '../services/downloads.js';
 import { Modal, Box, Button, FormControlLabel, Checkbox,FormGroup,  } from '@mui/material';
 import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
 import CloseIcon from '@mui/icons-material/Close';
 import '../App.css';
 
-export default function ButtonDownloadXLSCustom({ stringURL, stringParams, datosToExport, filename = 'archivo.xlsx'}) {
+export default function ButtonDownloadXLSCustom({ stringURL, stringParams, datosToExport, filename = 'archivo.xlsx', decorated = true}) {
 
     const [downloadLink, setDownloadLink] = useState(null);
     
@@ -117,6 +115,7 @@ export default function ButtonDownloadXLSCustom({ stringURL, stringParams, datos
   
     return (
       <>
+      {(decorated === true) ? 
         <button
           type="button"
           className="link_primary vertical_align cursor_pointer"
@@ -126,10 +125,20 @@ export default function ButtonDownloadXLSCustom({ stringURL, stringParams, datos
           <FileDownloadOutlinedIcon />
           Reporte en Excel
         </button>
+      :
+        <button
+          type="button"
+          className=" vertical_align cursor_pointer"
+          onClick={handleOpenModal}
+          style={{ background: 'none', border: 'none' }}
+        >
+        Reporte en Excel
+        </button>
+      }
         <Modal open={openModal} onClose={handleCloseModal}>
           <div className="display_ flex justify_center margin_none">
             <Box className="modal_box justify-center modal_spacing scroll_modal">
-              <div className="header_select f_wrap margin_top_m margin_bottom_s justify_center_mobile">
+              <div className="header_select f_wrap margin_top_m_ margin_bottom_s justify_center_mobile">
                 <Button
                   onClick={handleCloseModal}
                   className="modal_close_button display_none_desktop"
@@ -142,7 +151,7 @@ export default function ButtonDownloadXLSCustom({ stringURL, stringParams, datos
                 <div className="display_flex">
                   <Button
                     onClick={handleCloseModal}
-                    className="modal_close_button display_none_mobile"
+                    className="modal_close_button display_none_mobile justify_end"
                   >
                     <CloseIcon />
                   </Button>

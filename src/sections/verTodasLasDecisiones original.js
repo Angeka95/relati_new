@@ -8,7 +8,7 @@ import { Container, Grid, Alert, Box, Button } from '@mui/material';
 import buscadorService from '../services/buscador.js';
 import LinearWithValueLabel from '../components/linearProgress.js';  
 import Context from '../context/context.js';
-import { filtroByDefault, removeFragmentoInString, getOpcionesAutocompletar, obtenerPalabrasFromArrayObject, validarfiltroJurisprudencial, sanitizeString } from '../helpers/utils.js';
+import { filtroByDefault, removeFragmentoInString, getOpcionesAutocompletar, obtenerPalabrasFromArrayObject, validarfiltroJurisprudencial, sanitizeString, obtenerAnio } from '../helpers/utils.js';
 import '../App.css';
 
 export default function VerTodasLasDecisiones() {
@@ -77,6 +77,7 @@ export default function VerTodasLasDecisiones() {
                             municipio:  (item.municipio !== null ) ? item.municipio : "",
                             delito: (item.delito !== null ) ? item.delito : "",
                             anioHechos: (item.anio_hechos !== null ) ? item.anio_hechos : "",
+                            anioProvidencia: (item.fecha_documento !== null ) ? obtenerAnio(item.fecha_documento) : "",
                             tipo: (item.tipo_documento !== null) ? item.tipo_documento : "", 
                             radicado: (item.radicado_documento !== null) ? item.radicado_documento : "",
                             compareciente: (item.compareciente !== null ) ? item.compareciente : "",
@@ -103,7 +104,7 @@ export default function VerTodasLasDecisiones() {
                         };
                         newItem["departamentoNombre"] = newItem.departamento;
                         newItem["procedimientos"] = newItem.procedimiento; 
-                        newItem["anio"] = newItem.anioHechos;
+                        newItem["anio"] = newItem.anioProvidencia;
                         newItem["comparecientes"] = newItem.tipoSujeto;
                         newItem["delitos"] = newItem.delito;
                         newItem["hipervinculoFichaJuris"] = ((newItem.ficha_id !== null ) && ( newItem.estado_id === 14 )) ? `${process.env.REACT_APP_API_SERVER_DOMAIN}/downloadfichaext/${newItem.ficha_id}` : " ";

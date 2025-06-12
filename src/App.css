@@ -539,7 +539,6 @@ h6 {
   padding: 40px 0px 170px 0px; 
 }
 
-
 .justify_end_spacing {
   display: flex;
   justify-content: end;
@@ -666,6 +665,11 @@ h6 {
   box-shadow: none !important;
 }
 
+.text_left {
+  text-align: left;
+}
+
+
 .text_center {
   text-align: center;
 }
@@ -717,6 +721,11 @@ h6 {
 
 .display_inline{
   display: inline !important;
+}
+
+
+.display_contents{
+  display: contents !important;
 }
 
 .display_block{
@@ -1580,7 +1589,7 @@ white-space: pre;
 }
 
 .modal_spacing{ 
-  padding: 0px 20px !important;
+  padding: 35px 20px !important;
 }
 
 
@@ -2693,9 +2702,13 @@ padding: 0px 0% 0% 3%;
 }
 
 .modal_close_button {
-  margin-top: 16px;
+  margin-top: 4px !important;
   font-size: 1.5rem !important;
   color: black !important;
+}
+
+.modal_close_button.justify_end {
+  justify-content: flex-end !important;
 }
 
 .modal_close_button:hover {
@@ -3375,6 +3388,7 @@ color: rgb(219, 0, 69);
 
 .header_select{
   width: 100%;
+  position: relative;
   display: flex;
   justify-content: space-between;
 }
@@ -3579,6 +3593,10 @@ color: rgb(219, 0, 69);
   min-width: 250px !important;
 }
 .title_recientes{
+  margin-top: 40px !important;
+}
+
+.title_mobile{
   margin-top: 220px !important;
 }
 

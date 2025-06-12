@@ -1,4 +1,4 @@
-import { sanitizeString } from '../helpers/utils.js';
+import { sanitizeString, obtenerAnio } from '../helpers/utils.js';
 
 const dataResults = (data) => { 
     const newDatos = data.map((i, k) => { 
@@ -19,6 +19,7 @@ const dataResults = (data) => {
             municipio:  (item.municipio !== null ) ? item.municipio : "",
             delito: (item.delito !== null ) ? item.delito : "",
             anioHechos: (item.anio_hechos !== null ) ? item.anio_hechos : "",
+            anioProvidencia: (item.fecha_documento !== null ) ? obtenerAnio(item.fecha_documento) : "",
             tipo: (item.tipo_documento !== null) ? item.tipo_documento : "", 
             radicado: (item.radicado_documento !== null) ? item.radicado_documento : "",
             compareciente: (item.compareciente !== null ) ? item.compareciente : "",
@@ -45,7 +46,7 @@ const dataResults = (data) => {
         };
         newItem["departamentoNombre"] = newItem.departamento;
         newItem["procedimientos"] = newItem.procedimiento; 
-        newItem["anio"] = newItem.anioHechos;
+        newItem["anio"] = newItem.anioProvidencia; 
         newItem["comparecientes"] = newItem.tipoSujeto;
         newItem["delitos"] = newItem.delito;
         newItem["hipervinculoFichaJuris"] = ((newItem.ficha_id !== null ) && ( newItem.estado_id === 14 )) ? `${process.env.REACT_APP_API_SERVER_DOMAIN}/downloadfichaext/${newItem.ficha_id}` : " ";
