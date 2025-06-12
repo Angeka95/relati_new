@@ -6,7 +6,7 @@ import { useTheme } from '@mui/material/styles';
 import { useMediaQuery } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
-import LogoRelati from '../assets/images/logo_Relativ4.png';
+import LogoRelati from '../assets/images/logo_Relati_v1.svg';
 import Escudo from '../assets/images/escudo.png';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
