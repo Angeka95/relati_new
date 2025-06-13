@@ -25,8 +25,7 @@ export default function Search({ isSearchAdvance, isSearchMain }) {
   const { estadoVerTodasDecisiones, setEstadoVerTodasDecisiones } = useContext(Context);
     
   const updateSelectedValue = (event, value) => {
-    console.log("valor auotc", event.target.value, value)
-    setValueBar(event.target.value);
+    setValueBar(value);
   };
 
   // Busqueda por palabra
@@ -45,6 +44,7 @@ export default function Search({ isSearchAdvance, isSearchMain }) {
           setMessageSearch({ message: "", classname: "" }); 
       }, 1500);
     } else {
+
       const params = new URLSearchParams({ string: encodeURIComponent(searchValue) });
       window.location.href = `/resultados-busqueda?${params.toString()}`;
     }
@@ -79,7 +79,7 @@ export default function Search({ isSearchAdvance, isSearchMain }) {
   },[estadoVerTodasDecisiones]);
   
   const executeAutoComplete = (event) => {
-  console.log("fasdfad", event.target.value);
+          console.log("fasdfad", event.target.value);
           setValAutoComplete(event.target.value);
       };
       
@@ -151,13 +151,14 @@ export default function Search({ isSearchAdvance, isSearchMain }) {
               onKeyDown={keypressEnterResultadosBusqueda}
               onChange={updateSelectedValue}
               options={options.map((option) => option.title)}
-              renderInput={(params) => <TextField {...params} ref={inputRef2}  placeholder="Busque por palabra clave, número de decisión, radicado...  " 
-              inputProps={{
-                ...params.inputProps,
-                maxLength: 80
-              }} 
-              onChange={executeAutoComplete}
-              />}
+              renderInput={(params) => 
+                    <TextField ref={inputRef2} {...params} placeholder="Busque por palabras clave, número de decisión, radicado...  " inputProps={{
+                      ...params.inputProps,
+                      maxLength: 400
+                      }} 
+                      onChange={executeAutoComplete}
+                    />
+              }
             />
             <NoneGrid>
               <Button onClick={search} className="searchAIButton autocomplete_button button_primary z-index100" startIcon={<SearchIcon />}>
