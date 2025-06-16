@@ -119,8 +119,10 @@ export default function Home() {
     };
 
     useEffect(() => {
-            getHomeData();
-    }, []);
+            if(decisionesRecientes.length === 0) {
+                getHomeData();
+            }
+    }, [decisionesRecientes]);
 
     // Layout Masonry Decisiones Recientes
     const masonryGridRef = useRef(null);
