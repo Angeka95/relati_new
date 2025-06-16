@@ -1,6 +1,10 @@
 
 const datos_anios = [
     {
+      "nombre_campo": "2025",
+      "valor": "2025"
+    },
+    {
       "nombre_campo": "2024",
       "valor": "2024"
     },
