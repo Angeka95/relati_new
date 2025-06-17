@@ -11,13 +11,11 @@ import '../App.css'
 export default function Search({ isSearchAdvance, isSearchMain }) {
 
   // referencia para poder acceder al valor escrito en el buscador
-  const inputRef2 = useRef(null);
+  const inputRef = useRef(null);
 
   // valor en el buscador 
   const [valueBar, setValueBar] = useState('');
   const [messageSearch, setMessageSearch] = useState({ message: "", classname: "" });
-  const [valAutoComplete, setValAutoComplete] = useState('');
-  const [options, setOptions] = useState([]);
   //const [verTodasDecisiones, setVerTodasDecisiones] = useState(false);
 
   // Trae el valor de la busqueda y del switch desde el contexto 
@@ -25,7 +23,7 @@ export default function Search({ isSearchAdvance, isSearchMain }) {
   const { estadoVerTodasDecisiones, setEstadoVerTodasDecisiones } = useContext(Context);
     
   const updateSelectedValue = (event, value) => {
-    setValueBar(value);
+    setValueBar(event.target.value);
   };
 
   // Busqueda por palabra
@@ -33,7 +31,7 @@ export default function Search({ isSearchAdvance, isSearchMain }) {
   const search = () => {
 
     let message_ = { message: "", classname: "" };
-    let searchValue = inputRef2.current.querySelector('input').value;
+    let searchValue = inputRef.current.querySelector('input').value;
     
     if(searchValue.length === 0){
       message_ = { message: "Busque por palabra clave, número de decisión, radicado...", classname: "warning" };
@@ -44,7 +42,6 @@ export default function Search({ isSearchAdvance, isSearchMain }) {
           setMessageSearch({ message: "", classname: "" }); 
       }, 1500);
     } else {
-
       const params = new URLSearchParams({ string: encodeURIComponent(searchValue) });
       window.location.href = `/resultados-busqueda?${params.toString()}`;
     }
@@ -52,10 +49,10 @@ export default function Search({ isSearchAdvance, isSearchMain }) {
   };
   
   const keypressEnterResultadosBusqueda = (event) => {
-    if (event.key === "Enter") {    
+        if (event.key === "Enter") {    
       search();
-    } 
-  };
+        } 
+    };
   
   // Encender y apagar switch ver todas las decisiones 
 
@@ -77,33 +74,6 @@ export default function Search({ isSearchAdvance, isSearchMain }) {
       window.location.href = `/resultados-busqueda?${params.toString()}`;
     }
   },[estadoVerTodasDecisiones]);
-  
-  const executeAutoComplete = (event) => {
-          console.log("fasdfad", event.target.value);
-          setValAutoComplete(event.target.value);
-      };
-      
-      const getListaBuscadorAutocompletar = (expresion) => {
-          buscadorService
-              .getBuscadorListaAutocompletar(expresion)
-              .then(response => {
-                  let optionsAutocomplete = response.data.map(item => {
-                      return { title: item.value };
-                  });
-                  setOptions(optionsAutocomplete);
-               }
-              )
-              .catch(error => console.log(error));
-      }; 
-      
-      // Este Hook permite actualizar el valor de estado options cada vez que se cambia el valor del input
-      useEffect((() => {
-          if ((valAutoComplete !== null ) && (valAutoComplete.length >= 3)) {
-               setTimeout(() =>{ 
-                  getListaBuscadorAutocompletar(valAutoComplete);
-               }, 1200);
-          }
-      }), [valAutoComplete]);
 
    // Grids personalizadas
 
@@ -148,17 +118,13 @@ export default function Search({ isSearchAdvance, isSearchMain }) {
               id="free-solo-demo"
               freeSolo
               value={valueBar}
-              onKeyDown={keypressEnterResultadosBusqueda}
               onChange={updateSelectedValue}
-              options={options.map((option) => option.title)}
-              renderInput={(params) => 
-                    <TextField ref={inputRef2} {...params} placeholder="Busque por palabras clave, número de decisión, radicado...  " inputProps={{
-                      ...params.inputProps,
-                      maxLength: 400
-                      }} 
-                      onChange={executeAutoComplete}
-                    />
-              }
+              options={searchOptions.map((option) => option.title)}
+              renderInput={(params) => <TextField {...params} ref={inputRef} onKeyDown={keypressEnterResultadosBusqueda} placeholder="Busque por palabra clave, número de decisión, radicado...  " 
+              inputProps={{
+                  ...params.inputProps,
+                maxLength: 80
+              }} />}
             />
             <NoneGrid>
               <Button onClick={search} className="searchAIButton autocomplete_button button_primary z-index100" startIcon={<SearchIcon />}>
@@ -190,3 +156,5 @@ export default function Search({ isSearchAdvance, isSearchMain }) {
     </>
   );
 }
+
+const searchOptions = [];

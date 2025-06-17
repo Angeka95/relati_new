@@ -519,7 +519,6 @@ export default function Home() {
                             <div className="justify_center">
                                 <div className="autocomplete_home_container">
                                     <Autocomplete className="margin_top_s autocomplete_home"
-                                        id="free-solo-demo"
                                         value={valueBar}
                                         freeSolo
                                         onChange={updateSelectedValue}
