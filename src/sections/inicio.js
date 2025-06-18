@@ -2,7 +2,6 @@ import React, { useEffect, useState, useRef, useContext } from 'react';
 import '../App.css';
 import LogoRelati from '../assets/images/logo_Relati.svg';
 import { Box, Container, Grid, Button, List, ListItem, Tooltip, Alert } from '@mui/material';
-import SearchBar from '../components/searchBar';
 import Carousel from '../components/carousel';
 import CardDecision from '../components/cardDecision.js';
 import { useNavigate } from 'react-router-dom';
@@ -173,8 +172,8 @@ export default function Home() {
     };
     
     // Esta funcion adjunta al onChange de TextField permite obtener lista de opciones que el usuario pueda elegir
-    const executeAutoComplete = (event) => {
-        setValAutoComplete(event.target.value);
+    const updateValAutoComplete = (event, value) => {
+        setValAutoComplete(value);
     };
     
     const getListaBuscadorAutocompletar = (expresion) => {
@@ -519,10 +518,12 @@ export default function Home() {
                             <div className="justify_center">
                                 <div className="autocomplete_home_container">
                                     <Autocomplete className="margin_top_s autocomplete_home"
-                                        id="free-solo-demo"
-                                        value={valueBar}
+                                        id="autocomplete-search"
                                         freeSolo
+                                        value={valueBar}
                                         onChange={updateSelectedValue}
+                                        inputValue={valAutoComplete}
+                                        onInputChange={updateValAutoComplete}
                                         onKeyDown={keypressEnterResultadosBusqueda}
                                         options={options.map((option) => option.title)}
                                         renderInput={(params) => 
@@ -530,7 +531,6 @@ export default function Home() {
                                             ...params.inputProps,
                                             maxLength: 400
                                             }} 
-                                            onChange={executeAutoComplete}
                                             />
                                         }
                                     />
