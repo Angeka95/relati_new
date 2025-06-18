@@ -7,6 +7,7 @@ import tesauroService from '../services/tesauro.js';
 import boletinesService from '../services/boletines.js';
 import busquedaAvanzadaService from '../services/busqueda_avanzada.js';
 import  buscadorService from '../services/buscador.js';
+import SearchBar from '../components/searchBar.js';
 
 export default function TestServices() {
     
@@ -125,6 +126,9 @@ export default function TestServices() {
     
     return (
         <Container>
+            <Box sx={{ flexGrow: 1, marginTop: "1rem", marginBottom: "1rem", paddingLeft: "1rem", paddingRight: "1rem" }}>
+                {/*<SearchBar isSearchAdvance={true}/>*/}
+            </Box>
             <Box sx={{ flexGrow: 1, marginTop: "1rem", marginBottom: "1rem", paddingLeft: "1rem", paddingRight: "1rem" }}>
                 {(datos.length > 0) ?
                     <div>

@@ -2,18 +2,31 @@ import React, { useState, useEffect, useContext, useRef } from 'react';
 import { Link } from 'react-router-dom'; 
 import Context from '../context/context';
 import { getLocalStorageWithExpiry } from '../helpers/utils.js';
-import { Button, Switch, FormControlLabel, Grid, Alert, TextField, Stack, Autocomplete } from '@mui/material';
+import { Button, Switch, FormControlLabel, Alert, TextField, Stack, Autocomplete } from '@mui/material';
+import { ShowGrid, NoneGrid, SpaceBottom } from '../components/styledGridComponents/CustomGrids.js'; 
 import SearchIcon from '@mui/icons-material/Search';
-import { styled } from '@mui/material/styles';
 import buscadorService from '../services/buscador.js';
 import '../App.css'
 
-export default function Search({ isSearchAdvance, isSearchMain }) {
+export default function Search({ isSearchAdvance = true, isSearchMain }) {
 
   // valor en el buscador 
   const inputRef = useRef(null);
+  const [valueBar, setValueBar] = useState(null);
+  const [valAutoComplete, setValAutoComplete] = useState('');
+  const [options, setOptions] = useState([]);
   const [messageSearch, setMessageSearch] = useState({ message: "", classname: "" });
-
+  
+  // Captura el valor en el componente Autocomplete
+  const updateSelectedValue = (event, value) => {
+      setValueBar(value);
+  };
+    
+  // Esta funcion adjunta al onChange de TextField permite obtener lista de opciones que el usuario pueda elegir
+  const updateValAutoComplete = (event, value) => {
+      setValAutoComplete(value);
+  };
+  
   // Trae el valor de la busqueda y del switch desde el contexto 
 
   const { estadoVerTodasDecisiones, setEstadoVerTodasDecisiones } = useContext(Context);
@@ -48,12 +61,6 @@ export default function Search({ isSearchAdvance, isSearchMain }) {
         } 
     };
     
-  /* Autocompletar */
-  
-  const [valueBar, setValueBar] = useState(null);
-  const [valAutoComplete, setValAutoComplete] = useState('');
-  const [options, setOptions] = useState([]);
-  
   useEffect(() => {
     
   },[]);
@@ -72,19 +79,14 @@ export default function Search({ isSearchAdvance, isSearchMain }) {
   }; 
    
   // Este Hook permite actualizar el valor de estado options cada vez que se cambia el valor del input
-  /*useEffect((() => {
-      if ((valueBar !== null ) && (valueBar.length >= 3)) {
-           setTimeout(() =>{ 
-              getListaBuscadorAutocompletar(valueBar);
-           }, 1200);
-      } else {
-        setOptions([]);
-        setValueBar(null);
-      }
-  }), [ valAutoComplete, valueBar ]);*/
+  useEffect((() => {
+          if ((valAutoComplete !== null ) && (valAutoComplete.length >= 3)) {
+               setTimeout(() =>{ 
+                  getListaBuscadorAutocompletar(valAutoComplete);
+               }, 1200);
+          }
+  }), [valAutoComplete]);
   
-  /* Fin Autocompletar */  
-    
   // Encender y apagar switch ver todas las decisiones 
 
   const handleChange = () => {
@@ -102,40 +104,8 @@ export default function Search({ isSearchAdvance, isSearchMain }) {
     }
   },[estadoVerTodasDecisiones]);
 
-   // Grids personalizadas
-
-   const NoneGrid = styled(Grid)(({ theme }) => ({
-
-    [theme.breakpoints.down('sm')]: {
-      display: 'none',
-      padding: 'none',
-    }
-  }));
-
-
-  const ShowGrid = styled(Grid)(({ theme }) => ({
-
-    [theme.breakpoints.down('sm')]: {
-      display: 'inblock',
-    },
-
-    [theme.breakpoints.up('sm')]: {
-      display: 'none',
-      padding: 'none',
-    }
-  }));
-
-  const SpaceBottom = styled(Grid)(({ theme }) => ({
-
-    [theme.breakpoints.down('sm')]: {
-      marginBottom: '40px',
-    }
-  }));
-
   return (
     <>
-    <div>{`valueBar: ${valueBar !== null ? `'${valueBar}'` : 'null'}`}</div>
-      <div>{`inputValueAutoComplete: '${valAutoComplete}'`}</div>
     <div className="justify_center">
       <Stack className={isSearchAdvance ? ('autocomplete_bar_search_nomargin') : 'autocomplete_bar_search'} >
         <SpaceBottom>
@@ -147,18 +117,16 @@ export default function Search({ isSearchAdvance, isSearchMain }) {
               id="autocomplete-search-inner"
               freeSolo
               value={valueBar}
-              onChange={(event, newValue) => {
-                console.log("desde valueBar: ", newValue);
-                //setValueBar(newValue);
-              }}
-              onInputChange={(event, newInputValue) => {
-                console.log("desde valAutoComplete: ", newInputValue, valueBar);
-                setValueBar(newInputValue);
-              }}
+              onChange={updateSelectedValue}
+              onInputChange={updateValAutoComplete}
               onKeyDown={keypressEnterResultadosBusqueda}
               options={options.map((option) => option.title)}
               renderInput={(params) => 
-                  <TextField ref={inputRef} {...params} placeholder="Busque por palabras clave, número de decisión, radicado...  " />
+                  <TextField ref={inputRef} {...params} placeholder="Busque por palabras clave, número de decisión, radicado...  " inputProps={{
+                  ...params.inputProps,
+                  maxLength: 400
+                  }} 
+                  />
               }
             />
             <NoneGrid>

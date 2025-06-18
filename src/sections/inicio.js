@@ -2,7 +2,6 @@ import React, { useEffect, useState, useRef, useContext } from 'react';
 import '../App.css';
 import LogoRelati from '../assets/images/logo_Relati.svg';
 import { Box, Container, Grid, Button, List, ListItem, Tooltip, Alert } from '@mui/material';
-import SearchBar from '../components/searchBar';
 import Carousel from '../components/carousel';
 import CardDecision from '../components/cardDecision.js';
 import { useNavigate } from 'react-router-dom';
@@ -173,7 +172,7 @@ export default function Home() {
     };
     
     // Esta funcion adjunta al onChange de TextField permite obtener lista de opciones que el usuario pueda elegir
-    const executeAutoComplete = (event, value) => {
+    const updateValAutoComplete = (event, value) => {
         setValAutoComplete(value);
     };
     
@@ -524,7 +523,7 @@ export default function Home() {
                                         value={valueBar}
                                         onChange={updateSelectedValue}
                                         inputValue={valAutoComplete}
-                                        onInputChange={executeAutoComplete}
+                                        onInputChange={updateValAutoComplete}
                                         onKeyDown={keypressEnterResultadosBusqueda}
                                         options={options.map((option) => option.title)}
                                         renderInput={(params) => 
