@@ -173,8 +173,8 @@ export default function Home() {
     };
     
     // Esta funcion adjunta al onChange de TextField permite obtener lista de opciones que el usuario pueda elegir
-    const executeAutoComplete = (event) => {
-        setValAutoComplete(event.target.value);
+    const executeAutoComplete = (event, value) => {
+        setValAutoComplete(value);
     };
     
     const getListaBuscadorAutocompletar = (expresion) => {
@@ -519,9 +519,12 @@ export default function Home() {
                             <div className="justify_center">
                                 <div className="autocomplete_home_container">
                                     <Autocomplete className="margin_top_s autocomplete_home"
-                                        value={valueBar}
+                                        id="autocomplete-search"
                                         freeSolo
+                                        value={valueBar}
                                         onChange={updateSelectedValue}
+                                        inputValue={valAutoComplete}
+                                        onInputChange={executeAutoComplete}
                                         onKeyDown={keypressEnterResultadosBusqueda}
                                         options={options.map((option) => option.title)}
                                         renderInput={(params) => 
@@ -529,7 +532,6 @@ export default function Home() {
                                             ...params.inputProps,
                                             maxLength: 400
                                             }} 
-                                            onChange={executeAutoComplete}
                                             />
                                         }
                                     />
