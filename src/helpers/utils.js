@@ -459,8 +459,6 @@ const ordenarTerminosABCD = (arr) => {
 
 const ordenarBoletinesActuales = (arr, filterByCurrentYear = false) => {
 
-console.log("Arr", arr);
-
     let boletinesOrdenados = [...arr].sort((a, b) => {
         const valorA = typeof a === "string" ? a : new Date(a.anioMes);
         const valorB = typeof b === "string" ? b : new Date(b.anioMes);
