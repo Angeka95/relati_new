@@ -689,7 +689,7 @@ export default function Home() {
                             <Button onClick={goToBoletinesPage} className="button_primary "> Ver todos los boletines</Button>
                         </div>
                         <div className="carousel_container">
-                            <Carousel boletines={boletines} filterByCurrentYear />
+                            <Carousel boletines={boletines} filterByCurrentYear={true} />
                         </div>
                     </div>
                 </div>
