@@ -16,8 +16,10 @@ export default function CustomTab({ boletines, title}) {
     
 
     // Anios del boletin
-
+  
     const anioBoletin = [...new Set(boletines.map(boletin => { return new Date(boletin.fecha).getUTCFullYear(); }))];
+  
+    anioBoletin.sort((a, b) => b - a); // Ordenar de mayor a menor
     
     const [value, setValue] = React.useState(0);
     

@@ -141,7 +141,7 @@ export default function SearchResults() {
                   <LinearWithValueLabel ></LinearWithValueLabel>
                 :
                 <>
-                  <div className="margin_bottom_xl"> </div> 
+                  <div className="margin_bottom_xl"></div> 
                     <ul>
                     </ul>
                   <div> 
