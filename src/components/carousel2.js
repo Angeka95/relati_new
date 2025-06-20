@@ -5,10 +5,12 @@ import { ordenarBoletinesActuales } from '../helpers/utils.js';
 export default function Carrusel({ boletines , libros, filterByCurrentYear = false}) {
 
   const boletinesActuales = ordenarBoletinesActuales(boletines, filterByCurrentYear);
-  
+      console.log("boletines actuales", boletinesActuales);
   // Agrupa en pares el carrusel
   const pares = [];
-
+  // for (let i = 0; i < boletines.length; i += 2) {
+  //     pares.push(boletines.slice(i, i + 2)); 
+  // }
   for (let i = 0; i < boletinesActuales.length; i += 2) {
     pares.push(boletinesActuales.slice(i, i + 2));
   } 

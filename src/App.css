@@ -1777,10 +1777,15 @@ justify-content: space-between;
   background-color: #98C438 !important; 
   border-radius: 50%;
   margin-top: 20px;
-  top: 100% !important;
+  top: calc(100% - 5px) !important;
   box-shadow: rgba(142, 195, 57, 0.2) 0px 8px 24px;
   opacity: 1 !important;
+}
 
+@media (min-width: 600px) {
+  .carousel-control-prev, .carousel-control-next {
+    top: calc(100% - 35px) !important;
+  }
 }
 /* 
 controlodares carrusel  */
@@ -1831,6 +1836,13 @@ controlodares carrusel  */
   flex-wrap: nowrap;
   display: flex;
   justify-content: center;
+  padding-bottom: 90px;
+}
+
+@media (min-width: 600px) {
+  .carousel_main_container {
+    padding-bottom: 65px;
+  }
 }
 
 .text_carousel_container{

@@ -449,28 +449,30 @@ const ordenarTerminosABCD = (arr) => {
  * ordenarBoletinesActuales()
  * Funcionalidad que obtiene la lista de boletines ordenados por fecha anioMes de mayor a menor
  * Parametros de entrada:
- * - arr: el array de objetos de boletines
+ * - arr: el array de objetos de boletines, 
+ * - filterByCurrentYear: booleano que indica si se filtra por el año actual, mostrando solo los boletines del año actual
  * Salida:
  * - Retorna un nuevo array de boletines ordenados por fecha    
  * Aplicación:
  * carousel.js componente
 */
 
-const ordenarBoletinesActuales = (arr) => {
+const ordenarBoletinesActuales = (arr, filterByCurrentYear = false) => {
 
     let boletinesOrdenados = [...arr].sort((a, b) => {
         const valorA = typeof a === "string" ? a : new Date(a.anioMes);
         const valorB = typeof b === "string" ? b : new Date(b.anioMes);
         return valorB - valorA;
     });
-        
-    let boletinesAnio = [...boletinesOrdenados].filter( boletin => boletin.fecha ===  String(new Date().getFullYear()) )
     
-    if(boletinesAnio.length > 0 ){
-        boletinesOrdenados = [...boletinesAnio];
+    if(filterByCurrentYear === true){
+        let boletinesAnio = [...boletinesOrdenados].filter( boletin => boletin.fecha ===  String(new Date().getFullYear()) )
+        if(boletinesAnio.length > 0 ){
+            boletinesOrdenados = [...boletinesAnio];
+        }
     }
-
     return boletinesOrdenados;
+    
   }
   
 /**

@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef, useContext } from 'react';
 import '../App.css';
 import LogoRelati from '../assets/images/logo_Relati.svg';
-import { Box, Container, Grid, Button, List, ListItem, Tooltip, Alert } from '@mui/material';
+import { Box, Container, Grid, Button, List, ListItem, Tooltip, Alert, Divider } from '@mui/material';
 import Carousel from '../components/carousel';
 import CardDecision from '../components/cardDecision.js';
 import { useNavigate } from 'react-router-dom';
@@ -680,18 +680,20 @@ export default function Home() {
                      <LinearWithValueLabel></LinearWithValueLabel>
                 </>
                 :
-                <div className="align_center carousel_main_container " >
-                    <div className="wrap text_carousel_container" >
-                        <h2 className="align_center text_bolder"> Boletines</h2>
-                        <h5 className=" align_center margin_top_s margin_bottom_m">Acceda al análisis de las decisiones más importantes de la JEP</h5>
-                        <Button onClick={goToBoletinesPage} className="button_primary "> Ver todos los boletines</Button>
-                    </div>
-                    <div className="carousel_container">
-
-                        <Carousel boletines={boletines} />
-
+                <>
+                <div>
+                    <div className="align_center carousel_main_container">
+                        <div className="wrap text_carousel_container" >
+                            <h2 className="align_center text_bolder"> Boletines</h2>
+                            <h5 className=" align_center margin_top_s margin_bottom_m">Acceda al análisis de las decisiones más importantes de la JEP</h5>
+                            <Button onClick={goToBoletinesPage} className="button_primary "> Ver todos los boletines</Button>
+                        </div>
+                        <div className="carousel_container">
+                            <Carousel boletines={boletines} filterByCurrentYear />
+                        </div>
                     </div>
                 </div>
+                </>
             }
             </Container>
 
