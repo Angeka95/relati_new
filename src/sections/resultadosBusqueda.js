@@ -5,6 +5,7 @@ import Context from '../context/context.js';
 import { useCleanLocalStorageVars } from '../hooks/useCleanLocalStorageVars.js';
 import { Container, Grid, Alert, Button, Box } from '@mui/material';
 import Filter from '../components/filter.js';
+import FilterResultadosBusqueda from '../components/filterResultadosBusqueda.js';
 import ListCardSearch from '../components/listCardSearchAIResults.js';
 import LinearWithValueLabel from '../components/linearProgress.js';
 import SearchBar from '../components/searchBar.js'
