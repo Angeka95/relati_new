@@ -5,7 +5,7 @@ import Context from '../context/context.js';
 import { useCleanLocalStorageVars } from '../hooks/useCleanLocalStorageVars.js';
 import { Container, Grid, Alert, Button, Box } from '@mui/material';
 import Filter from '../components/filter.js';
-import FilterResultadosBusqueda from '../components/filterResultadosBusqueda.js';
+import FilterBeta from '../components/filterBeta.js';
 import ListCardSearch from '../components/listCardSearchAIResults.js';
 import LinearWithValueLabel from '../components/linearProgress.js';
 import SearchBar from '../components/searchBar.js'
@@ -13,6 +13,7 @@ import buscadorService from '../services/buscador.js';
 import busquedaAvanzadaService from '../services/busqueda_avanzada.js';
 import { filtroByDefault, validarfiltroJurisprudencial, getOpcionesAutocompletar, setLocalStorageWithExpiry, getLocalStorageWithExpiry, validateSearchParamsBusquedaAV, formattingSearchParamsBusquedaAV } from '../helpers/utils.js';
 import dataResults from '../data_results/dataResBusqueda.js';
+import dataFilterResults from '../data_results/dataFilterResBusqueda.js';
 import '../App.css';
 
 export default function SearchResults() {
@@ -23,6 +24,7 @@ export default function SearchResults() {
   const stringParam = decodeURIComponent(searchParams.get('string'));
 
   const [datos, setDatos] = useState([]);
+  const [customFilter, setCustomFilter] = useState([]);
   const [message, setMessage] = useState({ message: "", classname: "" });
   const [selectedFilters, setSelectedFilters] = useState([]);
   const [stringQuery, setStringQuery] = useState("");
@@ -49,19 +51,24 @@ export default function SearchResults() {
       .then(response => {
           if((response.status_info.status === 200) && (response.data.length > 0)) {
               const newDatos = dataResults(response.data);
+              const newDatosFilters = dataFilterResults(response.filters);
               setDatos(newDatos);
+              setCustomFilter(newDatosFilters);
               setSearchOptions(getOpcionesAutocompletar(newDatos));
               setLocalStorageWithExpiry('dataFromQueryLs', JSON.stringify(newDatos), ttl);
+              setLocalStorageWithExpiry('dataFiltersFromQueryLs', JSON.stringify(newDatosFilters), ttl);
               newMessage["message"] = `${response.status_info.reason}`;
               newMessage["classname"] = 'success';
           } else if(response.status_info.status === 500) {
               setLocalStorageWithExpiry('stringQueryLs', '', ttl);
               setLocalStorageWithExpiry('dataFromQueryLs', '', ttl);
+              setLocalStorageWithExpiry('dataFiltersFromQueryLs', '', ttl);
               newMessage["message"] = `${response.status_info.reason}`;
               newMessage["classname"] = 'error';
           } else {
             setLocalStorageWithExpiry('stringQueryLs', '', ttl);
             setLocalStorageWithExpiry('dataFromQueryLs', '', ttl);
+            setLocalStorageWithExpiry('dataFiltersFromQueryLs', '', ttl);
             newMessage["message"] = `${response.status_info.reason}`;
             newMessage["classname"] = 'warning';
           }
@@ -127,6 +134,7 @@ export default function SearchResults() {
     } 
   },[]);
   
+
   // Este useEffect valida si no hay parametros de busqueda
   // Previamente valida si los parametros provienen de una busqueda avanzada con validateSearchParamsBusquedaAV
   // Si se cumple, obtiene los resultados de busqueda avanzada
@@ -142,6 +150,7 @@ export default function SearchResults() {
         getResultadosBuscadorAV(searchParamsObj);
         setLocalStorageWithExpiry('stringQueryLs', '', ttl);
         setLocalStorageWithExpiry('dataFromQueryLs', '', ttl);
+        setLocalStorageWithExpiry('dataFiltersFromQueryLs', '', ttl);
     } else if ((stringParam === "") || (stringParam === null) || (stringParam === "null")) {
       let newMessage = {};
       newMessage["message"] = `No se puede realizar la solicitud.`;
@@ -150,6 +159,7 @@ export default function SearchResults() {
       setDatos([]);
       setLocalStorageWithExpiry('stringQueryLs', '', ttl);
       setLocalStorageWithExpiry('dataFromQueryLs', '', ttl);
+      setLocalStorageWithExpiry('dataFiltersFromQueryLs', '', ttl);
       navigate('/');
     } else {
       if(stringQuery === ""){
@@ -170,6 +180,7 @@ export default function SearchResults() {
       if(stringQuery.length > 0 ){
         if((stringQuery === getLocalStorageWithExpiry('stringQueryLs')) && localStorage.hasOwnProperty('dataFromQueryLs')){
           setDatos(JSON.parse(getLocalStorageWithExpiry('dataFromQueryLs')));
+          setCustomFilter(JSON.parse(getLocalStorageWithExpiry('dataFiltersFromQueryLs')));
         } else {
           getResultadosBuscadorAI(stringQuery);
           setLocalStorageWithExpiry('stringQueryLs', stringQuery, ttl);
@@ -188,6 +199,7 @@ export default function SearchResults() {
 
   // Esta funcion limpia las variables LocalStorage almacenadas despues de cierto tiempo
   useCleanLocalStorageVars('dataFromQueryLs', ttl);
+  useCleanLocalStorageVars('dataFiltersFromQueryLs', ttl);
 
   return (
     <>
@@ -243,7 +255,11 @@ export default function SearchResults() {
           </Grid>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
-              <Filter setSelectedFilters={setSelectedFilters}></Filter>
+              {(customFilter !== null) ? 
+                <FilterBeta setSelectedFilters={setSelectedFilters} customFilter={customFilter} isFilterFloat={false} isShowingFilter={false} isSearchAdvance={false}></FilterBeta>
+              :
+                <Filter setSelectedFilters={setSelectedFilters}></Filter>
+              } 
             </Grid>
             <Grid item xs={12} sm={12} md={8} lg={8} xl={8}>
                 <ListCardSearch datosBusqueda={datos} selectedTerm={stringQuery} searchOptions={searchOptions} selectedFilters={selectedFilters} isExternalFilters={false} paramsBusquedaAV={paramsBusquedaAV}></ListCardSearch>

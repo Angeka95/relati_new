@@ -46,14 +46,15 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
             let datosFiltrados = [...datos];
             setPage(1);
             setMessage({ message: "", classname: "" });
+           
             if(filtroJurisprudencial.departamentos.length > 0){
                 datosFiltrados = datosFiltrados.filter( item => { 
-                    return filtroJurisprudencial.departamentos.includes(item.departamentoNombre); 
+                    return filtroJurisprudencial.departamentos.some(elemento => item.departamentoNombre.toLowerCase().includes(elemento.toLowerCase())); 
                 });
             }
             if(filtroJurisprudencial.anios.length > 0){
                 datosFiltrados = datosFiltrados.filter( item => { 
-                    return filtroJurisprudencial.anios.includes(String(item.anio)) 
+                    return filtroJurisprudencial.anios.some(elemento => String(item.anio).includes(elemento)); 
                 });
             }
             if(filtroJurisprudencial.salas.length > 0){
@@ -63,7 +64,7 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
             }
             if(filtroJurisprudencial.macrocasos.length > 0){
                 datosFiltrados = datosFiltrados.filter( item => { 
-                    return filtroJurisprudencial.macrocasos.includes(item.caso); 
+                    return filtroJurisprudencial.macrocasos.some(elemento => item.caso.toLowerCase().includes(elemento.toLowerCase())); 
                 });
             }
             if(filtroJurisprudencial.comparecientes.length > 0){

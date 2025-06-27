@@ -2,7 +2,7 @@ import DOMPurify from 'dompurify';
 import {  obtenerPalabrasFromArrayObject, sanitizeString } from './../helpers/utils.js';
 
 const dataResults = (data) => {
-console.log("dataResults", data[0]);
+//console.log("dataResults", data[0]);
 const newArray = data.map((i, k) => {
     let item = i._source;
     let newItem = {
