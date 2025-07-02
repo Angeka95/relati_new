@@ -142,6 +142,9 @@ export default function MenuBar() {
                     <Link to="/preguntas-frecuentes" onClick={handleClose}>
                         <MenuItem className="text_decoration_none text_black menu_text" >Preguntas Frecuentes</MenuItem>
                     </Link>
+                    <Link to="https://docs.google.com/forms/d/e/1FAIpQLSds3_Z2OxYXMf3P-2dcCZpUZi5QLiJ7sD1wiqbKtkaJ2zSdAw/viewform" onClick={handleClose}>
+                        <MenuItem className="text_decoration_none text_black menu_text" >Evalúe a Relati</MenuItem>
+                    </Link>
                 </Menu>
               <Button  className=" text_black menu_text text_center"  onClick={handleToggleMenu2} startIcon={anchor2 ? <ExpandLessIcon /> : <ExpandMoreIcon />} >Nuestras Publicaciones</Button>
               <Menu
@@ -246,6 +249,13 @@ export default function MenuBar() {
                 <ListItem button component={Link} to="/preguntas-frecuentes">
                   <ListItemText primary="Preguntas frecuentes" />
                 </ListItem>
+                <ListItem button component={Link} to="https://docs.google.com/forms/d/e/1FAIpQLSds3_Z2OxYXMf3P-2dcCZpUZi5QLiJ7sD1wiqbKtkaJ2zSdAw/viewform">
+                  <ListItemText primary="Evalúe a Relati" />
+                </ListItem>
+
+
+
+
               </List>
             </Collapse>
 
