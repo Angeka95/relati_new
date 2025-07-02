@@ -212,7 +212,7 @@ export default function Filter({ setSelectedFilters, isFilterFloat, isShowingFil
         <SelectField isDisabled={isFilterDisabled} datos_filtros={datos_sala_seccion} selectedData={selectedDataFilter1} setSelectedData={setSelectedDataFilter1}
           label='Sala o Sección' id='sala' isVTD={isVTD}></SelectField>
         <SelectField isDisabled={isFilterDisabled} datos_filtros={datos_anios} selectedData={selectedDataFilter2} setSelectedData={setSelectedDataFilter2}
-          label='Año de la providencia' id='anio' isVTD={isVTD}></SelectField>
+          label='Año de la decisión' id='anio' isVTD={isVTD}></SelectField>
         <SelectField isDisabled={isFilterDisabled} datos_filtros={listaDptosJurisprudencial} selectedData={selectedDataFilter3} setSelectedData={setSelectedDataFilter3}
           label='Departamento' id='departamento'  isVTD={isVTD}></SelectField>
         <SelectField isDisabled={isFilterDisabled} datos_filtros={datos_delito} selectedData={selectedDataFilter4} setSelectedData={setSelectedDataFilter4}

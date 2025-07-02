@@ -74,31 +74,31 @@ const FormBusquedaAV = () => {
 
     let result = '';
     let result_text = '';
-    let estilosOperadores = ' <p className="text_bolder operador_size">*operadorLogico*</p> ';
+    let estilosOperadores = ' <p class="text_bolder operador_size">-operadorLogico-</p> ';
     if (values.length > 0) {
       result += values.join(estilosOperadores.replace('operadorLogico', 'y'));
-      result_text += values.join(' *y* ');
+      result_text += values.join(' -y- ');
     }
 
     if (values2.length > 0) {
       if (result) result += estilosOperadores.replace('operadorLogico', 'y');
-      if (result_text) result_text += ' *y* ';
+      if (result_text) result_text += ' -y- ';
       result += values2.join(estilosOperadores.replace('operadorLogico', 'y'));
-      result_text += values2.join(' *y* ');
+      result_text += values2.join(' -y- ');
     }
 
     if (values3.length > 0) {
       if (result) result += estilosOperadores.replace('operadorLogico', 'o');
-      if (result_text) result_text += ' *o* ';
+      if (result_text) result_text += ' -o- ';
       result += values3.join(estilosOperadores.replace('operadorLogico', 'o'));
-      result_text += values3.join(' *o* ');
+      result_text += values3.join(' -o- ');
     }
 
     if (values4.length > 0) {
-      if (result) result += estilosOperadores.replace('operadorLogico', 'excluir');
-      if (result_text) result_text += ' *excluir* ';
-      result += values4.join(estilosOperadores.replace('operadorLogico', 'excluir'));
-      result_text += values4.join(' *excluir* ');
+      if (result) result += estilosOperadores.replace('operadorLogico', 'excluir termino');
+      if (result_text) result_text += ' -excluir termino- ';
+      result += values4.join(estilosOperadores.replace('operadorLogico', 'excluir termino'));
+      result_text += values4.join(' -excluir termino- ');
     }
 
     setBusquedaAvanzada(result);

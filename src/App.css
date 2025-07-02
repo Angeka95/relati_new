@@ -2529,14 +2529,12 @@ padding: 0px 0% 0% 3%;
 .page_small{
   width: 29%;
   margin: 2%; 
-  box-shadow: rgba(57, 129, 195, 0.2) 0px 8px 24px;
   padding: 2% 2% 1% 2%;
-  height: 450px;
+  height: auto;
 }
 
 .page_small:hover{
   cursor: pointer;
-  box-shadow: rgba(3, 103, 196, 0.311) 0px 4px 24px !important;
   transform: scale(1.06);
 }
 
@@ -2547,6 +2545,20 @@ padding: 0px 0% 0% 3%;
   display: flex;
   align-items: center;
   align-content: center;
+}
+
+.cover_container_analisis{
+  max-width: 250px;
+  margin: 20px 20px;
+  max-height: 400px;
+  transition: transform 0.3s ease;
+  box-shadow: 0px 8px 16px rgba(57, 129, 195, 0.2) !important;
+
+}
+
+.cover_container_analisis:hover{
+  transform: scale(1.1);
+  box-shadow: rgba(3, 103, 196, 0.311) 0px 4px 24px !important;
 }
 
 .autocomplete_home {
@@ -3453,6 +3465,11 @@ color: rgb(219, 0, 69);
   .modal_box{
     max-height: 80%;
     overflow-y: auto;
+  }
+
+  .page_small{
+    min-width: 100%;
+ 
   }
   
   }

@@ -6,6 +6,7 @@ import SearchBar from '../components/searchBar';
 import Carousel from '../components/carousel';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import TabAnalisis from '../components/tabAnalisis.js';
 
 export default function Analisis() {
 
@@ -138,6 +139,27 @@ En este sentido, los productos publicados acá dan cuenta de la secuencia lógic
 
 
 
+    const docsAnalisis = 
+        [
+            {
+              "id": 1,
+              "url": "https://relatoria.jep.gov.co/documentos/libros/CODIGO_JURISDICCION_ESPECIAL_PAZ_1A_ED.pdf",
+              "cover": `${process.env.REACT_APP_API_SERVER_DOMAIN}/img/libros/portada_codigo_JEP_c.png`
+            },
+            {
+              "id": 2,
+              "url": "https://relatoria.jep.gov.co/documentos/libros/CODIGO_JURISDICCION_ESPECIAL_PAZ_1A_ED.pdf",
+              "cover": `${process.env.REACT_APP_API_SERVER_DOMAIN}/img/libros/portada_codigo_JEP_c.png`
+            },
+            {
+                "id": 3,
+                "url": "https://relatoria.jep.gov.co/documentos/libros/CODIGO_JURISDICCION_ESPECIAL_PAZ_1A_ED.pdf",
+                "cover": `${process.env.REACT_APP_API_SERVER_DOMAIN}/img/libros/portada_codigo_JEP_c.png`
+              }
+          ]
+    
+
+
     return (
         <div className="descripcion_nowrap margin_bottom_xl">
 
@@ -198,7 +220,7 @@ En este sentido, los productos publicados acá dan cuenta de la secuencia lógic
                             {temas[temaSeleccionadoIndex].numeroPaso === "6" && (
                                 <Container className="margin_top_s ">
 
-                                    <div className="wrap">
+                                    {/* <div className="wrap">
                                         <div className="page_small transition_smooth">
                                             <div className="page_border wrap text_center justify_center">
                                                 <p className="text_center">Tema Principal </p>
@@ -229,6 +251,27 @@ En este sentido, los productos publicados acá dan cuenta de la secuencia lógic
                                             </div>
 
                                         </div>
+                                    </div> */}
+                                    <div className="width_100 margin_top_m margin_bottom_m">
+                                    
+                                    <TabAnalisis data={docsAnalisis} />
+
+                                    </div>
+                                    <div className="width_100 display_flex justify_center"> 
+                                        <div className="width_80"> 
+                                        <p className="margin_top_s">
+
+                                        <strong>   Nota aclaratoria-Carácter no vinculante del análisis temático </strong>  <br/><br/>
+
+                                            Los análisis temáticos han sido elaborados con fines informativos, de divulgación y de apoyo al estudio del desarrollo y evolución de la jurisprudencia de la Jurisdicción Especial para la Paz (JEP). Lo anterior, en cumplimiento de las funciones de la Relatoría General de la JEP definidas en el artículo 85 del Acuerdo ASP No. 001 de 2020 “Por el cual se adopta el Reglamento General de la Jurisdicción Especial para la Paz”.<br/>
+
+                                            El contenido de los documentos no compromete la posición institucional de la JEP, ni constituye un pronunciamiento oficial de la misma. La interpretación ofrecida en estos análisis temáticos refleja únicamente un ejercicio técnico de análisis jurídico realizado por la Relatoría General de la JEP y no tiene efectos vinculantes para ningún sujeto procesal ni para terceros. En ningún caso, los análisis sustituyen las decisiones adoptadas por las autoridades judiciales competentes ni puede considerarse como precedente, fuente de derecho, directriz oficial o criterio interpretativo.<br/>
+                                               
+                                                Cualquier uso de los presentes análisis debe tener en cuenta su naturaleza meramente orientadora, y su consulta no exime del deber de verificar el contenido de las providencias judiciales originales ni de acudir a los medios oficiales para obtener información institucional.
+
+                                        </p>
+                                        </div>
+
                                     </div>
 
                                 </Container>

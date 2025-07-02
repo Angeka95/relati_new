@@ -227,7 +227,7 @@ export default function Tesauro() {
                 <div className="cta">
                     <Container > 
                         <div className="cta_container"> 
-                            <h6 className="text_bolder cta_text">Explore las relaciones de los términos del Tesauro... </h6> 
+                            <h6 className="text_bolder cta_text">Interactúe con las palabras clave del Tesauro a través de sus redes y relaciones temáticas</h6> 
                             <Link to="/red-terminos">
                             <Button className="button_primary ">Ver Red de Términos</Button>
                             </Link>
