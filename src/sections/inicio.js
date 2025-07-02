@@ -221,6 +221,28 @@ export default function Home() {
     }), [terminosMasBuscados])
         
     /* Fin Terminos Mas Buscados */
+    
+    /* Documentos Sentencias */
+    
+    const [docsSentencias, setDocsSentencias] = useState([]);
+    
+    const getDocsSentencias = () => {
+        inithomeService
+            .getDocsSentencias()
+            .then(response => {
+                setDocsSentencias(response.data);
+             }
+            )
+            .catch(error => console.log(error));
+    }; 
+    
+    useEffect((() => {
+        if (docsSentencias.length === 0 ) {
+            getDocsSentencias();
+        }
+    }), [docsSentencias])
+        
+    /* Documentos Sentencias */
 
     const [showAll, setShowAll] = useState(false);
 
@@ -616,7 +638,7 @@ export default function Home() {
                 </Box>
 
             <Container xs={12} sm={12} md={8} lg={8} xl={8} className="margin_top_xl " >
-                {(terminosMasBuscados.length === 0 ) ?
+                {(docsSentencias.length === 0 ) ?
                         <div className="wrap margin_bottom_xl">
                              <h2 className="text_bolder text_left padding_x text_center_mobile  title_recientes">Documentos</h2>
                              <LinearWithValueLabel></LinearWithValueLabel>
@@ -630,17 +652,27 @@ export default function Home() {
                             </div>
                             <div className="wrap container_60">
                                 <ul>
-                                    {documentosSentencias.map((adicional) => (
-                                        <li key={adicional.id}>
-                                            <a target="_blank" rel="noreferrer" className="link_secondary text_capitalize" href={adicional.pdf} >
-                                                {adicional.nombreDocumento}
+                                    {docsSentencias.map((adicional, k) => (
+                                        <li key={k}>
+                                            <a target="_blank" rel="noreferrer" className="link_secondary text_capitalize" href={adicional.url} >
+                                                {adicional.nombre}
                                             </a>
-        
+                                            {(adicional.docs.length > 0) && ( 
+                                                    <ul className="sublist">
+                                                        {adicional.docs.map((doc, i) => {
+                                                            return (doc.url.length > 0 && doc.nombre.length > 0) ?
+                                                                <li key={i}>
+                                                                    <a target="_blank" rel="noreferrer" className="link_secondary text_capitalize" href={doc.url} >
+                                                                        {doc.nombre}
+                                                                    </a>
+                                                                </li>
+                                                                :
+                                                                null;  
+                                                        })}
+                                                    </ul>
+                                            )}
                                         </li>
-                                    )
-        
-                                    )}
-                                    
+                                    ))}
                                     <div className="separator_blue"> </div>
                                     <li> 
                                         <a className="link_secondary text_capitalize cursor_pointer" onClick={toggleContent}>
@@ -652,7 +684,7 @@ export default function Home() {
                                         
                                         {isOpen && (
                                         <>
-                                        <DocumentosComisionGenero />
+                                        <DocumentosComisionGenero/>
                                         </>
                                         )}
                                     </li>
@@ -679,9 +711,6 @@ export default function Home() {
                         </div>
                 }        
             </Container>
-
-
-
 
             <Container className="space_top " id="seccion_caso">
                 {( casesToDisplay.length === 0 ) ? 

@@ -4,7 +4,7 @@ import { useSearchParams } from 'react-router-dom';
 import { Container, Grid, Tooltip, Alert } from '@mui/material';
 import './../App.css';
 
-const DocumentosComisionGenero = () => {
+const DocumentosComisionGenero = ({ docsSentencias = [] }) => {
   
       const documentos = [
       {
