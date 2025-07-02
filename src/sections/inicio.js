@@ -602,6 +602,19 @@ export default function Home() {
                 }
             </Container>
 
+            <Box className= " margin_bottom_xl margin_top_m"> 
+                <div className="cta">
+                    <Container > 
+                        <div className="cta_container"> 
+                            <h6 className="text_bolder cta_text">Encuentre las decisiones de la JEP y actividad judicial basadas en enfoque de género</h6> 
+                            <Button onClick={goToEnfoqueGeneroPage} className="button_primary " >
+                                     Ver decisiones 
+                                </Button>
+                        </div>
+                    </Container>
+                </div>
+                </Box>
+
             <Container xs={12} sm={12} md={8} lg={8} xl={8} className="margin_top_xl " >
                 {(terminosMasBuscados.length === 0 ) ?
                         <div className="wrap margin_bottom_xl">
@@ -613,12 +626,7 @@ export default function Home() {
                             <div className="container_40 ">
                                 <h2 className="text_bolder text_left text_center_mobile">Documentos</h2>
                                 <h5>Conozca los documentos de Sentencias Interpretativas y Comisiones de Género </h5>
-                                <div className="separator"> 
-                                </div> 
-                                <h5 className='margin_top_s margin_bottom_s'> Encuentre las decisiones de la JEP y actividad judicial basadas en enfoque de género </h5>
-                                <Button onClick={goToEnfoqueGeneroPage} className="button_primary " >
-                                     Ver decisiones 
-                                </Button>
+                               
                             </div>
                             <div className="wrap container_60">
                                 <ul>
@@ -673,29 +681,7 @@ export default function Home() {
             </Container>
 
 
-            <Container maxWidth="lg" disableGutters className="margin_top_xl margin_bottom_xl">
-            {( boletines.length === 0 ) ? 
-                 <>
-                     <h2 className="text_bolder text_left padding_x text_center_mobile  title_recientes">Boletines</h2>
-                     <LinearWithValueLabel></LinearWithValueLabel>
-                </>
-                :
-                <>
-                <div>
-                    <div className="align_center carousel_main_container">
-                        <div className="wrap text_carousel_container" >
-                            <h2 className="align_center text_bolder"> Boletines</h2>
-                            <h5 className=" align_center margin_top_s margin_bottom_m">Acceda al análisis de las decisiones más importantes de la JEP</h5>
-                            <Button onClick={goToBoletinesPage} className="button_primary "> Ver todos los boletines</Button>
-                        </div>
-                        <div className="carousel_container">
-                            <Carousel boletines={boletines} filterByCurrentYear={true} />
-                        </div>
-                    </div>
-                </div>
-                </>
-            }
-            </Container>
+
 
             <Container className="space_top " id="seccion_caso">
                 {( casesToDisplay.length === 0 ) ? 
@@ -732,6 +718,30 @@ export default function Home() {
                         </Button>
                     )}
                 </div> */}
+                </>
+            }
+            </Container>
+
+            <Container maxWidth="lg" disableGutters className="margin_top_xl margin_bottom_xl">
+            {( boletines.length === 0 ) ? 
+                 <>
+                     <h2 className="text_bolder text_left padding_x text_center_mobile  title_recientes">Boletines</h2>
+                     <LinearWithValueLabel></LinearWithValueLabel>
+                </>
+                :
+                <>
+                <div>
+                    <div className="align_center carousel_main_container">
+                        <div className="wrap text_carousel_container" >
+                            <h2 className="align_center text_bolder"> Boletines</h2>
+                            <h5 className=" align_center margin_top_s margin_bottom_m">Acceda al análisis de las decisiones más importantes de la JEP</h5>
+                            <Button onClick={goToBoletinesPage} className="button_primary "> Ver todos los boletines</Button>
+                        </div>
+                        <div className="carousel_container">
+                            <Carousel boletines={boletines} filterByCurrentYear={true} />
+                        </div>
+                    </div>
+                </div>
                 </>
             }
             </Container>
