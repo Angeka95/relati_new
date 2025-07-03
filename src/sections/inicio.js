@@ -424,26 +424,26 @@ export default function Home() {
           const libros = [
             {
                 id : 1,
-                pdf: '${process.env.REACT_APP_API_SERVER_DOMAIN}/documentos/libros/CODIGO_JURISDICCION_ESPECIAL_PAZ_1A_ED.pdf', 
+                pdf: `${process.env.REACT_APP_API_SERVER_DOMAIN}/documentos/libros/CODIGO_JURISDICCION_ESPECIAL_PAZ_1A_ED.pdf`, 
                 fecha: "2025-01", 
                 imagenPortada: `${process.env.REACT_APP_API_SERVER_DOMAIN}/img/libros/portada_codigo_JEP_c.png`
              },
             {
                 id : 2,
-                pdf: '${process.env.REACT_APP_API_SERVER_DOMAIN}/documentos/libros/TOMO_1_Las-SENIT-1-2-3.pdf', 
+                pdf: `${process.env.REACT_APP_API_SERVER_DOMAIN}/documentos/libros/TOMO_1_Las-SENIT-1-2-3.pdf`, 
                 fecha: "2024-01", 
                 imagenPortada: `${process.env.REACT_APP_API_SERVER_DOMAIN}/img/libros/TOMO_1_Las-SENIT-1-2-3.jpg`
              },
              {
                 id : 3,
-                pdf: '${process.env.REACT_APP_API_SERVER_DOMAIN}/documentos/libros/Tomo_2_lineamientos_analisis_tematico.pdf', 
+                pdf: `${process.env.REACT_APP_API_SERVER_DOMAIN}/documentos/libros/Tomo_2_lineamientos_analisis_tematico.pdf`, 
                 fecha: "2024-01", 
                 imagenPortada: `${process.env.REACT_APP_API_SERVER_DOMAIN}/img/libros/portada_tomo_II.jpg`
              },
 
              {
                 id : 4,
-                pdf: '${process.env.REACT_APP_API_SERVER_DOMAIN}/documentos/libros/Tomo_III_Macrocasos_versión_final.pdf', 
+                pdf: `${process.env.REACT_APP_API_SERVER_DOMAIN}/documentos/libros/Tomo_III_Macrocasos_versión_final.pdf`, 
                 fecha: "2025-01", 
                 imagenPortada: `${process.env.REACT_APP_API_SERVER_DOMAIN}/img/libros/portada_tomo3.jpeg`
              },
