@@ -31,22 +31,6 @@ const datos_anios = [
     {
       "nombre_campo": "2018",
       "valor": "2018"
-    },
-    {
-      "nombre_campo": "2017",
-      "valor": "2017"
-    },
-    {
-      "nombre_campo": "2016",
-      "valor": "2016"
-    },
-    {
-      "nombre_campo": "2015",
-      "valor": "2015"
-    },
-    {
-      "nombre_campo": "2014",
-      "valor": "2014"
     }
   ]
 
