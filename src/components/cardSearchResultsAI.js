@@ -255,7 +255,7 @@ export default function CardSearch({ datos, hiddenAnalisisJuridico = false }) {
              </div>
             )}
             {/* Campo Análisis solo aplicable a Enfoque Genero */}
-            {((hiddenAnalisisJuridico === false ) && (typeof datos.problemasJuridicos === 'string' ) && (datos.problemasJuridicos.trim() !== '')) && (
+            {((hiddenAnalisisJuridico === false ) && (typeof datos.problemasJuridicos === 'string' ) && (datos.problemasJuridicos.trim() !== '') && (!datos.hechos.includes("null"))) && (
             <div className="width_100">
               <Button onClick={toggleAnalisisJuridico} className=" link_secondary text_capitalize"  startIcon={isSujetosProcesalesExpanded ?<ExpandLessOutlinedIcon /> :  <ExpandMoreOutlinedIcon />}>
               Análisis Jurídico
@@ -263,16 +263,16 @@ export default function CardSearch({ datos, hiddenAnalisisJuridico = false }) {
   
               {isAnalisisJuridicoExpanded && (
                   <div className="margin_top_s">
-                    {((typeof datos.hechos === 'string' ) && (datos.hechos.trim() !== '')) && (
+                    {((typeof datos.hechos === 'string' ) && (datos.hechos.trim() !== '') && (!datos.hechos.includes("null"))) && (
                       <p className="text_space_min text_justify">• Hechos:  <span className="text_bolder"> {datos.hechos}</span> </p>
                     )}
-                    {((typeof datos.problemasJuridicos === 'string' ) && (datos.problemasJuridicos.trim() !== '')) && (
+                    {((typeof datos.problemasJuridicos === 'string' ) && (datos.problemasJuridicos.trim() !== '') && (!datos.problemasJuridicos.includes("null"))) && (
                       <p className="text_space_min text_justify">• Problemas Jurídicos:  <span className="text_bolder"> {datos.problemasJuridicos}</span> </p>
                     )}
-                    {((typeof datos.reglas === 'string' ) && (datos.reglas.trim() !== '')) && (
+                    {((typeof datos.reglas === 'string' ) && (datos.reglas.trim() !== '') && (!datos.reglas.includes("null"))) && (
                       <p className="text_space_min text_justify">• Reglas:  <span className="text_bolder"> {datos.reglas}</span> </p>
                     )}
-                    {((typeof datos.aplicacionCasoConcreto === 'string' ) && (datos.aplicacionCasoConcreto.trim() !== '')) && (
+                    {((typeof datos.aplicacionCasoConcreto === 'string' ) && (datos.aplicacionCasoConcreto.trim() !== '') && (!datos.aplicacionCasoConcreto.includes("null"))) && (
                       <p className="text_space_min text_justify">• Aplicación al Caso Concreto:  <span className="text_bolder"> {datos.aplicacionCasoConcreto}</span> </p>
                     )}
                   </div>
