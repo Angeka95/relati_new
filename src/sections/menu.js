@@ -59,7 +59,7 @@ export default function MenuBar() {
 
   const podcastURL = () => {
     var anchor = document.createElement('a');
-    anchor.href = 'https://www.spreaker.com/podcast/relatos-de-la-jep--5701029';
+    anchor.href = 'https://open.spotify.com/show/5hEeZojgIOkXfOkGxDDsiS?si=9154b05a55ff47ed';
     anchor.target="_blank";
     anchor.rel="noreferrer";
     anchor.click();
@@ -291,7 +291,7 @@ export default function MenuBar() {
                 <ListItem button component={Link} to="/libros">
                   <ListItemText primary="Libros" />
                 </ListItem>
-                <ListItem button component={Link} to="https://www.spreaker.com/podcast/relatos-de-la-jep--5701029">
+                <ListItem button component={Link} to="https://open.spotify.com/show/5hEeZojgIOkXfOkGxDDsiS?si=9154b05a55ff47ed">
                   <ListItemText primary="Podcast" />
                 </ListItem>
               </List>
