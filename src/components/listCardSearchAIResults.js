@@ -383,7 +383,8 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
 
                                 <Grid item  className="justify_end_partial" xs={12} sm={12} md={(isListSmall ? 12 : 4)} lg={(isListSmall ? 12 : 4)} xl={(isListSmall ? 12 : 4) }>
                                     {/*<SearchBarSmall searchOptions={searchDocsOptions} handlerSetSelectedOption={handlerSetSelectedDoc}> </SearchBarSmall>*/}
-                                    <SearchBarForInnerResults handlerInnerSearch={handlerInnerSearch} handlerReset={deshacerBusqueda} ref={searchBarForInnerResultsInputRef}></SearchBarForInnerResults>
+                                     {/* Ocultar temporalmente */}
+                                     {/* <SearchBarForInnerResults handlerInnerSearch={handlerInnerSearch} handlerReset={deshacerBusqueda} ref={searchBarForInnerResultsInputRef}></SearchBarForInnerResults> */}
                                 </Grid>
                             </SpaceBetweenGrid>
 

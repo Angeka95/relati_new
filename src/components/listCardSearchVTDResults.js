@@ -379,7 +379,9 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
                                 </Grid>
 
                                 <Grid item className="justify_end_partial" xs={12} sm={12} md={(isListSmall ? 12 : 6)} lg={(isListSmall ? 12 : 6)} xl={(isListSmall ? 12 : 6)}>
-                                    <SearchBarForInnerResultsVTD handlerInnerSearch={handlerInnerSearchVTD} handlerReset={deshacerBusquedaVTD} ref={searchBarForInnerResultsInputRef}></SearchBarForInnerResultsVTD>
+                                    {/* Ocultar temporalmente */}
+                                    {/*}
+                                    <SearchBarForInnerResultsVTD handlerInnerSearch={handlerInnerSearchVTD} handlerReset={deshacerBusquedaVTD} ref={searchBarForInnerResultsInputRef}></SearchBarForInnerResultsVTD>*/}
                                 </Grid>
                             </SpaceBetweenGrid>
 
