@@ -200,6 +200,11 @@ export default function SearchResults() {
   // Esta funcion limpia las variables LocalStorage almacenadas despues de cierto tiempo
   useCleanLocalStorageVars('dataFromQueryLs', ttl);
   useCleanLocalStorageVars('dataFiltersFromQueryLs', ttl);
+  
+  // Esta funcionalidad permite deshacer la busqueda
+  const deshacerBusqueda = (e) => {
+          setFiltroJurisprudencial(filtroByDefault);
+   };
 
   return (
     <>
@@ -256,9 +261,9 @@ export default function SearchResults() {
           <Grid container spacing={2}>
             <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
               {(customFilter !== null) ? 
-                <FilterBeta setSelectedFilters={setSelectedFilters} customFilter={customFilter} isFilterFloat={false} isShowingFilter={false} isSearchAdvance={false}></FilterBeta>
+                <FilterBeta setSelectedFilters={setSelectedFilters} customFilter={customFilter} isFilterFloat={false} isShowingFilter={false} isSearchAdvance={false} handlerReset={deshacerBusqueda}></FilterBeta>
               :
-                <Filter setSelectedFilters={setSelectedFilters}></Filter>
+                <Filter setSelectedFilters={setSelectedFilters} handlerReset={deshacerBusqueda}></Filter>
               } 
             </Grid>
             <Grid item xs={12} sm={12} md={8} lg={8} xl={8}>

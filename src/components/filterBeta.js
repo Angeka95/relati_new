@@ -9,7 +9,7 @@ import { validarfiltroJurisprudencial, validateSearchParamsVTD, createSelectedFi
 import SelectField from '../components/selectFieldBeta.js';
 import '../App.css';
 
-const FilterBeta = ({ setSelectedFilters, customFilter = {}, isFilterFloat = false, isShowingFilter = false, isSearchAdvance = false, isVTD = false }) => {
+const FilterBeta = ({ setSelectedFilters, customFilter = {}, isFilterFloat = false, isShowingFilter = false, isSearchAdvance = false, isVTD = false, handlerReset = false}) => {
 
   // Manipula el valor de busqueda que viene desde SearchBarForInnerResults y en valor
   const searchBarForInnerResultsInputRef = useRef(null);
@@ -196,11 +196,19 @@ const FilterBeta = ({ setSelectedFilters, customFilter = {}, isFilterFloat = fal
         <div className="justify_center width_100 margin_top_s">
           <Button disabled={isFilterDisabled} className="button_primary margin_xs " onClick={applyFilters}>Aplicar filtros</Button>
         </div>
-        {(isVTD === true) && (
-          <div className="justify_center width_100 margin_top_m">
-            <Button variant="outlined" className='autocomplete_bar_inner_search_undo_results margin_right_0' size="small" onClick={deshacerBusquedaVTD}>Reestablecer resultados</Button>
-          </div>
-        )}
+        {(isVTD === true) ?
+            <div className="justify_center width_100 margin_top_m">
+              <Button variant="outlined" className='autocomplete_bar_inner_search_undo_results margin_right_0' size="small" onClick={deshacerBusquedaVTD}>Reestablecer resultados</Button>
+            </div>
+            :
+            <>
+              {(typeof handlerReset === "function") && (
+              <div className="justify_center width_100 margin_top_m">
+                <Button variant="outlined" className='autocomplete_bar_inner_search_undo_results margin_right_0' size="small" onClick={() => handlerReset() }>Reestablecer resultados</Button>
+              </div>
+              )}
+            </>
+        }
       </CardContent>
     </Card>
   );

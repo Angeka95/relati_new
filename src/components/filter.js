@@ -14,7 +14,7 @@ import { validarfiltroJurisprudencial, generarArrayDeObjetosNombreCampoValor, va
 import SelectField from '../components/selectField.js';
 import '../App.css';
 
-export default function Filter({ setSelectedFilters, isFilterFloat, isShowingFilter, selectedData, isSearchAdvance, isVTD = false }) {
+export default function Filter({ setSelectedFilters, isFilterFloat, isShowingFilter, selectedData, isSearchAdvance, isVTD = false, handlerReset = false }) {
 
   // Estado para controlar si el botón está habilitado o deshabilitado
   const { verTodasDecisiones, busqueda } = useContext(Context);
@@ -246,11 +246,19 @@ export default function Filter({ setSelectedFilters, isFilterFloat, isShowingFil
         <div className="justify_center width_100 margin_top_s">
           <Button disabled={isFilterDisabled} className="button_primary margin_xs " onClick={applyFilters}>Aplicar filtros</Button>
         </div>
-        {(isVTD === true) && (
+        {(isVTD === true) ?
           <div className="justify_center width_100 margin_top_m">
             <Button variant="outlined" className='autocomplete_bar_inner_search_undo_results margin_right_0' size="small" onClick={deshacerBusquedaVTD}>Reestablecer resultados</Button>
           </div>
-        )}
+          :
+          <>
+          {(typeof handlerReset === "function") && (
+          <div className="justify_center width_100 margin_top_m">
+            <Button variant="outlined" className='autocomplete_bar_inner_search_undo_results margin_right_0' size="small" onClick={() => handlerReset() }>Reestablecer resultados</Button>
+          </div>
+          )}
+          </>
+        }
       </CardContent>
     </Card>
   );
