@@ -34,7 +34,7 @@ const SearchBarForInnerResultsVTD = forwardRef(( props, ref ) => {
   };
     
   return (
-    <div className="autocomplete_bar_inner_search">
+    <div className="autocomplete_bar_inner_search" style={{ visibility: "hidden"}}>
       <Stack className='autocomplete_bar_search_small'>
         <Autocomplete
           id="searchBarForInnerResults"
