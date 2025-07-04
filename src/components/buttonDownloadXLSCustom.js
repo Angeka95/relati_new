@@ -80,8 +80,8 @@ export default function ButtonDownloadXLSCustom({ stringURL, stringParams, datos
             //const predeterminatedValues = ["tipo_documento", "fecha_documento", "sala_seccion", "enlace", "palabras_clave", "conclusion", "nombre_providencia"];
             //const priorityValues = ["tipo_documento", "fecha_documento", "sala_seccion", "enlace", "palabras_clave", "conclusion", "nombre_providencia"];
             
-            const predeterminatedValues = ["nombre_providencia", "enlace"];
-            const priorityValues = ["nombre_providencia", "enlace"];
+            const predeterminatedValues = ["nombre_providencia", "hipervinculo"];
+            const priorityValues = ["nombre_providencia", "hipervinculo"];
             
             let selectedValues = [];
             
