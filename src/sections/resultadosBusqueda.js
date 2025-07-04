@@ -90,7 +90,9 @@ export default function SearchResults() {
         .then(response => {
               if((response.status_info.status === 200) && (response.data.length > 0)) {
                 const newDatos = dataResults(response.data);
+                const newDatosFilters = dataFilterResults(response.filters);
                 setDatos(newDatos);
+                setCustomFilter(newDatosFilters);
                 setSearchOptions(getOpcionesAutocompletar(newDatos));
                 newMessage["message"] = `${response.status_info.reason}`;
                 newMessage["classname"] = 'success';

@@ -10,7 +10,7 @@ import mapaJurisprudencialService from '../services/mapa_jurisprudencial.js';
 import datos_anios from '../data/data_anios.js';
 import { datos_macrocaso } from '../data/datos_macrocaso.js';
 import datos_sala_seccion from '../data/datos_sala_seccion.js';
-import { validarfiltroJurisprudencial, generarArrayDeObjetosNombreCampoValor, validateSearchParamsVTD, createSelectedFiltersVTD } from '../helpers/utils.js';
+import { validarfiltroJurisprudencial, generarArrayDeObjetosNombreCampoValor, validateSearchParamsVTD, createSelectedFiltersVTD, filtroByDefault } from '../helpers/utils.js';
 import SelectField from '../components/selectField.js';
 import '../App.css';
 
@@ -252,7 +252,7 @@ export default function Filter({ setSelectedFilters, isFilterFloat, isShowingFil
           </div>
           :
           <>
-          {(typeof handlerReset === "function") && (
+          {((typeof handlerReset === "function") && (!validarfiltroJurisprudencial(filtroJurisprudencial))) && (
           <div className="justify_center width_100 margin_top_m">
             <Button variant="outlined" className='autocomplete_bar_inner_search_undo_results margin_right_0' size="small" onClick={() => handlerReset() }>Reestablecer resultados</Button>
           </div>

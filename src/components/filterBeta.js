@@ -202,7 +202,7 @@ const FilterBeta = ({ setSelectedFilters, customFilter = {}, isFilterFloat = fal
             </div>
             :
             <>
-              {(typeof handlerReset === "function") && (
+              {((typeof handlerReset === "function") && (!validarfiltroJurisprudencial(filtroJurisprudencial))) && (
               <div className="justify_center width_100 margin_top_m">
                 <Button variant="outlined" className='autocomplete_bar_inner_search_undo_results margin_right_0' size="small" onClick={() => handlerReset() }>Reestablecer resultados</Button>
               </div>
