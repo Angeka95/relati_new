@@ -38,7 +38,7 @@ export default function ButtonDownloadXLSCustom({ stringURL, stringParams, datos
         { label: "Tipo de documento", value: "tipo_documento" }
     ];
     
-    const initialState = optionsExcel.reduce((acc, option) => { acc[option.label] = true; return acc; }, {});
+    const initialState = optionsExcel.reduce((acc, option) => { acc[option.label] = false; return acc; }, {});
     
     const [checkedState, setCheckedState] = useState(initialState);
 
@@ -47,7 +47,7 @@ export default function ButtonDownloadXLSCustom({ stringURL, stringParams, datos
     const handleOpenModal = () => setOpenModal(true);
     const handleCloseModal = () => setOpenModal(false);
     
-    const [checkedAll, setCheckedAll] = useState(true); 
+    const [checkedAll, setCheckedAll] = useState(false); 
     
     const handleChangeSelectAll = (event) => {
         
@@ -77,8 +77,11 @@ export default function ButtonDownloadXLSCustom({ stringURL, stringParams, datos
         if (openModal) {
             
             const selectedOptions = optionsExcel.filter(option => checkedState[option.label]);
-            const predeterminatedValues = ["tipo_documento", "fecha_documento", "sala_seccion", "enlace", "palabras_clave", "conclusion", "nombre_providencia"];
-            const priorityValues = ["tipo_documento", "fecha_documento", "sala_seccion", "enlace", "palabras_clave", "conclusion", "nombre_providencia"];
+            //const predeterminatedValues = ["tipo_documento", "fecha_documento", "sala_seccion", "enlace", "palabras_clave", "conclusion", "nombre_providencia"];
+            //const priorityValues = ["tipo_documento", "fecha_documento", "sala_seccion", "enlace", "palabras_clave", "conclusion", "nombre_providencia"];
+            
+            const predeterminatedValues = ["nombre_providencia", "enlace"];
+            const priorityValues = ["nombre_providencia", "enlace"];
             
             let selectedValues = [];
             
@@ -183,19 +186,33 @@ export default function ButtonDownloadXLSCustom({ stringURL, stringParams, datos
               </div>
               <div className="modal_double_border">
                 <FormGroup className="display_grid columns">
-                  {optionsExcel.map((option) => (
-                    <FormControlLabel
-                      key={option.value}
-                      control={
-                        <Checkbox
-                          checked={checkedState[option.label]}
-                          onChange={handleChangeCheck}
-                          name={option.label}
-                        />
-                      }
-                      label={option.label}
-                    />
-                  ))}
+                  {optionsExcel.map((option) =>
+                    (option.label === "Nombre" || option.label === "Enlace") ? (
+                      <FormControlLabel
+                        key={option.value}
+                        control={
+                          <Checkbox
+                            checked={true}
+                            onChange={handleChangeCheck}
+                            name={option.label}
+                          />
+                        }
+                        label={option.label}
+                      />
+                    ) : (
+                      <FormControlLabel
+                        key={option.value}
+                        control={
+                          <Checkbox
+                            checked={checkedState[option.label]}
+                            onChange={handleChangeCheck}
+                            name={option.label}
+                          />
+                        }
+                        label={option.label}
+                      />
+                    )
+                  )}
                 </FormGroup>
               </div>
             </Box>
