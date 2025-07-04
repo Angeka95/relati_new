@@ -231,6 +231,7 @@ export default function Home() {
             .getDocsSentencias()
             .then(response => {
                 setDocsSentencias(response.data);
+                
              }
             )
             .catch(error => console.log(error));
@@ -241,6 +242,16 @@ export default function Home() {
             getDocsSentencias();
         }
     }), [docsSentencias])
+
+    const [openIndexes, setOpenIndexes] = useState({});
+
+    const toggleSublist = (index) => {
+        setOpenIndexes((prev) => ({
+          ...prev,
+          [index]: !prev[index],
+        }));
+      };
+
         
     /* Documentos Sentencias */
 
@@ -654,11 +665,25 @@ export default function Home() {
                                 <ul>
                                     {docsSentencias.map((adicional, k) => (
                                         <li key={k}>
-                                            <a target="_blank" rel="noreferrer" className="link_secondary text_capitalize" href={adicional.url} >
+
+                                            <Button target="_blank" rel="noreferrer" className="link_secondary text_capitalize document_title" 
+                                          onClick={() => toggleSublist(k)}>
                                                 {adicional.nombre}
-                                            </a>
-                                            {(adicional.docs.length > 0) && ( 
+                                                {openIndexes[k] ? (
+                                                <ExpandLessOutlinedIcon />
+                                                ) : (
+                                                <ExpandMoreOutlinedIcon />
+                                                )}
+                                            </Button>
+
+                                            {(openIndexes[k] && adicional.docs.length > 0) && ( 
                                                     <ul className="sublist">
+                                                        <li> 
+                                                            <a target="_blank" rel="noreferrer" className="link_secondary text_capitalize" 
+                                                            href={adicional.url} >
+                                                                {adicional.nombre} {adicional.k}
+                                                            </a>
+                                                        </li>
                                                         {adicional.docs.map((doc, i) => {
                                                             return (doc.url.length > 0 && doc.nombre.length > 0) ?
                                                                 <li key={i}>
