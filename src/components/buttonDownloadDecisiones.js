@@ -6,7 +6,7 @@ import ButtonDownloadXLSCustom from './buttonDownloadXLSCustom.js';
 import ButtonDownloadZIPCustom from './buttonDownloadZIPCustom.js';
 import '../App.css';
 
-export default function ButtonDownloadDecisiones({isButtonDownloadEnabled = false, datos, datosToExport, sortAscByDate}) {
+export default function ButtonDownloadDecisiones({isButtonDownloadEnabled = false, datos, datosToExport, sortAscByDate, showZipButton = true}) {
   
     const [boolButtonDownloadEnabled, setBoolButtonDownloadEnabled] = useState(false);
     const [isMobile, setIsMobile] = useState(window.innerWidth < 1000);
@@ -45,15 +45,17 @@ export default function ButtonDownloadDecisiones({isButtonDownloadEnabled = fals
                               filename="resultados.xlsx"
                               decorated="false"
                           />
-                          <div style={{ display: "none"}}>
+                          {(showZipButton === true) && (
+                          <>
                           <Divider sx={{ marginTop: "0.5rem", marginBottom: "0.5rem"}}/>
                           <ButtonDownloadZIPCustom
                               stringURL={`${process.env.REACT_APP_API_SERVER_DOMAIN}/getdocumentszip`}
                               stringParams={`providencias_id=${datosToExport}`}
                               filename="resultados.zip"
                               sortAscByDate={sortAscByDate}
-                          />    
-                          </div>
+                          />
+                          </>
+                          )}
                       </>
                   }
               </div>

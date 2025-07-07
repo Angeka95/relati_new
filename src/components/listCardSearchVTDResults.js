@@ -354,6 +354,7 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
                                                 datos={datos}
                                                 datosToExport={datosToExport}
                                                 sortAscByDate={sortAscByDate}
+                                                showZipButton={false}
                                             />}
                                             </NoneGrid>  
                                         )}
