@@ -14,7 +14,7 @@ export default function Libros() {
             id : 1,
             pdf: `${process.env.REACT_APP_API_SERVER_DOMAIN}/documentos/libros/TOMO_1_Las-SENIT-1-2-3.pdf`, 
             fecha: "2024-01", 
-            qr: `${process.env.REACT_APP_API_SERVER_DOMAIN}/img/libros/qr-tomo-1.png`, 
+            qr: `${process.env.REACT_APP_API_SERVER_DOMAIN}/img/libros/tomo_1_qr.png`, 
             title: ` Tomo I </br>
             Las Sentencias Interpretativas - SENIT 1, 2 Y 3`,
             text:`Las Sentencias Interpretativas (SENIT) son providencias que buscan: </br>
@@ -37,7 +37,7 @@ export default function Libros() {
             id : 2,
             pdf: `${process.env.REACT_APP_API_SERVER_DOMAIN}/documentos/libros/Tomo_2_lineamientos_analisis_tematico.pdf`, 
             fecha: "2024-01", 
-            qr: `${process.env.REACT_APP_API_SERVER_DOMAIN}/img/libros/qr-tomo-2.jpeg`, 
+            qr: `${process.env.REACT_APP_API_SERVER_DOMAIN}/img/libros/tomo_2_qr.png`, 
             title: `Tomo II </br>
             Lineamientos para el análisis temático de las decisiones de la JEP: reflexiones desde la teoría jurídica y la práctica judicial`,
             text:`Es un libro orientado a público jurídico o académico con interés en el desarrollo de las temáticas de la Jurisdicción Especial para la Paz. Se ha estructurado de la siguiente forma:</br> En un primer apartado se explica de manera detallada el fundamento teórico y conceptual de la metodología, para entender, primero, el rol del juez dentro del derecho para el establecimiento de reglas y subreglas jurídicas a través del precedente y, segundo, cómo esto fundamenta la necesidad del levantamiento de líneas jurisprudenciales.</br> Posteriormente, en el segundo apartado se explican cada uno de los pasos contemplados dentro de la metodología, junto con algunos ejemplos de su aplicabilidad.  </br> Por último, se incorporan dos anexos para la comprensión de la creación del Banco de decisiones y la elaboración del documento analítico, que hacen parte de los resultados esperados dentro del desarrollo de las líneas jurisprudenciales. 
@@ -48,9 +48,9 @@ export default function Libros() {
             id : 3,
             pdf: `${process.env.REACT_APP_API_SERVER_DOMAIN}/documentos/libros/Tomo_III_Macrocasos_versión_final.pdf`, 
             fecha: "2025-05", 
-            qr: `${process.env.REACT_APP_API_SERVER_DOMAIN}/img/libros/QR_TOMO_III.png`, 
+            qr: `${process.env.REACT_APP_API_SERVER_DOMAIN}/img/libros/tomo_3_qr.png`, 
             title: `Tomo III </br>
-            Lineamientos para el análisis temático de las decisiones de la JEP: reflexiones desde la teoría jurídica y la práctica judicial`,
+           Macrocasos y justicia restaurativa en la JEP`,
             text:`Este tomo se centra en los macrocasos de la JEP, en donde diferentes autores de la entidad dan una perspectiva analítica de estas investigaciones judiciales, que se pueden agrupar en cuatro ejes temáticos: (i) el análisis contextual del proceso investigativo
  de los macrocasos; (ii) la formulación de la jurisprudencia transicional en cada macrocaso; (iii) los principales avances y resultados en las investigaciones, al igual que sus retos estructurales y (iv) los conceptos esenciales en las investigaciones, como
  el de máxima responsabilidad. 
