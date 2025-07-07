@@ -45,13 +45,15 @@ export default function ButtonDownloadDecisiones({isButtonDownloadEnabled = fals
                               filename="resultados.xlsx"
                               decorated="false"
                           />
+                          <div style={{ display: "none"}}>
                           <Divider sx={{ marginTop: "0.5rem", marginBottom: "0.5rem"}}/>
                           <ButtonDownloadZIPCustom
                               stringURL={`${process.env.REACT_APP_API_SERVER_DOMAIN}/getdocumentszip`}
                               stringParams={`providencias_id=${datosToExport}`}
                               filename="resultados.zip"
                               sortAscByDate={sortAscByDate}
-                          />     
+                          />    
+                          </div>
                       </>
                   }
               </div>

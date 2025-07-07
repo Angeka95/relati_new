@@ -1196,7 +1196,7 @@ white-space: pre;
   margin-left: 8px;
   background-color: #fff;
   z-index: 10 !important;
-  width: min-content;
+  width: max-content;
   height: auto;
   box-shadow: rgba(57, 129, 195, 0.2) 0px 8px 24px;
   padding: 12px;

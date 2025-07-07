@@ -15,6 +15,7 @@ import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import { filtroByDefault, validarfiltroJurisprudencial, getDecisionesIDsToExport, createSearchParamsObj } from '../helpers/utils.js';
 import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
+import ButtonDownloadDecisiones from './buttonDownloadDecisiones.js';
 import '../App.css';
 
 export default function Card({ datosBusqueda, searchOptions, selectedFilters, isListSmall, selectedTerm, isLargeResult, isExternalFilters, customPagination = {} }) {
@@ -334,48 +335,28 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
                                     )}
 
                                     {!isExternalFilters && (
-                                        <NoneGrid className="display_flex">
-                                            <div className=" position_relative">
-                                                <Button className="button_function" startIcon={<SortIcon />} onClick={toggleButton}>Ordenar
-                                                </Button>
-
-
-                                                {isButtonSorterEnabled && (
-                                                    <div className='container_date_sorted'>
-                                                        <Button onClick={sortDescByDate} className='items_sorted' endIcon={<ArrowUpwardIcon />} >Más recientes </Button>
-                                                        <Button onClick={sortAscByDate} className='items_sorted' endIcon={<ArrowDownwardIcon />} >Más antiguos </Button>
-                                                        <Button onClick={sortDescByScore} className='items_sorted' endIcon={<ArrowUpwardIcon />} >Mayor Relevancia </Button>
-                                                        <Button onClick={sortAscByScore} className='items_sorted' endIcon={<ArrowDownwardIcon />} >Menor Relevancia </Button>
-                                                    </div>
-                                                )}</div>
-
-                                            <div className=" position_relative">
-
-                                                <Button className="button_function button_download " startIcon={<FileDownloadOutlinedIcon />} onClick={toggleButtonDownload}>{isMobile ? 'Descargar' : 'Descargar resultados'}
-                                                </Button>
-
-
-                                                {isButtonDownloadEnabled && (
-                                                    <div className='container_date_download position_float'>
-
-
-                                                        {((datos.length > 0) && (datosToExport !== null)) &&
-                                                            <>
-                                                           <ButtonDownloadXLSCustom
-                                                                stringURL={`${process.env.REACT_APP_API_SERVER_DOMAIN}/downloadresult`}
-                                                                stringParams={`idpro=${datosToExport}`}
-                                                                datosToExport={datosToExport}
-                                                                filename="resultados.xlsx"
-                                                            />
-                                                            </>
-                                                        }
-                                                        <Button onClick={sortAscByDate} className='items_sorted '  >Exportar decisiones en ZIP</Button>
-
-                                                    </div>
-                                                )}</div>
-
-                                        </NoneGrid>
-                                    )}
+                                            <NoneGrid className="display_flex">
+                                                <div className=" position_relative"> 
+                                              <Button className="button_function" startIcon={<SortIcon />} onClick={toggleButton}>Ordenar
+                                              </Button>
+                                          
+                                                
+                                              {isButtonSorterEnabled && (
+                                                  <div className='container_date_sorted'>
+                                                      <Button onClick={sortDescByDate} className='items_sorted' endIcon={<ArrowUpwardIcon />} >Más recientes </Button>
+                                                      <Button onClick={sortAscByDate} className='items_sorted' endIcon={<ArrowDownwardIcon />} >Más antiguos </Button>
+                                                      <Button onClick={sortDescByScore} className='items_sorted' endIcon={<ArrowUpwardIcon />} >Mayor Relevancia </Button>
+                                                      <Button onClick={sortAscByScore} className='items_sorted' endIcon={<ArrowDownwardIcon />} >Menor Relevancia </Button>
+                                                  </div>
+                                              )}</div>
+                                            {<ButtonDownloadDecisiones
+                                                isButtonDownloadEnabled={false}
+                                                datos={datos}
+                                                datosToExport={datosToExport}
+                                                sortAscByDate={sortAscByDate}
+                                            />}
+                                            </NoneGrid>  
+                                        )}
                                 </Grid>
 
                                 <Grid item className="justify_end_partial" xs={12} sm={12} md={(isListSmall ? 12 : 6)} lg={(isListSmall ? 12 : 6)} xl={(isListSmall ? 12 : 6)}>
