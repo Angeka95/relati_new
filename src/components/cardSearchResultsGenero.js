@@ -51,6 +51,9 @@ export default function CardSearch({ datos, tipo }) {
         {((typeof datos.sala === 'string' ) && (datos.sala.trim() !== '')) && (
           <p className="text_bolder text_uppercase text_space_min">{datos.sala}</p>
         )}
+        {((typeof datos.caso === 'string' ) && (datos.caso.trim() !== '')) && (
+          <p className="text_space_min">• Macrocaso:  <span className="text_bolder"> {datos.caso}</span> </p>
+        )}
         {((typeof datos.asuntoNombre === 'string' ) && (datos.asuntoNombre.trim() !== '')) && (
           <p className="text_bolder text_uppercase text_space_min">{datos.asuntoNombre}</p>
         )}

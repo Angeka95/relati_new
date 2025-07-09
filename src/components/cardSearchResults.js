@@ -215,6 +215,9 @@ export default function CardSearch({ datos, hiddenAnalisisJuridico = false }) {
                 {((typeof datos.salaOSeccion === 'string' ) && (datos.salaOSeccion.trim() !== '')) && (
                   <p className="text_space_min">• Sala o Sección:  <span className="text_bolder"> {datos.salaOSeccion}</span> </p>
                 )}
+                {((typeof datos.caso === 'string' ) && (datos.caso.trim() !== '')) && (
+                  <p className="text_space_min">• Macrocaso:  <span className="text_bolder"> {datos.caso}</span> </p>
+                )}
                 {((typeof datos.procedimiento === 'string' ) && (datos.procedimiento.trim() !== '')) && (
                   <p className="text_space_min">• Procedimiento:  <span className="text_bolder"> {datos.procedimiento}</span> </p>
                 )}
