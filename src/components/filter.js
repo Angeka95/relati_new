@@ -103,7 +103,8 @@ export default function Filter({ setSelectedFilters, isFilterFloat, isShowingFil
   // Se encarga de aplicar los filtros seleccionados y actualizar el estado de selectedFilters
   const applyFilters = () => {
     if(isVTD === true){ 
-      //console.log("filtroJurisprudencialVTD", filtroJurisprudencialVTD);
+      console.log("entra porque es vtd");
+      console.log("filtroJurisprudencialVTD", filtroJurisprudencialVTD);
       setFiltroJurisprudencial(filtroJurisprudencialVTD);
     } else {
       setSelectedFilters(

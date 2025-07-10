@@ -33,7 +33,7 @@ export default function Select_field({ datos_filtros, label, id, selectedData, s
             salas: selectedValues
           });
           break;
-        case "Año de los hechos":
+        case "Año de la decisión":
           setFiltroJurisprudencialVTD({
             ...filtroJurisprudencialVTD,
             anios: selectedValues
