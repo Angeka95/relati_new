@@ -1,4 +1,4 @@
-GET {{$dotenv REACT_APP_API_SERVER_DOMAIN}}/searchin?string=&procedimiento=&sala_seccion=&anio_hechos=2014|2018&delito=&dpto=DEPARTAMENTO CAUCA|DEPARTAMENTO TOLIMA&macrocaso=&tipo_compareciente=FARC-EP HTTP/1.1
+GET {{$dotenv REACT_APP_API_SERVER_DOMAIN}}/searchin?string=&procedimiento=&sala_seccion=&anio_providencia=2014|2018&delito=&dpto=DEPARTAMENTO CAUCA|DEPARTAMENTO TOLIMA&macrocaso=&tipo_compareciente=FARC-EP HTTP/1.1
 user: {{$dotenv REACT_APP_API_USER}}
 password: {{$dotenv REACT_APP_API_PASS}}
 Authorization: Bearer {{$dotenv REACT_APP_API_ACCESS_TOKEN}}

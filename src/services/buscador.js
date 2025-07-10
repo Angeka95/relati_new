@@ -48,7 +48,7 @@ const getAllResultsByFilter = (searchParamsObj) => {
     params: {  }
   };
   const searchParamsString = new URLSearchParams(searchParamsObj).toString();
-  /*const request =  axios.get(`${process.env.REACT_APP_API_SERVER_DOMAIN}/searchin?string=&procedimiento=&sala_seccion=&anio_hechos=2014|2018&delito=&dpto=DEPARTAMENTO CAUCA|DEPARTAMENTO TOLIMA&macrocaso=&tipo_compareciente=FARC-EP`, config);*/
+  /*const request =  axios.get(`${process.env.REACT_APP_API_SERVER_DOMAIN}/searchin?string=&procedimiento=&sala_seccion=&anio_providencia=2014|2018&delito=&dpto=DEPARTAMENTO CAUCA|DEPARTAMENTO TOLIMA&macrocaso=&tipo_compareciente=FARC-EP`, config);*/
   const request =  axios.get(`${process.env.REACT_APP_API_SERVER_DOMAIN}/searchin?${searchParamsString}`, config);
   return request.then(response => { 
     if((response.data.status !== undefined) || (response.data.status === 401) || (response.data.status === 403)) {

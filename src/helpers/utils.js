@@ -603,7 +603,7 @@ const validateSearchParamsVTD = (searchParamsObj) => {
     ( searchParamsObj.hasOwnProperty('string') && 
       searchParamsObj.hasOwnProperty('procedimiento') &&   
       searchParamsObj.hasOwnProperty('sala_seccion') &&
-      searchParamsObj.hasOwnProperty('anio_hechos') &&
+      searchParamsObj.hasOwnProperty('anio_providencia') &&
       searchParamsObj.hasOwnProperty('delito') &&   
       searchParamsObj.hasOwnProperty('dpto') &&
       searchParamsObj.hasOwnProperty('macrocaso') &&
@@ -632,7 +632,7 @@ const createSearchParamsObj = (filtroJurisprudencial, stringInnerQuery) => {
     let newObj = { string: stringInnerQuery.trim(), 
         procedimiento: filtroJurisprudencial.procedimientos.join("|"),
         sala_seccion: filtroJurisprudencial.salas.join("|"), 
-        anio_hechos: filtroJurisprudencial.anios.join("|"), 
+        anio_providencia: filtroJurisprudencial.anios.join("|"), //anios_hechos
         delito: filtroJurisprudencial.delitos.join("|"), 
         dpto: filtroJurisprudencialDepartamentos.join("|"), 
         macrocaso: filtroJurisprudencial.macrocasos.join("|"),
@@ -662,7 +662,7 @@ const createSelectedFiltersVTD = (searchParamsObj) => {
    
 let newObj = { 
       departamentos: (searchParamsObj["dpto"].length > 0) ? dptos : [],
-      anios:  (searchParamsObj["anio_hechos"].length > 0) ? searchParamsObj["anio_hechos"].split("|") : [],
+      anios:  (searchParamsObj["anio_providencia"].length > 0) ? searchParamsObj["anio_providencia"].split("|") : [],
       salas:  (searchParamsObj["sala_seccion"].length > 0) ? searchParamsObj["sala_seccion"].split("|") : [],
       delitos:  (searchParamsObj["delito"].length > 0) ? searchParamsObj["delito"].split("|") : [],
       macrocasos:  (searchParamsObj["macrocaso"].length > 0) ? searchParamsObj["macrocaso"].split("|") : [],
