@@ -290,7 +290,7 @@ export default function Home() {
             setBusqueda(searchValue);
             setVerTodasDecisiones(false);
 
-            const params = new URLSearchParams({ string: encodeURIComponent(searchValue) });
+            const params = new URLSearchParams({ string: encodeURIComponent(searchValue), page: 1, per_page: 10 });
             navigate(`/resultados-busqueda?${params.toString()}`);
         }
         

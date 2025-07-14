@@ -47,7 +47,7 @@ export default function Search({ isSearchAdvance = true, isSearchMain }) {
           setMessageSearch({ message: "", classname: "" }); 
       }, 1500);
     } else {
-      const params = new URLSearchParams({ string: encodeURIComponent(searchValue) });
+      const params = new URLSearchParams({ string: encodeURIComponent(searchValue), page: 1, per_page: 10 });
       window.location.href = `/resultados-busqueda?${params.toString()}`;
     }
 

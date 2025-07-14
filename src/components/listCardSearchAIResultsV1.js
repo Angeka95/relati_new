@@ -29,7 +29,7 @@ import ButtonDownloadDecisiones from './buttonDownloadDecisiones.js';
 import '../App.css';
 
 export default function Card({ datosBusqueda, searchOptions, selectedFilters, isListSmall, selectedTerm, isLargeResult, isExternalFilters, customPagination = {}, paramsBusquedaAV = null }) {  
-
+       
     const [datos, setDatos] = useState(datosBusqueda);
     const [datosOriginales, setDatosOriginales] = useState(datosBusqueda);
     const [selectedDoc, setSelectedDoc] = useState({ "title": "* Todos los resultados", "id": 0 });
@@ -172,9 +172,9 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
         setIsButtonSorterEnabled(false);
         setDatosToExport(getDecisionesIDsToExport(sortedDatos, "providencia_id"));
     };
-    
-    
-    // Funciones de paginacion
+
+
+    // Paginado
     const [page, setPage] = useState(1);
     const [itemsPerPage, setitemsPerPage] = React.useState(10);
     const handleChange = (event, value) => {
@@ -190,19 +190,27 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
     // custom Pagination
     const [itemsCustomPerPage, setItemsCustomPerPage] = useState(customPagination.per_page);
     const handleChangeCustomPagination = (event, value) => {
+        console.log("Custom paginate processing...", value);
         const params = new URLSearchParams({ page: encodeURIComponent(value), per_page: encodeURIComponent(customPagination.per_page) });
         window.location.href = `/ver-todas-las-decisiones?${params.toString()}`;
     }
+
+    useEffect(() => {
+        if(datos.length > 0){
+            getCurrentData();
+            setDatosToExport(getDecisionesIDsToExport(datos, "providencia_id"));
+        }
+    }, [page, itemsPerPage, datos]);
 
     const getCurrentData = (items = 0) => {
         if (items === 0) {
             items = itemsPerPage;
         }
+    
         const startIndex = (page - 1) * items;
         setCurrentData(datos.slice(startIndex, startIndex + items));
+     
     }
-
-    // Fin funciones de paginacion
 
     const handleChange2 = (event) => {
         setitemsPerPage(event.target.value);
@@ -213,7 +221,7 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
         const params = new URLSearchParams({ page: encodeURIComponent(customPagination.current_page), per_page: encodeURIComponent(value.props.value) });
         window.location.href = `/ver-todas-las-decisiones?${params.toString()}`;
     }
-  
+    
     // Manipula el valor de busqueda que viene desde SearchBarForInnerResults y en valor
     
     const searchBarForInnerResultsInputRef = useRef(null);
@@ -260,14 +268,6 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
     }
     
     // Fin de manipula el valor de busqueda que viene desde SearchBarForInnerResults y en valor
-    
-    // Este useEffect permite obtener el listado de IDs a partir de los datos resultantes y preparalos para ser exportados en un archivo de Excel
-    useEffect(() => {
-        if (datos.length > 0) {
-            getCurrentData();
-            setDatosToExport(getDecisionesIDsToExport(datos, "providencia_id"));
-        }
-    }, [page, itemsPerPage, datos]);
         
      if(datosBusqueda.length > 0) {
         return (
@@ -387,101 +387,102 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
                                      {/* <SearchBarForInnerResults handlerInnerSearch={handlerInnerSearch} handlerReset={deshacerBusqueda} ref={searchBarForInnerResultsInputRef}></SearchBarForInnerResults> */}
                                 </Grid>
                             </SpaceBetweenGrid>
+
                         </Grid>
                     </div>
                 </div>
                 <>  
-                    {(Object.keys(customPagination).length === 0) ?
-                        <>
-                            {/* Paginacion para seccion resultados de busqueda */}
-                            <WrapGrid item xs={12} sm={12} md={12} lg={12} xl={12} className="flex " >
-                                <Width100Grid>
-                                    <p className="margin_results_page">
-
-                                        <span> {startIndexPage} </span> a
-                                        <span> {endIndexPage} </span> de
-                                        <span className="text_bolder"> {datos.length} </span> decisiones
-                                    </p>
-                                </Width100Grid>
-                                <NoneGrid>
-                                    <p className='margin_xs'> | </p>
-                                </NoneGrid>
-                                <div>
-                                    <Width100Grid className='width_100 flex '>
-                                        <p className="margin_results_page">Resultados por página  </p>
-                                        <Box sx={{ minWidth: 270 }}>
-                                            <FormControl fullWidth>
-                                                {/* <InputLabel id="demo-simple-select-label"></InputLabel> */}
-                                                <Select className={isListSmall ? "select_items_results_small" : ("select_items_results justify_center")}
-                                                    value={itemsPerPage}
-                                                    onChange={handleChange2}
-                                                    MenuProps={{
-                                                        PaperProps: {
-                                                            sx: {
-                                                                boxShadow: '0px 8px 24px rgba(57, 129, 195, 0.2) ', // Sombra 
-
-                                                            },
+                    {(Object.keys(customPagination).length === 0) ? 
+                        <>                            
+                        {/* Paginacion para seccion resultados de busqueda */}
+                        <WrapGrid item xs={12} sm={12} md={12} lg={12} xl={12} className="flex " >
+                            <Width100Grid>
+                                <p className="margin_results_page white_space_line">
+                                    
+                                    <span> {startIndexPage} </span> a
+                                    <span> {endIndexPage} </span> de
+                                    <span className="text_bolder"> {datos.length} </span> decisiones
+                                </p>
+                            </Width100Grid>
+                            <NoneGrid>
+                                <p className='margin_xs'> | </p>
+                            </NoneGrid>
+                            <div>
+                                <Width100Grid className='width_100 flex '>
+                                <p className="margin_results_page white_space_line">Resultados por página  </p>
+                                    <Box sx={{ minWidth: 270 }}>
+                                        <FormControl fullWidth>
+                                            {/* <InputLabel id="demo-simple-select-label"></InputLabel> */}
+                                            <Select className= {isListSmall ? "select_items_results_small" : ("select_items_results justify_center")} 
+                                                value={itemsPerPage}
+                                                onChange={handleChange2}
+                                                MenuProps={{
+                                                    PaperProps: {
+                                                        sx: {
+                                                            boxShadow: '0px 8px 24px rgba(57, 129, 195, 0.2) ', // Sombra 
+                                                            
                                                         },
-                                                    }}
-                                                >
-                                                    <MenuItem value={10}>10</MenuItem>
-                                                    <MenuItem value={20}>20</MenuItem>
-                                                    <MenuItem value={30}>30</MenuItem>
-                                                    <MenuItem value={datos.length}>Todas</MenuItem>
-                                                </Select>
-                                            </FormControl>
-                                        </Box>
-                                    </Width100Grid>
-                                </div>
-                            </WrapGrid>
-                        </>
-                        :
-                        <>
-                            {/* Paginacion para seccion ver todas las decisiones */}
-                            <WrapGrid item xs={12} sm={12} md={12} lg={12} xl={12} className="flex " >
-                                <Width100Grid>
-                                    <p className="margin_results_page">
-
-                                        <span> {customPagination.from} </span> a
-                                        <span> {customPagination.to} </span> de
-                                        <span className="text_bolder"> {customPagination.total} </span> decisiones
-                                    </p>
+                                                    },
+                                                }}
+                                            >
+                                                <MenuItem value={10}>10</MenuItem>
+                                                <MenuItem value={20}>20</MenuItem>
+                                                <MenuItem value={30}>30</MenuItem>
+                                                <MenuItem value={datos.length}>Todas</MenuItem>
+                                            </Select>
+                                        </FormControl>
+                                    </Box>
                                 </Width100Grid>
-                                <NoneGrid>
-                                    <p className='margin_xs'> | </p>
-                                </NoneGrid>
-
-                                <div >
-                                    <Width100Grid className='width_100 flex '>
-                                        <p className="margin_results_page">Resultados por página  </p>
-                                        <Box sx={{ minWidth: 270 }}>
-                                            <FormControl fullWidth>
-                                                {/* <InputLabel id="demo-simple-select-label"></InputLabel> */}
-                                                <Select className={isListSmall ? "select_items_results_small" : ("select_items_results justify_center")}
-                                                    value={itemsCustomPerPage}
-                                                    onChange={handleChangeResultsPerPage}
-                                                    MenuProps={{
-                                                        PaperProps: {
-                                                            sx: {
-                                                                boxShadow: '0px 8px 24px rgba(57, 129, 195, 0.2) ', // Sombra 
-
-                                                            },
-                                                        },
-                                                    }}
-                                                >
-                                                    <MenuItem value={10}>10</MenuItem>
-                                                    <MenuItem value={20}>20</MenuItem>
-                                                    <MenuItem value={30}>30</MenuItem>
-                                                </Select>
-                                            </FormControl>
-                                        </Box>
-
-                                    </Width100Grid>
-
-                                </div>
-
-                            </WrapGrid>
+                            </div>
+                        </WrapGrid>
                         </>
+                    : 
+                        <>
+                        {/* Paginacion para seccion ver todas las decisiones */}
+                        <WrapGrid item xs={12} sm={12} md={12} lg={12} xl={12} className="flex " >
+                            <Width100Grid>
+                                <p className="margin_results_page">
+                                    
+                                    <span> {customPagination.from} </span> a
+                                    <span> {customPagination.to} </span> de
+                                    <span className="text_bolder"> {customPagination.total} </span> decisiones
+                                </p>
+                            </Width100Grid>
+                            <NoneGrid>
+                                <p className='margin_xs'> | </p>
+                            </NoneGrid>
+    
+                            <div >
+                                <Width100Grid className='width_100 flex '>
+                                <p className="margin_results_page">Resultados por página  </p>
+                                    <Box sx={{ minWidth: 270 }}>
+                                        <FormControl fullWidth>
+                                            {/* <InputLabel id="demo-simple-select-label"></InputLabel> */}
+                                            <Select className= {isListSmall ? "select_items_results_small" : ("select_items_results justify_center")} 
+                                                value={itemsCustomPerPage}
+                                                onChange={ handleChangeResultsPerPage }
+                                                MenuProps={{
+                                                    PaperProps: {
+                                                        sx: {
+                                                            boxShadow: '0px 8px 24px rgba(57, 129, 195, 0.2) ', // Sombra 
+                                                            
+                                                        },
+                                                    },
+                                                }}
+                                            >
+                                                <MenuItem value={10}>10</MenuItem>
+                                                <MenuItem value={20}>20</MenuItem>
+                                                <MenuItem value={30}>30</MenuItem>
+                                            </Select>
+                                        </FormControl>
+                                    </Box>
+                                    
+                                </Width100Grid>
+                                
+                            </div>
+                            
+                        </WrapGrid>
+                        </> 
                     }
                     {/* <div className="justify_end">    
                         { ((datos.length > 0) && (datosToExport !== null)) && 
@@ -498,90 +499,90 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
                     </div> */}
                     <div className="separator width_100"></div>
                     {/* Lista de resultados */}
-                    {(datos.length > 0) ?
-                        <>
-                            <SpaceGrid className="justify_end">
-                                {(Object.keys(customPagination).length === 0) ?
-                                    <Pagination className="margin_top_s"
-                                        count={totalPages}
-                                        page={page}
-                                        onChange={handleChange}
-                                        renderItem={(item, id) => (
-                                            <PaginationItem key={id}
-                                                slots={{ previous: ArrowBackIcon, next: ArrowForwardIcon }}
-                                                {...item}
-                                            />
-                                        )}
+                    {(datos.length > 0) ? 
+                        <> 
+                        <SpaceGrid className="justify_end">
+                            {(Object.keys(customPagination).length === 0) ? 
+                                <Pagination className="margin_top_s"
+                                count={totalPages}
+                                page={page}
+                                onChange={handleChange}
+                                renderItem={(item, id) => (
+                                    <PaginationItem key={id}
+                                        slots={{ previous: ArrowBackIcon, next: ArrowForwardIcon }}
+                                        {...item}
                                     />
-                                    :
-                                    <Pagination className="margin_top_s"
-                                        count={Math.ceil(customPagination.total / customPagination.per_page)}
-                                        page={customPagination.current_page}
-                                        onChange={handleChangeCustomPagination}
-                                        renderItem={(item, id) => (
-                                            <PaginationItem key={id}
-                                                slots={{ previous: ArrowBackIcon, next: ArrowForwardIcon }}
-                                                {...item}
-                                            />
-                                        )}
+                                )}
+                                />
+                            :
+                                <Pagination className="margin_top_s"
+                                count={Math.ceil(customPagination.total/customPagination.per_page)}
+                                page={customPagination.current_page}
+                                onChange={handleChangeCustomPagination}
+                                renderItem={(item, id) => (
+                                    <PaginationItem key={id}
+                                        slots={{ previous: ArrowBackIcon, next: ArrowForwardIcon }}
+                                        {...item}
                                     />
-                                }
-                            </SpaceGrid>
-                            <List className="width_100">
-                                {currentData.map((item, k) => (
-                                    <SpaceGrid key={k}>
-                                        <ListItem className="padding_none" key={item.id}>
-                                            <CardSearch className="padding_none" datos={item}></CardSearch>
-                                        </ListItem>
-                                    </SpaceGrid>
-                                ))}
-                            </List>
-                            <SpaceGrid className="justify_end">
-                                {(Object.keys(customPagination).length === 0) ?
-                                    <Pagination className="margin_top_s"
-                                        count={totalPages}
-                                        page={page}
-                                        onChange={handleChange}
-                                        renderItem={(item, id) => (
-                                            <PaginationItem key={id}
-                                                slots={{ previous: ArrowBackIcon, next: ArrowForwardIcon }}
-                                                {...item}
-                                            />
-                                        )}
+                                )}
+                                />    
+                            }
+                        </SpaceGrid>
+                        <List className="width_100"> 
+                            {currentData.map((item, k) => (
+                                <SpaceGrid key={k}>
+                                    <ListItem className="padding_none" key={item.id}>
+                                        <CardSearch className="padding_none" datos={item}></CardSearch>
+                                    </ListItem>
+                                </SpaceGrid>
+                            ))}
+                        </List>
+                        <SpaceGrid className="justify_end">
+                        {(Object.keys(customPagination).length === 0) ? 
+                                <Pagination className="margin_top_s"
+                                count={totalPages}
+                                page={page}
+                                onChange={handleChange}
+                                renderItem={(item, id) => (
+                                    <PaginationItem key={id}
+                                        slots={{ previous: ArrowBackIcon, next: ArrowForwardIcon }}
+                                        {...item}
                                     />
-                                    :
-                                    <Pagination className="margin_top_s"
-                                        count={Math.ceil(customPagination.total / customPagination.per_page)}
-                                        page={customPagination.current_page}
-                                        onChange={handleChangeCustomPagination}
-                                        renderItem={(item, id) => (
-                                            <PaginationItem key={id}
-                                                slots={{ previous: ArrowBackIcon, next: ArrowForwardIcon }}
-                                                {...item}
-                                            />
-                                        )}
+                                )}
+                                />
+                            :
+                                <Pagination className="margin_top_s"
+                                count={Math.ceil(customPagination.total/customPagination.per_page)}
+                                page={customPagination.current_page}
+                                onChange={handleChangeCustomPagination}
+                                renderItem={(item, id) => (
+                                    <PaginationItem key={id}
+                                        slots={{ previous: ArrowBackIcon, next: ArrowForwardIcon }}
+                                        {...item}
                                     />
-                                }
-                            </SpaceGrid>
+                                )}
+                                />    
+                            }
+                        </SpaceGrid>
                         </>
-                        :
+                    :
                         <>
-                            {(message.message === "") ?
+                            { (message.message === "") ?
                                 <>
-                                    <LinearWithValueLabel processingMessages={["Procesando solicitud...", "Preparando respuesta..."]}></LinearWithValueLabel>
-                                </>
+                                <LinearWithValueLabel processingMessages={["Procesando solicitud...", "Preparando respuesta..."]}></LinearWithValueLabel> 
+                                </> 
                                 :
                                 <>
-                                    {((message.classname === "error") || (message.classname === "warning")) &&
-                                        <>
-                                            <Alert variant="outlined" severity={message.classname}>
-                                                {message.message}
-                                            </Alert>
-                                            <Box sx={{ px: 0, my: 2, display: 'flex', justifyContent: 'center' }}>
-                                                <Button className="button_primary margin_xs card_size_small" target='_self' rel="noreferrer" onClick={deshacerBusqueda}>Deshacer búsqueda</Button>
-                                            </Box>
-                                        </>
-                                    }
+                                { ((message.classname === "error") || (message.classname === "warning")) && 
+                                  <>
+                                  <Alert variant="outlined" severity={message.classname}>
+                                  {message.message}
+                                  </Alert>
+                                  <Box sx={{ px: 0, my: 2, display: 'flex', justifyContent: 'center' }}>
+                                    <Button className="button_primary margin_xs card_size_small" target='_self' rel="noreferrer" onClick={deshacerBusqueda}>Deshacer búsqueda</Button>
+                                  </Box>
+                                  </>
+                                }
                                 </>
                             }
                         </>
@@ -590,5 +591,5 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
                 </>
             </Stack>
         );
-     }
+     } 
 }

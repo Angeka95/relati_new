@@ -74,7 +74,7 @@ const getAllResultsByFilter = (searchParamsObj) => {
   
 };
 
-const getSearchQData = (string) => {
+const getSearchQDataV1 = (string) => {
   const config = {
     headers: {
       'Content-Type': 'application/json',
@@ -106,6 +106,48 @@ const getSearchQData = (string) => {
     }
   }).catch(error => {
     return { "data": [], "filters": [], "status_info": { "status": 500, "reason": "Lo sentimos, algo salió mal. Parece que hubo un problema en nuestro servidor. Estamos trabajando para solucionarlo. Por favor, inténtalo de nuevo más tarde." } };
+  });
+  
+}
+
+// Este servicio obtiene los resultados de busqueda por buscador normal al AI proveniente de searchqdata
+const getSearchQDataV2 = (searchParamsObj) => {
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${process.env.REACT_APP_API_ACCESS_TOKEN}`,
+      'user': process.env.REACT_APP_API_USER,
+      'password': process.env.REACT_APP_API_PASS
+    },
+    params: { }
+  };
+  const searchParamsString = new URLSearchParams(searchParamsObj).toString();
+  const request =  axios.get(`${process.env.REACT_APP_API_SERVER_DOMAIN}/searchquery?${searchParamsString}`, config);
+  return request.then(response => { 
+    if((response.data.status !== undefined) || (response.data.status === 401) || (response.data.status === 403)) {
+      return { "data": [], "filters": [], "pagination": [], "status_info": { "status": response.data.status, "reason": response.data.reason }};
+    } else {
+      let data = [];
+      let status_info = {};
+      let filters = [];
+      let pagination = [];
+      if(response.data["reponse"].hasOwnProperty('hits')) { 
+        data = response.data["reponse"].hits.hits;
+        filters = response.data["filter"];
+        pagination = [
+          { "page": response.data["page"], "per_page": response.data["per_page"], "total": response.data["total"], "from": response.data["from"], "to": response.data["to"] }
+        ];
+        status_info = { "status": 200, "reason": "La consulta se ha realizado satisfactoriamente." };
+        if(data.length === 0){
+          status_info = { "status": 200, "reason": "No se encontraron resultados." };
+        } 
+      } else {
+        status_info = { "status": 204, "reason": "La consulta no esta disponible por el momento.(Elastic Search)." } 
+      }
+      return { "data": data, "filters": filters, "pagination": pagination, "status_info": status_info };
+    }
+  }).catch(error => {
+    return { "data": [], "filters": [], "pagination": [], "status_info": { "status": 500, "reason": "Lo sentimos, algo salió mal. Parece que hubo un problema en nuestro servidor. Estamos trabajando para solucionarlo. Por favor, inténtalo de nuevo más tarde." } };
   });
   
 }
@@ -148,4 +190,4 @@ const getBuscadorListaAutocompletar = (expression) => {
   });
 };
 
-export default { getAllResults, getAllResultsByFilter, getSearchQData, getSearchQDataTest, getBuscadorListaAutocompletar };
+export default { getAllResults, getAllResultsByFilter, getSearchQDataV1, getSearchQDataV2, getSearchQDataTest, getBuscadorListaAutocompletar };

@@ -2,6 +2,7 @@ import React from 'react';
 import { useState, useEffect, useContext } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import Context from '../context/context.js';
+import { useCleanLocalStorageVars } from '../hooks/useCleanLocalStorageVars.js';
 import { Container, Grid, Alert, Button, Box } from '@mui/material';
 import Filter from '../components/filter.js';
 import FilterBeta from '../components/filterBeta.js';
@@ -27,45 +28,47 @@ export default function SearchResults() {
   const [message, setMessage] = useState({ message: "", classname: "" });
   const [selectedFilters, setSelectedFilters] = useState([]);
   const [stringQuery, setStringQuery] = useState("");
-  const [stringQueryLs, setStringQueryLs] = useState("");
   const [searchOptions, setSearchOptions] = useState([]);
+  const [stringQueryLs, setStringQueryLs] = useState("");
   const [paramsBusquedaAV, setParamsBusquedaAV] = useState({});
-   const [pagination, setPagination] = useState({});
 
-  // Variables de Contexto
-  const { estadoVerTodasDecisiones, setEstadoVerTodasDecisiones } = useContext(Context);
+  const { ttl } = useContext(Context); // Variable de contexto determina el tiempo de expiracion de una varaiable localStorage
   const { filtroJurisprudencial, setFiltroJurisprudencial } = useContext(Context);
-  
-  const stringParamPage = (searchParams.get('page')) ? decodeURIComponent(searchParams.get('page')) : 1;
-  const stringParamPerPage = (searchParams.get('per_page')) ? decodeURIComponent(searchParams.get('per_page')) : 10;
-  
+  const { estadoVerTodasDecisiones, setEstadoVerTodasDecisiones } = useContext(Context);
+
   // Esta funcion permite configurar el mensaje de error o exito en variable message
   const handleMessage = (newMessage) => {
     setTimeout(function(){ 
         setMessage(newMessage);
     }, 3000);
   };
-  
-  const getResultadosBuscadorAI = (searchParamsObj) => {
+
+  // Esta funcion obtiene los resultados de busqueda por buscador normal al AI 
+  const getResultadosBuscadorAI = (string) => {
     let newMessage = {}; 
     buscadorService
-      .getSearchQDataV2(searchParamsObj)
+      .getSearchQData(string)
       .then(response => {
           if((response.status_info.status === 200) && (response.data.length > 0)) {
-              let objPagination = Object.assign({}, response.pagination[0]);
-              objPagination["per_page"] = Number(objPagination["per_page"]);
-              setPagination(objPagination);
               const newDatos = dataResults(response.data);
               const newDatosFilters = dataFilterResults(response.filters);
               setDatos(newDatos);
               setCustomFilter(newDatosFilters);
               setSearchOptions(getOpcionesAutocompletar(newDatos));
+              setLocalStorageWithExpiry('dataFromQueryLs', JSON.stringify(newDatos), ttl);
+              setLocalStorageWithExpiry('dataFiltersFromQueryLs', JSON.stringify(newDatosFilters), ttl);
               newMessage["message"] = `${response.status_info.reason}`;
               newMessage["classname"] = 'success';
           } else if(response.status_info.status === 500) {
+              setLocalStorageWithExpiry('stringQueryLs', '', ttl);
+              setLocalStorageWithExpiry('dataFromQueryLs', '', ttl);
+              setLocalStorageWithExpiry('dataFiltersFromQueryLs', '', ttl);
               newMessage["message"] = `${response.status_info.reason}`;
               newMessage["classname"] = 'error';
           } else {
+            setLocalStorageWithExpiry('stringQueryLs', '', ttl);
+            setLocalStorageWithExpiry('dataFromQueryLs', '', ttl);
+            setLocalStorageWithExpiry('dataFiltersFromQueryLs', '', ttl);
             newMessage["message"] = `${response.status_info.reason}`;
             newMessage["classname"] = 'warning';
           }
@@ -112,19 +115,19 @@ export default function SearchResults() {
 
   /* useEffects */
 
-  // NO BORRAR: Si no hay datos en la consulta, se establece el filtro jurisprudencial por defecto
+  // Si no hay datos en la consulta, se establece el filtro jurisprudencial por defecto
   useEffect(() => {
     if(datos.length === 0){
         setFiltroJurisprudencial(filtroByDefault);
     } 
   }, []);
 
-  // NO BORRAR: Este useEffect cambia el estado de contexto estadoVerTodasDecisiones a false
+  // Este useEffect cambia el estado de contexto estadoVerTodasDecisiones a false
   useEffect(()=>{
     setEstadoVerTodasDecisiones(false);
   },[]);
   
-  // NO BORRAR: Si la seccion /resultados-busqueda no cuenta con ningun parametro, lo envia al home
+  // Si la seccion /resultados-busqueda no cuenta con ningun parametro, lo envia al home
   useEffect(() => {
     const url = window.location.href;  
     const tieneParametros = url.includes('?');
@@ -133,32 +136,61 @@ export default function SearchResults() {
     } 
   },[]);
   
-  // Este useEffect para obtener los resultados
-  useEffect(()=>{
+
+  // Este useEffect valida si no hay parametros de busqueda
+  // Previamente valida si los parametros provienen de una busqueda avanzada con validateSearchParamsBusquedaAV
+  // Si se cumple, obtiene los resultados de busqueda avanzada
+  // En caso de que no se cumpla, procede a la busqueda sencilla
+  // Al validar si el stringParam es nulo o vacio
+  // Si se cumple, limpia los valores del localStorage: stringQueryLs y dataFromQueryLs
+  // Si se cumple tambien redirige a la pagina principal
+  // Si no se cumple, es decir hay un valor en el parametro string, se establece el stringQuery con el valor del stringParam
+  useEffect(() => {
     const searchParamsObj = Object.fromEntries(searchParams.entries());
     if(validateSearchParamsBusquedaAV(searchParamsObj)){ 
-            // Busqueda avanzada
-            console.log("entra al avanzada");
-            setParamsBusquedaAV(searchParamsObj);
-            getResultadosBuscadorAV(searchParamsObj);
+        setParamsBusquedaAV(searchParamsObj);
+        getResultadosBuscadorAV(searchParamsObj);
+        setLocalStorageWithExpiry('stringQueryLs', '', ttl);
+        setLocalStorageWithExpiry('dataFromQueryLs', '', ttl);
+        setLocalStorageWithExpiry('dataFiltersFromQueryLs', '', ttl);
     } else if ((stringParam === "") || (stringParam === null) || (stringParam === "null")) {
-          let newMessage = {};
-          newMessage["message"] = `No se puede realizar la solicitud.`;
-          newMessage["classname"] = 'error';
-          handleMessage(newMessage);
-          setDatos([]);
-          navigate('/');
+      let newMessage = {};
+      newMessage["message"] = `No se puede realizar la solicitud.`;
+      newMessage["classname"] = 'error';
+      handleMessage(newMessage);
+      setDatos([]);
+      setLocalStorageWithExpiry('stringQueryLs', '', ttl);
+      setLocalStorageWithExpiry('dataFromQueryLs', '', ttl);
+      setLocalStorageWithExpiry('dataFiltersFromQueryLs', '', ttl);
+      navigate('/');
     } else {
       if(stringQuery === ""){
         setStringQuery(stringParam);
-      } else { 
-        // Busqueda normal
-        if(datos.length === 0){
-          getResultadosBuscadorAI(searchParamsObj);
-        }
       } 
-    } 
-  },[stringQuery, stringParam]);
+    }
+  }, [stringQuery, stringParam ]);
+
+  // Este useEffect almacena la cadena de consulta en el localStorage
+  // Los datos obtenidos a partir de la cadena de consulta se almacenan en localStorage
+  // Si el stringQuery recien ingresado es el mismo que esta en localStorage.stringQueryLs toma los datos almacenados del sesionStorage 
+  // En caso contrario, una consulta diferente procede a obtener nuevos registros.
+  useEffect(()=>{
+    if (!localStorage.hasOwnProperty('stringQueryLs')) {
+      setLocalStorageWithExpiry('stringQueryLs', '', ttl);
+      setLocalStorageWithExpiry('dataFromQueryLs', '', ttl);
+    } else {
+      if(stringQuery.length > 0 ){
+        if((stringQuery === getLocalStorageWithExpiry('stringQueryLs')) && localStorage.hasOwnProperty('dataFromQueryLs')){
+          setDatos(JSON.parse(getLocalStorageWithExpiry('dataFromQueryLs')));
+          setCustomFilter(JSON.parse(getLocalStorageWithExpiry('dataFiltersFromQueryLs')));
+        } else {
+          getResultadosBuscadorAI(stringQuery);
+          setLocalStorageWithExpiry('stringQueryLs', stringQuery, ttl);
+          setStringQueryLs(stringQuery);
+        }
+      }
+    }
+  },[stringQuery]);
   
   // Si el filtroJurisprudencial como variable de contexto es un objeto vacio, tambien se limpia el estado de selectedFilters
   useEffect(() => {
@@ -166,11 +198,15 @@ export default function SearchResults() {
         setSelectedFilters([]);
     } 
   }, [filtroJurisprudencial]);
+
+  // Esta funcion limpia las variables LocalStorage almacenadas despues de cierto tiempo
+  useCleanLocalStorageVars('dataFromQueryLs', ttl);
+  useCleanLocalStorageVars('dataFiltersFromQueryLs', ttl);
   
   // Esta funcionalidad permite deshacer la busqueda
   const deshacerBusqueda = (e) => {
-    setFiltroJurisprudencial(filtroByDefault);
-  };
+          setFiltroJurisprudencial(filtroByDefault);
+   };
 
   return (
     <>
@@ -233,7 +269,7 @@ export default function SearchResults() {
               } 
             </Grid>
             <Grid item xs={12} sm={12} md={8} lg={8} xl={8}>
-                <ListCardSearch datosBusqueda={datos} selectedTerm={stringQuery} searchOptions={searchOptions} selectedFilters={selectedFilters} isExternalFilters={false} paramsBusquedaAV={paramsBusquedaAV} customPagination={pagination}></ListCardSearch>
+                <ListCardSearch datosBusqueda={datos} selectedTerm={stringQuery} searchOptions={searchOptions} selectedFilters={selectedFilters} isExternalFilters={false} paramsBusquedaAV={paramsBusquedaAV}></ListCardSearch>
             </Grid>
           </Grid>
         </Container>
