@@ -59,11 +59,11 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
 
     // handlerInnerSearchVTD realiza la busqueda para proceder a obtener todas las decisiones
     const handlerInnerSearchVTD = (valueSearchBarInner) => {
-        //console.log("Debe redireccionar a ver todas las decisiones pero con parametros de busqueda");
-        //console.log("filtro juris VTD", filtroJurisprudencialVTD, "stringQueryInner", valueSearchBarInner);
+        console.log("Debe redireccionar a ver todas las decisiones pero con parametros de busqueda");
+        console.log("filtro juris VTD", filtroJurisprudencialVTD, "stringQueryInner", valueSearchBarInner);
         const stringQueryInner = valueSearchBarInner;
         const params = new URLSearchParams(createSearchParamsObj(filtroJurisprudencialVTD, stringQueryInner));
-        //console.log(params.toString());
+        console.log(params.toString());
         window.location.href = `/ver-todas-las-decisiones?${params.toString()}`;
     };
 

@@ -190,7 +190,7 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
     // custom Pagination
     const [itemsCustomPerPage, setItemsCustomPerPage] = useState(customPagination.per_page);
     const handleChangeCustomPagination = (event, value) => {
-        const params = new URLSearchParams({ page: encodeURIComponent(value), per_page: encodeURIComponent(customPagination.per_page) });
+        const params = new URLSearchParams({ string: encodeURIComponent(selectedTerm), page: encodeURIComponent(value), per_page: encodeURIComponent(customPagination.per_page) });
         window.location.href = `/resultados-busqueda?${params.toString()}`;
     }
 
@@ -210,7 +210,7 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
     }
 
     const handleChangeResultsPerPage = (event, value) => {
-        const params = new URLSearchParams({ page: encodeURIComponent(customPagination.current_page), per_page: encodeURIComponent(value.props.value) });
+        const params = new URLSearchParams({ string: encodeURIComponent(selectedTerm), page: encodeURIComponent(customPagination.current_page), per_page: encodeURIComponent(value.props.value) });
         window.location.href = `/resultados-busqueda?${params.toString()}`;
     }
   
