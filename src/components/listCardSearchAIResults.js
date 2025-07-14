@@ -29,7 +29,6 @@ import ButtonDownloadDecisiones from './buttonDownloadDecisiones.js';
 import '../App.css';
 
 export default function Card({ datosBusqueda, searchOptions, selectedFilters, isListSmall, selectedTerm, isLargeResult, isExternalFilters, customPagination = {}, paramsBusquedaAV = null }) {  
-
     const [datos, setDatos] = useState(datosBusqueda);
     const [datosOriginales, setDatosOriginales] = useState(datosBusqueda);
     const [selectedDoc, setSelectedDoc] = useState({ "title": "* Todos los resultados", "id": 0 });
@@ -502,6 +501,7 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
                         <>
                             <SpaceGrid className="justify_end">
                                 {(Object.keys(customPagination).length === 0) ?
+                                    <>
                                     <Pagination className="margin_top_s"
                                         count={totalPages}
                                         page={page}
@@ -513,10 +513,12 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
                                             />
                                         )}
                                     />
+                                    </>
                                     :
+                                    <>
                                     <Pagination className="margin_top_s"
                                         count={Math.ceil(customPagination.total / customPagination.per_page)}
-                                        page={customPagination.current_page}
+                                        page={ customPagination.current_page }
                                         onChange={handleChangeCustomPagination}
                                         renderItem={(item, id) => (
                                             <PaginationItem key={id}
@@ -525,6 +527,7 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
                                             />
                                         )}
                                     />
+                                    </>
                                 }
                             </SpaceGrid>
                             <List className="width_100">

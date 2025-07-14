@@ -53,7 +53,6 @@ export default function SearchResults() {
       .then(response => {
           if((response.status_info.status === 200) && (response.data.length > 0)) {
               let objPagination = Object.assign({}, response.pagination[0]);
-              console.log("objPagination", objPagination);
               objPagination["per_page"] = Number(objPagination["per_page"]);
               setPagination(objPagination);
               const newDatos = dataResults(response.data);

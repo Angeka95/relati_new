@@ -135,7 +135,7 @@ const getSearchQDataV2 = (searchParamsObj) => {
         data = response.data["reponse"].hits.hits;
         filters = response.data["filter"];
         pagination = [
-          { "page": response.data["page"], "per_page": response.data["per_page"], "total": response.data["total"], "from": response.data["from"], "to": response.data["to"] }
+          { "page": response.data["page"], "per_page": response.data["per_page"], "total": response.data["total"], "from": response.data["from"], "to": response.data["to"], "current_page": response.data["current_page"] }
         ];
         status_info = { "status": 200, "reason": "La consulta se ha realizado satisfactoriamente." };
         if(data.length === 0){
