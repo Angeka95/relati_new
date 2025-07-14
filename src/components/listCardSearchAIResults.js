@@ -191,7 +191,7 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
     const [itemsCustomPerPage, setItemsCustomPerPage] = useState(customPagination.per_page);
     const handleChangeCustomPagination = (event, value) => {
         const params = new URLSearchParams({ page: encodeURIComponent(value), per_page: encodeURIComponent(customPagination.per_page) });
-        window.location.href = `/ver-todas-las-decisiones?${params.toString()}`;
+        window.location.href = `/resultados-busqueda?${params.toString()}`;
     }
 
     const getCurrentData = (items = 0) => {
@@ -211,7 +211,7 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
 
     const handleChangeResultsPerPage = (event, value) => {
         const params = new URLSearchParams({ page: encodeURIComponent(customPagination.current_page), per_page: encodeURIComponent(value.props.value) });
-        window.location.href = `/ver-todas-las-decisiones?${params.toString()}`;
+        window.location.href = `/resultados-busqueda?${params.toString()}`;
     }
   
     // Manipula el valor de busqueda que viene desde SearchBarForInnerResults y en valor

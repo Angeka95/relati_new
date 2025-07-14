@@ -138,7 +138,7 @@ export default function SearchResults() {
     const searchParamsObj = Object.fromEntries(searchParams.entries());
     if(validateSearchParamsBusquedaAV(searchParamsObj)){ 
             // Busqueda avanzada
-            console.log("entra al avanzada");
+            // console.log("entra al avanzada");
             setParamsBusquedaAV(searchParamsObj);
             getResultadosBuscadorAV(searchParamsObj);
     } else if ((stringParam === "") || (stringParam === null) || (stringParam === "null")) {
