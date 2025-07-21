@@ -26,6 +26,7 @@ import LinearWithValueLabel from '../components/linearProgress.js';
 import ButtonDownloadZIPCustom from './buttonDownloadZIPCustom.js';
 import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
 import ButtonDownloadDecisiones from './buttonDownloadDecisiones.js';
+import Paginator from './resultadosBusqueda/Paginator.js';
 import '../App.css';
 
 export default function Card({ datosBusqueda, searchOptions, selectedFilters, isListSmall, selectedTerm, isLargeResult, isExternalFilters, customPagination = {}, paramsBusquedaAV = null }) {  
@@ -499,6 +500,16 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
                     {/* Lista de resultados */}
                     {(datos.length > 0) ?
                         <>
+                            <Paginator 
+                                        datosLength={datos.length} 
+                                        itemsPerPage={itemsPerPage} 
+                                        page={page} 
+                                        customPagination={customPagination} 
+                                        totalPages={totalPages} 
+                                        handleChange={handleChange} 
+                                        selectedTerm={selectedTerm}
+                                        customPagination={customPagination} 
+                            />   
                             <SpaceGrid className="justify_end">
                                 {(Object.keys(customPagination).length === 0) ?
                                     <>
