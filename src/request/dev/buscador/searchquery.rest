@@ -1,4 +1,4 @@
-GET {{$dotenv REACT_APP_API_SERVER_DOMAIN}}/searchqdata?string=MEDIDAS CAUTELARES&page=1&per_page=10 HTTP/1.1
+GET {{$dotenv REACT_APP_API_SERVER_DOMAIN}}/searchquery?string=MEDIDAS CAUTELARES&page=1&per_page=10&order=date_desc HTTP/1.1
 user: {{$dotenv REACT_APP_API_USER}}
 password: {{$dotenv REACT_APP_API_PASS}}
 Authorization: Bearer {{$dotenv REACT_APP_API_ACCESS_TOKEN}}

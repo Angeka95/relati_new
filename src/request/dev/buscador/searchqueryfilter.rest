@@ -1,0 +1,11 @@
+GET {{$dotenv REACT_APP_API_SERVER_DOMAIN}}/searchqdata?sala_seccion=T - Sección de Apelación&anio_providencia=2025, 2023&delito&dpto&macrocaso&tipo_compareciente&procedimiento&size=10&providencias_id=16228, 27415&page=1&order=date_desc HTTP/1.1
+user: {{$dotenv REACT_APP_API_USER}}
+password: {{$dotenv REACT_APP_API_PASS}}
+Authorization: Bearer {{$dotenv REACT_APP_API_ACCESS_TOKEN}}
+Content-Type: application/json
+
+{
+
+}
+
+
