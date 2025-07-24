@@ -16,6 +16,7 @@ import { Container, Grid } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { EditCalendar } from '@mui/icons-material';
 import Context from '../context/context.js';
+import PaginatorContext from '../context/paginatorContext.js';
 import ExpandLessOutlinedIcon from '@mui/icons-material/ExpandLessOutlined';
 import ExpandMoreOutlinedIcon from '@mui/icons-material/ExpandMoreOutlined';
 import FilterShort from './filterShort.js';
@@ -27,6 +28,7 @@ import ButtonDownloadZIPCustom from './buttonDownloadZIPCustom.js';
 import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
 import ButtonDownloadDecisiones from './buttonDownloadDecisiones.js';
 import Paginator from './resultadosBusqueda/Paginator.js';
+import PruebaInner from './resultadosBusqueda/PruebaInner.js';
 import '../App.css';
 
 export default function Card({ datosBusqueda, searchOptions, selectedFilters, isListSmall, selectedTerm, isLargeResult, isExternalFilters, customPagination = {}, paramsBusquedaAV = null }) {  
@@ -37,9 +39,9 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
     const [datosToExport, setDatosToExport] = useState("");
     const [valorBuscadorEnResultados, setValorBuscadorEnResultados] = useState("");
     const [message, setMessage] = useState({ message: "", classname: "" });
-    
+    const [pruebaPaginator, setPruebaPaginator] = useState("Context Prueba Paginator");
     const { filtroJurisprudencial, setFiltroJurisprudencial } = useContext(Context);
-
+    
     useEffect(() => {
         if(!validarfiltroJurisprudencial(filtroJurisprudencial)) { 
             let newMessage = { message: "", classname: "" }; 
@@ -271,6 +273,10 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
         
      if(datosBusqueda.length > 0) {
         return (
+            <PaginatorContext.Provider value={{ pruebaPaginator }}>
+            <div>Context de paginator provider prueba: { pruebaPaginator }
+            <PruebaInner></PruebaInner>
+            </div>
             <Stack>
                 <div className=  {isListSmall ? ('text_results_search', 'no-spacing') :  ('text_results_search','margin_search') } >
                     <SpaceGrid>
@@ -500,7 +506,7 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
                     {/* Lista de resultados */}
                     {(datos.length > 0) ?
                         <>
-                            <Paginator 
+                            {/*<Paginator 
                                         datosLength={datos.length} 
                                         itemsPerPage={itemsPerPage} 
                                         page={page} 
@@ -509,7 +515,7 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
                                         handleChange={handleChange} 
                                         selectedTerm={selectedTerm}
                                         customPagination={customPagination} 
-                            />   
+                            />*/}   
                             <SpaceGrid className="justify_end">
                                 {(Object.keys(customPagination).length === 0) ?
                                     <>
@@ -603,6 +609,7 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
                     {/* Lista de resultados */}
                 </>
             </Stack>
+            </PaginatorContext.Provider>
         );
      }
 }
