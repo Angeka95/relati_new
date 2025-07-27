@@ -1,12 +1,12 @@
 import React from 'react';
 import { useState, useEffect, useContext } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import Context from '../context/context.js';
+import Context from './../context/context.js';
 import PaginatorProvider from '../context/paginatorProvider.js';
 import { Container, Grid, Alert, Button, Box } from '@mui/material';
 import Filter from '../components/filter.js';
 import FilterBeta from '../components/filterBeta.js';
-import ListCardSearch from '../components/listCardSearchAIResults.js';
+import ListCardSearch from '../components/resultadosBusqueda/listCardSearchResults.js';
 import LinearWithValueLabel from '../components/linearProgress.js';
 import SearchBar from '../components/searchBar.js'
 import buscadorService from '../services/buscador.js';
