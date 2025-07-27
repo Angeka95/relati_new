@@ -1,31 +1,46 @@
 import React from 'react';
-import { useState } from 'react';
+import { useEffect, useContext } from 'react';
+import PaginatorContext from './../../context/paginatorContext.js';
 import { Pagination, PaginationItem } from '@mui/material';
 import { SpaceGrid } from './../listCardSearch/gridComponents.js';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 
-const Paginator = ({ datosLength = 0, itemsPerPage = 10, page = 1, customPagination = null, handleChange = null, selectedTerm = null }) => {
+const Paginator = ({ datosLength = 0, selectedTerm = null, href = null }) => {
+    
+    const { page, setPage } = useContext(PaginatorContext);
+    const { itemsPerPage, setItemsPerPage } = useContext(PaginatorContext);
+    const { startIndexPage, setStartIndexPage } = useContext(PaginatorContext);
+    const { endIndexPage, setEndIndexPage } = useContext(PaginatorContext);
+    const { customPagination, setCustomPagination } = useContext(PaginatorContext);
+    const { totalPages, setTotalPages } = useContext(PaginatorContext);
+    const { setHref } = useContext(PaginatorContext);
 
     // Funciones de paginacion
-
-    const totalPages = Math.ceil(datosLength / itemsPerPage);
-    let endIndexPage = Math.ceil(page * itemsPerPage);
-    endIndexPage = endIndexPage > datosLength ? datosLength : endIndexPage
-
-    const startIndexPage = Math.ceil(page * itemsPerPage + 1 - itemsPerPage);
-
+    
+    useEffect(() => {
+        let tempEndIndexPage = Math.ceil(page * itemsPerPage);
+        setEndIndexPage(tempEndIndexPage > datosLength ? datosLength : tempEndIndexPage);
+        setStartIndexPage(Math.ceil(page * itemsPerPage + 1 - itemsPerPage));
+        setTotalPages(Math.ceil(datosLength / itemsPerPage));
+        setHref(href);
+    }, []);
+    
+    // 
+    const handleChange = (event, value) => {
+        setPage(value);
+    };
+    
     // custom Pagination
     const handleChangeCustomPagination = (event, value) => {
         const params = new URLSearchParams({ string: encodeURIComponent(selectedTerm), page: encodeURIComponent(value), per_page: encodeURIComponent(customPagination.per_page) });
-        window.location.href = `/resultados-busqueda?${params.toString()}`;
+        window.location.href = `${href}?${params.toString()}`;
     }
 
     // Fin funciones de paginacion
     
   return (
       <>
-        Paginador para resultados de busqueda
         <SpaceGrid className="justify_end">
             {(Object.keys(customPagination).length === 0) ?
                 <>

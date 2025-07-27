@@ -2,6 +2,7 @@ import React from 'react';
 import { useState, useEffect, useContext } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import Context from '../context/context.js';
+import PaginatorProvider from '../context/paginatorProvider.js';
 import { Container, Grid, Alert, Button, Box } from '@mui/material';
 import Filter from '../components/filter.js';
 import FilterBeta from '../components/filterBeta.js';
@@ -10,7 +11,7 @@ import LinearWithValueLabel from '../components/linearProgress.js';
 import SearchBar from '../components/searchBar.js'
 import buscadorService from '../services/buscador.js';
 import busquedaAvanzadaService from '../services/busqueda_avanzada.js';
-import { filtroByDefault, validarfiltroJurisprudencial, getOpcionesAutocompletar, setLocalStorageWithExpiry, getLocalStorageWithExpiry, validateSearchParamsBusquedaAV, formattingSearchParamsBusquedaAV } from '../helpers/utils.js';
+import { filtroByDefault, validarfiltroJurisprudencial, getOpcionesAutocompletar, validateSearchParamsBusquedaAV, formattingSearchParamsBusquedaAV } from '../helpers/utils.js';
 import dataResults from '../data_results/dataResBusqueda.js';
 import dataFilterResults from '../data_results/dataFilterResBusqueda.js';
 import '../App.css';
@@ -233,7 +234,9 @@ export default function SearchResults() {
               } 
             </Grid>
             <Grid item xs={12} sm={12} md={8} lg={8} xl={8}>
-                <ListCardSearch datosBusqueda={datos} selectedTerm={stringQuery} searchOptions={searchOptions} selectedFilters={selectedFilters} isExternalFilters={false} paramsBusquedaAV={paramsBusquedaAV} customPagination={pagination}></ListCardSearch>
+                <PaginatorProvider>
+                  <ListCardSearch datosBusqueda={datos} selectedTerm={stringQuery} searchOptions={searchOptions} selectedFilters={selectedFilters} isExternalFilters={false} paramsBusquedaAV={paramsBusquedaAV} objPagination={pagination}></ListCardSearch>
+                </PaginatorProvider>
             </Grid>
           </Grid>
         </Container>

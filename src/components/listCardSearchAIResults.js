@@ -16,7 +16,6 @@ import { Container, Grid } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { EditCalendar } from '@mui/icons-material';
 import Context from '../context/context.js';
-import PaginatorContext from '../context/paginatorContext.js';
 import ExpandLessOutlinedIcon from '@mui/icons-material/ExpandLessOutlined';
 import ExpandMoreOutlinedIcon from '@mui/icons-material/ExpandMoreOutlined';
 import FilterShort from './filterShort.js';
@@ -27,11 +26,12 @@ import LinearWithValueLabel from '../components/linearProgress.js';
 import ButtonDownloadZIPCustom from './buttonDownloadZIPCustom.js';
 import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
 import ButtonDownloadDecisiones from './buttonDownloadDecisiones.js';
+import PaginatorContext from './../context/paginatorContext.js';
 import Paginator from './resultadosBusqueda/Paginator.js';
-import PruebaInner from './resultadosBusqueda/PruebaInner.js';
+import PaginatorDetails from './resultadosBusqueda/PaginatorDetails.js';
 import '../App.css';
 
-export default function Card({ datosBusqueda, searchOptions, selectedFilters, isListSmall, selectedTerm, isLargeResult, isExternalFilters, customPagination = {}, paramsBusquedaAV = null }) {  
+export default function Card({ datosBusqueda, searchOptions, selectedFilters, isListSmall, selectedTerm, isLargeResult, isExternalFilters, objPagination = {}, paramsBusquedaAV = null }) {  
     const [datos, setDatos] = useState(datosBusqueda);
     const [datosOriginales, setDatosOriginales] = useState(datosBusqueda);
     const [selectedDoc, setSelectedDoc] = useState({ "title": "* Todos los resultados", "id": 0 });
@@ -39,7 +39,7 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
     const [datosToExport, setDatosToExport] = useState("");
     const [valorBuscadorEnResultados, setValorBuscadorEnResultados] = useState("");
     const [message, setMessage] = useState({ message: "", classname: "" });
-    const [pruebaPaginator, setPruebaPaginator] = useState("Context Prueba Paginator");
+
     const { filtroJurisprudencial, setFiltroJurisprudencial } = useContext(Context);
     
     useEffect(() => {
@@ -177,24 +177,14 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
     
     
     // Funciones de paginacion
-    const [page, setPage] = useState(1);
-    const [itemsPerPage, setitemsPerPage] = React.useState(10);
-    const handleChange = (event, value) => {
-        setPage(value);
-    };
-
-    const totalPages = Math.ceil(datos.length / itemsPerPage);
-    let endIndexPage = Math.ceil(page * itemsPerPage);
-    endIndexPage = endIndexPage > datos.length ? datos.length : endIndexPage
-
-    const startIndexPage = Math.ceil(page * itemsPerPage + 1 - itemsPerPage);
-
+    
+    const { page, itemsPerPage, setCustomPagination, setPage } = useContext(PaginatorContext);
+    
+    useEffect(() => {
+        setCustomPagination(objPagination);
+    }, []);
+       
     // custom Pagination
-    const [itemsCustomPerPage, setItemsCustomPerPage] = useState(customPagination.per_page);
-    const handleChangeCustomPagination = (event, value) => {
-        const params = new URLSearchParams({ string: encodeURIComponent(selectedTerm), page: encodeURIComponent(value), per_page: encodeURIComponent(customPagination.per_page) });
-        window.location.href = `/resultados-busqueda?${params.toString()}`;
-    }
 
     const getCurrentData = (items = 0) => {
         if (items === 0) {
@@ -206,16 +196,6 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
 
     // Fin funciones de paginacion
 
-    const handleChange2 = (event) => {
-        setitemsPerPage(event.target.value);
-        setPage(1);
-    }
-
-    const handleChangeResultsPerPage = (event, value) => {
-        const params = new URLSearchParams({ string: encodeURIComponent(selectedTerm), page: encodeURIComponent(customPagination.current_page), per_page: encodeURIComponent(value.props.value) });
-        window.location.href = `/resultados-busqueda?${params.toString()}`;
-    }
-  
     // Manipula el valor de busqueda que viene desde SearchBarForInnerResults y en valor
     
     const searchBarForInnerResultsInputRef = useRef(null);
@@ -273,10 +253,6 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
         
      if(datosBusqueda.length > 0) {
         return (
-            <PaginatorContext.Provider value={{ pruebaPaginator }}>
-            <div>Context de paginator provider prueba: { pruebaPaginator }
-            <PruebaInner></PruebaInner>
-            </div>
             <Stack>
                 <div className=  {isListSmall ? ('text_results_search', 'no-spacing') :  ('text_results_search','margin_search') } >
                     <SpaceGrid>
@@ -397,98 +373,7 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
                     </div>
                 </div>
                 <>  
-                    {(Object.keys(customPagination).length === 0) ?
-                        <>
-                            {/* Paginacion para seccion resultados de busqueda */}
-                            <WrapGrid item xs={12} sm={12} md={12} lg={12} xl={12} className="flex " >
-                                <Width100Grid>
-                                    <p className="margin_results_page">
-
-                                        <span> {startIndexPage} </span> a
-                                        <span> {endIndexPage} </span> de
-                                        <span className="text_bolder"> {datos.length} </span> decisiones
-                                    </p>
-                                </Width100Grid>
-                                <NoneGrid>
-                                    <p className='margin_xs'> | </p>
-                                </NoneGrid>
-                                <div>
-                                    <Width100Grid className='width_100 flex '>
-                                        <p className="margin_results_page">Resultados por página  </p>
-                                        <Box sx={{ minWidth: 270 }}>
-                                            <FormControl fullWidth>
-                                                {/* <InputLabel id="demo-simple-select-label"></InputLabel> */}
-                                                <Select className={isListSmall ? "select_items_results_small" : ("select_items_results justify_center")}
-                                                    value={itemsPerPage}
-                                                    onChange={handleChange2}
-                                                    MenuProps={{
-                                                        PaperProps: {
-                                                            sx: {
-                                                                boxShadow: '0px 8px 24px rgba(57, 129, 195, 0.2) ', // Sombra 
-
-                                                            },
-                                                        },
-                                                    }}
-                                                >
-                                                    <MenuItem value={10}>10</MenuItem>
-                                                    <MenuItem value={20}>20</MenuItem>
-                                                    <MenuItem value={30}>30</MenuItem>
-                                                    <MenuItem value={datos.length}>Todas</MenuItem>
-                                                </Select>
-                                            </FormControl>
-                                        </Box>
-                                    </Width100Grid>
-                                </div>
-                            </WrapGrid>
-                        </>
-                        :
-                        <>
-                            {/* Paginacion para seccion ver todas las decisiones */}
-                            <WrapGrid item xs={12} sm={12} md={12} lg={12} xl={12} className="flex " >
-                                <Width100Grid>
-                                    <p className="margin_results_page">
-
-                                        <span> {customPagination.from} </span> a
-                                        <span> {customPagination.to} </span> de
-                                        <span className="text_bolder"> {customPagination.total} </span> decisiones
-                                    </p>
-                                </Width100Grid>
-                                <NoneGrid>
-                                    <p className='margin_xs'> | </p>
-                                </NoneGrid>
-
-                                <div >
-                                    <Width100Grid className='width_100 flex '>
-                                        <p className="margin_results_page">Resultados por página  </p>
-                                        <Box sx={{ minWidth: 270 }}>
-                                            <FormControl fullWidth>
-                                                {/* <InputLabel id="demo-simple-select-label"></InputLabel> */}
-                                                <Select className={isListSmall ? "select_items_results_small" : ("select_items_results justify_center")}
-                                                    value={itemsCustomPerPage}
-                                                    onChange={handleChangeResultsPerPage}
-                                                    MenuProps={{
-                                                        PaperProps: {
-                                                            sx: {
-                                                                boxShadow: '0px 8px 24px rgba(57, 129, 195, 0.2) ', // Sombra 
-
-                                                            },
-                                                        },
-                                                    }}
-                                                >
-                                                    <MenuItem value={10}>10</MenuItem>
-                                                    <MenuItem value={20}>20</MenuItem>
-                                                    <MenuItem value={30}>30</MenuItem>
-                                                </Select>
-                                            </FormControl>
-                                        </Box>
-
-                                    </Width100Grid>
-
-                                </div>
-
-                            </WrapGrid>
-                        </>
-                    }
+                    <PaginatorDetails datosLength={datos.length} isListSmall={isListSmall} selectedTerm={selectedTerm}/>
                     {/* <div className="justify_end">    
                         { ((datos.length > 0) && (datosToExport !== null)) && 
                             <>
@@ -506,47 +391,11 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
                     {/* Lista de resultados */}
                     {(datos.length > 0) ?
                         <>
-                            {/*<Paginator 
+                            <Paginator 
                                         datosLength={datos.length} 
-                                        itemsPerPage={itemsPerPage} 
-                                        page={page} 
-                                        customPagination={customPagination} 
-                                        totalPages={totalPages} 
-                                        handleChange={handleChange} 
                                         selectedTerm={selectedTerm}
-                                        customPagination={customPagination} 
-                            />*/}   
-                            <SpaceGrid className="justify_end">
-                                {(Object.keys(customPagination).length === 0) ?
-                                    <>
-                                    <Pagination className="margin_top_s"
-                                        count={totalPages}
-                                        page={page}
-                                        onChange={handleChange}
-                                        renderItem={(item, id) => (
-                                            <PaginationItem key={id}
-                                                slots={{ previous: ArrowBackIcon, next: ArrowForwardIcon }}
-                                                {...item}
-                                            />
-                                        )}
-                                    />
-                                    </>
-                                    :
-                                    <>
-                                    <Pagination className="margin_top_s"
-                                        count={Math.ceil(customPagination.total / customPagination.per_page)}
-                                        page={ customPagination.current_page }
-                                        onChange={handleChangeCustomPagination}
-                                        renderItem={(item, id) => (
-                                            <PaginationItem key={id}
-                                                slots={{ previous: ArrowBackIcon, next: ArrowForwardIcon }}
-                                                {...item}
-                                            />
-                                        )}
-                                    />
-                                    </>
-                                }
-                            </SpaceGrid>
+                                        href={`/resultados-busqueda`}
+                            />   
                             <List className="width_100">
                                 {currentData.map((item, k) => (
                                     <SpaceGrid key={k}>
@@ -556,33 +405,11 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
                                     </SpaceGrid>
                                 ))}
                             </List>
-                            <SpaceGrid className="justify_end">
-                                {(Object.keys(customPagination).length === 0) ?
-                                    <Pagination className="margin_top_s"
-                                        count={totalPages}
-                                        page={page}
-                                        onChange={handleChange}
-                                        renderItem={(item, id) => (
-                                            <PaginationItem key={id}
-                                                slots={{ previous: ArrowBackIcon, next: ArrowForwardIcon }}
-                                                {...item}
-                                            />
-                                        )}
-                                    />
-                                    :
-                                    <Pagination className="margin_top_s"
-                                        count={Math.ceil(customPagination.total / customPagination.per_page)}
-                                        page={customPagination.current_page}
-                                        onChange={handleChangeCustomPagination}
-                                        renderItem={(item, id) => (
-                                            <PaginationItem key={id}
-                                                slots={{ previous: ArrowBackIcon, next: ArrowForwardIcon }}
-                                                {...item}
-                                            />
-                                        )}
-                                    />
-                                }
-                            </SpaceGrid>
+                            <Paginator 
+                                        datosLength={datos.length} 
+                                        selectedTerm={selectedTerm}
+                                        href={`/resultados-busqueda`}
+                            />  
                         </>
                         :
                         <>
@@ -609,7 +436,6 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
                     {/* Lista de resultados */}
                 </>
             </Stack>
-            </PaginatorContext.Provider>
         );
      }
 }
