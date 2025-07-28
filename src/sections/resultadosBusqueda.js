@@ -228,7 +228,7 @@ export default function SearchResults() {
           <Grid container spacing={2}>
             <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
               {(customFilter !== null) ? 
-                <FilterBeta setSelectedFilters={setSelectedFilters} customFilter={customFilter} isFilterFloat={false} isShowingFilter={false} isSearchAdvance={false} handlerReset={deshacerBusqueda}></FilterBeta>
+                <FilterBeta setSelectedFilters={setSelectedFilters} customFilter={customFilter} isShowingFilter={false} isSearchAdvance={false} handlerReset={deshacerBusqueda}></FilterBeta>
               :
                 <Filter setSelectedFilters={setSelectedFilters} handlerReset={deshacerBusqueda}></Filter>
               } 

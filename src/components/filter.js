@@ -14,7 +14,7 @@ import { validarfiltroJurisprudencial, generarArrayDeObjetosNombreCampoValor, va
 import SelectField from '../components/selectField.js';
 import '../App.css';
 
-export default function Filter({ setSelectedFilters, isFilterFloat, isShowingFilter, selectedData, isSearchAdvance, isVTD = false, handlerReset = false }) {
+export default function Filter({ setSelectedFilters, isFilterFloat = false, isShowingFilter, selectedData, isSearchAdvance, isVTD = false, handlerReset = false }) {
 
   // Estado para controlar si el botón está habilitado o deshabilitado
   const { verTodasDecisiones, busqueda } = useContext(Context);
@@ -203,6 +203,7 @@ export default function Filter({ setSelectedFilters, isFilterFloat, isShowingFil
   }));
 
   return (
+    <> 
     <Card className={isFilterFloat ? (!isShowingFilter ? "card_filter_float_hidden" : "card_filter_float") : "card_filter"} >
       <CardContent>
         <JustFilterFloatNoneGrid>
@@ -262,6 +263,7 @@ export default function Filter({ setSelectedFilters, isFilterFloat, isShowingFil
         }
       </CardContent>
     </Card>
+    </>
   );
   
 }

@@ -32,11 +32,12 @@ export const SpaceBottom = styled(Grid)(({ theme }) => ({
   },
 
 }));
-
-export const JustFilterFloatNoneGrid = styled(Grid)(({ theme, isFilterFloat, isSearchAdvance }) => ({
-
-    [theme.breakpoints.up('xs')]: {
-      display: isFilterFloat || isSearchAdvance ? 'none' : '',
-    }
-    
+ 
+export const JustFilterFloatNoneGrid = styled( Grid, { shouldForwardProp: (prop) => prop !== 'isFilterFloat' && prop !== 'isSearchAdvance' }
+      )(({ theme, isFilterFloat, isSearchAdvance }) => ({
+        
+        [theme.breakpoints.up('xs')]: {
+          display: isFilterFloat || isSearchAdvance ? 'none' : 'block',
+        }
+      
 }));

@@ -140,6 +140,7 @@ const FilterBeta = ({ setSelectedFilters, customFilter = {}, isFilterFloat = fal
   }
     
   return (
+     <>
      <Card className={isFilterFloat ? (!isShowingFilter ? "card_filter_float_hidden" : "card_filter_float") : "card_filter"} >
       <CardContent>
         <JustFilterFloatNoneGrid isFilterFloat={isFilterFloat} isSearchAdvance={isSearchAdvance}>
@@ -211,6 +212,7 @@ const FilterBeta = ({ setSelectedFilters, customFilter = {}, isFilterFloat = fal
         }
       </CardContent>
     </Card>
+    </>
   );
   
 };
