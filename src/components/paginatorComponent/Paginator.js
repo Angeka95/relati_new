@@ -2,9 +2,10 @@ import React from 'react';
 import { useEffect, useContext } from 'react';
 import PaginatorContext from './../../context/paginatorContext.js';
 import { Pagination, PaginationItem } from '@mui/material';
-import { SpaceGrid } from './../listCardSearch/gridComponents.js';
+import { SpaceGrid } from './../gridComponents/gridComponents.js';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import './../../App.css';
 
 const Paginator = ({ datosLength = 0, selectedTerm = null, href = null }) => {
     
@@ -15,7 +16,7 @@ const Paginator = ({ datosLength = 0, selectedTerm = null, href = null }) => {
     const { customPagination, setCustomPagination } = useContext(PaginatorContext);
     const { totalPages, setTotalPages } = useContext(PaginatorContext);
     const { setHref } = useContext(PaginatorContext);
-
+    
     // Funciones de paginacion
     
     useEffect(() => {

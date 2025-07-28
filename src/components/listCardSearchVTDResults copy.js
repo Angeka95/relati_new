@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext, useRef } from 'react';
 import { Grid, Stack, Pagination, PaginationItem, List, ListItem, Button, Box, Chip, Alert, MenuItem, FormControl, Select } from '@mui/material';
-import { SpaceGrid, WrapGrid, SpaceBetweenGrid, Width100Grid, NoneGrid, JustMapGrid, JustMapNoneGrid } from './listCardSearch/gridComponents.js';
+import { SpaceGrid, WrapGrid, SpaceBetweenGrid, Width100Grid, NoneGrid, JustMapGrid, JustMapNoneGrid } from './gridComponents/gridComponents.js';
 import Context from '../context/context.js';
 import CardSearch from './cardSearchResultsAI.js';
 import SearchBarForInnerResults from './searchBarForInnerResults.js';

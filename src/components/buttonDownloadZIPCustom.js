@@ -7,7 +7,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import LinearWithValueLabel from './linearProgress.js';
 import '../App.css';
 
-export default function ButtonDownloadZIPCustom({ stringURL, stringParams, filename = 'archivo.zip', sortAscByDate = () => {} }) {
+export default function ButtonDownloadZIPCustom({ stringURL, stringParams, filename = 'archivo.zip' }) {
 
     const [downloadLink, setDownloadLink] = useState(null);
     const [prepareDownload, setPrepareDownload] = useState(false);
@@ -16,7 +16,6 @@ export default function ButtonDownloadZIPCustom({ stringURL, stringParams, filen
     // Modal 
     const [openModal, setOpenModal] = useState(false);
     const handleOpenModal = () => {
-      sortAscByDate();
       setOpenModal(true);
     }
     const handleCloseModal = () => setOpenModal(false);

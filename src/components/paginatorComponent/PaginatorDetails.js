@@ -2,7 +2,7 @@ import React from 'react';
 import { useState, useEffect, useContext } from 'react';
 import PaginatorContext from './../../context/paginatorContext.js';
 import { FormControl, Select, MenuItem, Box } from '@mui/material';
-import { WrapGrid, Width100Grid, NoneGrid } from './../listCardSearch/gridComponents.js';
+import { WrapGrid, Width100Grid, NoneGrid } from './../gridComponents/gridComponents.js';
 
 const PaginatorDetails = ({datosLength = 0, isListSmall, selectedTerm = null}) => {
 

@@ -1,4 +1,5 @@
-import React, { useState , useEffect } from 'react';
+import React, { useState , useEffect, useContext } from 'react';
+import PaginatorContext from './../context/paginatorContext.js';
 import { Button } from '@mui/material';
 import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
 import Divider from '@mui/material/Divider'; 
@@ -6,10 +7,12 @@ import ButtonDownloadXLSCustom from './buttonDownloadXLSCustom.js';
 import ButtonDownloadZIPCustom from './buttonDownloadZIPCustom.js';
 import '../App.css';
 
-export default function ButtonDownloadDecisiones({isButtonDownloadEnabled = false, datos, datosToExport, sortAscByDate, showZipButton = true}) {
-  
+const ButtonDownloadDecisiones = ({isButtonDownloadEnabled = false, showZipButton = true}) => {
+
     const [boolButtonDownloadEnabled, setBoolButtonDownloadEnabled] = useState(false);
     const [isMobile, setIsMobile] = useState(window.innerWidth < 1000);
+    
+    const { datos, datosToExport } = useContext(PaginatorContext);
     
     useEffect(() => {
         const handleResize = () => {
@@ -52,7 +55,6 @@ export default function ButtonDownloadDecisiones({isButtonDownloadEnabled = fals
                               stringURL={`${process.env.REACT_APP_API_SERVER_DOMAIN}/getdocumentszip`}
                               stringParams={`providencias_id=${datosToExport}`}
                               filename="resultados.zip"
-                              sortAscByDate={sortAscByDate}
                           />
                           </>
                           )}
@@ -65,3 +67,5 @@ export default function ButtonDownloadDecisiones({isButtonDownloadEnabled = fals
     );
     
 };
+
+export default ButtonDownloadDecisiones;

@@ -2,33 +2,40 @@ import React, { useState, useEffect, useContext, useRef } from 'react';
 import { Stack, List, ListItem, Button, Box, Chip, Alert } from '@mui/material';
 import CardSearch from './../cardSearchResults.js';
 import SearchBarForInnerResults from './../searchBarForInnerResults.js';
-import { SpaceGrid, SpaceBetweenGrid, NoneGrid, JustMapGrid, JustMapNoneGrid } from './../listCardSearch/gridComponents.js';
-import SortIcon from '@mui/icons-material/Sort';
-import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
-import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
+import { SpaceGrid, SpaceBetweenGrid, NoneGrid, JustMapGrid, JustMapNoneGrid } from './../gridComponents/gridComponents.js';
 import { Grid } from '@mui/material';
 import Context from './../../context/context.js';
 import FilterShort from './../filterShort.js';
 import { filtroByDefault, validarfiltroJurisprudencial, getOpcionesAutocompletar, getDecisionesIDsToExport, validateSearchParamsBusquedaAV, formattingSearchParamsBusquedaAV  } from './../../helpers/utils.js';
 import LinearWithValueLabel from './../../components/linearProgress.js';  
 import ButtonDownloadZIPCustom from './../buttonDownloadZIPCustom.js';
-import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
 import ButtonDownloadDecisiones from './../buttonDownloadDecisiones.js';
 import PaginatorContext from './../../context/paginatorContext.js';
 import Paginator from './../paginatorComponent/Paginator.js';
 import PaginatorDetails from './../paginatorComponent/PaginatorDetails.js';
+import PaginatorOrderList from './../paginatorComponent/PaginatorOrderList.js';
 import './../../App.css';
 
 export default function Card({ datosBusqueda, searchOptions, selectedFilters, isListSmall, selectedTerm, isLargeResult, isExternalFilters, objPagination = {}, paramsBusquedaAV = null }) {  
-    const [datos, setDatos] = useState(datosBusqueda);
+   
     const [datosOriginales, setDatosOriginales] = useState(datosBusqueda);
     const [selectedDoc, setSelectedDoc] = useState({ "title": "* Todos los resultados", "id": 0 });
     const [searchDocsOptions, setSearchDocsOptions] = useState(searchOptions);
-    const [datosToExport, setDatosToExport] = useState("");
+   
     const [valorBuscadorEnResultados, setValorBuscadorEnResultados] = useState("");
     const [message, setMessage] = useState({ message: "", classname: "" });
 
     const { filtroJurisprudencial, setFiltroJurisprudencial } = useContext(Context);
+    const { datos, setDatos, currentData, getCurrentData, setDatosToExport } = useContext(PaginatorContext);
+    
+    // Este useEffect permite inicializar los datos de búsqueda y las opciones de autocompletar
+    useEffect(() => {
+        //console.log("Datos de busqueda", datosBusqueda);
+        //console.log("Datos", datos)
+        if((datos.length === 0) && (datosBusqueda.length > 0)) {
+            setDatos(datosBusqueda);
+        }
+    }, [datos]);
     
     useEffect(() => {
         if(!validarfiltroJurisprudencial(filtroJurisprudencial)) { 
@@ -110,12 +117,6 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
     if (!selectedFilters) {
         selectedFilters = [];
     }
-    const [isButtonSorterEnabled, setIsButtonSorterEnabled] = useState(false);
-
-    // Estado del Boton ordenar 
-    const toggleButton = () => {
-        setIsButtonSorterEnabled(prev => !prev);
-    };
 
     const [showFilter, setShowFilter] = useState(false);
 
@@ -124,45 +125,6 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
     };
 
     const [externalFilters, setExternalFilters] = useState([]);
-
-    const [currentData, setCurrentData] = useState([]);
-
-    // Función para ordenar en orden ascendente por fecha
-    const sortAscByDate = () => {
-        const sortedDatos = [...datos].sort((a, b) => new Date(a.fecha) - new Date(b.fecha));
-        setDatos(sortedDatos);
-        getCurrentData();
-        setIsButtonSorterEnabled(false);
-        setDatosToExport(getDecisionesIDsToExport(sortedDatos, "providencia_id"));
-    };
-
-    // Función para ordenar en orden descendente por fecha
-    const sortDescByDate = () => {
-        const sortedDatos = [...datos].sort((a, b) => new Date(b.fecha) - new Date(a.fecha));
-        setDatos(sortedDatos);
-        getCurrentData();
-        setIsButtonSorterEnabled(false);
-        setDatosToExport(getDecisionesIDsToExport(sortedDatos, "providencia_id"));
-    };
-    
-    // Función para ordenar en orden ascendente por score
-    const sortAscByScore = () => {
-        const sortedDatos = [...datos].sort((a, b) => new Date(a.score) - new Date(b.score));
-        setDatos(sortedDatos);
-        getCurrentData();
-        setIsButtonSorterEnabled(false);
-        setDatosToExport(getDecisionesIDsToExport(sortedDatos, "providencia_id"));
-    };
-
-    // Función para ordenar en orden descendente por score
-    const sortDescByScore = () => {
-        const sortedDatos = [...datos].sort((a, b) => new Date(b.score) - new Date(a.score));
-        setDatos(sortedDatos);
-        getCurrentData();
-        setIsButtonSorterEnabled(false);
-        setDatosToExport(getDecisionesIDsToExport(sortedDatos, "providencia_id"));
-    };
-    
     
     // Funciones de paginacion
     
@@ -173,14 +135,6 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
     }, []);
        
     // custom Pagination
-
-    const getCurrentData = (items = 0) => {
-        if (items === 0) {
-            items = itemsPerPage;
-        }
-        const startIndex = (page - 1) * items;
-        setCurrentData(datos.slice(startIndex, startIndex + items));
-    }
 
     // Fin funciones de paginacion
 
@@ -245,27 +199,21 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
                 <div className=  {isListSmall ? ('text_results_search', 'no-spacing') :  ('text_results_search','margin_search') } >
                     <SpaceGrid>
                         <JustMapNoneGrid>
-    
                         {!isExternalFilters && (
                             <h3 className="">Resultados de búsqueda</h3>
                         )}
                         {!busqueda && !verTodasDecisiones && (
                             <h4 className="text_diabled">Cuando ingrese una búsqueda verá los resultados aquí</h4>
                         )}
-    
                         {(!isExternalFilters && !selectedTerm && verTodasDecisiones && paramsBusquedaAV === null ) && 
                             <h4 >Está buscando por <span className="text_bolder">"Todas las decisiones"</span> </h4>
                         }
-
                         {(validateSearchParamsBusquedaAV(paramsBusquedaAV) === true) &&
                             <h4 >Búsqueda avanzada por <span className="text_bolder">"{formattingSearchParamsBusquedaAV(paramsBusquedaAV)}"</span></h4>
                         }
-    
                         {selectedTerm && (
                             <h4 >Está buscando por <span className="text_bolder">"{selectedTerm}"</span> </h4>
-            
                         )}
-    
                         {!selectedTerm && !isExternalFilters && selectedFilters.length === 0 && (
                             <h4 className="text_diabled">(Aún no ha agregado ningún filtro a su búsqueda)</h4>
                         )}
@@ -292,11 +240,8 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
                                         }}
                                         className="chip_select" key={value} label={value}
                                     />
-    
-    
                                 ))}
                                 </Box>
-                            
                             </div>    
                         )}
                         </JustMapNoneGrid>
@@ -311,46 +256,16 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
                                         {isExternalFilters && (
                                             <div className='filter_sort_container'>
                                                 <FilterShort setSelectedFilters={setExternalFilters}/>
-                                                <NoneGrid className='margin_left_s'>
-                                                    <Button className="button_function" startIcon={<SortIcon />} onClick={toggleButton}>Ordenar
-                                                    </Button>  
-                                                    {isButtonSorterEnabled && (
-                                                        <div className='container_date_sorted'>
-                                                          <Button onClick={sortDescByDate} className='items_sorted' endIcon={<ArrowUpwardIcon />} >Más recientess </Button>
-                                                          <Button onClick={sortAscByDate} className='items_sorted' endIcon={<ArrowDownwardIcon />} >Más antiguos </Button>
-                                                          <Button onClick={sortDescByScore} className='items_sorted' endIcon={<ArrowUpwardIcon />} >Mayor Relevancia </Button>
-                                                          <Button onClick={sortAscByScore} className='items_sorted' endIcon={<ArrowDownwardIcon />} >Menor Relevancia </Button>
-                                                        </div>
-                                                    )}
-                                                </NoneGrid>
+                                                <PaginatorOrderList />
                                             </div>
                                         )}
-
                                         {!isExternalFilters && (
                                             <NoneGrid className="display_flex">
-                                                <div className=" position_relative"> 
-                                              <Button className="button_function" startIcon={<SortIcon />} onClick={toggleButton}>Ordenar
-                                              </Button>
-                                          
-                                                
-                                              {isButtonSorterEnabled && (
-                                                  <div className='container_date_sorted'>
-                                                      <Button onClick={sortDescByDate} className='items_sorted' endIcon={<ArrowUpwardIcon />} >Más recientes </Button>
-                                                      <Button onClick={sortAscByDate} className='items_sorted' endIcon={<ArrowDownwardIcon />} >Más antiguos </Button>
-                                                      <Button onClick={sortDescByScore} className='items_sorted' endIcon={<ArrowUpwardIcon />} >Mayor Relevancia </Button>
-                                                      <Button onClick={sortAscByScore} className='items_sorted' endIcon={<ArrowDownwardIcon />} >Menor Relevancia </Button>
-                                                  </div>
-                                              )}</div>
-                                            {<ButtonDownloadDecisiones
-                                                isButtonDownloadEnabled={false}
-                                                datos={datos}
-                                                datosToExport={datosToExport}
-                                                sortAscByDate={sortAscByDate}
-                                            />}
+                                                <PaginatorOrderList />    
+                                                <ButtonDownloadDecisiones isButtonDownloadEnabled={false} />
                                             </NoneGrid>  
                                         )}
                                 </Grid>
-
                                 <Grid item  className="justify_end_partial" xs={12} sm={12} md={(isListSmall ? 12 : 4)} lg={(isListSmall ? 12 : 4)} xl={(isListSmall ? 12 : 4) }>
                                     {/*<SearchBarSmall searchOptions={searchDocsOptions} handlerSetSelectedOption={handlerSetSelectedDoc}> </SearchBarSmall>*/}
                                      {/* Ocultar temporalmente */}
