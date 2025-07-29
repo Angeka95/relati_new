@@ -2,97 +2,56 @@ import React from 'react';
 import { useState, useEffect, useContext, useRef } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import Context from '../context/context';
-import { Card, CardContent, Button, Grid } from '@mui/material';
+import FilterContext from '../context/filterContext.js';
+import { Card, CardContent, Button } from '@mui/material';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import { JustFilterFloatNoneGrid } from '../components/styledGridComponents/CustomGrids.js'; 
-import { validarfiltroJurisprudencial, validateSearchParamsVTD, createSelectedFiltersVTD } from '../helpers/utils.js';
+import { validarfiltroJurisprudencial } from '../helpers/utils.js';
 import SelectField from '../components/selectFieldBeta.js';
 import '../App.css';
+import { StarSharp } from '@mui/icons-material';
 
-const FilterBeta = ({ setSelectedFilters, customFilter = {}, isFilterFloat = false, isShowingFilter = false, isSearchAdvance = false, isVTD = false, handlerReset = false}) => {
+const FilterBeta = ({ arrayProvidencias = [], customFilter = {}, selectedTerm = "", isFilterFloat = false, isShowingFilter = false, isSearchAdvance = false, isVTD = false, href }) => {
 
-  // Manipula el valor de busqueda que viene desde SearchBarForInnerResults y en valor
-  const searchBarForInnerResultsInputRef = useRef(null);
+  const isFilterDisabled = false;
+  
+  // En caso de que reciba variables por URL 
   const [searchParams] = useSearchParams();
-
-  const [isFilterDisabled, setIsFilterDisabled] = useState(false);
-  const [isButtonEnabled, setIsButtonEnabled] = useState(true);
-  const [ listaDptosJurisprudencial, setListaDptosJurisprudencial ] = useState([]);
-  const [selectedDataFilter1, setSelectedDataFilter1] = useState([]);
-  const [selectedDataFilter2, setSelectedDataFilter2] = useState([]);
-  const [selectedDataFilter3, setSelectedDataFilter3] = useState([]);
-  const [selectedDataFilter4, setSelectedDataFilter4] = useState([]); 
-  const [selectedDataFilter5, setSelectedDataFilter5] = useState([]);
-  const [selectedDataFilter6, setSelectedDataFilter6] = useState([]);
-  const [selectedDataFilter7, setSelectedDataFilter7] = useState([]);
-  const [datos_delito, setDatosDelito] = useState([]);
-  const [datos_compareciente, setDatosCompareciente] = useState([]);
-  const [datos_procedimiento, setDatosProcedimiento] = useState([]);
   
-  const { verTodasDecisiones, busqueda } = useContext(Context);
+  // Variables de contexto
   const { filtroJurisprudencial, setFiltroJurisprudencial } = useContext(Context);
-  const { filtroJurisprudencialVTD, setFiltroJurisprudencialVTD } = useContext(Context);
+  const { setSelectedFilters, stringTerm, setStringTerm, createSelectedFiltersQryStringSearchRes } = useContext(FilterContext);
   
-  const toggleButton = () => {
-    setIsButtonEnabled(prev => !prev);
-  };
-    
-    useEffect(() => {
-      const searchParamsObj = Object.fromEntries(searchParams.entries());
-    
-      if(!validarfiltroJurisprudencial(filtroJurisprudencial)) { 
-
-        //console.log("datos en filter 3", selectedDataFilter3);
-        let updateSelectedFilters = [...new Set([
-            ...selectedDataFilter1,
-            ...selectedDataFilter2,
-            ...selectedDataFilter3,
-            ...selectedDataFilter4,
-            ...selectedDataFilter5,
-            ...selectedDataFilter6,
-            ...selectedDataFilter7,
-          ].concat([...filtroJurisprudencial.departamentos]))];
-        if(filtroJurisprudencial.departamentos.length === 1){
-          updateSelectedFilters = [...new Set([
-            ...selectedDataFilter1,
-            ...selectedDataFilter2,
-            ...selectedDataFilter4,
-            ...selectedDataFilter5,
-            ...selectedDataFilter6,
-            ...selectedDataFilter7,
-          ].concat([...filtroJurisprudencial.departamentos]))];
-        } 
-        //console.log("updateselectedfilters", updateSelectedFilters);
-        setSelectedFilters(updateSelectedFilters);
-      } else if (validateSearchParamsVTD(searchParamsObj)) {
-          const newSelectedFilters = createSelectedFiltersVTD(searchParamsObj);
-          //console.log("Verificando los filtros seleccionados", newSelectedFilters);
-          setSelectedDataFilter1(newSelectedFilters["salas"]);
-          setSelectedDataFilter2(newSelectedFilters["anios"]);
-          setSelectedDataFilter3(newSelectedFilters["departamentos"]);
-          setSelectedDataFilter4(newSelectedFilters["delitos"]);
-          setSelectedDataFilter5(newSelectedFilters["macrocasos"]);
-          setSelectedDataFilter6(newSelectedFilters["comparecientes"]);
-          setSelectedDataFilter7(newSelectedFilters["procedimientos"]);
-      } else {
-          //console.log("Los componentes por cada criterio de filtrado quedan vacios");
-          setSelectedDataFilter1([]);
-          setSelectedDataFilter2([]);
-          setSelectedDataFilter3([]);
-          setSelectedDataFilter4([]);
-          setSelectedDataFilter5([]);
-          setSelectedDataFilter6([]);
-          setSelectedDataFilter7([]);
-      }
-    }, [filtroJurisprudencial]);
+  // Salas
+  const [selectedDataFilter1, setSelectedDataFilter1] = useState([]);
   
-   // applyFilters es la función que se ejecuta al hacer clic en el botón "Aplicar filtros"
-  // Se encarga de aplicar los filtros seleccionados y actualizar el estado de selectedFilters
+  // Anios
+  const [selectedDataFilter2, setSelectedDataFilter2] = useState([]);
+  
+  // Departamentos
+  const [selectedDataFilter3, setSelectedDataFilter3] = useState([]);
+  
+  // Delitos
+  const [selectedDataFilter4, setSelectedDataFilter4] = useState([]);
+  
+  // Macrocasos
+  const [selectedDataFilter5, setSelectedDataFilter5] = useState([]);
+  
+  // Comparecientes
+  const [selectedDataFilter6, setSelectedDataFilter6] = useState([]);
+  
+  // Procedimientos
+  const [selectedDataFilter7, setSelectedDataFilter7] = useState([]);
+    
+  // Funcionalidad de expansion y contraccion de filtros
+  
+  const [isButtonEnabled, setIsButtonEnabled] = useState(true);
+  const toggleButton = () => { setIsButtonEnabled(prev => !prev) };
+  
+  // Funcionalidad que permite aplicar los filtros seleccionados
   const applyFilters = () => {
-    if(isVTD === true){ 
-      console.log("filtroJurisprudencialVTD", filtroJurisprudencialVTD);
-      setFiltroJurisprudencial(filtroJurisprudencialVTD);
-    } else {
+      
+      // Modifica el estado de selectedFilters con los valores seleccionados en los filtros
       setSelectedFilters(
         [
           ...selectedDataFilter1, //Salas
@@ -104,7 +63,10 @@ const FilterBeta = ({ setSelectedFilters, customFilter = {}, isFilterFloat = fal
           ...selectedDataFilter7, //Procedimientos
         ]
       );
-      setFiltroJurisprudencial({
+      
+      // Actualiza el filtroJurisprudencial con los valores seleccionados
+      
+      const objFiltroJurisprudencial = {
         salas: [...selectedDataFilter1],
         anios: [...selectedDataFilter2],
         departamentos: [...selectedDataFilter3],
@@ -112,106 +74,124 @@ const FilterBeta = ({ setSelectedFilters, customFilter = {}, isFilterFloat = fal
         macrocasos: [...selectedDataFilter5],
         comparecientes: [...selectedDataFilter6],
         procedimientos: [...selectedDataFilter7]
-      });
-    }    
+      };
+      
+      setFiltroJurisprudencial(objFiltroJurisprudencial);
+      
+      // Cuando ya se tiene la informacion de los filtros se preparan los parametros de busqueda
+      const qryString = createSelectedFiltersQryStringSearchRes(objFiltroJurisprudencial, stringTerm, arrayProvidencias);
+      window.location.href = `${href}?${qryString}`;
+      
   };
   
-  useEffect(() => {
-      if (!verTodasDecisiones && !busqueda) {
-        setIsFilterDisabled(true);
-        // setSelectedDataAllFilters([])
-      }
-      else {
-        setIsFilterDisabled(false);
-      }
+  // Funcionalidad para deshacer la busqueda en Ver Todas Decisiones
+  const deshacerBusqueda = (e) => {
+    const params = new URLSearchParams({ string: encodeURIComponent(selectedTerm), page: encodeURIComponent(1), per_page: encodeURIComponent(10) });
+    window.location.href = `${href}?${params.toString()}`;
+  }
   
-    }, [verTodasDecisiones, busqueda]);
-    
-  useEffect(() => {  
-    if (customFilter !== null ) {
-      setListaDptosJurisprudencial(customFilter["departamentos"]);    
-    }
-    }, [customFilter]);
-    
-    
-   // deshacerBusquedaVTD reestablece la busqueda y redirecciona a ver todas las decisiones
-   const deshacerBusquedaVTD = (e) => {
+  // Funcionalidad para deshacer la busqueda en Ver Todas Decisiones
+  const deshacerBusquedaVTD = (e) => {
     window.location.href = `/ver-todas-las-decisiones`;
   }
-    
+  
+  // useEffect que toma el valor del termino de busqueda de la consulta y lo almacena en el contexto stringTerm
+   useEffect(() => {
+     const searchParamsObj = Object.fromEntries(searchParams.entries());
+     if( (stringTerm === "") && (searchParamsObj["string"].length > 0) ) {
+      setStringTerm(decodeURIComponent(searchParams.get('string')));
+     }
+  }, [stringTerm]);
+  
   return (
      <>
-     <Card className={isFilterFloat ? (!isShowingFilter ? "card_filter_float_hidden" : "card_filter_float") : "card_filter"} >
-      <CardContent>
-        <JustFilterFloatNoneGrid isFilterFloat={isFilterFloat} isSearchAdvance={isSearchAdvance}>
-          <div className="vertical_align">
-            <h3> <FilterListIcon /> Filtrar </h3>
-          </div>
-        </JustFilterFloatNoneGrid>
-        {(customFilter["salas"].length > 0) && (
-        <SelectField isDisabled={isFilterDisabled} datos_filtros={customFilter["salas"]} selectedData={selectedDataFilter1} setSelectedData={setSelectedDataFilter1}
-          label='Sala o Sección' id='sala' isVTD={isVTD}></SelectField>
-        )}
-        {(customFilter["anios"].length > 0) && (
-        <SelectField isDisabled={isFilterDisabled} datos_filtros={customFilter["anios"]} selectedData={selectedDataFilter2} setSelectedData={setSelectedDataFilter2}
-          label='Año de la providencia' id='anio' isVTD={isVTD}></SelectField>
-        )}
-        {(customFilter["departamentos"].length > 0) && (
-        <SelectField isDisabled={isFilterDisabled} datos_filtros={customFilter["departamentos"]} selectedData={selectedDataFilter3} setSelectedData={setSelectedDataFilter3}
-          label='Departamento' id='departamento'  isVTD={isVTD}></SelectField>
-        )}
-        {(customFilter["delitos"].length > 0) && (
-        <SelectField isDisabled={isFilterDisabled} datos_filtros={customFilter["delitos"]} selectedData={selectedDataFilter4} setSelectedData={setSelectedDataFilter4}
-          label='Delito' id='delito'  isVTD={isVTD}></SelectField>
-        )}  
-        <div className='justify_center'>
-          {isButtonEnabled && (
-            <Button className="link_primary text_lowercase" onClick={toggleButton}> ver más filtros
-            </Button>)
-          }
-          {!isButtonEnabled && (
-            <div className="width_100 text_center">
-            {(customFilter["macrocasos"].length > 0) && (
-            <SelectField isDisabled={isFilterDisabled} datos_filtros={customFilter["macrocasos"]} selectedData={selectedDataFilter5} setSelectedData={setSelectedDataFilter5}
-                label='Macrocasos' id='macrocasos' isVTD={isVTD}></SelectField>
-            )} 
-              
-            {(customFilter["comparecientes"].length > 0) && (
-            <SelectField isDisabled={isFilterDisabled} datos_filtros={customFilter["comparecientes"]} selectedData={selectedDataFilter6} setSelectedData={setSelectedDataFilter6}
-                label='Compareciente' id='compareciente' isVTD={isVTD}></SelectField>
-            )}
-              
-            {(customFilter["procedimientos"].length > 0) && (
-            <SelectField isDisabled={isFilterDisabled} datos_filtros={customFilter["procedimientos"]} selectedData={selectedDataFilter7} setSelectedData={setSelectedDataFilter7}
-                label='Procedimiento' id='procedimiento' isVTD={isVTD}></SelectField>
-            )}
-              <Button
-                className="link_primary text_lowercase"
-                onClick={toggleButton}>
-                {!isButtonEnabled && 'ver menos filtros'}
-              </Button>
-            </div>
-          )
-          }
-        </div>
-        <div className="justify_center width_100 margin_top_s">
-          <Button disabled={isFilterDisabled} className="button_primary margin_xs " onClick={applyFilters}>Aplicar filtros</Button>
-        </div>
-        {(isVTD === true) ?
-            <div className="justify_center width_100 margin_top_m">
-              <Button variant="outlined" className='autocomplete_bar_inner_search_undo_results margin_right_0' size="small" onClick={deshacerBusquedaVTD}>Reestablecer resultados</Button>
-            </div>
-            :
-            <>
-              {((typeof handlerReset === "function") && (!validarfiltroJurisprudencial(filtroJurisprudencial))) && (
-              <div className="justify_center width_100 margin_top_m">
-                <Button variant="outlined" className='autocomplete_bar_inner_search_undo_results margin_right_0' size="small" onClick={() => handlerReset() }>Reestablecer resultados</Button>
+      <Card className={isFilterFloat ? (!isShowingFilter ? "card_filter_float_hidden" : "card_filter_float") : "card_filter"} >
+        <CardContent>
+            <JustFilterFloatNoneGrid isFilterFloat={isFilterFloat} isSearchAdvance={isSearchAdvance}>
+              <div className="vertical_align">
+                <h3> <FilterListIcon /> Filtrar </h3>
               </div>
-              )}
-            </>
-        }
-      </CardContent>
-    </Card>
+            </JustFilterFloatNoneGrid>
+            {/* Seccion de filtros principales */}
+            {/* Filtro Salas */}
+            {(customFilter["salas"].length > 0) && (
+            <SelectField isDisabled={isFilterDisabled} datos_filtros={customFilter["salas"]} selectedData={selectedDataFilter1} setSelectedData={setSelectedDataFilter1}
+              label='Sala o Sección' id='sala'></SelectField>
+            )}
+            {/* Filtro Años */}
+            {(customFilter["anios"].length > 0) && (
+            <SelectField isDisabled={isFilterDisabled} datos_filtros={customFilter["anios"]} selectedData={selectedDataFilter2} setSelectedData={setSelectedDataFilter2}
+              label='Año de la providencia' id='anio'></SelectField>
+            )}
+            {/* Filtro Departamentos */}
+            {(customFilter["departamentos"].length > 0) && (
+            <SelectField isDisabled={isFilterDisabled} datos_filtros={customFilter["departamentos"]} selectedData={selectedDataFilter3} setSelectedData={setSelectedDataFilter3}
+              label='Departamento' id='departamento'></SelectField>
+            )}
+            {/* Filtro Delitos */}
+            {(customFilter["delitos"].length > 0) && (
+            <SelectField isDisabled={isFilterDisabled} datos_filtros={customFilter["delitos"]} selectedData={selectedDataFilter4} setSelectedData={setSelectedDataFilter4}
+              label='Delito' id='delito'></SelectField>
+            )} 
+            {/* Seccion de filtros principales */}
+            {/* Seccion de filtros secundarios */}
+            <div className='justify_center'>
+               {/* Si el boton de ver más filtros está expandido, muestra filtros secundarios */}
+              {(!isButtonEnabled) ?
+                  <div className="width_100 text_center">
+                    {/* Filtro Macrocasos */}
+                    {(customFilter["macrocasos"].length > 0) && (
+                    <SelectField isDisabled={isFilterDisabled} datos_filtros={customFilter["macrocasos"]} selectedData={selectedDataFilter5} setSelectedData={setSelectedDataFilter5}
+                        label='Macrocasos' id='macrocasos'></SelectField>
+                    )} 
+                    {/* Filtro Comparecientes */}
+                    {(customFilter["comparecientes"].length > 0) && (
+                    <SelectField isDisabled={isFilterDisabled} datos_filtros={customFilter["comparecientes"]} selectedData={selectedDataFilter6} setSelectedData={setSelectedDataFilter6}
+                        label='Compareciente' id='compareciente'></SelectField>
+                    )}
+                    {/* Filtro Procedimientos */}
+                    {(customFilter["procedimientos"].length > 0) && (
+                    <SelectField isDisabled={isFilterDisabled} datos_filtros={customFilter["procedimientos"]} selectedData={selectedDataFilter7} setSelectedData={setSelectedDataFilter7}
+                        label='Procedimiento' id='procedimiento'></SelectField>
+                    )}
+                    {/* Botón para ocultar filtros secundarios */}
+                    <Button
+                      className="link_primary text_lowercase"
+                      onClick={toggleButton}>
+                      {!isButtonEnabled && 'ver menos filtros'}
+                    </Button>
+                  </div>
+                :
+                  <>
+                    {/* Botón para mostrar filtros secundarios */}
+                    <Button className="link_primary text_lowercase" onClick={toggleButton}> ver más filtros</Button>
+                  </>
+              }
+            </div>
+            {/* Seccion de filtros secundarios */}
+            {/* Seccion de aplicar filtros y reestablecer resultados */}
+            <div className="justify_center width_100 margin_top_s">
+              {/* Boton para aplicar filtros */}
+              <Button disabled={isFilterDisabled} className="button_primary margin_xs " onClick={applyFilters}>Aplicar filtros</Button>
+            </div>
+            {/* Boton para reestablecer resultados, si isVTD(ver todas decisiones) es verdadero, la funcionalidad es diferente */}
+            {(isVTD === true) && (
+                <div className="justify_center width_100 margin_top_m">
+                  <Button variant="outlined" className='autocomplete_bar_inner_search_undo_results margin_right_0' size="small" onClick={deshacerBusquedaVTD}>Reestablecer resultados</Button>
+                </div>
+            )}
+            {(isVTD === false) && (
+                <>
+                  {((!validarfiltroJurisprudencial(filtroJurisprudencial))) && (  
+                  <div className="justify_center width_100 margin_top_m">
+                    <Button variant="outlined" className='autocomplete_bar_inner_search_undo_results margin_right_0' size="small" onClick={deshacerBusqueda}>Reestablecer resultados</Button>
+                  </div>
+                  )}
+                </>
+            )}
+            {/* Seccion de aplicar filtros y reestablecer resultados */}  
+        </CardContent>
+      </Card>
     </>
   );
   

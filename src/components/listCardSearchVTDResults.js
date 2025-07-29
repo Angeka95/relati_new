@@ -349,13 +349,14 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
                                                       <Button onClick={sortAscByScore} className='items_sorted' endIcon={<ArrowDownwardIcon />} >Menor Relevancia </Button>
                                                   </div>
                                               )}</div>
-                                            {<ButtonDownloadDecisiones
+                                            {/*<ButtonDownloadDecisiones
                                                 isButtonDownloadEnabled={false}
                                                 datos={datos}
                                                 datosToExport={datosToExport}
                                                 sortAscByDate={sortAscByDate}
                                                 showZipButton={false}
-                                            />}
+                                            />*/}
+                                            {/*<ButtonDownloadDecisiones isButtonDownloadEnabled={false} />*/}
                                             </NoneGrid>  
                                         )}
                                 </Grid>

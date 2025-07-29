@@ -1,12 +1,14 @@
 import React, { useState, useEffect, useContext, useRef } from 'react';
 import { Stack, List, ListItem, Button, Box, Chip, Alert } from '@mui/material';
+import { useSearchParams } from 'react-router-dom';
 import CardSearch from './../cardSearchResults.js';
 import SearchBarForInnerResults from './../searchBarForInnerResults.js';
 import { SpaceGrid, SpaceBetweenGrid, NoneGrid, JustMapGrid, JustMapNoneGrid } from './../gridComponents/gridComponents.js';
 import { Grid } from '@mui/material';
 import Context from './../../context/context.js';
+import FilterContext from './../../context/filterContext.js';
 import FilterShort from './../filterShort.js';
-import { filtroByDefault, validarfiltroJurisprudencial, getOpcionesAutocompletar, getDecisionesIDsToExport, validateSearchParamsBusquedaAV, formattingSearchParamsBusquedaAV  } from './../../helpers/utils.js';
+import { filtroByDefault, getDecisionesIDsToExport, validateSearchParamsBusquedaAV, formattingSearchParamsBusquedaAV, validateSearchParamsBusquedaFromFilter,   getExternalFilterCriteriaSR  } from './../../helpers/utils.js';
 import LinearWithValueLabel from './../../components/linearProgress.js';  
 import ButtonDownloadZIPCustom from './../buttonDownloadZIPCustom.js';
 import ButtonDownloadDecisiones from './../buttonDownloadDecisiones.js';
@@ -16,7 +18,9 @@ import PaginatorDetails from './../paginatorComponent/PaginatorDetails.js';
 import PaginatorOrderList from './../paginatorComponent/PaginatorOrderList.js';
 import './../../App.css';
 
-export default function Card({ datosBusqueda, searchOptions, selectedFilters, isListSmall, selectedTerm, isLargeResult, isExternalFilters, objPagination = {}, paramsBusquedaAV = null }) {  
+export default function Card({ datosBusqueda, searchOptions, isListSmall, selectedTerm, isLargeResult, isExternalFilters = false, objPagination = {}, paramsBusquedaAV = null }) {  
+
+    const [searchParams] = useSearchParams();
    
     const [datosOriginales, setDatosOriginales] = useState(datosBusqueda);
     const [selectedDoc, setSelectedDoc] = useState({ "title": "* Todos los resultados", "id": 0 });
@@ -28,6 +32,8 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
     const { filtroJurisprudencial, setFiltroJurisprudencial } = useContext(Context);
     const { datos, setDatos, currentData, getCurrentData, setDatosToExport } = useContext(PaginatorContext);
     
+    const { selectedFilters } = useContext(FilterContext);
+    
     // Este useEffect permite inicializar los datos de búsqueda y las opciones de autocompletar
     useEffect(() => {
         //console.log("Datos de busqueda", datosBusqueda);
@@ -37,7 +43,7 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
         }
     }, [datos]);
     
-    useEffect(() => {
+/*    useEffect(() => {
         if(!validarfiltroJurisprudencial(filtroJurisprudencial)) { 
             let newMessage = { message: "", classname: "" }; 
             let datosFiltrados = [...datos];
@@ -111,7 +117,7 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
             setSearchDocsOptions(searchOptions);
         }
     }, [filtroJurisprudencial]);
-
+*/
     const { verTodasDecisiones, busqueda } = useContext(Context);
 
     if (!selectedFilters) {
@@ -124,8 +130,19 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
       setShowFilter(!showFilter);
     };
 
+    // Los filtros externos son aquellos que vienen desde el buscador avanzado o del filtro lateral
+
     const [externalFilters, setExternalFilters] = useState([]);
     
+    // Este useEffect permite cargar los elementos que conforman el filtro de busqueda
+    useEffect(() => {
+        if(externalFilters.length === 0 ) { 
+            const searchParamsObj = Object.fromEntries(searchParams.entries());
+            if(validateSearchParamsBusquedaFromFilter(searchParamsObj)) {          
+                setExternalFilters(getExternalFilterCriteriaSR(searchParamsObj));
+            }
+        }
+    }, [externalFilters]);
     // Funciones de paginacion
     
     const { page, itemsPerPage, setCustomPagination, setPage } = useContext(PaginatorContext);

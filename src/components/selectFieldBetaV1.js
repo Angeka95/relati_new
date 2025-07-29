@@ -1,28 +1,85 @@
 import React from 'react';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
+import Context from '../context/context';
+import FilterContext from '../context/filterContext';
 import { FormControl, InputLabel, Select, MenuItem, Chip, Checkbox, ListItemText, Box } from '@mui/material';
+import { validarfiltroJurisprudencial } from '../helpers/utils.js';
 import CloseIcon from '@mui/icons-material/Close';
 import '../App.css';
 
-const SelectField = ({ datos_filtros, label, id, selectedData, setSelectedData, isDisabled }) => {
+const SelectField = ({ datos_filtros, label, id, selectedData, setSelectedData, isDisabled, isVTD = false }) => {
 
-  /** Props **/ 
-  
-  // datos_filtros: Array de objetos con los datos a mostrar en el select
-  // label: Etiqueta del select
-  // id: Identificador del select
-  // selectedData: Estado que guarda los valores seleccionados en el select
-  // setSelectedData: Función para actualizar el estado de selectedData proveniente de componente padre
-  // isDisabled: Booleano que indica si el select está deshabilitado
-  
-  /** Props **/ 
-
-  // seletectValues es el estado que guarda los valores seleccionados en el SelectField
   const [selectedValues, setSelectedValues] = useState([]);
+  
+  const { filtroJurisprudencial, setFiltroJurisprudencial } = useContext(Context);
+  const { filtroJurisprudencialVTD, setFiltroJurisprudencialVTD } = useContext(Context);
+  
+  const { test  } = useContext(FilterContext);
   
   useEffect(()=>{
     setSelectedValues([...selectedData]);
   },[selectedData]);
+
+  // Este useEffect solo aplica en Ver Todas Decisiones
+  // Se actualiza el valor de filtroJurisprudencialVTD cuando se selecciona un valor en el select
+  useEffect(()=>{
+    //console.log("Valor filtro jurisprudencia VTD", filtroJurisprudencialVTD, "eventtarget", selectedValues);
+    if(isVTD === true){
+      switch(label){
+        case "Sala o Sección":
+          setFiltroJurisprudencialVTD({
+            ...filtroJurisprudencialVTD,
+            salas: selectedValues
+          });
+          break;
+        case "Año de los hechos":
+          setFiltroJurisprudencialVTD({
+            ...filtroJurisprudencialVTD,
+            anios: selectedValues
+          });
+        break;
+        case "Departamento":
+          setFiltroJurisprudencialVTD({
+            ...filtroJurisprudencialVTD,
+            departamentos: selectedValues
+          });
+        break;
+        case "Delito":
+          setFiltroJurisprudencialVTD({
+            ...filtroJurisprudencialVTD,
+            delitos: selectedValues
+          });
+        break;
+        case "Macrocasos":
+          setFiltroJurisprudencialVTD({
+            ...filtroJurisprudencialVTD,
+            macrocasos: selectedValues
+          });
+        break;
+        case "Compareciente":
+          setFiltroJurisprudencialVTD({
+            ...filtroJurisprudencialVTD,
+            comparecientes: selectedValues
+          });
+        break;
+        case "Procedimiento":
+          setFiltroJurisprudencialVTD({
+            ...filtroJurisprudencialVTD,
+            procedimientos: selectedValues
+          });
+        break;
+        default:
+          break;
+      }
+    }
+  },[selectedValues]);
+  
+  
+  useEffect(()=>{
+    if(validarfiltroJurisprudencial(filtroJurisprudencial)) { 
+      setSelectedValues([]);
+    }
+  },[filtroJurisprudencial]);
   
   // Toma el valor seleccionado y lo guarda en el estado de SelectField
   const handleChange = (event) => {

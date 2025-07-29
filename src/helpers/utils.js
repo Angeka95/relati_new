@@ -758,6 +758,60 @@ const formattingSearchParamsBusquedaAV = (searchParamsObj) => {
     return newArray.join(", ");
 }
 
+
+/**
+ * validateSearchParamsBusquedaFromFilter()
+ * Funcionalidad que valida los datos de un objeto de tipo searchParams provenientes de React Router desde busqueda avanzada. Si el objeto no esta vacio y contiene alguna de las propiedades retorna True.
+ * Parametros de entrada:
+ * - searchParamsObj: el objeto searchParams proveniente de React Router
+ * Salida:
+ * - Obtiene un valor de tipo boolean true o false. True en caso de que el objeto no contenga propiedades vacias
+ * Aplicación:
+ * - resultadosBusqueda.js
+*/
+
+const validateSearchParamsBusquedaFromFilter = (searchParamsObj) => { 
+    let valor = ((Object.values(searchParamsObj).some(value => value !== null || value !== undefined || value !== "")) && 
+    (   searchParamsObj.hasOwnProperty('from_filter') && 
+        searchParamsObj.hasOwnProperty('string') &&
+        searchParamsObj.hasOwnProperty('dpto') &&
+        searchParamsObj.hasOwnProperty('anio_providencia') &&
+        searchParamsObj.hasOwnProperty('sala_seccion') &&
+        searchParamsObj.hasOwnProperty('macrocaso') &&
+        searchParamsObj.hasOwnProperty('tipo_compareciente') &&   
+        searchParamsObj.hasOwnProperty('procedimiento') &&  
+        searchParamsObj.hasOwnProperty('providencias_id') &&
+        searchParamsObj.hasOwnProperty('delito') &&   
+        searchParamsObj.hasOwnProperty('size') &&
+        searchParamsObj.hasOwnProperty('page') &&
+        searchParamsObj.hasOwnProperty('order')
+    ));
+    return valor;
+}
+
+
+/**
+ * getExternalFilterCriteriaSR()
+ * Funcionalidad que valida los datos de un objeto de tipo searchParams y crea una lista de elementos de los criterios seleccionados en el filtro de busqueda.
+ * Parametros de entrada:
+ * - searchParamsObj: el objeto searchParams proveniente de React Router
+ * Salida:
+ * - Obtiene un array
+ * Aplicación:
+ * - listCardSearch.js
+*/
+
+const getExternalFilterCriteriaSR = (searchParamsObj) => { 
+    console.log("searchParamsObj", searchParamsObj);
+    const excluir = ['providencias_id', 'from_filter', 'size', 'page', 'order', 'string'];
+    const newObject = Object.fromEntries(
+      Object.entries(searchParamsObj).filter(([key]) => !excluir.includes(key))
+    );
+    const arrExternalItems = ([].concat(...Object.values(newObject))).filter(item => item !== "");
+    return arrExternalItems;
+    
+}
+
 export { filtroByDefault, 
          filtroBusquedaAvanzadaByDefault,
          truncateWithEllipsis, 
@@ -788,5 +842,7 @@ export { filtroByDefault,
          createSearchParamsObj,
          createSelectedFiltersVTD,
          validateSearchParamsBusquedaAV,
-         formattingSearchParamsBusquedaAV
+         formattingSearchParamsBusquedaAV,
+         validateSearchParamsBusquedaFromFilter,
+         getExternalFilterCriteriaSR
 };
