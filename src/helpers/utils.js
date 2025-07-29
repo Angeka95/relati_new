@@ -803,7 +803,7 @@ const validateSearchParamsBusquedaFromFilter = (searchParamsObj) => {
 
 const getExternalFilterCriteriaSR = (searchParamsObj) => { 
     console.log("searchParamsObj", searchParamsObj);
-    const excluir = ['providencias_id', 'from_filter', 'size', 'page', 'order', 'string'];
+    const excluir = ['providencias_id', 'from_filter', 'per_page', 'page', 'order', 'string'];
     const newObject = Object.fromEntries(
       Object.entries(searchParamsObj).filter(([key]) => !excluir.includes(key))
     );

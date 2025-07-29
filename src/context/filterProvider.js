@@ -14,6 +14,9 @@ const FilterProvider = ({ children }) => {
     // Funcion que crea un objeto a partir de filtroJurisprudencial y stringTerm
     // Retorna un objeto con los filtros seleccionados y el string de busqueda
     const createSelectedFiltersQryObjectSearchRes = (objFiltroJurisprudencial, stringTerm, arrayProvidencias = []) => { 
+    
+        console.log("array_Providencias", arrayProvidencias.join(","));
+           
         let newObj = {
               from_filter: true,
               string: stringTerm,
@@ -25,7 +28,8 @@ const FilterProvider = ({ children }) => {
               tipo_compareciente:  objFiltroJurisprudencial["comparecientes"].join(","),
               procedimiento:  objFiltroJurisprudencial["procedimientos"].map(el => el.trim()).join(","),
               providencias_id: arrayProvidencias.slice(0,10).join(","),
-              size: 10,
+              //providencias_id: arrayProvidencias.join(","),
+              per_page: 10,
               page: 1,
               order: "date_desc"
         };
@@ -47,7 +51,7 @@ const FilterProvider = ({ children }) => {
         qryString += `&tipo_compareciente=${encodeURIComponent(qryObject.tipo_compareciente)}`;
         qryString += `&procedimiento=${encodeURIComponent(qryObject.procedimiento)}`;
         qryString += `&providencias_id=${encodeURIComponent(qryObject.providencias_id)}`;
-        qryString += `&size=${encodeURIComponent(qryObject.size)}`;
+        qryString += `&size=${encodeURIComponent(qryObject.per_page)}`;
         qryString += `&page=${encodeURIComponent(qryObject.page)}`;
         qryString += `&order=${encodeURIComponent(qryObject.order)}`;
         return qryString;
