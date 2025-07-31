@@ -215,6 +215,50 @@ const getSearchQDataFilterV2 = (searchParamsObj) => {
   });
 }
 
+// Este servicio obtiene los resultados de busqueda por buscador normal al AI proveniente de searchqdata filtrados por medio de Fetch API
+const getSearchQDataFilterV2Fetch = async (searchParamsObj) => {
+  console.log("Entra al fetch API")
+  const url = `${process.env.REACT_APP_API_SERVER_DOMAIN}/searchqueryfilter?${new URLSearchParams(searchParamsObj).toString()}`;
+  const headers = {
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${process.env.REACT_APP_API_ACCESS_TOKEN}`,
+    'user': process.env.REACT_APP_API_USER,
+    'password': process.env.REACT_APP_API_PASS
+  };
+
+  try {
+    const response = await fetch(url, { method: 'GET', headers });
+    const data = await response.json();
+
+    if ((data.status !== undefined) || (data.status === 401) || (data.status === 403)) {
+      return { data: [], filters: [], pagination: [], array_providencias_id: [], status_info: { status: data.status, reason: data.reason } };
+    } else {
+      let resultData = [];
+      let status_info = {};
+      let filters = [];
+      let pagination = [];
+      let array_providencias_id = [];
+      if (data["reponse"] && data["reponse"].hasOwnProperty('hits')) {
+        resultData = data["reponse"].hits.hits;
+        filters = data["filter"];
+        array_providencias_id = data["array_providencia_id"];
+        pagination = [
+          { page: data["page"], per_page: data["per_page"], total: data["total"], from: data["from"], to: data["to"], current_page: data["current_page"] }
+        ];
+        status_info = { status: 200, reason: "La consulta se ha realizado satisfactoriamente." };
+        if (resultData.length === 0) {
+          status_info = { status: 200, reason: "No se encontraron resultados." };
+        }
+      } else {
+        status_info = { status: 204, reason: "La consulta no esta disponible por el momento.(Elastic Search)." };
+      }
+      return { data: resultData, filters, pagination, array_providencias_id, status_info };
+    }
+  } catch (error) {
+    return { data: [], filters: [], pagination: [], array_providencias_id: [], status_info: { status: 500, reason: "Lo sentimos, algo salió mal. Parece que hubo un problema en nuestro servidor. Estamos trabajando para solucionarlo. Por favor, inténtalo de nuevo más tarde." } };
+  }
+};
+
 // Este servicio  obtiene la lista de opciones de autocompletar para el buscador principal basado en Tesauro relatoria.jep.gov.co/autocompletesearch?search=corte
 const getBuscadorListaAutocompletar = (expression) => {
   const config = {
@@ -234,4 +278,13 @@ const getBuscadorListaAutocompletar = (expression) => {
   });
 };
 
-export default { getAllResults, getAllResultsByFilter, getSearchQDataV1, getSearchQDataV2, getSearchQDataFilterV2, getSearchQDataTest, getBuscadorListaAutocompletar };
+export default { 
+                 getAllResults, 
+                 getAllResultsByFilter, 
+                 getSearchQDataV1, 
+                 getSearchQDataV2,
+                 getSearchQDataFilterV2, 
+                 getSearchQDataTest, 
+                 getBuscadorListaAutocompletar, 
+                 getSearchQDataFilterV2Fetch 
+                };

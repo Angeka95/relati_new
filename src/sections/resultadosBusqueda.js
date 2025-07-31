@@ -85,7 +85,7 @@ export default function SearchResults() {
   const getResultadosBuscadorFromFilter = (searchParamsObj) => {
     let newMessage = {}; 
     buscadorService
-      .getSearchQDataFilterV2(searchParamsObj)
+      .getSearchQDataFilterV2Fetch(searchParamsObj)
       .then(response => {
           if((response.status_info.status === 200) && (response.data.length > 0)) {
               let objPagination = Object.assign({}, response.pagination[0]);
