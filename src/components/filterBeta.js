@@ -80,6 +80,7 @@ const FilterBeta = ({ arrayProvidencias = [], customFilter = {}, selectedTerm = 
       
       // Cuando ya se tiene la informacion de los filtros se preparan los parametros de busqueda
       const qryString = createSelectedFiltersQryStringSearchRes(objFiltroJurisprudencial, stringTerm, arrayProvidencias);
+      //console.log(qryString);
       window.location.href = `${href}?${qryString}`;
       
   };
