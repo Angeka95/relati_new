@@ -812,6 +812,47 @@ const getExternalFilterCriteriaSR = (searchParamsObj) => {
     
 }
 
+
+/**
+ * setLocalStorageSimple()
+ * Funcionalidad que guarda en localStorage sin expiración
+ * Parametros de entrada:
+ * - key: nombre variable localStorage
+ * - value: valor de la variable localStorage
+ * Salida:
+ * - Crea una nueva variable en localStorage de tipo objeto {value: ""}
+ * Aplicación:
+ * - resultadosBusqueda.js
+*/
+const setLocalStorageSimple = (key, value) => {
+    const item = {
+      value: value
+    };
+    localStorage.setItem(key, JSON.stringify(item));
+};
+  
+/**
+ * getLocalStorageSimple()
+ * Funcionalidad que obtiene el valor de una variable en localStorage de la cual en caso de que expire sea automaticamente eliminada
+ * Parametros de entrada:
+ * - key: nombre variable localStorage
+ * Salida:
+ * - Obtiene el valor de la variable 
+ * Aplicación:
+ * - resultadosBusqueda.js
+*/
+
+const getLocalStorageSimple = (key) => {
+
+    const itemStr = localStorage.getItem(key);
+
+    if (!itemStr) return null;
+  
+    const item = JSON.parse(itemStr);
+   
+    return item.value;
+};
+
 export { filtroByDefault, 
          filtroBusquedaAvanzadaByDefault,
          truncateWithEllipsis, 
@@ -844,5 +885,7 @@ export { filtroByDefault,
          validateSearchParamsBusquedaAV,
          formattingSearchParamsBusquedaAV,
          validateSearchParamsBusquedaFromFilter,
-         getExternalFilterCriteriaSR
+         getExternalFilterCriteriaSR,
+         setLocalStorageSimple,
+         getLocalStorageSimple
 };

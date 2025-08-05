@@ -13,7 +13,7 @@ import LinearWithValueLabel from '../components/linearProgress.js';
 import SearchBar from '../components/searchBar.js'
 import buscadorService from '../services/buscador.js';
 import busquedaAvanzadaService from '../services/busqueda_avanzada.js';
-import { filtroByDefault, getOpcionesAutocompletar, validateSearchParamsBusquedaAV, formattingSearchParamsBusquedaAV } from '../helpers/utils.js';
+import { filtroByDefault, getOpcionesAutocompletar, validateSearchParamsBusquedaAV, formattingSearchParamsBusquedaAV, setLocalStorageSimple, getLocalStorageSimple, validarfiltroJurisprudencial } from '../helpers/utils.js';
 import dataResults from '../data_results/dataResBusqueda.js';
 import dataFilterResults from '../data_results/dataFilterResBusqueda.js';
 import '../App.css';
@@ -33,9 +33,9 @@ export default function SearchResults() {
   const [searchOptions, setSearchOptions] = useState([]);
   const [paramsBusquedaAV, setParamsBusquedaAV] = useState({});
   const [pagination, setPagination] = useState({});
-
+   
   // Variables de Contexto
-  const { estadoVerTodasDecisiones, setEstadoVerTodasDecisiones } = useContext(Context);
+  const { setEstadoVerTodasDecisiones } = useContext(Context);
   const { filtroJurisprudencial, setFiltroJurisprudencial } = useContext(Context);
     
   const stringParamPage = (searchParams.get('page')) ? decodeURIComponent(searchParams.get('page')) : 1;
@@ -82,17 +82,20 @@ export default function SearchResults() {
     });
   };
   
-  const getResultadosBuscadorFromFilter = (searchParamsObj) => {
+  const getResultadosBuscadorFromFilter = (searchFilterObj) => {
+    console.log(searchFilterObj);
     let newMessage = {}; 
     buscadorService
-      .getSearchQDataFilterV2Fetch(searchParamsObj)
+      .getSearchQDataFilterV2Fetch(searchFilterObj)
       .then(response => {
+          console.log("response", response);
           if((response.status_info.status === 200) && (response.data.length > 0)) {
               let objPagination = Object.assign({}, response.pagination[0]);
               objPagination["per_page"] = Number(objPagination["per_page"]);
               setPagination(objPagination);
               const newDatos = dataResults(response.data);
               const newDatosFilters = dataFilterResults(response.filters);
+              console.log("mnuevos datos", newDatos)
               setDatos(newDatos);
               setArrayProvidenciasId(response.array_providencias_id);
               setCustomFilter(newDatosFilters);
@@ -148,6 +151,36 @@ export default function SearchResults() {
   }
 
   /* useEffects */
+  
+  // Verifica si las variables existen en localStorage, si no, las crea
+  // En caso de que existan valida los valores de las variables
+  useEffect(() => {
+  
+    const lsSearchResultsBaseQry = localStorage.getItem('searchResultsBaseQry');
+    const lsFlagFromFilter = localStorage.getItem('flagFromFilter');
+    const lsSearchFilterQry = localStorage.getItem('searchFilterQry');
+    
+    if((lsSearchResultsBaseQry === null) && (lsFlagFromFilter === null) && (lsSearchFilterQry === null)){
+        // LocalStorage var searchResultsBaseQry: la consulta base en formato string
+        setLocalStorageSimple('searchResultsBaseQry', `${searchParams.toString()}`);
+        // LocalStorage var flagFilteredQry: flag que determina si se ha ejecutado la consulta, estado inicial false
+        setLocalStorageSimple('flagFromFilter', 'false');
+        // LocalStorage var searchFilter: objeto que contiene informacion de la consulta a partir de la ejecucion de filtro
+        setLocalStorageSimple('searchFilterQry', 'null');
+    } 
+    
+    // Volver a los valores iniciales si se recarga la pagina
+    if (lsSearchResultsBaseQry && (getLocalStorageSimple('searchResultsBaseQry') !== "")){
+        setLocalStorageSimple('searchResultsBaseQry', `${searchParams.toString()}`);
+    } 
+    
+    // Volver a los valores iniciales si se recarga la pagina
+    if (getLocalStorageSimple('flagFromFilter') === "true"){
+        setLocalStorageSimple('flagFromFilter', 'false');
+        setLocalStorageSimple('searchFilterQry', 'null');
+    } 
+   
+  }, []);
 
   // NO BORRAR: Si no hay datos en la consulta, se establece el filtro jurisprudencial por defecto
   useEffect(() => {
@@ -173,17 +206,7 @@ export default function SearchResults() {
   // Este useEffect para obtener los resultados
   useEffect(()=>{
     const searchParamsObj = Object.fromEntries(searchParams.entries());
-    //console.log("searchParamsObj", searchParamsObj);
-    if((searchParamsObj.hasOwnProperty('from_filter') && (searchParamsObj["from_filter"] === "true"))) {
-      if(stringQuery === ""){
-          setStringQuery(stringParam);
-        } else { 
-          // Busqueda normal
-          if(datos.length === 0){
-            getResultadosBuscadorFromFilter(searchParamsObj);
-          }
-        } 
-    } else if(validateSearchParamsBusquedaAV(searchParamsObj)){ 
+    if(validateSearchParamsBusquedaAV(searchParamsObj)){ 
             // Busqueda avanzada
             // console.log("entra al avanzada");
             setParamsBusquedaAV(searchParamsObj);
@@ -207,6 +230,17 @@ export default function SearchResults() {
       } 
   },[stringQuery, stringParam]);
   
+  
+
+  useEffect(() => {
+      if(!validarfiltroJurisprudencial(filtroJurisprudencial)){ 
+      setDatos([]);
+      setMessage({ message: "", classname: "" });
+      const searchFilterObj = JSON.parse(getLocalStorageSimple('searchFilterQry'));
+      getResultadosBuscadorFromFilter(searchFilterObj); 
+      } 
+  }, [filtroJurisprudencial]);
+
   return (
     <>
       {(datos.length === 0) ?

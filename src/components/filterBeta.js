@@ -6,7 +6,7 @@ import FilterContext from '../context/filterContext.js';
 import { Card, CardContent, Button } from '@mui/material';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import { JustFilterFloatNoneGrid } from '../components/styledGridComponents/CustomGrids.js'; 
-import { validarfiltroJurisprudencial } from '../helpers/utils.js';
+import { validarfiltroJurisprudencial, setLocalStorageSimple } from '../helpers/utils.js';
 import SelectField from '../components/selectFieldBeta.js';
 import '../App.css';
 import { StarSharp } from '@mui/icons-material';
@@ -20,7 +20,7 @@ const FilterBeta = ({ arrayProvidencias = [], customFilter = {}, selectedTerm = 
   
   // Variables de contexto
   const { filtroJurisprudencial, setFiltroJurisprudencial } = useContext(Context);
-  const { setSelectedFilters, stringTerm, setStringTerm, createSelectedFiltersQryStringSearchRes } = useContext(FilterContext);
+  const { setSelectedFilters, stringTerm, setStringTerm, createSelectedFiltersObj } = useContext(FilterContext);
   
   // Salas
   const [selectedDataFilter1, setSelectedDataFilter1] = useState([]);
@@ -78,13 +78,12 @@ const FilterBeta = ({ arrayProvidencias = [], customFilter = {}, selectedTerm = 
       
       setFiltroJurisprudencial(objFiltroJurisprudencial);
       
-      // Cuando ya se tiene la informacion de los filtros se preparan los parametros de busqueda
-      const qryString = createSelectedFiltersQryStringSearchRes(objFiltroJurisprudencial, stringTerm, arrayProvidencias);
-      //console.log(qryString);
-      window.location.href = `${href}?${qryString}`;
-      
+      // Cuando ya se tiene la informacion de los filtros se preparan los parametros de busqueda procesar por POST
+      const objSearchFilterQry = createSelectedFiltersObj(objFiltroJurisprudencial, stringTerm, arrayProvidencias);
+      setLocalStorageSimple('searchFilterQry', JSON.stringify(objSearchFilterQry));
+      setLocalStorageSimple('flagFromFilter', "true");
   };
-  
+    
   // Funcionalidad para deshacer la busqueda en Ver Todas Decisiones
   const deshacerBusqueda = (e) => {
     const params = new URLSearchParams({ string: encodeURIComponent(selectedTerm), page: encodeURIComponent(1), per_page: encodeURIComponent(10) });
