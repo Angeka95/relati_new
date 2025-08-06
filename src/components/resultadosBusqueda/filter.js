@@ -98,9 +98,10 @@ const FilterBeta = ({ arrayProvidencias = [], customFilter = {}, selectedTerm = 
   }
   
   // useEffect que toma el valor del termino de busqueda de la consulta y lo almacena en el contexto stringTerm
+  // No se aplica para busquedas avanzadas
    useEffect(() => {
      const searchParamsObj = Object.fromEntries(searchParams.entries());
-     if( (stringTerm === "") && (searchParamsObj["string"].length > 0) ) {
+     if( (stringTerm === "") && searchParamsObj.hasOwnProperty('string')) {
       setStringTerm(decodeURIComponent(searchParams.get('string')));
      }
   }, [stringTerm]);
