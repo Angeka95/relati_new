@@ -2,7 +2,7 @@ import React from 'react';
 import { useState, useEffect } from 'react';
 import { FormControl, InputLabel, Select, MenuItem, Chip, Checkbox, ListItemText, Box } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
-import '../App.css';
+import '../../App.css';
 
 const SelectField = ({ datos_filtros, label, id, selectedData, setSelectedData, isDisabled }) => {
 

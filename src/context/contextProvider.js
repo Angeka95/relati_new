@@ -16,6 +16,7 @@ const ContextProvider = ({ children }) => {
   const [ttl] = useState(60000); // Variable define el tiempo para eliminar variables de localStorage
   const [ttlMCD] = useState(1800000); // Variable define el tiempo para eliminar variables de localStorage para Macrocasos Decisiones
   const [ filtroBusquedaAvanzada, setFiltroBusquedaAvanzada ] = useState(filtroBusquedaAvanzadaByDefault); 
+  const [ searchFilterObj, setSearchFilterObj ] = useState(null); // Objeto Filtro Busqueda Avanzada
 
   return (
     <Context.Provider 
@@ -39,6 +40,8 @@ const ContextProvider = ({ children }) => {
                setFiltroBusquedaAvanzada,
                filtroJurisprudencialVTD, 
                setFiltroJurisprudencialVTD,
+               searchFilterObj,
+               setSearchFilterObj
             }}
     >
       {children}

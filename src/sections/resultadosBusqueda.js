@@ -5,15 +5,13 @@ import Context from './../context/context.js';
 import PaginatorProvider from '../context/paginatorProvider.js';
 import FilterProvider from '../context/filterProvider.js';
 import { Container, Grid, Alert, Button, Box } from '@mui/material';
-import Filter from '../components/filter.js';
-import FilterBeta from '../components/filterBeta.js';
-import FilterV2 from '../components/resultadosBusqueda/filter.js';
+import Filter from '../components/resultadosBusqueda/filter.js';
 import ListCardSearch from '../components/resultadosBusqueda/listCardSearchResults.js';
 import LinearWithValueLabel from '../components/linearProgress.js';
 import SearchBar from '../components/searchBar.js'
 import buscadorService from '../services/buscador.js';
 import busquedaAvanzadaService from '../services/busqueda_avanzada.js';
-import { filtroByDefault, getOpcionesAutocompletar, validateSearchParamsBusquedaAV, formattingSearchParamsBusquedaAV, setLocalStorageSimple, getLocalStorageSimple, validarfiltroJurisprudencial } from '../helpers/utils.js';
+import { filtroByDefault, getOpcionesAutocompletar, validateSearchParamsBusquedaAV, formattingSearchParamsBusquedaAV, setLocalStorageSimple, getLocalStorageSimple } from '../helpers/utils.js';
 import dataResults from '../data_results/dataResBusqueda.js';
 import dataFilterResults from '../data_results/dataFilterResBusqueda.js';
 import '../App.css';
@@ -36,7 +34,8 @@ export default function SearchResults() {
    
   // Variables de Contexto
   const { setEstadoVerTodasDecisiones } = useContext(Context);
-  const { filtroJurisprudencial, setFiltroJurisprudencial } = useContext(Context);
+  const { setFiltroJurisprudencial } = useContext(Context);
+  const { searchFilterObj, setSearchFilterObj } = useContext(Context);
     
   const stringParamPage = (searchParams.get('page')) ? decodeURIComponent(searchParams.get('page')) : 1;
   const stringParamPerPage = (searchParams.get('per_page')) ? decodeURIComponent(searchParams.get('per_page')) : 10;
@@ -83,19 +82,16 @@ export default function SearchResults() {
   };
   
   const getResultadosBuscadorFromFilter = (searchFilterObj) => {
-    console.log(searchFilterObj);
     let newMessage = {}; 
     buscadorService
       .getSearchQDataFilterV2Fetch(searchFilterObj)
       .then(response => {
-          console.log("response", response);
           if((response.status_info.status === 200) && (response.data.length > 0)) {
               let objPagination = Object.assign({}, response.pagination[0]);
               objPagination["per_page"] = Number(objPagination["per_page"]);
               setPagination(objPagination);
               const newDatos = dataResults(response.data);
               const newDatosFilters = dataFilterResults(response.filters);
-              console.log("mnuevos datos", newDatos)
               setDatos(newDatos);
               setArrayProvidenciasId(response.array_providencias_id);
               setCustomFilter(newDatosFilters);
@@ -167,17 +163,21 @@ export default function SearchResults() {
         setLocalStorageSimple('flagFromFilter', 'false');
         // LocalStorage var searchFilter: objeto que contiene informacion de la consulta a partir de la ejecucion de filtro
         setLocalStorageSimple('searchFilterQry', 'null');
+        // Variable de contexto setSearchFilterObj dejar en null
+        setSearchFilterObj(null);
     } 
     
     // Volver a los valores iniciales si se recarga la pagina
     if (lsSearchResultsBaseQry && (getLocalStorageSimple('searchResultsBaseQry') !== "")){
         setLocalStorageSimple('searchResultsBaseQry', `${searchParams.toString()}`);
+        setSearchFilterObj(null);
     } 
     
     // Volver a los valores iniciales si se recarga la pagina
     if (getLocalStorageSimple('flagFromFilter') === "true"){
         setLocalStorageSimple('flagFromFilter', 'false');
         setLocalStorageSimple('searchFilterQry', 'null');
+        setSearchFilterObj(null);
     } 
    
   }, []);
@@ -230,16 +230,14 @@ export default function SearchResults() {
       } 
   },[stringQuery, stringParam]);
   
-  
-
+  // Este useEffect valida si la variable de contexto searchFilterObj contiene valores provenientes del filtro lateral, procede a acceder al servicio getResultadosBuscadorFromFilter
   useEffect(() => {
-      if(!validarfiltroJurisprudencial(filtroJurisprudencial)){ 
-      setDatos([]);
-      setMessage({ message: "", classname: "" });
-      const searchFilterObj = JSON.parse(getLocalStorageSimple('searchFilterQry'));
-      getResultadosBuscadorFromFilter(searchFilterObj); 
+      if(searchFilterObj !== null){
+        setDatos([]);
+        setMessage({ message: "", classname: "" });
+        getResultadosBuscadorFromFilter(searchFilterObj); 
       } 
-  }, [filtroJurisprudencial]);
+  }, [searchFilterObj]);
 
   return (
     <>
@@ -298,7 +296,7 @@ export default function SearchResults() {
               <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
                 {(customFilter !== null) && ( 
                   <>
-                      <FilterBeta arrayProvidencias={arrayProvidenciasId} customFilter={customFilter} selectedTerm={stringQuery} isShowingFilter={false} isSearchAdvance={false} href={`/resultados-busqueda`}></FilterBeta>
+                      <Filter arrayProvidencias={arrayProvidenciasId} customFilter={customFilter} selectedTerm={stringQuery} isShowingFilter={false} isSearchAdvance={false} href={`/resultados-busqueda`}></Filter>
                   </>
                 )} 
               </Grid>
