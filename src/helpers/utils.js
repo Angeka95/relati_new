@@ -791,7 +791,7 @@ const validateSearchParamsBusquedaFromFilter = (searchParamsObj) => {
 
 
 /**
- * getExternalFilterCriteriaSR()
+ * getFilterCriteriaSR()
  * Funcionalidad que valida los datos de un objeto de tipo searchParams y crea una lista de elementos de los criterios seleccionados en el filtro de busqueda.
  * Parametros de entrada:
  * - searchParamsObj: el objeto searchParams proveniente de React Router
@@ -801,17 +801,18 @@ const validateSearchParamsBusquedaFromFilter = (searchParamsObj) => {
  * - listCardSearch.js
 */
 
-const getExternalFilterCriteriaSR = (searchParamsObj) => { 
-    console.log("searchParamsObj", searchParamsObj);
+const getFilterCriteriaSR = (searchParamsObj) => { 
     const excluir = ['providencias_id', 'from_filter', 'per_page', 'page', 'order', 'string'];
     const newObject = Object.fromEntries(
       Object.entries(searchParamsObj).filter(([key]) => !excluir.includes(key))
     );
-    const arrExternalItems = ([].concat(...Object.values(newObject))).filter(item => item !== "");
+    const objConverted = {};
+    for (let key in newObject) {
+     objConverted[key] = newObject[key].split(',').map(item => item.trim());
+    }
+    const arrExternalItems = ([].concat(...Object.values(objConverted))).filter(item => item !== "");
     return arrExternalItems;
-    
 }
-
 
 /**
  * setLocalStorageSimple()
@@ -885,7 +886,7 @@ export { filtroByDefault,
          validateSearchParamsBusquedaAV,
          formattingSearchParamsBusquedaAV,
          validateSearchParamsBusquedaFromFilter,
-         getExternalFilterCriteriaSR,
+         getFilterCriteriaSR,
          setLocalStorageSimple,
          getLocalStorageSimple
 };

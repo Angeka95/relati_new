@@ -8,7 +8,7 @@ import { Grid } from '@mui/material';
 import Context from './../../context/context.js';
 import FilterContext from './../../context/filterContext.js';
 import FilterShort from './../filterShort.js';
-import { filtroByDefault, getDecisionesIDsToExport, validateSearchParamsBusquedaAV, formattingSearchParamsBusquedaAV, validateSearchParamsBusquedaFromFilter,   getExternalFilterCriteriaSR  } from './../../helpers/utils.js';
+import { filtroByDefault, getDecisionesIDsToExport, validateSearchParamsBusquedaAV, formattingSearchParamsBusquedaAV, validateSearchParamsBusquedaFromFilter,   getFilterCriteriaSR  } from './../../helpers/utils.js';
 import LinearWithValueLabel from './../../components/linearProgress.js';  
 import ButtonDownloadZIPCustom from './../buttonDownloadZIPCustom.js';
 import ButtonDownloadDecisiones from './../buttonDownloadDecisiones.js';
@@ -30,6 +30,7 @@ export default function Card({ datosBusqueda, searchOptions, isListSmall, select
     const [message, setMessage] = useState({ message: "", classname: "" });
 
     const { filtroJurisprudencial, setFiltroJurisprudencial } = useContext(Context);
+    const { searchFilterObj, setSearchFilterObj } = useContext(Context);
     const { datos, setDatos, currentData, getCurrentData, setDatosToExport } = useContext(PaginatorContext);
     
     const { selectedFilters } = useContext(FilterContext);
@@ -134,15 +135,23 @@ export default function Card({ datosBusqueda, searchOptions, isListSmall, select
 
     const [externalFilters, setExternalFilters] = useState([]);
     
-    // Este useEffect permite cargar los elementos que conforman el filtro de busqueda
+    // Este useEffect permite cargar los elementos que conforman el filtro de busqueda provenientes de una URL por navegador
     useEffect(() => {
         if(externalFilters.length === 0 ) { 
             const searchParamsObj = Object.fromEntries(searchParams.entries());
             if(validateSearchParamsBusquedaFromFilter(searchParamsObj)) {          
-                setExternalFilters(getExternalFilterCriteriaSR(searchParamsObj));
+                setExternalFilters(getFilterCriteriaSR(searchParamsObj));
             }
         }
     }, [externalFilters]);
+    
+    // Este useEffect toma el objeto que contiene los valores del filtro searchFilterObj y envia un array a externalFilters para mostrar los criterios de busqueda seleccionados
+    useEffect(() => {
+          if(searchFilterObj !== null){
+            setExternalFilters(getFilterCriteriaSR(searchFilterObj));
+          } 
+    }, [searchFilterObj]);
+    
     // Funciones de paginacion
     
     const { page, itemsPerPage, setCustomPagination, setPage } = useContext(PaginatorContext);
