@@ -21,7 +21,7 @@ import FilterShort from './filterShort.js';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import SearchBarForInnerResults from './searchBarForInnerResults.js';
 import LinearWithValueLabel from '../components/linearProgress.js';
-import ButtonDownloadXLSCustom from './buttonDownloadXLSCustom.js';
+import ButtonDownloadXLSCustom from './downloadsComponents/buttonDownloadXLSCustom.js';
 import { validarfiltroJurisprudencial, getOpcionesAutocompletar, getDecisionesIDsToExport } from '../helpers/utils.js';
 import '../App.css';
 

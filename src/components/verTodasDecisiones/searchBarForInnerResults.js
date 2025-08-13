@@ -2,7 +2,7 @@ import React from 'react';
 import { useState, useRef, forwardRef, useImperativeHandle } from 'react';
 import { Button, TextField, Stack, Autocomplete, Box } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
-import '../App.css';
+import '../../App.css';
 
 const SearchBarForInnerResultsVTD = forwardRef(( props, ref ) => {
 

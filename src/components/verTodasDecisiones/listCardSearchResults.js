@@ -1,22 +1,22 @@
 import React, { useState, useEffect, useContext, useRef } from 'react';
 import { Grid, Stack, Pagination, PaginationItem, List, ListItem, Button, Box, Chip, Alert, MenuItem, FormControl, Select } from '@mui/material';
-import { SpaceGrid, WrapGrid, SpaceBetweenGrid, Width100Grid, NoneGrid, JustMapGrid, JustMapNoneGrid } from './gridComponents/gridComponents.js';
-import Context from '../context/context.js';
-import CardSearch from './cardSearchResultsVTD.js';
-import SearchBarForInnerResultsVTD from './searchBarForInnerResultsVTD.js';
+import { SpaceGrid, WrapGrid, SpaceBetweenGrid, Width100Grid, NoneGrid, JustMapGrid, JustMapNoneGrid } from './../../components/gridComponents/gridComponents.js';
+import Context from '../../context/context.js';
+import CardSearch from './../cardSearchResults.js';
+import SearchBarForInnerResults from './searchBarForInnerResults.js';
 import FilterShort from './filterShort.js';
-import LinearWithValueLabel from '../components/linearProgress.js';
-import ButtonDownloadXLS from './buttonDownloadXLS.js';
-import ButtonDownloadXLSCustom from './buttonDownloadXLSCustom.js';
+import LinearWithValueLabel from '../../components/linearProgress.js';
+import ButtonDownloadXLS from '../../components/downloadsComponents/buttonDownloadXLS.js';
+import ButtonDownloadXLSCustom from '../../components/downloadsComponents/buttonDownloadXLSCustom.js';
 import SortIcon from '@mui/icons-material/Sort';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
-import { filtroByDefault, validarfiltroJurisprudencial, getDecisionesIDsToExport, createSearchParamsObj } from '../helpers/utils.js';
+import { filtroByDefault, validarfiltroJurisprudencial, getDecisionesIDsToExport, createSearchParamsObj } from '../../helpers/utils.js';
 import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
-import ButtonDownloadDecisiones from './buttonDownloadDecisiones.js';
-import '../App.css';
+import ButtonDownloadDecisiones from '../../components/downloadsComponents/buttonDownloadDecisiones.js';
+import '../../App.css';
 
 export default function Card({ datosBusqueda, searchOptions, selectedFilters, isListSmall, selectedTerm, isLargeResult, isExternalFilters, customPagination = {} }) {
 
@@ -363,7 +363,7 @@ export default function Card({ datosBusqueda, searchOptions, selectedFilters, is
 
                                 <Grid item className="justify_end_partial" xs={12} sm={12} md={(isListSmall ? 12 : 6)} lg={(isListSmall ? 12 : 6)} xl={(isListSmall ? 12 : 6)}>
                                     {/* Ocultar temporalmente */}
-                                    <SearchBarForInnerResultsVTD handlerInnerSearch={handlerInnerSearchVTD} handlerReset={deshacerBusquedaVTD} ref={searchBarForInnerResultsInputRef}></SearchBarForInnerResultsVTD>
+                                    <SearchBarForInnerResults handlerInnerSearch={handlerInnerSearchVTD} handlerReset={deshacerBusquedaVTD} ref={searchBarForInnerResultsInputRef}></SearchBarForInnerResults>
                                 </Grid>
                             </SpaceBetweenGrid>
 

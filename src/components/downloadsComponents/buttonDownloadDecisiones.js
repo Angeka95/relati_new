@@ -1,11 +1,11 @@
 import React, { useState , useEffect, useContext } from 'react';
-import PaginatorContext from './../context/paginatorContext.js';
+import PaginatorContext from '../../context/paginatorContext.js';
 import { Button } from '@mui/material';
 import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
 import Divider from '@mui/material/Divider'; 
 import ButtonDownloadXLSCustom from './buttonDownloadXLSCustom.js';
 import ButtonDownloadZIPCustom from './buttonDownloadZIPCustom.js';
-import '../App.css';
+import '../../App.css';
 
 const ButtonDownloadDecisiones = ({isButtonDownloadEnabled = false, showZipButton = true}) => {
 

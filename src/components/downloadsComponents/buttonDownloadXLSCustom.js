@@ -2,7 +2,7 @@ import React, { useState , useEffect } from 'react';
 import { Modal, Box, Button, FormControlLabel, Checkbox,FormGroup,  } from '@mui/material';
 import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
 import CloseIcon from '@mui/icons-material/Close';
-import '../App.css';
+import '../../App.css';
 
 export default function ButtonDownloadXLSCustom({ stringURL, stringParams, datosToExport, filename = 'archivo.xlsx', decorated = true}) {
 

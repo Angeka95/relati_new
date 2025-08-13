@@ -1,13 +1,15 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { Container, Grid, Alert, Box, Button } from '@mui/material';
 import SearchBar from '../components/searchBar.js';
-import Filter from '../components/filter.js';
-import ListCardSearch from '../components/listCardSearchVTDResults.js';
+//import Filter from '../components/filter.js';
+import Filter from '../components/verTodasDecisiones/filter.js';
+import ListCardSearch from '../components/verTodasDecisiones/listCardSearchResults.js';
 import LinearWithValueLabel from '../components/linearProgress.js'; 
 import buscadorService from '../services/buscador.js';
 import Context from '../context/context.js';
-import { filtroByDefault, getOpcionesAutocompletar, validarfiltroJurisprudencial, validateSearchParamsVTD, createSelectedFiltersVTD } from '../helpers/utils.js';
+import { filtroByDefault, getOpcionesAutocompletar, validateSearchParamsVTD } from '../helpers/utils.js';
 import dataResults from '../data_results/dataResVerTodasLasDecisiones.js';
 import '../App.css';
 

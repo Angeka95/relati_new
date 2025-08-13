@@ -11,7 +11,7 @@ import SelectField from '../../components/resultadosBusqueda/selectField.js';
 import '../../App.css';
 import { StarSharp } from '@mui/icons-material';
 
-const FilterBeta = ({ arrayProvidencias = [], customFilter = {}, selectedTerm = "", isFilterFloat = false, isShowingFilter = false, isSearchAdvance = false, isVTD = false, href }) => {
+const Filter = ({ arrayProvidencias = [], customFilter = {}, selectedTerm = "", isFilterFloat = false, isShowingFilter = false, isSearchAdvance = false, isVTD = false, href }) => {
 
   const isFilterDisabled = false;
   
@@ -200,4 +200,4 @@ const FilterBeta = ({ arrayProvidencias = [], customFilter = {}, selectedTerm = 
   
 };
 
-export default FilterBeta;
+export default Filter;

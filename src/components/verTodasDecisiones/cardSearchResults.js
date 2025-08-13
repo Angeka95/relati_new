@@ -1,21 +1,14 @@
-import React, { useState, useContext, useEffect } from 'react';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import Box from '@mui/material/Box';
-import CardActions from '@mui/material/CardActions';
-import Button from '@mui/material/Button';
-import '../App.css';
-import { Container, Grid, Tooltip, Divider, Alert } from '@mui/material';
+import React from 'react';
+import { useState, useContext } from 'react';
+import Context from '../../context/context';
+import { Card, CardContent, Box, CardActions, Button, Grid, Tooltip, Divider, Tabs, Tab } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import Context from '../context/context';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
 import ExpandLessOutlinedIcon from '@mui/icons-material/ExpandLessOutlined';
 import ExpandMoreOutlinedIcon from '@mui/icons-material/ExpandMoreOutlined';
 import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
-import StringToHtml from './cardSearchResults/stringToHtml';
-import LikeDislike from './cardSearchResults/likeDislike';
-import { useDownloadResource } from '../hooks/useDownloadResource';
+import StringToHtml from './../cardSearchResults/stringToHtml';
+import { useDownloadResource } from '../../hooks/useDownloadResource';
+import '../../App.css';
 
 export default function CardSearch({ datos, hiddenAnalisisJuridico = false }) {
   const { busqueda } = useContext(Context);
