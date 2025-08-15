@@ -5,8 +5,8 @@ import Context from './../context/context.js';
 import PaginatorProvider from '../context/paginatorProvider.js';
 import FilterProvider from '../context/filterProvider.js';
 import { Container, Grid, Alert, Button, Box } from '@mui/material';
-import Filter from '../components/resultadosBusqueda/filter.js';
-import ListCardSearch from '../components/resultadosBusqueda/listCardSearchResults.js';
+import Filter from '../components/sectionResultadosBusqueda/filter.js';
+import ListCardSearch from '../components/sectionResultadosBusqueda/listCardSearchResults.js';
 import LinearWithValueLabel from '../components/linearProgress.js';
 import SearchBar from '../components/searchBar.js'
 import buscadorService from '../services/buscador.js';

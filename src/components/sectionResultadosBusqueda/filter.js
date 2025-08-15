@@ -7,7 +7,7 @@ import { Card, CardContent, Button } from '@mui/material';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import { JustFilterFloatNoneGrid } from '../../components/styledGridComponents/CustomGrids.js'; 
 import { validarfiltroJurisprudencial, setLocalStorageSimple } from '../../helpers/utils.js';
-import SelectField from '../../components/resultadosBusqueda/selectField.js';
+import SelectField from '../../components/sectionResultadosBusqueda/selectField.js';
 import '../../App.css';
 import { StarSharp } from '@mui/icons-material';
 
