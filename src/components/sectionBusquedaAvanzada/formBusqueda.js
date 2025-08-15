@@ -2,13 +2,10 @@ import React from 'react';
 import { useState, useEffect, useRef, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Context from '../../context/context.js';
-import { Container, Grid, Button, Box, Chip, TextField, styled } from '@mui/material';
-import ExpandLessOutlinedIcon from '@mui/icons-material/ExpandLessOutlined';
-import ExpandMoreOutlinedIcon from '@mui/icons-material/ExpandMoreOutlined';
-import FilterListIcon from '@mui/icons-material/FilterList';
+import { Grid, Button, Box, Chip, TextField, styled } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import FilterShort from './filterShort.js';
-import { validateSearchParamsBusquedaAV, createSearchParamsObj } from '../../helpers/utils.js';
+import { validateSearchParamsBusquedaAV } from '../../helpers/utils.js';
 import '../../App.css';
 
 const FormBusquedaAV = () => {
