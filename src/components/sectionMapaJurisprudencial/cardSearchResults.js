@@ -4,13 +4,13 @@ import CardContent from '@mui/material/CardContent';
 import Box from '@mui/material/Box';
 import CardActions from '@mui/material/CardActions';
 import Button from '@mui/material/Button';
-import '../App.css';
+import '../../App.css';
 import { Container, Grid } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
-import Context from '../context/context';
-import LikeDislike from './cardSearchResults/likeDislike';
-import { useDownloadResource } from '../hooks/useDownloadResource';
+import Context from '../../context/context';
+import LikeDislike from './../cardSearchResults/likeDislike';
+import { useDownloadResource } from '../../hooks/useDownloadResource';
 
 export default function CardSearch({ datos, tipo }) {
   const { busqueda, verTodasDecisiones } = useContext(Context);

@@ -17,7 +17,6 @@ export const ShowGrid = styled(Grid)(({ theme }) => ({
     [theme.breakpoints.down('sm')]: {
       display: 'inblock',
     },
-
     [theme.breakpoints.up('sm')]: {
       display: 'none',
       padding: 'none',
@@ -41,3 +40,4 @@ export const JustFilterFloatNoneGrid = styled( Grid, { shouldForwardProp: (prop)
         }
       
 }));
+
