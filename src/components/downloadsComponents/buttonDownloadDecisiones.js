@@ -7,7 +7,7 @@ import ButtonDownloadXLSCustom from './buttonDownloadXLSCustom.js';
 import ButtonDownloadZIPCustom from './buttonDownloadZIPCustom.js';
 import '../../App.css';
 
-const ButtonDownloadDecisiones = ({isButtonDownloadEnabled = false, showZipButton = true}) => {
+const ButtonDownloadDecisiones = ({isButtonDownloadEnabled = false, showZipButton = false}) => {
 
     const [boolButtonDownloadEnabled, setBoolButtonDownloadEnabled] = useState(false);
     const [isMobile, setIsMobile] = useState(window.innerWidth < 1000);
@@ -50,12 +50,12 @@ const ButtonDownloadDecisiones = ({isButtonDownloadEnabled = false, showZipButto
                           />
                           {(showZipButton === true) && (
                           <>
-                          <Divider sx={{ marginTop: "0.5rem", marginBottom: "0.5rem"}}/>
-                          <ButtonDownloadZIPCustom
-                              stringURL={`${process.env.REACT_APP_API_SERVER_DOMAIN}/getdocumentszip`}
-                              stringParams={`providencias_id=${datosToExport}`}
-                              filename="resultados.zip"
-                          />
+                              <Divider sx={{ marginTop: "0.5rem", marginBottom: "0.5rem"}}/>
+                              <ButtonDownloadZIPCustom
+                                  stringURL={`${process.env.REACT_APP_API_SERVER_DOMAIN}/getdocumentszip`}
+                                  stringParams={`providencias_id=${datosToExport}`}
+                                  filename="resultados.zip"
+                              />
                           </>
                           )}
                       </>
