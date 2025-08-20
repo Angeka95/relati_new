@@ -88,8 +88,11 @@ const Filter = ({ arrayProvidencias = [], customFilter = {}, selectedTerm = "", 
     
   // Funcionalidad para deshacer la busqueda en Ver Todas Decisiones
   const deshacerBusqueda = (e) => {
+    console.log("Estado del filtro lateral: ", searchFilterObj);
     const params = new URLSearchParams({ string: encodeURIComponent(selectedTerm), page: encodeURIComponent(1), per_page: encodeURIComponent(10) });
-    window.location.href = `${href}?${params.toString()}`;
+    setTimeout(() => {
+      window.location.href = `${href}?${params.toString()}`;
+    }, 20000);
   }
   
   // Funcionalidad para deshacer la busqueda en Ver Todas Decisiones
