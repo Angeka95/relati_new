@@ -21,7 +21,7 @@ const Filter = ({ arrayProvidencias = [], customFilter = {}, selectedTerm = "", 
   // Variables de contexto
   const { filtroJurisprudencial, setFiltroJurisprudencial } = useContext(Context);
   const { searchFilterObj, setSearchFilterObj } = useContext(Context);
-  const { setSelectedFilters, stringTerm, setStringTerm, createSelectedFiltersObj } = useContext(FilterContext);
+  const { setSelectedFilters, stringTerm, setStringTerm, createSelectedFiltersObj, filterAttempts, setFilterAttempts, itemsByFilterAttempts, setItemsByFilterAttempts } = useContext(FilterContext);
   
   // Salas
   const [selectedDataFilter1, setSelectedDataFilter1] = useState([]);
@@ -84,6 +84,7 @@ const Filter = ({ arrayProvidencias = [], customFilter = {}, selectedTerm = "", 
       setLocalStorageSimple('searchFilterQry', JSON.stringify(objSearchFilterQry));
       setLocalStorageSimple('flagFromFilter', "true");
       setSearchFilterObj(objSearchFilterQry);
+      setFilterAttempts(() => filterAttempts + 1);
   };
     
   // Funcionalidad para deshacer la busqueda en Ver Todas Decisiones
@@ -105,9 +106,15 @@ const Filter = ({ arrayProvidencias = [], customFilter = {}, selectedTerm = "", 
    useEffect(() => {
      const searchParamsObj = Object.fromEntries(searchParams.entries());
      if( (stringTerm === "") && searchParamsObj.hasOwnProperty('string')) {
+      console.log("Estado del filtro lateral: ", searchFilterObj);
       setStringTerm(decodeURIComponent(searchParams.get('string')));
      }
   }, [stringTerm]);
+  
+  // Test filterAttempts
+   useEffect(() => {
+     console.log("Filter attempts updated: ", filterAttempts);
+  }, [filterAttempts]);
   
   return (
      <>
