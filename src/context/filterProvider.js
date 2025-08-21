@@ -8,6 +8,8 @@ const FilterProvider = ({ children }) => {
  
     const [stringTerm, setStringTerm] = useState("");
     const [selectedFilters, setSelectedFilters] = useState([]);
+    const [filterAttempts, setFilterAttempts] = useState(0);
+    const [itemsByFilterAttempts, setItemsByFilterAttempts] = useState([]);
     
     const { filtroJurisprudencial } = useContext(Context);
     
@@ -50,7 +52,11 @@ const FilterProvider = ({ children }) => {
                    setSelectedFilters,
                    stringTerm,
                    setStringTerm,
-                   createSelectedFiltersObj
+                   createSelectedFiltersObj,
+                   filterAttempts,
+                   setFilterAttempts,
+                   itemsByFilterAttempts, 
+                   setItemsByFilterAttempts
                 }} 
         >
           {children}
