@@ -6,5 +6,5 @@ Relati es una herramienta avanzada diseñada para facilitar la búsqueda y consu
 
 Tabla de contenido
 
-[Guía de inicio rápido](01_getting-started.md)
+[Guía de inicio rápido](docs/01_getting-started.md)
  
