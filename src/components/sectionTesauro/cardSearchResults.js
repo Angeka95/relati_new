@@ -6,15 +6,15 @@ import CardActions from '@mui/material/CardActions';
 import Button from '@mui/material/Button';
 import { Container, Grid, Tooltip, Divider, Alert } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import Context from '../context/context';
+import Context from '../../context/context';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import ExpandLessOutlinedIcon from '@mui/icons-material/ExpandLessOutlined';
 import ExpandMoreOutlinedIcon from '@mui/icons-material/ExpandMoreOutlined';
 import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
-import StringToHtml from './cardSearchResults/stringToHtml';
-import LikeDislike from './cardSearchResults/likeDislike';
-import { useDownloadResource } from '../hooks/useDownloadResource';
+import StringToHtml from './../cardSearchResults/stringToHtml.js';
+import LikeDislike from './../cardSearchResults/likeDislike';
+import { useDownloadResource } from '../../hooks/useDownloadResource';
 import '../../App.css';
 
 export default function CardSearch({ datos, hiddenAnalisisJuridico = false }) {

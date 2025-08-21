@@ -8,14 +8,14 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import CardSearch from './cardSearchResults.js';
-import SearchBarForInnerResults from '../../searchBarForInnerResults.js';
+import SearchBarForInnerResults from './../searchBarForInnerResults.js';
 import SortIcon from '@mui/icons-material/Sort';
 import { styled } from '@mui/material/styles';
 import Context from '../../context/context';
-import FilterShort from '../../filterShort';
+import FilterShort from './../filterShort';
 import LinearWithValueLabel from '../../components/linearProgress.js';
-import tesauroService from './../services/tesauro.js';
-import { sanitizeString, formatHighlight } from '../../helpers/utils.js';
+import tesauroService from './../../services/tesauro.js';
+import { formatHighlight } from './../../helpers/utils.js';
 import '../../App.css';
 
 export default function Card({ selectedFilters, isListSmall, selectedTerm, isLargeResult, isExternalFilters }) {
