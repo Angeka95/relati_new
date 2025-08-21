@@ -2,7 +2,7 @@ import React, { useState, useEffect, act } from 'react';
 import { Container, Grid, Button, Autocomplete, TextField, Stack, Alert, Box } from '@mui/material';
 import tesauroService from '../services/tesauro.js';
 import SearchIcon from '@mui/icons-material/Search';
-import ListCardSearch from '../components/listCardSearchResults.js';
+import ListCardSearch from '../components/sectionTesauro/listCardSearchResults.js';
 import LinearWithValueLabel from '../components/linearProgress.js';  
 import '../App.css';
 import { Link } from 'react-router-dom';
