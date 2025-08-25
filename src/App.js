@@ -4,6 +4,7 @@ import ResultadosBusqueda from './sections/resultadosBusqueda';
 import BusquedaAvanzada from './sections/busquedaAvanzada';
 import MapaJurisprudencial from './sections/mapaJurisprudencial';
 import ContextProvider from './context/contextProvider';
+import FilterProvider from './context/filterProvider.js';
 import Tesauro from './sections/tesauro';
 import Boletines from './sections/boletines';
 import Suscripcion from './sections/suscripcion';
@@ -32,7 +33,7 @@ function App() {
     <div className="App">
 
         <ContextProvider>
-          
+          <FilterProvider>
         <Router>
         
         <MaintenanceWrapper />
@@ -67,6 +68,7 @@ function App() {
         </Routes>
         <Footer />
       </Router>
+      </FilterProvider>
         </ContextProvider>
         
       </div>
