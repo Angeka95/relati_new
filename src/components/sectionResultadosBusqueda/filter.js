@@ -84,16 +84,17 @@ const Filter = ({ arrayProvidencias = [], customFilter = {}, selectedTerm = "", 
       setLocalStorageSimple('searchFilterQry', JSON.stringify(objSearchFilterQry));
       setLocalStorageSimple('flagFromFilter', "true");
       setSearchFilterObj(objSearchFilterQry);
-      setFilterAttempts(() => filterAttempts + 1);
+      setFilterAttempts((filterAttempts) => filterAttempts + 1);
   };
     
   // Funcionalidad para deshacer la busqueda en Ver Todas Decisiones
   const deshacerBusqueda = (e) => {
     console.log("Estado del filtro lateral: ", searchFilterObj);
     const params = new URLSearchParams({ string: encodeURIComponent(selectedTerm), page: encodeURIComponent(1), per_page: encodeURIComponent(10) });
+    setFilterAttempts(0);
     setTimeout(() => {
       window.location.href = `${href}?${params.toString()}`;
-    }, 20000);
+    }, 100);
   }
   
   // Funcionalidad para deshacer la busqueda en Ver Todas Decisiones
@@ -110,11 +111,6 @@ const Filter = ({ arrayProvidencias = [], customFilter = {}, selectedTerm = "", 
       setStringTerm(decodeURIComponent(searchParams.get('string')));
      }
   }, [stringTerm]);
-  
-  // Test filterAttempts
-   useEffect(() => {
-     console.log("Filter attempts updated: ", filterAttempts);
-  }, [filterAttempts]);
   
   return (
      <>

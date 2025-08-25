@@ -33,7 +33,7 @@ export default function Card({ datosBusqueda, searchOptions, isListSmall, select
     const { searchFilterObj, setSearchFilterObj } = useContext(Context);
     const { datos, setDatos, currentData, getCurrentData, setDatosToExport } = useContext(PaginatorContext);
     
-    const { selectedFilters } = useContext(FilterContext);
+    const { selectedFilters, filterAttempts, itemsByFilterAttempts } = useContext(FilterContext);
     
     // Este useEffect permite inicializar los datos de búsqueda y las opciones de autocompletar
     useEffect(() => {
@@ -136,20 +136,22 @@ export default function Card({ datosBusqueda, searchOptions, isListSmall, select
     const [externalFilters, setExternalFilters] = useState([]);
     
     // Este useEffect permite cargar los elementos que conforman el filtro de busqueda provenientes de una URL por navegador
-    useEffect(() => {
+    /*useEffect(() => {
         if(externalFilters.length === 0 ) { 
             const searchParamsObj = Object.fromEntries(searchParams.entries());
             if(validateSearchParamsBusquedaFromFilter(searchParamsObj)) {          
                 setExternalFilters(getFilterCriteriaSR(searchParamsObj));
             }
         }
-    }, [externalFilters]);
+    }, [externalFilters]);*/
     
     // Este useEffect toma el objeto que contiene los valores del filtro searchFilterObj y envia un array a externalFilters para mostrar los criterios de busqueda seleccionados
     useEffect(() => {
-          if(searchFilterObj !== null){
-            setExternalFilters(getFilterCriteriaSR(searchFilterObj));
-          } 
+          if((searchFilterObj !== null) && ( filterAttempts > 0 )){
+            //setExternalFilters(getFilterCriteriaSR(searchFilterObj));
+          //} else {
+            setExternalFilters(itemsByFilterAttempts);
+          }
     }, [searchFilterObj]);
     
     // Funciones de paginacion
@@ -243,7 +245,7 @@ export default function Card({ datosBusqueda, searchOptions, isListSmall, select
                         {!selectedTerm && !isExternalFilters && selectedFilters.length === 0 && (
                             <h4 className="text_diabled">(Aún no ha agregado ningún filtro a su búsqueda)</h4>
                         )}
-                        {selectedFilters.length > 0 && (
+                        {/*{selectedFilters.length > 0 && (
                             <Box sx={{ marginBottom: '20px', display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
                                 {selectedFilters.map((value) => (
                                     <Chip
@@ -254,7 +256,7 @@ export default function Card({ datosBusqueda, searchOptions, isListSmall, select
                                     />
                                 ))}
                             </Box>
-                        )}
+                        )}*/}
                         {externalFilters.length > 0 && (
                             <div>
                                 <h5 className="text_bolder margin_bottom_s margin_top_s">Su búsqueda se está filtrando por:</h5>

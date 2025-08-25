@@ -3,7 +3,6 @@ import { useState, useEffect, useContext } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import Context from './../context/context.js';
 import PaginatorProvider from '../context/paginatorProvider.js';
-import FilterProvider from '../context/filterProvider.js';
 import { Container, Grid, Alert, Button, Box } from '@mui/material';
 import Filter from '../components/sectionResultadosBusqueda/filter.js';
 import ListCardSearch from '../components/sectionResultadosBusqueda/listCardSearchResults.js';
@@ -282,7 +281,6 @@ export default function SearchResults() {
           </Grid>
         </Container>      
         : 
-        <FilterProvider>
           <Container className="margin_bottom_m">
             <Grid container spacing={2} sx={{ mb: 5 }}>
               <Grid item xs={12} sm={12} md={4} lg={4} xl={4} >
@@ -307,7 +305,6 @@ export default function SearchResults() {
               </Grid>
             </Grid>
           </Container>
-        </FilterProvider>
       }
     </>  
   );

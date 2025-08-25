@@ -44,6 +44,18 @@ const FilterProvider = ({ children }) => {
         } 
         
     }, [filtroJurisprudencial]);
+    
+    
+    useEffect(() => {
+        console.log("Valor desde filterAttempts, provider: ", filterAttempts);
+        if(filterAttempts > 0){
+            console.log("Selected filters: ", selectedFilters);
+            setItemsByFilterAttempts((itemsByFilterAttempts) => {
+                let newItems = itemsByFilterAttempts.concat(selectedFilters);
+                return [...new Set(newItems)];
+            });
+        }
+    }, [filterAttempts]);
             
     return (
         <FilterContext.Provider 
