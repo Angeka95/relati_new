@@ -2,15 +2,23 @@
 import React, { useState, useContext, useEffect } from 'react';
 import FilterContext from './filterContext';
 import Context from './context';
-import { validarfiltroJurisprudencial } from '../helpers/utils.js';
+import { validarfiltroJurisprudencial } from './../helpers/utils';
 
 const FilterProvider = ({ children }) => {
  
+    // stringTerm, corresponde al termino de busqueda, es un string
     const [stringTerm, setStringTerm] = useState("");
+    
+    // selectedFilters, corresponde a los filtros seleccionados en el componente FilterComponent, es un array de strings
     const [selectedFilters, setSelectedFilters] = useState([]);
-    const [filterAttempts, setFilterAttempts] = useState(0);
+    
+    // filterAttempts, es un contador que se incrementa cada vez que se aplica un filtro
+    const [filterAttempts, setFilterAttempts] = useState(0); 
+    
+    // itemsByFilterAttempts, es un array que contiene los filtros seleccionados en cada intento de filtrado
     const [itemsByFilterAttempts, setItemsByFilterAttempts] = useState([]);
     
+    // filtroJurisprudencial, es un objeto que contiene los filtros seleccionados en el componente FilterComponent
     const { filtroJurisprudencial } = useContext(Context);
     
     // Funcion que crea un objeto a partir de filtroJurisprudencial y stringTerm
@@ -45,11 +53,10 @@ const FilterProvider = ({ children }) => {
         
     }, [filtroJurisprudencial]);
     
-    
+    // Este useEffect recibe el valor del contador filterAttempts, a partir de 1 en adelante actualiza el array itemsByFilterAttempts concatenando los nuevos filtros seleccionados 
+    // que estan en selectedFilters y elimina los valores duplicados con Set
     useEffect(() => {
-        console.log("Valor desde filterAttempts, provider: ", filterAttempts);
         if(filterAttempts > 0){
-            console.log("Selected filters: ", selectedFilters);
             setItemsByFilterAttempts((itemsByFilterAttempts) => {
                 let newItems = itemsByFilterAttempts.concat(selectedFilters);
                 return [...new Set(newItems)];

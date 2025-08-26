@@ -26,7 +26,7 @@ import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import buscadorService from '../services/buscador.js';
-
+import FilterContext from './../context/filterContext';
 
 export default function Home() {
 
@@ -35,6 +35,9 @@ export default function Home() {
     const [boletines, setBoletines] = useState([]);
     const [messageSearch, setMessageSearch] = useState({ message: "", classname: "" });
     const [message, setMessage] = useState("");
+    
+    // Variables de contexto
+    const { setFilterAttempts, setItemsByFilterAttempts } = useContext(FilterContext);
 
     const setArrayDatosDecisiones = (arrData) => {
         const newArray = arrData.map(item => {
@@ -462,7 +465,13 @@ export default function Home() {
         
         
         ]
-
+        
+    // Este useEffect permite inicializar las variables de contexto filtersAttempts e itemsByFilterAttempts en 0 y [] respectivamente cada vez que se carga la página de inicio
+    useEffect(() => {
+        setFilterAttempts(0);
+        setItemsByFilterAttempts([]);
+    }, []);
+    
     return (
         <div className="nowrap">
             {/* {isModalVisible && (

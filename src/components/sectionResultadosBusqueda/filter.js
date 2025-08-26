@@ -1,15 +1,14 @@
 import React from 'react';
-import { useState, useEffect, useContext, useRef } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import Context from '../../context/context';
 import FilterContext from '../../context/filterContext.js';
 import { Card, CardContent, Button } from '@mui/material';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import { JustFilterFloatNoneGrid } from '../../components/styledGridComponents/CustomGrids.js'; 
-import { validarfiltroJurisprudencial, setLocalStorageSimple } from '../../helpers/utils.js';
 import SelectField from '../../components/sectionResultadosBusqueda/selectField.js';
+import { validarfiltroJurisprudencial, setLocalStorageSimple } from '../../helpers/utils.js';
 import '../../App.css';
-import { StarSharp } from '@mui/icons-material';
 
 const Filter = ({ arrayProvidencias = [], customFilter = {}, selectedTerm = "", isFilterFloat = false, isShowingFilter = false, isSearchAdvance = false, isVTD = false, href }) => {
 
@@ -21,7 +20,7 @@ const Filter = ({ arrayProvidencias = [], customFilter = {}, selectedTerm = "", 
   // Variables de contexto
   const { filtroJurisprudencial, setFiltroJurisprudencial } = useContext(Context);
   const { searchFilterObj, setSearchFilterObj } = useContext(Context);
-  const { setSelectedFilters, stringTerm, setStringTerm, createSelectedFiltersObj, filterAttempts, setFilterAttempts, itemsByFilterAttempts, setItemsByFilterAttempts } = useContext(FilterContext);
+  const { setSelectedFilters, stringTerm, setStringTerm, createSelectedFiltersObj, setFilterAttempts } = useContext(FilterContext);
   
   // Salas
   const [selectedDataFilter1, setSelectedDataFilter1] = useState([]);
@@ -80,6 +79,7 @@ const Filter = ({ arrayProvidencias = [], customFilter = {}, selectedTerm = "", 
       setFiltroJurisprudencial(objFiltroJurisprudencial);
       
       // Cuando ya se tiene la informacion de los filtros se preparan los parametros de busqueda procesar por POST
+      // Se incrementa el numero de intentos de filtrado
       const objSearchFilterQry = createSelectedFiltersObj(objFiltroJurisprudencial, stringTerm, arrayProvidencias);
       setLocalStorageSimple('searchFilterQry', JSON.stringify(objSearchFilterQry));
       setLocalStorageSimple('flagFromFilter', "true");
@@ -107,7 +107,6 @@ const Filter = ({ arrayProvidencias = [], customFilter = {}, selectedTerm = "", 
    useEffect(() => {
      const searchParamsObj = Object.fromEntries(searchParams.entries());
      if( (stringTerm === "") && searchParamsObj.hasOwnProperty('string')) {
-      console.log("Estado del filtro lateral: ", searchFilterObj);
       setStringTerm(decodeURIComponent(searchParams.get('string')));
      }
   }, [stringTerm]);

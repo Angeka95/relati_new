@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext, useRef } from 'react';
 import { Link } from 'react-router-dom'; 
 import Context from '../context/context';
+import FilterContext from '../context/filterContext';
 import { getLocalStorageWithExpiry } from '../helpers/utils.js';
 import { Button, Switch, FormControlLabel, Alert, TextField, Stack, Autocomplete } from '@mui/material';
 import { ShowGrid, NoneGrid, SpaceBottom } from '../components/styledGridComponents/CustomGrids.js'; 
@@ -16,6 +17,9 @@ export default function Search({ isSearchAdvance = true, isSearchMain }) {
   const [valAutoComplete, setValAutoComplete] = useState('');
   const [options, setOptions] = useState([]);
   const [messageSearch, setMessageSearch] = useState({ message: "", classname: "" });
+  
+  // Variables de contexto
+  const { setFilterAttempts, setItemsByFilterAttempts } = useContext(FilterContext);
   
   // Captura el valor en el componente Autocomplete
   const updateSelectedValue = (event, value) => {
@@ -48,6 +52,8 @@ export default function Search({ isSearchAdvance = true, isSearchMain }) {
       }, 1500);
     } else {
       const params = new URLSearchParams({ string: encodeURIComponent(searchValue), page: 1, per_page: 10 });
+      setFilterAttempts(0); 
+      setItemsByFilterAttempts([]);
       window.location.href = `/resultados-busqueda?${params.toString()}`;
     }
 
