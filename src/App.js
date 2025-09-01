@@ -12,6 +12,7 @@ import Home from './sections/inicio';
 import Analisis from './sections/analisisTematico';
 import Glosario from './sections/glosario'
 import PreguntasFrecuentes from './sections/preguntasFrecuentes'
+import Ayuda from './sections/ayuda'
 import Acerca from './sections/acercaDeNosotros'
 import Menu from './sections/menu'
 import Footer from './sections/footer'
@@ -49,7 +50,7 @@ function App() {
           <Route path="/busqueda-avanzada" element={<BusquedaAvanzada />} />
           <Route path="/resultados-busqueda" element={<ResultadosBusqueda />} />
           <Route path="/analisis-tematico" element={<Analisis />} />
-       
+          <Route path="/ayuda" element={<Ayuda />} />
           <Route path="/glosario" element={<Glosario />} />
           <Route path="/preguntas-frecuentes" element={<PreguntasFrecuentes />} />
           <Route path="/acerca-de-nosotros" element={<Acerca />} />

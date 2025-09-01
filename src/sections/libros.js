@@ -153,7 +153,7 @@ La JEP abrió 11 macrocasos con el fin de investigar quiénes fueron los máximo
                                 <div className="book_container">
                                     <div className="collection_container_text">
                                     <div className="text_bolder title_text text_white text_center margin_bottom_m  book_margin_mobile carrousel_title_mobile" dangerouslySetInnerHTML={{__html: libros[currentIndex].title}}></div>
-                                        <div className="text_white padding_m book_margin_mobile" dangerouslySetInnerHTML={{__html: libros[currentIndex].text}}></div>
+                                        <div className="text_white padding_m book_margin_mobile scroll-none" dangerouslySetInnerHTML={{__html: libros[currentIndex].text}}></div>
                                         
                                     </div> 
                                 </div>

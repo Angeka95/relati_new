@@ -230,6 +230,10 @@ h6 {
   margin-bottom: 0.5rem;
 }
 
+.first_capitalize{
+  text-transform: capitalize !important;
+}
+
 
 /*END COLOR PALETTE */
 
@@ -3457,6 +3461,132 @@ color: rgb(219, 0, 69);
 /*--------------------------------------------------------------------*/
 /*--------------------------------------------------------------------*/
 
+
+/* Ayuda */
+
+.panel_display{
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.panel_border{
+  border-bottom:  2px solid rgba(206, 206, 206, 0.418) !important;
+}
+
+.panel_button{
+  padding: 8px 14px !important;
+  box-shadow: rgba(57, 128, 195, 0.164) 0px 8px 24px !important;
+  color: #007CAE !important;
+  margin: 3px 0px;
+}
+
+.panel_text_container{
+  padding: 8px 30px; 
+
+  
+}
+
+.panel_button_container{
+  height: 280px;
+  overflow-y: auto;
+}
+
+.panel_button:hover{
+  /* border-left: #007CAE 6px solid !important; */
+  color: #111D31 !important;
+    font-weight: 700 !important;
+    /* background-color: #007cae42 !important; */
+
+
+}
+
+
+.panel_button_active{
+  background-color: rgba(27, 127, 204, 0.068) !important;
+  border-left: #98C438 6px solid !important;
+  font-weight: 700 !important;
+  box-shadow: rgba(57, 128, 195, 0.164) 0px 8px 24px !important; 
+  color: #111D31 !important;
+
+
+}
+
+.panel_align{
+  justify-content: flex-start !important;
+  border-radius: 0px !important;
+}
+
+.panel_small{
+  width: 30% !important;
+}
+
+.panel_large{
+  width: 40% !important;
+}
+
+
+.scroll-none{
+  scrollbar-width: none;
+
+}
+
+.scroll_panel {
+  width: 1000px; /* Ancho del contenedor */
+  height: 280px; /* Altura del contenedor */
+  overflow-y: auto; /* Scroll vertical */
+  box-shadow: 0px 8px 16px rgba(57, 129, 195, 0.2);
+
+  padding: 0px !important; 
+  background-color: #fff;
+}
+
+.scroll_panel {
+  scrollbar-width: thin;
+  scrollbar-color: #ececec transparent; /*Color  scroll fondo */
+  background: transparent;
+
+  scroll-behavior: smooth;
+
+
+}
+.scroll_panel::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.scroll_panel::-webkit-scrollbar-track,
+.scroll_panel::-webkit-scrollbar-track-piece,
+.scroll_panel::-webkit-scrollbar-corner {
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.scroll_panel::-webkit-scrollbar-thumb {
+  background-color: #dedede;   
+  border-radius: 999px;
+  border: 2px solid transparent; 
+  background-clip: padding-box;
+  box-shadow: none;
+}
+
+.fixed_panel{
+  position: fixed;
+  max-width: 280px;
+  max-height: 245px;
+  
+}
+
+.visible{ 
+  position: relative;
+  z-index: 100 !important;
+}
+
+
+/* Fin Ayuda */
+
+
+
+
 /*QUERIES*/
 
 @media (min-width: 1300px) {
@@ -3638,6 +3768,26 @@ color: rgb(219, 0, 69);
   min-width: 170px;
   margin-left: 10%;
 }
+
+.panel_small{
+  width: 100% !important;
+}
+
+.panel_large{
+  width: 100% !important;
+}
+
+.fixed_panel{
+
+  position: relative;
+  max-width: 80%;
+
+}
+
+.panel_mobile{
+  margin-top: 40px;
+}
+
 
 }
 
