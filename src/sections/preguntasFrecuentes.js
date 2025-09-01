@@ -74,7 +74,7 @@ export default function PreguntasFrecuentes() {
         <div>
             <Container className="margin_bottom_xl">
                 <h1 className="text_center margin_top_l">Preguntas Frecuentes</h1>
-                <h5 className="text_center">Encuentre las decisiones de la JEP y conozca la actividad judicial en el territorio Colombiano</h5>
+               
 
                 <div className="justify_center ">
                     <div className="box_scrolleable scroll-container margin_top_l">

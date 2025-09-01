@@ -8,7 +8,7 @@ export default function Footer() {
 
     return (
         <div>
-    <footer id="footer" className="width: 100%" >
+    <footer id="footer" className="width: 100% visible" >
  
      <div className="container secondary_blue" >
          <div className="footer-info row">
