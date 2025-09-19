@@ -107,7 +107,7 @@ const getHitosMacrocasos = () => {
     },
     params: { }
   };
-  const request =  axios.get(`${process.env.REACT_APP_API_SERVER_DOMAIN}/itosmacrocasos`, config);
+  const request =  axios.get(`${process.env.REACT_APP_API_SERVER_DOMAIN}/lineatiempomacrocaso`, config);
   return request.then(response => {
     if((response.data.status !== undefined) || (response.data.status === 401) || (response.data.status === 403)) {
       return { "data": [], "status_info": { "status": response.data.status, "reason": response.data.reason }};

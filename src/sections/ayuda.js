@@ -16,67 +16,39 @@ export default function Ayuda() {
             id: 1,
             nombre: "Búsqueda General",
             url: "https://www.youtube.com/embed/KckiSIEZRcY",
-            descripcion: `La búsqueda general es la forma de encontrar decisiones a partir de palabras clave, temas específicos, número o radicado de la decisión.  
-            <br> </br>
-            Este buscador arroja la información solicitada a partir de una serie de datos que llamamos “metadatos” que tiene cada decisión, y muestra las decisiones que tienen mayor relevancia frente a la solicitud luego de una serie de procesos lógicos dentro de la plataforma.  
-            <br> </br>
-            Se debe aclarar que para esta búsqueda no es necesario el uso de comillas, no es relevante escribir en mayúscula o minúscula ni en singular o plural.  
-            <br> </br>
-            Los resultados que arroja se pueden organizar por relevancia o por antigüedad.  
-            <br> </br>
-            Cada resultado muestra los metadatados: el nombre de la decisión, la síntesis, la Sala o Sección, si tiene asociación a algún macrocaso, el procedimiento, el departamento de los hechos, el delito y el expediente.  
-            <br> </br>
-            Además, en la sección de datos específicos se muestran los campos del análisis IRAC, que son las palabras clave, el análisis jurídico, la conclusión, el resuelve, los magistrados y los sujetos procesales.  
-            <br> </br>
-            Si la decisión tuvo algún tipo de recurso, aparece un semáforo que señala qué decisión tomó la providencia que resolvió el recurso y en documentos asociados se puede ver el detalle de esa decisión y se puede acceder a ella.  
-            <br> </br>
-            Igualmente, en la sección de documentos asociados aparece el salvamento o aclaración de voto del magistrado/a en caso de votar de esa forma.  
-            <br> </br>
-            El botón verde en cada decisión permite descargar la providencia y el botón azul aparece únicamente en las decisiones con una ficha jurisprudencial.  `
+            descripcion: `Permite encontrar decisiones mediante palabras clave, radicados o nombre de la decisión. No distingue mayúsculas/minúsculas ni singular/plural. Los resultados se organizan por relevancia o antigüedad, incluyendo un resumen de la decisión, con hechos, problema jurídico, reglas, aplicación al caso concreto; ofrece funcionalidades al usuario para encontrar recursos relacionados con las decisiones, opciones de descarga de resultados de la búsqueda en Excel y acceso a fichas jurisprudenciales. `
         },
 
         {
             id: 2,
             nombre: "Búsqueda Avanzada",
             url: "https://www.youtube.com/embed/oixcxwftRPw",
-            descripcion: `La busuqear general permite buscar por palabras claves`
+            descripcion: `Permite acotar información a partir de la inclusión y exclusión de palabras. Ofrece las opciones: "Frase exacta" para ubicar una frase completa dentro de las decisiones; "Todas las palabras" para incluir en la búsqueda palabras puntuales y "Ninguna de las palabras" para excluir contenido. Facilita investigaciones y análisis académicos mediante combinación de múltiples parámetros. `
         },
 
         {
             id: 3,
             nombre: "Todas las Decisiones",
             url: "https://www.youtube.com/embed/KckiSIEZRcY",
-            descripcion: `La busuqear general permite buscar por palabras claves`
+            descripcion: `Vista panorámica de toda la jurisprudencia publicada en tiempo real. Diseñada para análisis estadístico con filtros por Sala, año, departamento, delito, macrocaso y procedimiento. Permite descarga en Excel de los resultados de la búsqueda. Facilita monitoreo de actividad judicial contemporánea,  identificación de patrones temporales y análisis cuantitativos.`
         },
         {
             id: 4,
             nombre: "Macrocasos",
             url: "https://www.youtube.com/embed/oixcxwftRPw",
-            descripcion: `Esta sección presenta los avances de los 11 macrocasos que investiga la JEP, enfocándose en las decisiones dentro de cada macrocaso.  
-            <br> </br>
-            Para cada uno de los casos se muestra el título y un breve resumen sobre su avance. 
-            <br> </br>
-            Si se da click sobre “Saber más del caso” se dirigirá a la ficha gráfica de cada macrocaso, donde se podrá conocer más a detalle de los avances en la investigación.  
-            <br> </br>
-            Igualmente, por cada macrocaso se muestra una línea de tiempo con las decisiones más relevantes.   
-            <br> </br>
-            En la sección de “Decisiones relacionadas con el caso” se pueden conocer todas las providencias de las Salas de Justicia y el Tribunal para la Paz con cada macrocaso. Solo se debe seleccionar el tipo de decisión y el sistema arroja el resultado. 
-            <br> </br>
-            Además, se pueden consultar las audiencias de cada macrocaso.  
-            <br> </br>
-            Finalmente, se presentan otros productos de divulgación de la Relatoría relacionados con cada macrocaso. Puntualmente, boletines y documentos relacionados y el podcast “Relatos de la JEP”.  `
+            descripcion: `Facilita comprensión del avance jurídico de uno de los 11 macrocasos de la JEP, a través de la líneas de tiempo, fichas gráficas y  productos de divulgación como boletinesy el podcast "Relatos de la JEP". Permite consultar decisiones de Salas de Justicia y Tribunal para la Paz de cada macrocaso.  `
         },
         {
             id: 5,
             nombre: "Tesauro",
             url: "https://www.youtube.com/embed/KckiSIEZRcY",
-            descripcion: `La busuqear general permite buscar por palabras claves`
+            descripcion: `Sistema de palabras clave organizadas alfabéticamente para acceso preciso a decisiones. Cada término conecta directamente con jurisprudencia indexada profesionalmente. Incluye terminología jurídica técnica y conceptos sustantivos de justicia transicional. Funciona como herramienta educativa para familiarizarse con vocabulario especializado de la JEP. Garantiza exhaustividad mediante vocabulario controlado y estandarizado.`
         },
         {
             id: 6,
             nombre: "Mapa Jurisprudencial",
             url: "https://www.youtube.com/embed/oixcxwftRPw",
-            descripcion: `La busuqear general permite buscar por palabras claves`
+            descripcion: `Visualización geoespacial de decisiones por departamentos en el mapa de Colombia. Al seleccionar un territorio, despliega decisiones relacionadas con acceso a datos, descarga y fichas. Incluye filtros superiores y gráficas temporales mostrando estadísticas por año. Permite análisis territorial, estudios comparativos regionales e identificación de patrones geográficos en la actividad judicial de la JEP.`
         },
 
     ]
