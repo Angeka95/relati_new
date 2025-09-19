@@ -195,7 +195,7 @@ function obtenerAnioMes(anio, nombreMes) {
         "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
         "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
     ];
-    const indice = meses.findIndex(mes => mes.toLowerCase() === nombreMes.toLowerCase()) + 1;
+    const indice = meses.findIndex(mes => mes.toLowerCase() === nombreMes?.toLowerCase()) + 1;
 
     let yyyym = `${anio}/${indice}`;
 

@@ -197,6 +197,14 @@ h6 {
   color: #007CAE !important;
 }
 
+.text_orange {
+  color: #FF9500 !important;
+}
+
+.text_dark_blue{
+  color: #135977 !important;
+}
+
 .text_grey{
   color: #b4b4b4 !important;
 }
@@ -265,7 +273,6 @@ h6 {
 
 .button_terciary {
   background-color: #fff !important;
-  text-transform: capitalize !important;
   color: #007CAE !important;
   border-radius: 32px !important;
   padding: 10px 30px !important;
@@ -318,6 +325,51 @@ h6 {
   transition: all 0.5s ease;
   color: #111D31 !important;
 }
+
+.link_orange{ 
+  background-color: none !important;
+  color: #FF9500 !important;
+  padding: 0px !important;
+  text-decoration: none !important;
+  transition: all 0.5s ease-out;
+}
+
+.link_orange:hover {
+  background-color: transparent !important;
+  transition: all 0.5s ease;
+  color: #111D31 !important;
+}
+
+.link_dark_blue{
+  background-color: none !important;
+  color: #135977 !important;
+  padding: 0px !important;
+  text-decoration: none !important;
+  transition: all 0.5s ease-out;
+}
+.link_dark_blue:hover {
+  background-color: transparent !important;
+  transition: all 0.5s ease;
+  color: #111D31 !important;
+}
+
+
+
+.link_dark_green{ 
+  background-color: none !important;
+  color: #5F6E30 !important;
+  padding: 0px !important;
+  text-decoration: none !important;
+  transition: all 0.5s ease-out;
+}
+
+.link_dark_green:hover {
+  background-color: transparent !important;
+  transition: all 0.5s ease;
+  color: #111D31 !important;
+}
+
+
 
 
 .link_simple:hover {
@@ -673,6 +725,9 @@ h6 {
   text-align: left;
 }
 
+.text_right{
+  text-align: right;
+}
 
 .text_center {
   text-align: center;
@@ -2194,9 +2249,11 @@ controlodares carrusel  */
 
 .limit_lines{
   display: -webkit-box;
-  -webkit-line-clamp: 3;
+  -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
+  max-height: 40px;
+  min-height: 40px;
 }
 
 .section_blue{
@@ -2228,25 +2285,35 @@ controlodares carrusel  */
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   gap: 20px; /* Espacio entre los eventos */
-  padding: 20px;
+  padding: 0px 20px;
   position: relative;
 }
 
 .timeline_item {
   text-align: center;
-  position: relative; /* Necesario para posicionar los puntos sobre la línea */
-  z-index: 1; /* Asegura que los puntos estén sobre la línea */
+  position: relative; 
+  z-index: 1; 
   display: flex;
   flex-direction: column;
-  align-items: center; /* Centra los elementos */
+  align-items: center; 
+  min-width: 275px;
 }
 
 .timeline_dot {
   width: 20px;
   height: 20px;
-  background-color: #9c9c9c; /* Cambia el color según tu preferencia */
+  background-color: #9c9c9c; 
   border-radius: 50%;
   margin: 0 auto;
+}
+
+.timeline_dot_green {
+  width: 20px;
+  height: 20px;
+  background-color: #111D31; 
+  border-radius: 50%;
+  margin: 0 auto;
+  padding-top: 20px;
 }
 
 .timeline_dot_initial{
@@ -2264,7 +2331,7 @@ controlodares carrusel  */
 .timeline_dot_end{
   margin: 10px auto; /* Centra el dot al final */
   margin-left: -22px !important;
-  margin-top: 8px !important;
+  margin-top: 12px !important;
   position: relative;
   width: 10px;
   height: 10px;
@@ -2275,8 +2342,32 @@ controlodares carrusel  */
 }
 
 .timeline_content {
-  margin-top: 10px;
+  margin-top: 2px;
 }
+.atimeline_salient{
+  padding-top: 8px;
+  max-height: 100px;
+  padding-bottom: -15px;
+  margin-top: 2px;
+  /* border: 2px solid #FF9500; */
+  background-color: #37373714;
+  width: 240px;
+  margin-left: -30px;
+}
+
+.dot_salient{
+
+  width: 240px;
+  margin-left: -30px;
+
+}
+
+.timeline_aside{
+  width: 240px;
+  margin-left: -30px;
+
+}
+
 
 .timeline_line {
   position: absolute;
@@ -2284,10 +2375,23 @@ controlodares carrusel  */
   left: -30px;
   right: 30px;
   right: 0;
-  height: 2px; /* Grosor de la línea */
+  height: 2px; 
   background-color: #ddd; 
-  z-index: -1; /*  línea esté detrás de los puntos */
+  z-index: -1;
 }
+
+.timeline_line_green{
+  position: absolute;
+  top: 10%; 
+  left: -30px;
+  right: 30px;
+  right: 0;
+  height: 3px; 
+
+  border-top: 4px dotted #FF9500;
+  z-index: -1; 
+}
+
 
 .timeline_date{
   margin-top: -25px;
@@ -2298,6 +2402,43 @@ controlodares carrusel  */
   margin-top: -40px;
   margin-bottom: 25px;
 }
+
+.info_timeline_container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+}
+
+.timeline-icon{
+  color: red;
+  font-size: 1.6rem;
+}
+
+.info_timeline{
+  padding: 10px;
+  width: 260px;
+  border: 1px solid #bdbdbd94; 
+  border-radius: 8px;
+}
+.timeline_tramite{
+  margin-top: -50px;
+  margin-bottom: 50px;
+  color: #b6b6b6;
+}
+
+.timline_dot_bullet{
+  margin: 0px 2px;
+}
+.timline_dot_r_bullet{
+  margin: 0px 4px;
+}
+
+.timeline_apertura{
+  max-width: 25%;
+  min-width: 200px;
+}
+
 
 .list_video_container{
   background-color: #111D31;
@@ -3089,6 +3230,44 @@ a, .breadcrumb-item:hover {
 
 /* FIN RED NEURONAL DE TERMINOS */
 
+
+/*SUBCASO */ 
+.title_subcaso{
+  border-left: 4px solid #FF9500;
+  margin-right: 4px;
+}
+
+.label_subcaso{    
+  padding: 0px 0px 0px 13px;
+  margin-bottom: -12px;}
+
+.separator_subcaso{
+  margin-left: 10px;
+}
+
+.button_subcaso{
+  margin: 0 auto;
+  text-transform: lowercase !important;
+}
+
+.container_button_subcaso{
+  display: flex;
+  justify-content: center;
+  width: 82%;
+}
+.bg_subcasos{
+background-color: #007dae10;
+padding: 20px 0px;
+}
+
+.foot_subcasos{
+  background-color: #007dae10;
+  padding-bottom: 20px;
+  }
+
+/*FIN SUBCASO */ 
+
+
 /*\ FOOTER  */
 
 .vega-actions a {
@@ -3743,6 +3922,11 @@ color: rgb(219, 0, 69);
 }
 
 @media (max-width: 900px) {
+
+  .button_subcaso{
+    margin: 0% !important;
+  }
+
 .list_video {
   margin-top: 40px;
   width: 100%;
@@ -3954,19 +4138,34 @@ color: rgb(219, 0, 69);
 
 }
 
+@media (max-width: 800px) {
+.timeline {
+  grid-template-columns: repeat(2, 1fr); /*2  columnas en pantallas medianas */
+}
+}
 
-
-@media (min-width: 600px) {
+@media (max-width: 700px) {
   .timeline {
-    grid-template-columns: repeat(4, 1fr); /* 4 columnas en pantallas grandes */
+    grid-template-columns: repeat(1, 1fr); /*1  columna en pantallas pequeñas */
+  }
+  }
+
+
+
+@media (min-width: 800px) {
+  .timeline {
+    grid-template-columns: repeat(3, 1fr); /*  columnas en pantallas grandes */
   }
 }
 
 
 @media (max-width: 600px) {
 
-  .timeline {
-    grid-template-columns: repeat(2, 1fr); /* 2 columnas en pantallas pequeñas */
+  .timeline_apertura{
+    display: flex;
+
+    max-width: 25%;
+    min-width: 160px;
   }
 
   .carousel_item_wrapper img {

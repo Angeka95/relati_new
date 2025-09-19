@@ -13,6 +13,8 @@ import { useParams } from 'react-router-dom';
 import { extraerSpreakerID, obtenerMesEnEspanol, obtenerAnioDeTexto, obtenerAnioMes, ordenarArrayPorFechaHitos } from '../helpers/utils.js';
 import { datos_links_toar } from '../data/datos_macrocaso.js';
 import DecisionesSalaTribunal from '../components/decisionesSalaTribunal.js';
+import InfoIcon from '@mui/icons-material/Info';
+import Timeline from '../components/timeline.js';
 
 export default function Caso() {
   
@@ -24,9 +26,19 @@ export default function Caso() {
   const [boletinesMacrocaso, setBoletinesMacrocaso] = useState([]);
   const [macrocasos, setMacrocasos] = useState([]);
   const [hitosMacrocasos, setHitosMacrocasos] = useState([]);
+  const [hitosSubcasos, setHitosSubcasos] = useState([]);
+  const [nombresSubcasos, setNombresSubcasos] = useState([]);
+  const [hitosApertura, setHitosApertura] = useState([]);
   const [timeLine, setTimeLine] = useState([]);
-
+  const [subcasoSeleccionado, setSubcasoSeleccionado] = useState(null);
   const { casoId } = useParams();
+
+  useEffect(() => {
+    if (hitosSubcasos && hitosSubcasos.length > 0) {
+      const primerNombre = hitosSubcasos[0]?.[0]?.nombre ?? null;
+      setSubcasoSeleccionado(primerNombre);
+    }
+  }, [hitosSubcasos]);
 
   const getMacrocasos = () => {
     macrocasoService
@@ -51,6 +63,14 @@ export default function Caso() {
           let casoSeleccionado = macrocasos.find(caso => caso.id === parseInt(casoId));
           if (casoSeleccionado !== undefined){
             casoSeleccionado["spreakerID"] = ( casoSeleccionado.multimedia.length > 0 ) ? extraerSpreakerID(casoSeleccionado.multimedia[0]) : ""; 
+            const subcasos = [
+              "Secretariado FARC-EP",
+              "Bloque Noroccidental",
+              "Comando Conjunto Central",
+            ];
+            const randomIndex = Math.floor(Math.random() * subcasos.length);
+            casoSeleccionado["subcaso"] = subcasos[randomIndex];
+      
             setCaso(casoSeleccionado);
           } else {
             navigate('/');
@@ -74,27 +94,90 @@ export default function Caso() {
   };
 
   useEffect(() => {
+    console.log("Cargando hitos...", hitosMacrocasos);
     if(hitosMacrocasos.length === 0){
         getHitosMacrocasos();
     } else {
         if(caso !== null) {
-          let hitosMacrocasoSeleccionado = hitosMacrocasos.find(item => Object.keys(item)[0] === `caso_${casoId}`);
-          hitosMacrocasoSeleccionado = hitosMacrocasoSeleccionado[`caso_${casoId}`].map(item => { 
-            let hitoMacrocaso = {
-              mes: obtenerMesEnEspanol(item.fecha),
-              anio: obtenerAnioDeTexto(item.fecha),
-              hecho: item.tipo, //item.asunto
-              actor: '',
-              enlace: item.enlace,
-              fecha: ""
-            }
-            hitoMacrocaso["fecha"] = obtenerAnioMes(hitoMacrocaso["anio"], hitoMacrocaso["mes"]);
-            return hitoMacrocaso;
-          });
-          setTimeLine(ordenarArrayPorFechaHitos(hitosMacrocasoSeleccionado));
-        }
+
+          let hitosCasoSeleccionado = hitosMacrocasos.find(
+            item => Object.keys(item)[0] === `mc_${casoId}`
+          ); 
+          
+          console.log(hitosCasoSeleccionado);
+          let hitosCaso = [];
+          if (hitosCasoSeleccionado) {
+
+            hitosCaso = hitosCasoSeleccionado[`mc_${casoId}`].map(item => {
+              let hito = {
+                mes: obtenerMesEnEspanol(item.fecha),
+                anio: obtenerAnioDeTexto(item.fecha),
+                hecho: item.tipo_decision,
+                actor: '',
+                enlace: item.enlace,
+                fecha: "",
+                nombre: item.nombre_caso,
+                numero: item.num_macrocaso,
+                tramite: item.tramite.trim()
+              };
+              hito.fecha = obtenerAnioMes(hito.anio, hito.mes);
+          
+              // const tramites = ["Trámite ante Sala", "Trámite ante Tribunal"];
+              // const randomIndex = Math.floor(Math.random() * tramites.length);
+              // hito.tramite = tramites[randomIndex];
+          
+              return hito;
+            });
+            
+            let apertura = hitosCaso.filter(event => event.hecho.toLowerCase().includes("auto de apertura"));
+            setHitosApertura(apertura);
+          }
+          
+          let nombresSubcasos = [];
+
+          let hitosMacrocasoSeleccionado = hitosMacrocasos
+            .filter(item => Object.keys(item)[0].includes(`mc_${casoId}_`))
+            .map(subcaso => {
+              let key = Object.keys(subcaso)[0];
+              let primerHito = true;
+              let hitos = subcaso[key].map(item => {
+
+
+                let hito = {
+                  mes: obtenerMesEnEspanol(item.fecha),
+                  anio: obtenerAnioDeTexto(item.fecha),
+                  hecho: item.tipo_decision,
+                  actor: '',
+                  enlace: item.enlace,
+                  fecha: "",
+                  nombre: item.nombre_caso, 
+                  numero: item.num_macrocaso,
+                  tramite: item.tramite.trim()
+                };
+                hito.fecha = obtenerAnioMes(hito.anio, hito.mes);
+    
+                if(primerHito) {
+                  nombresSubcasos.push({
+                    nombre: hito.nombre,
+                    noPublicado: hito.hecho === "" ? true : false
+                });
+                  primerHito = false;
+                }
+                return hito;
+              });
+    
+              return ordenarArrayPorFechaHitos(hitos);
+            });
+ // Decisiones del macrocaso 
+    if(hitosCaso.length > 1){
+      hitosMacrocasoSeleccionado.unshift(hitosCaso);
     }
-}, [hitosMacrocasos, caso]);
+
+          setHitosSubcasos(hitosMacrocasoSeleccionado);
+          setNombresSubcasos(nombresSubcasos);
+        }
+      }
+    }, [hitosMacrocasos, caso, casoId]);
   
   const getBoletinesMacrocaso = (macrocaso) => {
     macrocasoService
@@ -154,6 +237,11 @@ export default function Caso() {
   };
 
 
+    // Orden autos
+ const autosApertura = visibleEvents.filter(event => event.hecho.toLowerCase().includes("apertura"));
+
+const autosLista = visibleEvents.filter(event => !event.hecho.toLowerCase().includes("apertura"))
+
   // ID de lista de reproducción
 
   const playlistId = 'PLbtegW3d3L4IAUQrIcYb8-ADAD1FDPmLc';
@@ -169,7 +257,8 @@ export default function Caso() {
         </Box>
         <Container>
           <div className="wrap margin_top_l justify_center ">
-            <h2 className="text_bolder subtitulo_caso">En qué va el {caso.titulo}</h2>
+            <h2 className="text_bolder subtitulo_caso text_right">En qué va el <span className="display_block ">{caso.titulo} </span></h2>
+           
             <div className="actualizacion_caso">
               <p>{caso.actualizacion}</p>
               {((caso.hasOwnProperty("infografia")) && (caso.infografia.length > 0)  && (caso.infografia[0] !== "")) ?
@@ -181,10 +270,144 @@ export default function Caso() {
             </div>
           </div>
         </Container>
-        <Container className="margin_top_l ">
-          <div className="timeline ">
-            <div className="timeline_dot_initial" />
-            {visibleEvents.map((event, index) => (
+      <Box className="bg_subcasos">
+        <Container className="margin_top_l">
+  <h2 className="text_bolder text_center ">El {caso.titulo}: Evolución en el Tiempo</h2>
+  <h5 className="text_bolder text_center margin_bottom_m">Seleccione un subcaso para ver sus decisiones de forma cronológica</h5>
+  <ul className="wrap" style={{ display: "flex", listStyle: "none", gap: "15px", padding: 0, justifyContent: "center",  }}>
+    {hitosSubcasos
+      .filter(hitos => Array.isArray(hitos) && hitos.length > 0)
+      .map((hitos, i) => {
+        const nombre = hitos[0]?.nombre ?? `subcaso-${i}`;
+
+        const isActive = subcasoSeleccionado === nombre;
+
+        return (
+          <li key={i}>
+            <button
+              onClick={() => setSubcasoSeleccionado(nombre)}
+              className={isActive ? "button_primary" : "button_terciary shadow_smooth"}
+              style={{
+                background: "none",
+                border: "none",
+                cursor: "pointer",
+                textDecoration: isActive ? "underline" : "none",
+                fontWeight: isActive ? "bold" : "normal",
+                color: isActive ? "button_primary" : "button_terciary",
+                whiteSpace: "nowrap",
+                
+                
+              }}
+            >
+              {nombre}
+            </button>
+          </li>
+        );
+      })}
+  </ul>
+</Container>
+</Box>
+
+
+
+
+{hitosSubcasos.map((event, index) => {
+ 
+  const nombre = Array.isArray(event) && event.length > 0 ? event[0].nombre : `subcaso-${index}`;
+
+
+  if (subcasoSeleccionado !== nombre ) return null;
+
+  if(nombresSubcasos.find(x => x.nombre === subcasoSeleccionado)?.noPublicado) 
+    return (
+      <Box className="bg_subcasos">
+        <Container> 
+        <div className="width_100 justify_center text_center"> 
+         <p>Aún no hay decisiones disponibles de <strong> {nombre}</strong> </p> 
+        </div> 
+      </Container> 
+      </Box> 
+    ); 
+
+  return (
+    <section key={index}>
+      <Timeline data={event} autosApertura={hitosApertura} />
+    </section>
+  );
+})}
+        {/* <Timeline data={hitosSubcasos[0] ?? []} autosApertura={hitosApertura}  />  */}
+
+
+        {/* <Container className="margin_top_l " style={{display:"flex"}}>
+        <div style={{ maxWidth: "25%", minWidth: "200px"}}> 
+        <div className="timeline_dot_initial" />
+            {autosApertura.map((event, index) => (
+  
+                  <div className="timeline_item dot_salient" key={index}>
+                  <h6 className="timeline_month">{event.mes}</h6>
+                  <h6 className="timeline_date text_bolder">{event.anio}</h6>
+                  <div className="timeline_line" />
+                  <div className="timeline_dot " />
+                  <div className="timeline_content timeline_salient">
+                    {event.enlace.length > 0 ? (
+                      <div>
+                      <a href={event.enlace} target="_blank" rel="noreferrer"  className={`${event.tramite === "Trámite ante Sala" ? "link_primary" : "link_secondary"} link_nounderline`}>
+                        <Tooltip title={event.hecho}>
+
+                        
+                          
+                        <h6 className= "limit_lines" >{event.hecho}</h6>
+                        </Tooltip>
+                        <p className="margin_bottom_l">{event.actor}</p>
+                      
+                      </a>
+                      <p className="text_secondary timeline_tramite versalitas">
+                        <span
+                          className={`${
+                            event.tramite === "Trámite ante Sala"
+                            ? "text_green"
+                            : "text_blue"
+                          } timline_dot_bullet`}
+                        >
+                          ●
+                        </span>{" "}
+                        {event.tramite.toLowerCase()}
+                        <span
+                          className={`${
+                            event.tramite === "Trámite ante Sala"
+                            ? "text_green"
+                            : "text_blue"
+                          } timline_dot_r_bullet`}
+                        >
+                          ●
+                        </span>
+                      </p>
+
+
+                        
+                      </div>
+                    ) : (
+                      <>
+                      <Tooltip title={event.hecho}>
+                        <h6 className="limit_lines">{event.hecho}</h6>
+                      </Tooltip>
+                        <p className="margin_bottom_l">{event.actor}</p>
+                      </>
+                    )
+                    }
+
+
+                  </div>
+
+
+                </div>
+              ))}
+
+</div>
+<div className="width_100" style={{display: "flex", justifyContent: "end"}}> 
+          <div className="timeline " style={{maxWidth: "98%", }}>
+            
+            {autosLista.map((event, index) => (
   
               <div className="timeline_item" key={index}>
                 <h6 className="timeline_month">{event.mes}</h6>
@@ -193,12 +416,42 @@ export default function Caso() {
                 <div className="timeline_dot" />
                 <div className="timeline_content">
                   {event.enlace.length > 0 ? (
-                    <a href={event.enlace} target="_blank" rel="noreferrer" className="link_primary link_nounderline ">
+                    <div>
+                    <a href={event.enlace} target="_blank" rel="noreferrer"  className={`${event.tramite === "Trámite ante Sala" ? "link_primary" : "link_secondary"} link_nounderline`}>
                       <Tooltip title={event.hecho}>
-                      <h6 className="limit_lines">{event.hecho}</h6>
+
+                      
+                        
+                      <h6 className= "limit_lines" >{event.hecho}</h6>
                       </Tooltip>
                       <p className="margin_bottom_l">{event.actor}</p>
+                     
                     </a>
+                    <p className="text_secondary timeline_tramite versalitas">
+                      <span
+                        className={`${
+                          event.tramite === "Trámite ante Sala"
+                            ? "text_green"
+                            : "text_blue"
+                        } timline_dot_bullet`}
+                      >
+                        ●
+                      </span>{" "}
+                      {event.tramite.toLowerCase()}
+                      <span
+                        className={`${
+                          event.tramite === "Trámite ante Sala"
+                            ? "text_green"
+                            : "text_blue"
+                        } timline_dot_r_bullet`}
+                      >
+                         ●
+                      </span>
+                    </p>
+
+
+                      
+                    </div>
                   ) : (
                     <>
                     <Tooltip title={event.hecho}>
@@ -216,21 +469,31 @@ export default function Caso() {
               </div>
             ))}
             {showMore && <div className="timeline_dot_end" />}
-          </div>
-          <div className="justify_center ">
-  
+            <div className="justify_center text_center" style={{margin:"0% 107%"}}> 
             {timeLine.length > 4 && (
-              <Button onClick={handleToggle} className="link_secondary text_lowercase">
-                {showMore ? 'Ver menos sucesos' : 'Ver más Sucesos'}
+              <Button onClick={handleToggle} className="button_terciary shadow_smooth text_transform_none margin_bottom_m">
+                {showMore ? 'Ver menos del subcaso' : 'Ver más del subcaso'}
               </Button>
+
+           
             )}
+            </div>
+
           </div>
+          </div>
+
+
   
   
   
+        </Container> */}
   
-        </Container>
-  
+       
+        
+        {/* Decisiones relacionadas por sala y tribunal*/}
+        <DecisionesSalaTribunal caso={caso} />
+        {/* Decisiones relacionadas por sala y tribunal*/}
+        
         <Box className="cta_boletines_container ">
           <div className="cta">
             <Container >
@@ -246,10 +509,6 @@ export default function Caso() {
             </Container>
           </div>
         </Box>
-        
-        {/* Decisiones relacionadas por sala y tribunal*/}
-        <DecisionesSalaTribunal caso={caso} />
-        {/* Decisiones relacionadas por sala y tribunal*/}
         
         <Container>
           <div className="margin_top_xxl ">

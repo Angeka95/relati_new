@@ -21,6 +21,7 @@ import Libros from './sections/libros'
 import Breadcrumb from './components/breadcrumbs';
 import BreadcrumbWrapper from './components/breadcrumbWrapper';
 import EnfoqueGenero from './sections/enfoqueGenero';
+import Red from './sections/red';
 import VerTodasLasDecisiones from './sections/verTodasLasDecisiones';
 import TestServices from './sections/testServices';
 import Error from './sections/error';
@@ -61,7 +62,7 @@ function App() {
           <Route path="/ver-todas-las-decisiones" element={<VerTodasLasDecisiones/>} />
           <Route path="/red-terminos" element={<RedTerminos/>} />
           <Route path="/error" element={<Error/>} />
-
+          <Route path="/red" element={<Red/>} />
           
           {/* Pagina no encontrada  */}
           {/* <Route path="*" element={<NotFound />} /> */}
